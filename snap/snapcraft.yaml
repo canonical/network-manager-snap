@@ -176,8 +176,8 @@ parts:
       - --with-suspend-resume=systemd
       - --with-modem-manager-1
       # 1.2 snap doesn't explicitly enable Tcl client
-      # --with-nmtui
-      - --with-nmcli
+      - --with-nmtui=no
+      - --with-nmcli=yes
       # no need for selinux on Ubuntu
       # --with-selinux \
       - --with-tests
