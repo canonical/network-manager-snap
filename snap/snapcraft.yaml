@@ -104,14 +104,14 @@ parts:
       - python-gi
       # not included in 1.2 snap; min version iw available in xenial/universe
       - libpsl-dev
-      # not included in 1.2 snap; min version iw available in xenial; use openssl instead
+      # not included in 1.2 snap; TODO: fix conflict with lib4curl-openssl-dev
       # - libcurl4-gnutls-dev
       - libcurl4-openssl-dev
       # build disabled in 1.2 snap:
       # - gtk-doc-tools
       # not included in 1.2 snap; min version iw available in xenial
       - perl
-      # not included in 1.2 snap; min version iw available in xenial      
+      # not included in 1.2 snap; min version iw available in xenial
       - libyaml-perl
       - libglib2.0-doc
       - libmm-glib-dev
@@ -142,7 +142,9 @@ parts:
       # ======================================================
       # from 1.10 deb:
       - --libexecdir=/usr/lib/NetworkManager
-      - --runstatedir=/run
+      # TODO: autotools plugin bug?  The plugin hands this as an
+      # arg to ./configure, however its not a recognized arg.
+      # - --runstatedir=/run
       #
       # TODO: should pppd be enabled?
       # - --with-pppd-plugin-dir=$(PPPD_PLUGIN_DIR)
