@@ -1,0 +1,288 @@
+name: network-manager
+version: '1.10.4-1ubuntu3-1'
+summary: Network Manager
+description: |
+  NetworkManager is a system network service that manages your network
+  devices and connections, attempting to keep active network connectivity
+  when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
+  PPPoE devices, provides VPN integration with a variety of different
+  VPN serivces.
+  Please find the source code at: https://code.launchpad.net/~network-manager/network-manager/+git/ubuntu/+ref/snap-1.10
+confinement: strict
+grade: stable
+
+slots:
+  service: network-manager
+
+plugs:
+  nmcli: network-manager
+  wpa:
+    interface: dbus
+    bus: system
+    name: fi.w1.wpa_supplicant1
+
+hooks:
+  configure:
+    plugs:
+      - nmcli
+      - network-setup-control
+apps:
+  nmcli:
+    command: usr/bin/nmcli
+    plugs: [nmcli]
+  networkmanager:
+    command: bin/networkmanager
+    daemon: simple
+    slots: [service]
+    plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control]
+    # FIXME: This will create currently a symlink inside /snap/bin
+    # which points nowhere as the service isn't exposed as application
+    # for the user. Instead snapd needs to gain support to handle
+    # aliases for services differently by adding the Alias= option
+    # within the systemd unit file instead for example. Until this
+    # is implemented we keep the alias disabled.
+    #
+    # aliases: [NetworkManager]
+
+parts:
+  #hooks:
+  #  plugin: dump
+  #  source: hooks
+  #  organize:
+  #    configure: meta/hooks/configure
+  #networkmanager-common:
+  #  plugin: copy
+  #  files:
+  #    bin/networkmanager: bin/networkmanager
+  #    bin/dhcp-lease-mover: bin/dhcp-lease-mover
+  #    bin/nmcli-internal: bin/nmcli-internal
+  #    bin/snap-config.sh: bin/snap-config.sh
+  #    bin/snap-prop.sh: bin/snap-prop.sh
+  #    conf/NetworkManager.conf: etc/NetworkManager/NetworkManager.conf
+  #    data/copyright: usr/share/doc/network-manager/copyright
+  #    startup-hooks/99-wol-by-default.sh: startup-hooks/99-wol-by-default.sh
+  #inotify-tools:
+  #  plugin: nil
+  #  stage-packages:
+  #    - libinotifytools0
+  #    - inotify-tools
+  #  filesets:
+  #    wanted:
+  #      - usr/share/doc/inotify-tools/copyright
+  #      - usr/bin/inotifywait
+  #      - usr/share/doc/libinotifytools0/copyright
+  #      - usr/lib/libinotifytools.so.0.4.1
+  #      - usr/lib/libinotifytools.so.0
+  #  snap:
+  #    - $wanted
+  networkmanager:
+    plugin: autotools
+    source: .
+    source-type: git
+
+    build-packages:
+      - intltool
+      - libdbus-glib-1-dev
+      - libdbus-1-dev
+      - libiw-dev
+      - libglib2.0-dev
+      - libnl-3-dev
+      - libnl-route-3-dev
+      - libnl-genl-3-dev
+      - ppp-dev
+      # -libpolkit-gobject-1-dev      // not included in 1.2 snap
+      # -libpolkit-agent-1-dev        // not included in 1.2 snap
+      # -libselinux1-dev              // not included in 1.2 snap
+      # -libaudit-dev                 // not included in 1.2 snap
+      - libgnutls28-dev
+      - uuid-dev
+      - systemd
+      - libsystemd-dev
+      - libudev-dev
+      - libgirepository1.0-dev
+      - gobject-introspection
+      - python-gi
+      # not included in 1.2 snap; min version iw available in xenial/universe
+      - libpsl-dev
+      # not included in 1.2 snap; min version iw available in xenial; use openssl instead
+      # - libcurl4-gnutls-dev
+      - libcurl4-openssl-dev
+      # build disabled in 1.2 snap:
+      # - gtk-doc-tools
+      # not included in 1.2 snap; min version iw available in xenial
+      - perl
+      # not included in 1.2 snap; min version iw available in xenial      
+      - libyaml-perl
+      - libglib2.0-doc
+      - libmm-glib-dev
+      - libndp-dev
+      - libreadline-dev
+      - libnewt-dev
+      - libteam-dev
+      - libjansson-dev
+      # - libbluetooth-dev            // 1.2 snap doesn't support bluez
+      - dbus
+      - python-dbus
+    # TODO: re-add
+    # stage-packages:
+    configflags:
+      # from 1.2 snap, TODO: still needed?
+      - --prefix=/usr
+      - --libdir=/usr/lib
+      - --disable-qt
+      - --with-dhcpcd=no
+      - --with-dhclient=no
+      - --with-dnsmasq=no
+      # TODO: why is this needed???
+      - --with-systemd-journal=no
+      # Removes dependency on libicudata which weights 25M. Also libsoup
+      # is only used to verify a domain in the DNS resolve process has a
+      # valid format and to check if a valid internet connection is available.
+      - --with-libsoup=no
+      # ======================================================
+      # from 1.10 deb:
+      - --libexecdir=/usr/lib/NetworkManager
+      - --runstatedir=/run
+      #
+      # TODO: should pppd be enabled?
+      # - --with-pppd-plugin-dir=$(PPPD_PLUGIN_DIR)
+      # -	--with-pppd=/usr/sbin/pppd
+      # TODO: what does this control?
+      # - --with-resolvconf=no
+      #
+      # TODO: The 1.2 snap doesn't use dhclient, as there were
+      # issues with confinement.
+      # - --with-dhclient=/sbin/dhclient
+      #
+      # TODO: iptables & dnsmasq are used for AP mode; not
+      # currently supported by the snap:
+      # - --with-iptables=/sbin/iptables
+      # - --with-dnsmasq=/usr/sbin/dnsmasq
+      # TODO: dnssec support?
+      # - TODO
+      # --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script: what is these used for?
+      # - --with-systemdsystemunitdir=/lib/systemd/system
+      # - --with-udev-dir=/lib/udev
+      # - --with-crypto=gnutls
+      # session tracking explicitly disabled in 1.2 snap
+      - --with-session-tracking=no
+      - --with-suspend-resume=systemd
+      - --with-modem-manager-1
+      # 1.2 snap doesn't explicitly enable Tcl client
+      # --with-nmtui
+      - --with-nmcli
+      # no need for selinux on Ubuntu
+      # --with-selinux \
+      - --with-tests
+      # TODO: what does this control?
+      # --with-libaudit
+      #
+      - --without-dhcpcanon
+      # 1.2 snap explicitly disables polkit, as it's
+      # not used on Ubuntu Core:
+      - --disable-polkit
+      - --disable-polkit-agent
+      # see above re: pppd; 1.2 snap includes pppd plugin
+      # - --enable-ppp
+      # TODO: double check what this enables (ENI plugin?)
+      # - --enable-ifupdown
+      # 1.2 snap explicitly disables:
+      - --disable-config-plugin-ibft
+      # 1.2 snap doesn't explicity enable
+      - --enable-introspection
+      # 1.2 snap doesn't ship gtk-doc, so disable
+      - --disable-gtk-doc
+      # Explicitly disable concheck:
+      - --disable-concheck
+      - --enable-teamdctl
+      - --enable-json-validation
+      # Explicitly disable BT & vala
+      - --disable-bluez5-dun
+      - --disable-vala
+      # TODO: what do these control?
+      - --disable-more-warnings
+      - --disable-modify-system
+      - --disable-ovs
+    install: |
+      # Run all tests NetworkManager ships by default
+      make check
+
+    # Filter files pulled in by stage-packages so they aren't
+    # included in the final snap. We only need them to build
+    # NetworkManager. All runtime dependencies are pulled in with
+    # the rdepends part below. The only left items specified
+    # here are the results of the network manager build.
+    filesets:
+      binaries:
+        - usr/bin/nmcli
+        - usr/lib/*/NetworkManager
+        # TODO: figure out pppd
+        #- usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+        - usr/lib/NetworkManager
+        - usr/sbin/NetworkManager
+        - usr/lib/*/libnm-*
+      configs:
+        - etc/NetworkManager/*
+      docs:
+        - usr/share/doc
+      rdepends:
+        - lib64/*
+        - lib/*/
+        - usr/lib/*
+      unwanted:
+        # We don't want anything in usr/share but the doc folder
+        # to carry all copyright information
+        - -usr/share/bash-completion
+        - -usr/share/bug
+        - -usr/share/dbus-1
+        - -usr/share/gir-1.0
+        - -usr/share/glib-2.0
+        - -usr/share/gtk-doc
+        - -usr/share/lintian
+        - -usr/share/locale
+        - -usr/share/man
+        - -usr/share/pam-configs
+        - -usr/share/polkit-1
+        - -usr/share/upstart
+
+        # We don't use dhclient so we don't need this helper
+        - -usr/lib/NetworkManager/nm-dhcp-helper
+        # Things we don't support yet and don't have to ship
+        - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
+        - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
+        - -usr/lib/NetworkManager/libnm-settings-plugin-ibft.so
+
+        # Unwanted content coming from the stage debian packages
+        - -etc/
+        # Contains many libraries which are already present in usr/lib/
+        - -lib/
+        - -usr/include/
+        - -usr/etc
+        - -usr/sbin/invoke-rc.d
+        - -usr/sbin/service
+        - -usr/sbin/update-rc.d
+        - -usr/lib/dbus-1.0/
+        - -usr/lib/tmpfiles.d/
+        - -usr/lib/*/pkgconfig
+        - -usr/lib/pkgconfig
+        - -usr/lib/gcc/
+        - -usr/lib/*/gconv/
+        - -usr/lib/girepository-1.0/
+        - -usr/lib/systemd/
+        - -usr/lib/udev/
+        - -usr/lib/*.a
+        - -usr/lib/*/*.a
+        - -usr/lib/*.la
+        - -usr/lib/*/*.la
+        - -usr/lib/*/*.o
+        - -usr/lib/*/systemd-shim
+        - -usr/lib/*/systemd-shim-cgroup-release-agent
+    prime:
+      - $binaries
+      - $configs
+      - $docs
+      - $rdepends
+      - $unwanted
+
+  
+
