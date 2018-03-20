@@ -79,7 +79,10 @@ parts:
     plugin: autotools
     source: .
     source-type: git
-
+    # TODO:
+    #   * none of the debian/patches are currently being applied
+    #   * there are build artifacts checked in, probably need to
+    #     to a manual clean of autotools generated files first...
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -165,6 +168,8 @@ parts:
       # --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script: what is these used for?
       # - --with-systemdsystemunitdir=/lib/systemd/system
       # - --with-udev-dir=/lib/udev
+      # TODO: need to research how nm 1.2 is built, and figure out if it's
+      # best for the nm 1.10 snap to also used gnutls.
       # - --with-crypto=gnutls
       # session tracking explicitly disabled in 1.2 snap
       - --with-session-tracking=no
