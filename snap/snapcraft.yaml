@@ -210,6 +210,8 @@ parts:
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
+    prepare: |
+      echo "networkmanager prepare called <patches go here>"
     install: |
       # Run all tests NetworkManager ships by default
       make check
