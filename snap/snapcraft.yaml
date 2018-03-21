@@ -135,8 +135,9 @@ parts:
       - --with-dhcpcd=no
       - --with-dhclient=no
       - --with-dnsmasq=no
-      # TODO: why is this needed???
-      - --with-systemd-journal=no
+      # from 1.2 snap, however 1.10 deb uses native journal
+      # logging by default; TODO confirm this works...
+      #- --with-systemd-journal=no
       # Removes dependency on libicudata which weights 25M. Also libsoup
       # is only used to verify a domain in the DNS resolve process has a
       # valid format and to check if a valid internet connection is available.
