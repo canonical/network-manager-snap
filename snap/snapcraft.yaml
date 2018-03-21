@@ -107,9 +107,8 @@ parts:
       - python-gi
       # not included in 1.2 snap; min version iw available in xenial/universe
       - libpsl-dev
-      # not included in 1.2 snap; TODO: fix conflict with lib4curl-openssl-dev
-      # - libcurl4-gnutls-dev
-      - libcurl4-openssl-dev
+      # not included in 1.2 snap; nm 1.10 deb uses gnutls crypto by default
+      - libcurl4-gnutls-dev
       # build disabled in 1.2 snap:
       # - gtk-doc-tools
       # not included in 1.2 snap; min version iw available in xenial
@@ -168,9 +167,8 @@ parts:
       # --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script: what is these used for?
       # - --with-systemdsystemunitdir=/lib/systemd/system
       # - --with-udev-dir=/lib/udev
-      # TODO: need to research how nm 1.2 is built, and figure out if it's
-      # best for the nm 1.10 snap to also used gnutls.
-      # - --with-crypto=gnutls
+      # Use gnutls (same as deb); note nss is NM default
+      - --with-crypto=gnutls
       # session tracking explicitly disabled in 1.2 snap
       - --with-session-tracking=no
       - --with-suspend-resume=systemd
