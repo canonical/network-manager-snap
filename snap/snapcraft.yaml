@@ -214,6 +214,7 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
+      - libc6
       - libdbus-glib-1-2
       - libidn2-0
       - libjansson4
