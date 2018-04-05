@@ -125,8 +125,6 @@ parts:
       # - libbluetooth-dev            // 1.2 snap doesn't support bluez
       - dbus
       - python-dbus
-    # TODO: re-add
-    # stage-packages:
     configflags:
       # from 1.2 snap, TODO: still needed?
       - --prefix=/usr
@@ -214,7 +212,16 @@ parts:
     install: |
       # Run all tests NetworkManager ships by default
       make check
-
+    stage-packages:
+      - libdbus-glib-1-2
+      - libidn2-0
+      - libjansson4
+      - libmm-glib0
+      - libndp0
+      - libpsl5
+      - libreadline7
+      - libteamdctl0
+      - libunistring2
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
     # NetworkManager. All runtime dependencies are pulled in with
