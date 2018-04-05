@@ -125,6 +125,7 @@ parts:
       # - libbluetooth-dev            // 1.2 snap doesn't support bluez
       - dbus
       - python-dbus
+      - xsltproc
     configflags:
       # from 1.2 snap, TODO: still needed?
       - --prefix=/usr
