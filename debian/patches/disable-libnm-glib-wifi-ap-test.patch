@@ -1,0 +1,13 @@
+Index: build/libnm-glib/tests/test-nm-client.c
+===================================================================
+--- build.orig/libnm-glib/tests/test-nm-client.c
++++ build/libnm-glib/tests/test-nm-client.c
+@@ -1133,7 +1133,7 @@ main (int argc, char **argv)
+ 	loop = g_main_loop_new (NULL, FALSE);
+ 
+ 	g_test_add_func ("/libnm-glib/device-added", test_device_added);
+-	g_test_add_func ("/libnm-glib/wifi-ap-added-removed", test_wifi_ap_added_removed);
++	/* g_test_add_func ("/libnm-glib/wifi-ap-added-removed", test_wifi_ap_added_removed); */
+ 	g_test_add_func ("/libnm-glib/wimax-nsp-added-removed", test_wimax_nsp_added_removed);
+ 	g_test_add_func ("/libnm-glib/devices-array", test_devices_array);
+ 	g_test_add_func ("/libnm-glib/client-manager-running", test_client_manager_running);
