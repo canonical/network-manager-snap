@@ -125,6 +125,7 @@ parts:
       # - libbluetooth-dev            // 1.2 snap doesn't support bluez
       - dbus
       - python-dbus
+      - quilt
       - xsltproc
     configflags:
       # from 1.2 snap, TODO: still needed?
@@ -210,6 +211,8 @@ parts:
       - --disable-ovs
     prepare: |
       echo "networkmanager prepare called <patches go here>"
+      export QUILT_PATCHES=debian/patches
+      quilt push -a
     install: |
       # Run all tests NetworkManager ships by default
       make check
