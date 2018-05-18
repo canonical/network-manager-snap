@@ -209,11 +209,13 @@ parts:
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
-    prepare: |
-      echo "networkmanager prepare called <patches go here>"
+    override-build: |
+      echo "networkmanager override-build called <patches go here>"
       export QUILT_PATCHES=debian/patches
       quilt push -a
-    install: |
+
+      snapcraftctl build
+
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
