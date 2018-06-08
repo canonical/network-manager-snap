@@ -229,6 +229,40 @@ parts:
       - libreadline7
       - libteamdctl0
       - libunistring2
+
+# stage-packages added due to snapcraft warning about
+# the following dependencies being added automatically:
+      - libblkid1
+      - libgcrypt20
+      - libgpg-error0
+      - liblzma5
+      - libmount1
+      - libnl-3-200
+      - libpcre3
+      - libselinux1
+# snapcraft produces warnings that these two snaps have
+# been automatically included in the snaps as they're
+# dependencies of network-manager. It warns that this
+# feature will be removed, and suggests adding these
+# packages to 'stage-packages', but as these snaps are
+# supposed to be provided by the core snap, this doesn't
+# seem correct. See:
+#
+# https://forum.snapcraft.io/t/preventing-dependencies-from-a-base-snap-from-being-included/5731
+#
+#     - libsystemd0
+#     - libudev1
+      - libtinfo5
+      - libuuid1
+      - zlib1g
+      - libgmp10
+      - libgnutls30
+      - libhogweed4
+      - liblz4-1
+      - libnettle6
+      - libp11-kit0
+      - libtasn1-6
+
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
     # NetworkManager. All runtime dependencies are pulled in with
