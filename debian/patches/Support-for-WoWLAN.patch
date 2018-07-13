@@ -1,0 +1,892 @@
+From: =?utf-8?q?Alfonso_S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Fri, 13 Jul 2018 11:54:30 +0200
+Subject: Support for WoWLAN
+
+This add supports for WoWLAN by backporting upstream patches:
+
+58cdc7b55 libnm-core: add wake-on-wlan configuration items
+1621c79e7 platform: add support for wake-on-wlan
+ea10016d2 devices: enable wake-on-wlan when device is enabled
+ca3bbede7 core: don't shutdown interfaces if they have wowlan enabled
+cb8003c40 cli: add support for wake-on-wlan properties
+8cba4d95d device/wifi: use _LOGD() macros in wake_on_wlan_enable()
+36e9ec055 wifi: fix check for valid NMSettingWirelessWakeOnWLan flag
+ac1302793 platform: add methods to retrieve current WoWLAN state
+c6e40215e devices: restore past WoWLAN when disconnecting wifi
+a3289400d wifi: ensure wake-on-wlan restore only acts once
+2c3a14fed platform/wifi: drop *_get_wowlan()
+---
+ clients/common/nm-meta-setting-desc.c  |  14 ++++
+ clients/common/settings-docs.c         |   1 +
+ clients/common/settings-docs.c.in      |   1 +
+ libnm-core/nm-setting-wireless.c       |  72 +++++++++++++++++
+ libnm-core/nm-setting-wireless.h       |  46 +++++++++++
+ libnm/libnm.ver                        |   2 +
+ src/devices/wifi/nm-device-wifi.c      | 102 +++++++++++++++++++++++-
+ src/nm-manager.c                       |  27 ++++---
+ src/platform/nm-linux-platform.c       |  19 ++++-
+ src/platform/nm-platform.c             |  20 +++++
+ src/platform/nm-platform.h             |   5 ++
+ src/platform/wifi/wifi-utils-nl80211.c | 139 ++++++++++++++++++++++++---------
+ src/platform/wifi/wifi-utils-private.h |   8 +-
+ src/platform/wifi/wifi-utils.c         |  28 ++++---
+ src/platform/wifi/wifi-utils.h         |   7 +-
+ 15 files changed, 425 insertions(+), 66 deletions(-)
+
+diff --git a/clients/common/nm-meta-setting-desc.c b/clients/common/nm-meta-setting-desc.c
+index 94404e9..21763a8 100644
+--- a/clients/common/nm-meta-setting-desc.c
++++ b/clients/common/nm-meta-setting-desc.c
+@@ -7271,6 +7271,20 @@ static const NMMetaPropertyInfo *const property_infos_WIRELESS[] = {
+ 			.typ_flags =                NM_META_PROPERTY_TYP_FLAG_ENUM_GET_PARSABLE_TEXT,
+ 		),
+ 	),
++	PROPERTY_INFO_WITH_DESC (NM_SETTING_WIRELESS_WAKE_ON_WLAN,
++		.property_type =                &_pt_gobject_enum,
++		.property_typ_data = DEFINE_PROPERTY_TYP_DATA (
++			PROPERTY_TYP_DATA_SUBTYPE (gobject_enum,
++				.get_gtype =            nm_setting_wireless_wake_on_wlan_get_type,
++				.value_infos =          ENUM_VALUE_INFOS (
++					{
++						.value = NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE,
++						.nick = "disabled",
++					}
++				),
++			),
++		),
++	),
+ 	NULL
+ };
+ 
+diff --git a/clients/common/settings-docs.c b/clients/common/settings-docs.c
+index bf5753c..911164a 100644
+--- a/clients/common/settings-docs.c
++++ b/clients/common/settings-docs.c
+@@ -21,6 +21,7 @@
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SEEN_BSSIDS N_("A list of BSSIDs (each BSSID formatted as a MAC address like \"00:11:22:33:44:55\") that have been detected as part of the Wi-Fi network.  NetworkManager internally tracks previously seen BSSIDs. The property is only meant for reading and reflects the BSSID list of NetworkManager. The changes you make to this property will not be preserved.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SSID N_("SSID of the Wi-Fi network. Must be specified.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_TX_POWER N_("If non-zero, directs the device to use the specified transmit power. Units are dBm.  This property is highly driver dependent and not all devices support setting a static transmit power.")
++#define DESCRIBE_DOC_NM_SETTING_WIRELESS_WAKE_ON_WLAN N_("The NMSettingWirelessWakeOnWLan options to enable. Not all devices support all options. May be any combination of NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY (0x2), NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT (0x4), NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC (0x8), NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE (0x10), NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST (0x20), NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE (0x40), NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE (0x80), NM_SETTING_WIRELESS_WAKE_ON_WLAN_TCP (0x100) or the special values NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT (0x1) (to use global settings) and NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE (0x8000) (to disable management of Wake-on-LAN in NetworkManager).")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_AUTH_ALG N_("When WEP is used (ie, key-mgmt = \"none\" or \"ieee8021x\") indicate the 802.11 authentication algorithm required by the AP here.  One of \"open\" for Open System, \"shared\" for Shared Key, or \"leap\" for Cisco LEAP.  When using Cisco LEAP (ie, key-mgmt = \"ieee8021x\" and auth-alg = \"leap\") the \"leap-username\" and \"leap-password\" properties must be specified.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_GROUP N_("A list of group/broadcast encryption algorithms which prevents connections to Wi-Fi networks that do not utilize one of the algorithms in the list.  For maximum compatibility leave this property empty.  Each list element may be one of \"wep40\", \"wep104\", \"tkip\", or \"ccmp\".")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_KEY_MGMT N_("Key management used for the connection.  One of \"none\" (WEP), \"ieee8021x\" (Dynamic WEP), \"wpa-none\" (Ad-Hoc WPA-PSK), \"wpa-psk\" (infrastructure WPA-PSK), or \"wpa-eap\" (WPA-Enterprise).  This property must be set for any Wi-Fi connection that uses security.")
+diff --git a/clients/common/settings-docs.c.in b/clients/common/settings-docs.c.in
+index bf5753c..911164a 100644
+--- a/clients/common/settings-docs.c.in
++++ b/clients/common/settings-docs.c.in
+@@ -21,6 +21,7 @@
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SEEN_BSSIDS N_("A list of BSSIDs (each BSSID formatted as a MAC address like \"00:11:22:33:44:55\") that have been detected as part of the Wi-Fi network.  NetworkManager internally tracks previously seen BSSIDs. The property is only meant for reading and reflects the BSSID list of NetworkManager. The changes you make to this property will not be preserved.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SSID N_("SSID of the Wi-Fi network. Must be specified.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_TX_POWER N_("If non-zero, directs the device to use the specified transmit power. Units are dBm.  This property is highly driver dependent and not all devices support setting a static transmit power.")
++#define DESCRIBE_DOC_NM_SETTING_WIRELESS_WAKE_ON_WLAN N_("The NMSettingWirelessWakeOnWLan options to enable. Not all devices support all options. May be any combination of NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY (0x2), NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT (0x4), NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC (0x8), NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE (0x10), NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST (0x20), NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE (0x40), NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE (0x80), NM_SETTING_WIRELESS_WAKE_ON_WLAN_TCP (0x100) or the special values NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT (0x1) (to use global settings) and NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE (0x8000) (to disable management of Wake-on-LAN in NetworkManager).")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_AUTH_ALG N_("When WEP is used (ie, key-mgmt = \"none\" or \"ieee8021x\") indicate the 802.11 authentication algorithm required by the AP here.  One of \"open\" for Open System, \"shared\" for Shared Key, or \"leap\" for Cisco LEAP.  When using Cisco LEAP (ie, key-mgmt = \"ieee8021x\" and auth-alg = \"leap\") the \"leap-username\" and \"leap-password\" properties must be specified.")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_GROUP N_("A list of group/broadcast encryption algorithms which prevents connections to Wi-Fi networks that do not utilize one of the algorithms in the list.  For maximum compatibility leave this property empty.  Each list element may be one of \"wep40\", \"wep104\", \"tkip\", or \"ccmp\".")
+ #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_KEY_MGMT N_("Key management used for the connection.  One of \"none\" (WEP), \"ieee8021x\" (Dynamic WEP), \"wpa-none\" (Ad-Hoc WPA-PSK), \"wpa-psk\" (infrastructure WPA-PSK), or \"wpa-eap\" (WPA-Enterprise).  This property must be set for any Wi-Fi connection that uses security.")
+diff --git a/libnm-core/nm-setting-wireless.c b/libnm-core/nm-setting-wireless.c
+index 0a3915b..7500c97 100644
+--- a/libnm-core/nm-setting-wireless.c
++++ b/libnm-core/nm-setting-wireless.c
+@@ -63,6 +63,7 @@ typedef struct {
+ 	gboolean hidden;
+ 	guint32 powersave;
+ 	NMSettingMacRandomization mac_address_randomization;
++	guint32 wowl;
+ } NMSettingWirelessPrivate;
+ 
+ enum {
+@@ -83,6 +84,7 @@ enum {
+ 	PROP_HIDDEN,
+ 	PROP_POWERSAVE,
+ 	PROP_MAC_ADDRESS_RANDOMIZATION,
++	PROP_WAKE_ON_WLAN,
+ 
+ 	LAST_PROP
+ };
+@@ -885,6 +887,26 @@ verify (NMSetting *setting, NMConnection *connection, GError **error)
+ 		return FALSE;
+ 	}
+ 
++	if (NM_FLAGS_ANY (priv->wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_EXCLUSIVE_FLAGS)) {
++		if (!nm_utils_is_power_of_two (priv->wowl)) {
++			g_set_error_literal (error,
++			                     NM_CONNECTION_ERROR,
++			                     NM_CONNECTION_ERROR_INVALID_PROPERTY,
++			                     _("Wake-on-WLAN mode 'default' and 'ignore' are exclusive flags"));
++			g_prefix_error (error, "%s.%s: ", NM_SETTING_WIRELESS_SETTING_NAME,
++			                NM_SETTING_WIRELESS_WAKE_ON_WLAN);
++			return FALSE;
++		}
++	} else if (NM_FLAGS_ANY (priv->wowl, ~NM_SETTING_WIRELESS_WAKE_ON_WLAN_ALL)) {
++		g_set_error_literal (error,
++		                     NM_CONNECTION_ERROR,
++		                     NM_CONNECTION_ERROR_INVALID_PROPERTY,
++		                     _("Wake-on-WLAN trying to set unknown flag"));
++		g_prefix_error (error, "%s.%s: ", NM_SETTING_WIRELESS_SETTING_NAME,
++		                NM_SETTING_WIRELESS_WAKE_ON_WLAN);
++		return FALSE;
++	}
++
+ 	/* from here on, check for NM_SETTING_VERIFY_NORMALIZABLE conditions. */
+ 
+ 	if (priv->cloned_mac_address) {
+@@ -939,6 +961,24 @@ nm_setting_wireless_get_security (NMSetting    *setting,
+ 		return NULL;
+ }
+ 
++/**
++ * nm_setting_wireless_get_wake_on_wlan:
++ * @setting: the #NMSettingWireless
++ *
++ * Returns the Wake-on-WLAN options enabled for the connection
++ *
++ * Returns: the Wake-on-WLAN options
++ *
++ * Since: 1.12
++ */
++NMSettingWirelessWakeOnWLan
++nm_setting_wireless_get_wake_on_wlan (NMSettingWireless *setting)
++{
++	g_return_val_if_fail (NM_IS_SETTING_WIRELESS (setting), NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE);
++
++	return NM_SETTING_WIRELESS_GET_PRIVATE (setting)->wowl;
++}
++
+ static void
+ clear_blacklist_item (char **item_p)
+ {
+@@ -1061,6 +1101,9 @@ set_property (GObject *object, guint prop_id,
+ 	case PROP_MAC_ADDRESS_RANDOMIZATION:
+ 		priv->mac_address_randomization = g_value_get_uint (value);
+ 		break;
++	case PROP_WAKE_ON_WLAN:
++		priv->wowl = g_value_get_uint (value);
++		break;
+ 	default:
+ 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+ 		break;
+@@ -1123,6 +1166,9 @@ get_property (GObject *object, guint prop_id,
+ 	case PROP_MAC_ADDRESS_RANDOMIZATION:
+ 		g_value_set_uint (value, nm_setting_wireless_get_mac_address_randomization (setting));
+ 		break;
++	case PROP_WAKE_ON_WLAN:
++		g_value_set_uint (value, nm_setting_wireless_get_wake_on_wlan (setting));
++		break;
+ 	default:
+ 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+ 		break;
+@@ -1633,4 +1679,30 @@ nm_setting_wireless_class_init (NMSettingWirelessClass *setting_wireless_class)
+ 	_nm_setting_class_add_dbus_only_property (setting_class, "security",
+ 	                                          G_VARIANT_TYPE_STRING,
+ 	                                          nm_setting_wireless_get_security, NULL);
++
++	/**
++	 * NMSettingWireless:wake-on-wlan:
++	 *
++	 * The #NMSettingWirelessWakeOnWLan options to enable. Not all devices support all options.
++	 * May be any combination of %NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE,
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_TCP or the special values
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT (to use global settings) and
++	 * %NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE (to disable management of Wake-on-LAN in
++	 * NetworkManager).
++	 *
++	 * Since: 1.12
++	 **/
++	g_object_class_install_property
++		(object_class, PROP_WAKE_ON_WLAN,
++		 g_param_spec_uint (NM_SETTING_WIRELESS_WAKE_ON_WLAN, "", "",
++		                    0, G_MAXUINT32, NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT,
++		                    G_PARAM_CONSTRUCT |
++		                    G_PARAM_READWRITE |
++		                    G_PARAM_STATIC_STRINGS));
+ }
+diff --git a/libnm-core/nm-setting-wireless.h b/libnm-core/nm-setting-wireless.h
+index b0ef475..4c1850f 100644
+--- a/libnm-core/nm-setting-wireless.h
++++ b/libnm-core/nm-setting-wireless.h
+@@ -41,6 +41,48 @@ G_BEGIN_DECLS
+ 
+ #define NM_SETTING_WIRELESS_SETTING_NAME "802-11-wireless"
+ 
++/**
++ * NMSettingWirelessWakeOnWLan:
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE: Wake-on-WLAN disabled
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY: Wake on any activity
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT: Wake on disconnect
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC: Wake on magic packet
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE: Wake on GTK rekey failure
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST: Wake on EAP identity request
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE: Wake on 4way hanshake
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE: Wake on rfkill release
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_ALL: Wake on all events. This does not
++ *   include the exclusive flags @NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT or
++ *   @NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE.
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT: Use the default value
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE: Don't change configured settings
++ * @NM_SETTING_WIRELESS_WAKE_ON_WLAN_EXCLUSIVE_FLAGS: Mask of flags that are
++ *   incompatible with other flags
++ *
++ * Options for #NMSettingWireless:wake-on-wlan. Note that not all options
++ * are supported by all devices.
++ *
++ * Since: 1.12
++ */
++typedef enum { /*< flags >*/
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE                 = 0, /*< skip >*/
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY                  = (1 << 1),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT           = (1 << 2),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC                = (1 << 3),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE    = (1 << 4),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST = (1 << 5),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE       = (1 << 6),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE       = (1 << 7),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_TCP                  = (1 << 8),
++	_NM_SETTING_WIRELESS_WAKE_ON_WLAN_NUM, /*< skip >*/
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_LAST                 = _NM_SETTING_WIRELESS_WAKE_ON_WLAN_NUM - 1, /*< skip >*/
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_ALL                  = ((NM_SETTING_WIRELESS_WAKE_ON_WLAN_LAST << 1) - 1) - (1 << 0 /*DEFAULT*/), /*< skip >*/
++
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT              = (1 << 0),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE               = (1 << 15),
++	NM_SETTING_WIRELESS_WAKE_ON_WLAN_EXCLUSIVE_FLAGS = NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT | NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE, /*< skip >*/
++} NMSettingWirelessWakeOnWLan;
++
+ #define NM_SETTING_WIRELESS_SSID        "ssid"
+ #define NM_SETTING_WIRELESS_MODE        "mode"
+ #define NM_SETTING_WIRELESS_BAND        "band"
+@@ -57,6 +99,7 @@ G_BEGIN_DECLS
+ #define NM_SETTING_WIRELESS_HIDDEN      "hidden"
+ #define NM_SETTING_WIRELESS_POWERSAVE   "powersave"
+ #define NM_SETTING_WIRELESS_MAC_ADDRESS_RANDOMIZATION   "mac-address-randomization"
++#define NM_SETTING_WIRELESS_WAKE_ON_WLAN "wake-on-wlan"
+ 
+ /**
+  * NM_SETTING_WIRELESS_MODE_ADHOC:
+@@ -166,6 +209,9 @@ gboolean          nm_setting_wireless_ap_security_compatible (NMSettingWireless
+                                                               NM80211ApSecurityFlags ap_rsn,
+                                                               NM80211Mode ap_mode);
+ 
++NM_AVAILABLE_IN_1_10
++NMSettingWirelessWakeOnWLan  nm_setting_wireless_get_wake_on_wlan (NMSettingWireless *setting);
++
+ G_END_DECLS
+ 
+ #endif /* __NM_SETTING_WIRELESS_H__ */
+diff --git a/libnm/libnm.ver b/libnm/libnm.ver
+index 7646a93..3376848 100644
+--- a/libnm/libnm.ver
++++ b/libnm/libnm.ver
+@@ -1276,6 +1276,8 @@ global:
+ 	nm_setting_team_remove_link_watcher_by_value;
+ 	nm_setting_team_remove_runner_tx_hash;
+ 	nm_setting_team_remove_runner_tx_hash_by_value;
++	nm_setting_wireless_get_wake_on_wlan;
++	nm_setting_wireless_wake_on_wlan_get_type;
+ 	nm_tc_action_dup;
+ 	nm_tc_action_equal;
+ 	nm_tc_action_get_attribute;
+diff --git a/src/devices/wifi/nm-device-wifi.c b/src/devices/wifi/nm-device-wifi.c
+index bf02109..e06aa32 100644
+--- a/src/devices/wifi/nm-device-wifi.c
++++ b/src/devices/wifi/nm-device-wifi.c
+@@ -119,6 +119,8 @@ typedef struct {
+ 	gint32 hw_addr_scan_expire;
+ 
+ 	guint             wps_timeout_id;
++
++	NMSettingWirelessWakeOnWLan wowlan_restore;
+ } NMDeviceWifiPrivate;
+ 
+ struct _NMDeviceWifi
+@@ -535,6 +537,22 @@ again:
+ 	nm_device_recheck_available_connections (NM_DEVICE (self));
+ }
+ 
++static gboolean
++wake_on_wlan_restore (NMDeviceWifi *self)
++{
++	NMDeviceWifiPrivate *priv = NM_DEVICE_WIFI_GET_PRIVATE (self);
++	NMSettingWirelessWakeOnWLan w;
++
++	w = priv->wowlan_restore;
++	if (w == NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE)
++		return TRUE;
++
++	priv->wowlan_restore = NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE;
++	return nm_platform_wifi_set_wake_on_wlan (NM_PLATFORM_GET,
++	                                          nm_device_get_ifindex (NM_DEVICE (self)),
++	                                          w);
++}
++
+ static void
+ deactivate (NMDevice *device)
+ {
+@@ -551,6 +569,9 @@ deactivate (NMDevice *device)
+ 
+ 	set_current_ap (self, NULL, TRUE);
+ 
++	if (!wake_on_wlan_restore (self))
++		_LOGW (LOGD_DEVICE | LOGD_WIFI, "Cannot unconfigure WoWLAN.");
++
+ 	/* Clear any critical protocol notification in the Wi-Fi stack */
+ 	nm_platform_wifi_indicate_addressing_running (nm_device_get_platform (device), ifindex, FALSE);
+ 
+@@ -2593,6 +2614,60 @@ error:
+ 
+ /*****************************************************************************/
+ 
++static gboolean
++wake_on_wlan_enable (NMDeviceWifi *self)
++{
++	NMDeviceWifiPrivate *priv = NM_DEVICE_WIFI_GET_PRIVATE (self);
++	NMSettingWirelessWakeOnWLan wowl;
++	NMSettingWireless *s_wireless;
++	gs_free char *value = NULL;
++
++	s_wireless = (NMSettingWireless *) nm_device_get_applied_setting (NM_DEVICE (self), NM_TYPE_SETTING_WIRELESS);
++	if (s_wireless) {
++		wowl = nm_setting_wireless_get_wake_on_wlan (s_wireless);
++		if (wowl != NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT)
++			goto found;
++	}
++
++	value = nm_config_data_get_connection_default (NM_CONFIG_GET_DATA,
++	                                               "wifi.wake-on-wlan",
++	                                               NM_DEVICE (self));
++
++	if (value) {
++		wowl = _nm_utils_ascii_str_to_int64 (value, 10,
++		                                     NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE,
++		                                     G_MAXINT32,
++		                                     NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT);
++
++		if (NM_FLAGS_ANY (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_EXCLUSIVE_FLAGS)) {
++			if (!nm_utils_is_power_of_two (wowl)) {
++				_LOGD (LOGD_WIFI, "invalid default value %u for wake-on-wlan: "
++				       "'default' and 'ignore' are exclusive flags", (guint) wowl);
++				wowl = NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT;
++			}
++		} else if (NM_FLAGS_ANY (wowl, ~NM_SETTING_WIRELESS_WAKE_ON_WLAN_ALL)) {
++			_LOGD (LOGD_WIFI, "invalid default value %u for wake-on-wlan", (guint) wowl);
++			wowl = NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT;
++		}
++		if (wowl != NM_SETTING_WIRELESS_WAKE_ON_WLAN_DEFAULT)
++			goto found;
++	}
++	wowl = NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE;
++
++found:
++	if (wowl == NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE) {
++		priv->wowlan_restore = wowl;
++		return TRUE;
++	}
++
++	priv->wowlan_restore = nm_platform_wifi_get_wake_on_wlan (NM_PLATFORM_GET,
++	                                                          nm_device_get_ifindex (NM_DEVICE (self)));
++
++	return nm_platform_wifi_set_wake_on_wlan (NM_PLATFORM_GET,
++	                                          nm_device_get_ifindex (NM_DEVICE (self)),
++	                                          wowl);
++}
++
+ static NMActStageReturn
+ act_stage1_prepare (NMDevice *device, NMDeviceStateReason *out_failure_reason)
+ {
+@@ -2802,6 +2877,9 @@ act_stage2_config (NMDevice *device, NMDeviceStateReason *out_failure_reason)
+ 		goto out;
+ 	}
+ 
++	if (!wake_on_wlan_enable (self))
++		_LOGW (LOGD_DEVICE | LOGD_WIFI, "Cannot configure WoWLAN.");
++
+ 	/* have secrets, or no secrets required */
+ 	if (nm_connection_get_setting_wireless_security (connection)) {
+ 		_LOGI (LOGD_DEVICE | LOGD_WIFI,
+@@ -2852,8 +2930,10 @@ act_stage2_config (NMDevice *device, NMDeviceStateReason *out_failure_reason)
+ 	ret = NM_ACT_STAGE_RETURN_POSTPONE;
+ 
+ out:
+-	if (ret == NM_ACT_STAGE_RETURN_FAILURE)
++	if (ret == NM_ACT_STAGE_RETURN_FAILURE) {
+ 		cleanup_association_attempt (self, TRUE);
++		wake_on_wlan_restore (self);
++	}
+ 
+ 	if (config) {
+ 		/* Supplicant interface object refs the config; we no longer care about
+@@ -3257,7 +3337,8 @@ can_reapply_change (NMDevice *device,
+ 		return nm_device_hash_check_invalid_keys (diffs,
+ 		                                          NM_SETTING_WIRELESS_SETTING_NAME,
+ 		                                          error,
+-		                                          NM_SETTING_WIRELESS_MTU); /* reapplied with IP config */
++		                                          NM_SETTING_WIRELESS_MTU, /* reapplied with IP config */
++		                                          NM_SETTING_WIRELESS_WAKE_ON_WLAN);
+ 	}
+ 
+ 	device_class = NM_DEVICE_CLASS (nm_device_wifi_parent_class);
+@@ -3269,6 +3350,21 @@ can_reapply_change (NMDevice *device,
+ 	                                         error);
+ }
+ 
++static void
++reapply_connection (NMDevice *device, NMConnection *con_old, NMConnection *con_new)
++{
++	NMDeviceWifi *self = NM_DEVICE_WIFI (device);
++
++	NM_DEVICE_CLASS (nm_device_wifi_parent_class)->reapply_connection (device,
++	                                                                   con_old,
++	                                                                   con_new);
++
++	_LOGD (LOGD_DEVICE, "reapplying wireless settings");
++
++	if (!wake_on_wlan_enable (self))
++		_LOGW (LOGD_DEVICE | LOGD_WIFI, "Cannot configure WoWLAN.");
++}
++
+ /*****************************************************************************/
+ 
+ static void
+@@ -3335,6 +3431,7 @@ nm_device_wifi_init (NMDeviceWifi *self)
+ 
+ 	priv->mode = NM_802_11_MODE_INFRA;
+ 	priv->aps = g_hash_table_new (nm_str_hash, g_str_equal);
++	priv->wowlan_restore = NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE;
+ }
+ 
+ static void
+@@ -3433,6 +3530,7 @@ nm_device_wifi_class_init (NMDeviceWifiClass *klass)
+ 	parent_class->deactivate_reset_hw_addr = deactivate_reset_hw_addr;
+ 	parent_class->unmanaged_on_quit = unmanaged_on_quit;
+ 	parent_class->can_reapply_change = can_reapply_change;
++	parent_class->reapply_connection = reapply_connection;
+ 
+ 	parent_class->state_changed = device_state_changed;
+ 
+diff --git a/src/nm-manager.c b/src/nm-manager.c
+index e60b6c6..fc8a97e 100644
+--- a/src/nm-manager.c
++++ b/src/nm-manager.c
+@@ -1315,6 +1315,12 @@ _parent_notify_changed (NMManager *self,
+ 	}
+ }
+ 
++static gboolean
++device_is_wake_on_lan (NMPlatform *platform, NMDevice *device)
++{
++	return nm_platform_link_get_wake_on_lan (platform, nm_device_get_ip_ifindex (device));
++}
++
+ static void
+ remove_device (NMManager *self,
+                NMDevice *device,
+@@ -1324,14 +1330,19 @@ remove_device (NMManager *self,
+ 	NMManagerPrivate *priv = NM_MANAGER_GET_PRIVATE (self);
+ 	gboolean unmanage = FALSE;
+ 
+-	_LOG2D (LOGD_DEVICE, device, "removing device (allow_unmanage %d, managed %d)",
+-	        allow_unmanage, nm_device_get_managed (device, FALSE));
++	_LOG2D (LOGD_DEVICE, device, "removing device (allow_unmanage %d, managed %d, wol %d)",
++	        allow_unmanage, nm_device_get_managed (device, FALSE),
++	        device_is_wake_on_lan (priv->platform, device));
+ 
+ 	if (allow_unmanage && nm_device_get_managed (device, FALSE)) {
+ 
+-		if (quitting)
+-			unmanage = nm_device_unmanage_on_quit (device);
+-		else {
++		if (quitting) {
++			/* Leave configured if wo(w)lan and quitting */
++			if (device_is_wake_on_lan (priv->platform, device))
++				unmanage = FALSE;
++			else
++				unmanage = nm_device_unmanage_on_quit (device);
++		} else {
+ 			/* the device is already gone. Unmanage it. */
+ 			unmanage = TRUE;
+ 		}
+@@ -4763,12 +4774,6 @@ done:
+ 	g_clear_object (&subject);
+ }
+ 
+-static gboolean
+-device_is_wake_on_lan (NMPlatform *platform, NMDevice *device)
+-{
+-	return nm_platform_link_get_wake_on_lan (platform, nm_device_get_ip_ifindex (device));
+-}
+-
+ static gboolean
+ sleep_devices_add (NMManager *self, NMDevice *device, gboolean suspending)
+ {
+diff --git a/src/platform/nm-linux-platform.c b/src/platform/nm-linux-platform.c
+index e5961c7..a061fc3 100644
+--- a/src/platform/nm-linux-platform.c
++++ b/src/platform/nm-linux-platform.c
+@@ -6119,6 +6119,21 @@ wifi_indicate_addressing_running (NMPlatform *platform, int ifindex, gboolean ru
+ 	wifi_utils_indicate_addressing_running (wifi_data, running);
+ }
+ 
++static NMSettingWirelessWakeOnWLan
++wifi_get_wake_on_wlan (NMPlatform *platform, int ifindex)
++{
++	WIFI_GET_WIFI_DATA_NETNS (wifi_data, platform, ifindex, FALSE);
++	return wifi_utils_get_wake_on_wlan (wifi_data);
++}
++
++static gboolean
++wifi_set_wake_on_wlan (NMPlatform *platform, int ifindex,
++                       NMSettingWirelessWakeOnWLan wowl)
++{
++	WIFI_GET_WIFI_DATA_NETNS (wifi_data, platform, ifindex, FALSE);
++	return wifi_utils_set_wake_on_wlan (wifi_data, wowl);
++}
++
+ /*****************************************************************************/
+ 
+ static gboolean
+@@ -6203,7 +6218,7 @@ link_get_wake_on_lan (NMPlatform *platform, int ifindex)
+ 		if (!wifi_data)
+ 			return FALSE;
+ 
+-		return wifi_utils_get_wowlan (wifi_data);
++		return wifi_utils_get_wake_on_wlan (wifi_data) != NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE;
+ 	} else
+ 		return FALSE;
+ }
+@@ -7279,6 +7294,8 @@ nm_linux_platform_class_init (NMLinuxPlatformClass *klass)
+ 	platform_class->wifi_set_powersave = wifi_set_powersave;
+ 	platform_class->wifi_find_frequency = wifi_find_frequency;
+ 	platform_class->wifi_indicate_addressing_running = wifi_indicate_addressing_running;
++	platform_class->wifi_get_wake_on_wlan = wifi_get_wake_on_wlan;
++	platform_class->wifi_set_wake_on_wlan = wifi_set_wake_on_wlan;
+ 
+ 	platform_class->mesh_get_channel = mesh_get_channel;
+ 	platform_class->mesh_set_channel = mesh_set_channel;
+diff --git a/src/platform/nm-platform.c b/src/platform/nm-platform.c
+index c7ed90e..7387a1d 100644
+--- a/src/platform/nm-platform.c
++++ b/src/platform/nm-platform.c
+@@ -2767,6 +2767,26 @@ nm_platform_wifi_indicate_addressing_running (NMPlatform *self, int ifindex, gbo
+ 	klass->wifi_indicate_addressing_running (self, ifindex, running);
+ }
+ 
++NMSettingWirelessWakeOnWLan
++nm_platform_wifi_get_wake_on_wlan (NMPlatform *self, int ifindex)
++{
++	_CHECK_SELF (self, klass, FALSE);
++
++	g_return_val_if_fail (ifindex > 0, FALSE);
++
++	return klass->wifi_get_wake_on_wlan (self, ifindex);
++}
++
++gboolean
++nm_platform_wifi_set_wake_on_wlan (NMPlatform *self, int ifindex, NMSettingWirelessWakeOnWLan wowl)
++{
++	_CHECK_SELF (self, klass, FALSE);
++
++	g_return_val_if_fail (ifindex > 0, FALSE);
++
++	return klass->wifi_set_wake_on_wlan (self, ifindex, wowl);
++}
++
+ guint32
+ nm_platform_mesh_get_channel (NMPlatform *self, int ifindex)
+ {
+diff --git a/src/platform/nm-platform.h b/src/platform/nm-platform.h
+index f6bf02b..0c167ee 100644
+--- a/src/platform/nm-platform.h
++++ b/src/platform/nm-platform.h
+@@ -32,6 +32,7 @@
+ #include "nm-core-utils.h"
+ #include "nm-setting-vlan.h"
+ #include "nm-setting-wired.h"
++#include "nm-setting-wireless.h"
+ 
+ #define NM_TYPE_PLATFORM            (nm_platform_get_type ())
+ #define NM_PLATFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), NM_TYPE_PLATFORM, NMPlatform))
+@@ -826,6 +827,8 @@ typedef struct {
+ 	void        (*wifi_set_powersave)    (NMPlatform *, int ifindex, guint32 powersave);
+ 	guint32     (*wifi_find_frequency)   (NMPlatform *, int ifindex, const guint32 *freqs);
+ 	void        (*wifi_indicate_addressing_running) (NMPlatform *, int ifindex, gboolean running);
++	NMSettingWirelessWakeOnWLan (*wifi_get_wake_on_wlan) (NMPlatform *, int ifindex);
++	gboolean    (*wifi_set_wake_on_wlan) (NMPlatform *, int ifindex, NMSettingWirelessWakeOnWLan wowl);
+ 
+ 	guint32     (*mesh_get_channel)      (NMPlatform *, int ifindex);
+ 	gboolean    (*mesh_set_channel)      (NMPlatform *, int ifindex, guint32 channel);
+@@ -1191,6 +1194,8 @@ void        nm_platform_wifi_set_mode         (NMPlatform *self, int ifindex, NM
+ void        nm_platform_wifi_set_powersave    (NMPlatform *self, int ifindex, guint32 powersave);
+ guint32     nm_platform_wifi_find_frequency   (NMPlatform *self, int ifindex, const guint32 *freqs);
+ void        nm_platform_wifi_indicate_addressing_running (NMPlatform *self, int ifindex, gboolean running);
++NMSettingWirelessWakeOnWLan nm_platform_wifi_get_wake_on_wlan (NMPlatform *self, int ifindex);
++gboolean    nm_platform_wifi_set_wake_on_wlan (NMPlatform *self, int ifindex, NMSettingWirelessWakeOnWLan wowl);
+ 
+ guint32     nm_platform_mesh_get_channel      (NMPlatform *self, int ifindex);
+ gboolean    nm_platform_mesh_set_channel      (NMPlatform *self, int ifindex, guint32 channel);
+diff --git a/src/platform/wifi/wifi-utils-nl80211.c b/src/platform/wifi/wifi-utils-nl80211.c
+index a5f25b0..3a09244 100644
+--- a/src/platform/wifi/wifi-utils-nl80211.c
++++ b/src/platform/wifi/wifi-utils-nl80211.c
+@@ -495,6 +495,103 @@ nla_put_failure:
+ 	return FALSE;
+ }
+ 
++static int
++nl80211_get_wake_on_wlan_handler (struct nl_msg *msg, void *arg)
++{
++	NMSettingWirelessWakeOnWLan *wowl = arg;
++	struct nlattr *attrs[NL80211_ATTR_MAX + 1];
++	struct nlattr *trig[NUM_NL80211_WOWLAN_TRIG];
++	struct genlmsghdr *gnlh = nlmsg_data (nlmsg_hdr (msg));
++
++	nla_parse (attrs, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
++	           genlmsg_attrlen(gnlh, 0), NULL);
++
++	if (!attrs[NL80211_ATTR_WOWLAN_TRIGGERS])
++		return NL_SKIP;
++
++	nla_parse (trig, MAX_NL80211_WOWLAN_TRIG,
++	           nla_data (attrs[NL80211_ATTR_WOWLAN_TRIGGERS]),
++	           nla_len (attrs[NL80211_ATTR_WOWLAN_TRIGGERS]),
++	           NULL);
++
++	*wowl = NM_SETTING_WIRELESS_WAKE_ON_WLAN_NONE;
++	if (trig[NL80211_WOWLAN_TRIG_ANY])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY;
++	if (trig[NL80211_WOWLAN_TRIG_DISCONNECT])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT;
++	if (trig[NL80211_WOWLAN_TRIG_MAGIC_PKT])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC;
++	if (trig[NL80211_WOWLAN_TRIG_GTK_REKEY_FAILURE])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE;
++	if (trig[NL80211_WOWLAN_TRIG_EAP_IDENT_REQUEST])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST;
++	if (trig[NL80211_WOWLAN_TRIG_4WAY_HANDSHAKE])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE;
++	if (trig[NL80211_WOWLAN_TRIG_RFKILL_RELEASE])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE;
++	if (trig[NL80211_WOWLAN_TRIG_TCP_CONNECTION])
++		*wowl |= NM_SETTING_WIRELESS_WAKE_ON_WLAN_TCP;
++
++	return NL_SKIP;
++}
++
++static NMSettingWirelessWakeOnWLan
++wifi_nl80211_get_wake_on_wlan (WifiData *data)
++{
++	WifiDataNl80211 *nl80211 = (WifiDataNl80211 *) data;
++	NMSettingWirelessWakeOnWLan wowl = NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE;
++	struct nl_msg *msg = NULL;
++
++	msg = nl80211_alloc_msg (nl80211, NL80211_CMD_GET_WOWLAN, 0);
++
++	nl80211_send_and_recv (nl80211, msg, nl80211_get_wake_on_wlan_handler, &wowl);
++
++	return wowl;
++}
++
++static gboolean
++wifi_nl80211_set_wake_on_wlan (WifiData *data, NMSettingWirelessWakeOnWLan wowl)
++{
++	WifiDataNl80211 *nl80211 = (WifiDataNl80211 *) data;
++	struct nl_msg *msg = NULL;
++	struct nlattr *triggers;
++	int err;
++
++	if (wowl == NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE)
++		return TRUE;
++
++	msg = nl80211_alloc_msg (nl80211, NL80211_CMD_SET_WOWLAN, 0);
++	if (!msg)
++		return FALSE;
++
++	triggers = nla_nest_start (msg, NL80211_ATTR_WOWLAN_TRIGGERS);
++
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_ANY))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_ANY);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_DISCONNECT))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_DISCONNECT);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_MAGIC))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_MAGIC_PKT);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_GTK_REKEY_FAILURE))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_GTK_REKEY_FAILURE);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_EAP_IDENTITY_REQUEST))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_EAP_IDENT_REQUEST);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_4WAY_HANDSHAKE))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_4WAY_HANDSHAKE);
++	if (NM_FLAGS_HAS (wowl, NM_SETTING_WIRELESS_WAKE_ON_WLAN_RFKILL_RELEASE))
++		NLA_PUT_FLAG (msg, NL80211_WOWLAN_TRIG_RFKILL_RELEASE);
++
++	nla_nest_end(msg, triggers);
++
++	err = nl80211_send_and_recv (nl80211, msg, NULL, NULL);
++
++	return err >= 0;
++
++nla_put_failure:
++	nlmsg_free (msg);
++	return FALSE;
++}
++
+ /* @divisor: pass what value @xbm should be divided by to get dBm */
+ static guint32
+ nl80211_xbm_to_percent (gint32 xbm, guint32 divisor)
+@@ -820,42 +917,6 @@ nla_put_failure:
+ }
+ #endif
+ 
+-struct nl80211_wowlan_info {
+-	gboolean enabled;
+-};
+-
+-static int
+-nl80211_wowlan_handler (struct nl_msg *msg, void *arg)
+-{
+-	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+-	struct genlmsghdr *gnlh = nlmsg_data (nlmsg_hdr (msg));
+-	struct nl80211_wowlan_info *info = arg;
+-
+-	info->enabled = FALSE;
+-
+-	if (nla_parse (tb, NL80211_ATTR_MAX, genlmsg_attrdata (gnlh, 0),
+-	               genlmsg_attrlen (gnlh, 0), NULL) < 0)
+-		return NL_SKIP;
+-
+-	if (tb[NL80211_ATTR_WOWLAN_TRIGGERS])
+-		info->enabled = TRUE;
+-
+-	return NL_SKIP;
+-}
+-
+-static gboolean
+-wifi_nl80211_get_wowlan (WifiData *data)
+-{
+-	WifiDataNl80211 *nl80211 = (WifiDataNl80211 *) data;
+-	struct nl_msg *msg;
+-	struct nl80211_wowlan_info info;
+-
+-	msg = nl80211_alloc_msg (nl80211, NL80211_CMD_GET_WOWLAN, 0);
+-	nl80211_send_and_recv (nl80211, msg, nl80211_wowlan_handler, &info);
+-
+-	return info.enabled;
+-}
+-
+ struct nl80211_device_info {
+ 	int phy;
+ 	guint32 *freqs;
+@@ -1154,8 +1215,10 @@ wifi_nl80211_init (int ifindex)
+ 	nl80211->num_freqs = device_info.num_freqs;
+ 	nl80211->parent.caps = device_info.caps;
+ 
+-	if (device_info.can_wowlan)
+-		nl80211->parent.get_wowlan = wifi_nl80211_get_wowlan;
++	if (device_info.can_wowlan) {
++		nl80211->parent.get_wake_on_wlan = wifi_nl80211_get_wake_on_wlan;
++		nl80211->parent.set_wake_on_wlan = wifi_nl80211_set_wake_on_wlan;
++	}
+ 
+ 	_LOGI (LOGD_PLATFORM | LOGD_WIFI,
+ 	       "(%s): using nl80211 for WiFi device control",
+diff --git a/src/platform/wifi/wifi-utils-private.h b/src/platform/wifi/wifi-utils-private.h
+index 11a0f06..18f6131 100644
+--- a/src/platform/wifi/wifi-utils-private.h
++++ b/src/platform/wifi/wifi-utils-private.h
+@@ -35,6 +35,12 @@ struct WifiData {
+ 	/* Set power saving mode on an interface */
+ 	gboolean (*set_powersave) (WifiData *data, guint32 powersave);
+ 
++	/* Get WakeOnWLAN configuration on an interface */
++	NMSettingWirelessWakeOnWLan (*get_wake_on_wlan) (WifiData *data);
++
++	/* Set WakeOnWLAN mode on an interface */
++	gboolean (*set_wake_on_wlan) (WifiData *data, NMSettingWirelessWakeOnWLan wowl);
++
+ 	/* Return current frequency in MHz (really associated BSS frequency) */
+ 	guint32 (*get_freq) (WifiData *data);
+ 
+@@ -53,8 +59,6 @@ struct WifiData {
+ 
+ 	void (*deinit) (WifiData *data);
+ 
+-	gboolean (*get_wowlan) (WifiData *data);
+-
+ 	/* OLPC Mesh-only functions */
+ 
+ 	guint32 (*get_mesh_channel) (WifiData *data);
+diff --git a/src/platform/wifi/wifi-utils.c b/src/platform/wifi/wifi-utils.c
+index d005212..f76bf95 100644
+--- a/src/platform/wifi/wifi-utils.c
++++ b/src/platform/wifi/wifi-utils.c
+@@ -115,6 +115,25 @@ wifi_utils_set_powersave (WifiData *data, guint32 powersave)
+ 	return data->set_powersave ? data->set_powersave (data, powersave) : TRUE;
+ }
+ 
++NMSettingWirelessWakeOnWLan
++wifi_utils_get_wake_on_wlan (WifiData *data)
++{
++	g_return_val_if_fail (data != NULL, FALSE);
++
++	return   data->get_wake_on_wlan
++	       ? data->get_wake_on_wlan (data)
++	       : NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE;
++}
++
++gboolean
++wifi_utils_set_wake_on_wlan (WifiData *data, NMSettingWirelessWakeOnWLan wowl)
++{
++	g_return_val_if_fail (data != NULL, FALSE);
++
++	return data->set_wake_on_wlan ?
++	       data->set_wake_on_wlan (data, wowl) : FALSE;
++}
++
+ guint32
+ wifi_utils_get_freq (WifiData *data)
+ {
+@@ -154,15 +173,6 @@ wifi_utils_get_qual (WifiData *data)
+ 	return data->get_qual (data);
+ }
+ 
+-gboolean
+-wifi_utils_get_wowlan (WifiData *data)
+-{
+-	g_return_val_if_fail (data != NULL, 0);
+-	if (!data->get_wowlan)
+-		return FALSE;
+-	return data->get_wowlan (data);
+-}
+-
+ void
+ wifi_utils_deinit (WifiData *data)
+ {
+diff --git a/src/platform/wifi/wifi-utils.h b/src/platform/wifi/wifi-utils.h
+index 705717b..776b3c9 100644
+--- a/src/platform/wifi/wifi-utils.h
++++ b/src/platform/wifi/wifi-utils.h
+@@ -25,6 +25,7 @@
+ #include <net/ethernet.h>
+ 
+ #include "nm-dbus-interface.h"
++#include "nm-setting-wireless.h"
+ 
+ typedef struct WifiData WifiData;
+ 
+@@ -61,11 +62,11 @@ int wifi_utils_get_qual (WifiData *data);
+ /* Tells the driver DHCP or SLAAC is running */
+ gboolean wifi_utils_indicate_addressing_running (WifiData *data, gboolean running);
+ 
+-/* Returns true if WoWLAN is enabled on device */
+-gboolean wifi_utils_get_wowlan (WifiData *data);
+-
+ gboolean wifi_utils_set_powersave (WifiData *data, guint32 powersave);
+ 
++NMSettingWirelessWakeOnWLan wifi_utils_get_wake_on_wlan (WifiData *data);
++
++gboolean wifi_utils_set_wake_on_wlan (WifiData *data, NMSettingWirelessWakeOnWLan wowl);
+ 
+ /* OLPC Mesh-only functions */
+ guint32 wifi_utils_get_mesh_channel (WifiData *data);
