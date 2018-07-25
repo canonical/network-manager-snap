@@ -79,7 +79,6 @@ parts:
   networkmanager:
     plugin: autotools
     source: .
-    source-type: git
     # TODO:
     #   * none of the debian/patches are currently being applied
     #   * there are build artifacts checked in, probably need to
@@ -214,7 +213,6 @@ parts:
       echo "networkmanager override-build called <patches go here>"
       export QUILT_PATCHES=debian/patches
       quilt push -a
-
       snapcraftctl build
 
       # Run all tests NetworkManager ships by default
