@@ -51,17 +51,17 @@ parts:
   #  source: hooks
   #  organize:
   #    configure: meta/hooks/configure
-  #networkmanager-common:
-  #  plugin: copy
-  #  files:
-  #    bin/networkmanager: bin/networkmanager
-  #    bin/dhcp-lease-mover: bin/dhcp-lease-mover
-  #    bin/nmcli-internal: bin/nmcli-internal
-  #    bin/snap-config.sh: bin/snap-config.sh
-  #    bin/snap-prop.sh: bin/snap-prop.sh
-  #    conf/NetworkManager.conf: etc/NetworkManager/NetworkManager.conf
-  #    data/copyright: usr/share/doc/network-manager/copyright
-  #    startup-hooks/99-wol-by-default.sh: startup-hooks/99-wol-by-default.sh
+  networkmanager-common:
+    plugin: dump
+    source: snap-common
+  #
+  # TODO: investigate whether this HACK is still needed. The script
+  # dhcp-lease-mover relies on inotifywait to determine if any DHCP
+  # DHCP leases stored under $SNAP_DATA are created or modified, and
+  # if so, it triggers a copy of the files to /run/NetworkManager/dhcp.
+  # This is done so that subiquity's hardware probing tool (probert) is
+  # able to detect active leases.
+  #
   #inotify-tools:
   #  plugin: nil
   #  stage-packages:

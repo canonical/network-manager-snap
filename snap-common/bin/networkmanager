@@ -1,0 +1,110 @@
+#!/bin/sh
+# Copyright (C) 2016-2018 Canonical Ltd
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+set -ex
+
+# Create all necessary directories we need at runtime
+mkdir -p "$SNAP_DATA"/conf/system-connections
+mkdir -p "$SNAP_DATA"/run
+
+# Create DHCP lease directory
+mkdir -p /run/NetworkManager/dhcp
+
+# A directory where users can place any additional configuration
+# files for NetworkManager
+mkdir -p "$SNAP_DATA"/conf.d
+
+# State dir where network-manager stores several things like the
+# secret key used for IPv6
+mkdir -p "$SNAP_DATA"/state
+mkdir -p "$SNAP_DATA"/state/dhcp
+
+# Apply current snapctl settings
+. "$SNAP"/bin/snap-config.sh
+apply_snap_config
+
+# Select which config we're going to use. We offer our users
+# to provide their own configuration file in $SNAP_DATA but
+# will fallback if no one exists to the default one we ship
+# in $SNAP
+NM_CONF=$SNAP/etc/NetworkManager/NetworkManager.conf
+if [ -e "$SNAP_DATA"/NetworkManager.conf ]; then
+    NM_CONF=$SNAP_DATA/NetworkManager.conf
+fi
+
+# If netplan is not configured to render by default to NetworkManager
+# configuration files we disable management of any ethernet device
+# as this will clash with any configuration netplan puts in place
+# for networkd.
+if [ ! -e "/etc/netplan/00-default-nm-renderer.yaml" ] ; then
+    if [ ! -e "$SNAP_DATA"/conf.d/disable-ethernet.conf ] ; then
+        echo "[keyfile]" > "$SNAP_DATA"/conf.d/disable-ethernet.conf
+        echo "unmanaged-devices+=interface-name:eth*,interface-name:enx*" >> \
+             "$SNAP_DATA"/conf.d/disable-ethernet.conf
+    fi
+else
+    # Enable ethernet management again if the user switched the netplan
+    # backend and wants us to manage ethernet
+    if [ -e "$SNAP_DATA"/conf.d/disable-ethernet.conf ] ; then
+        rm -f "$SNAP_DATA"/conf.d/disable-ethernet.conf
+    fi
+
+    # If the snapd configuration for netplan is not present or empty
+    # we will start managing all ethernet ports automatically. Because
+    # of that we need to remove any previously created configuration files
+    # which prevented us from doing that.
+    if [ ! -e /etc/netplan/00-snapd-config.yaml ] ||
+           [ -s /etc/netplan/00-snapd-config.yaml ] ; then
+        rm -f "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
+    else
+        if [ ! -e "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf ] ; then
+            # If we're running as the only network management service
+            # and are configured via netplan on first boot then we should
+            # not try to auto configure ethernet ports as this is up to
+            # netplan and will be the same for networkd.
+            echo "[main]" > "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
+            echo "no-auto-default=interface-name:eth*,interface-name:enx*" >> \
+                 "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
+        fi
+    fi
+fi
+
+# HACK: Until we've fixed probert to look in $SNAP_DATA/state/dhcp or
+# somewhere else for our lease files we use inotifywatch to monitor
+# our lease files and copy all over when something has changed. This
+# background process gets stopped when our systemd service unit gets
+# stopped.
+"$SNAP"/bin/dhcp-lease-mover &
+
+# Identify if we are in debug mode or not
+LOG_LEVEL=INFO
+if [ -f "$SNAP_DATA"/.debug_enabled ]; then
+    LOG_LEVEL=DEBUG
+fi
+
+# Run available startup hooks to have a point to store custom
+# logic outside of this script. More of the things from above
+# should be moved into these.
+for hook in "$SNAP"/startup-hooks/* ; do
+    [ -x "$hook" ] && /bin/sh -x "$hook"
+done
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/NetworkManager
+
+exec "$SNAP"/usr/sbin/NetworkManager \
+    --config-dir="$SNAP_DATA"/conf.d/ \
+    --config="$NM_CONF" \
+    --log-level="$LOG_LEVEL" \
+    --no-daemon

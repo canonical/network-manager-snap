@@ -1,0 +1,26 @@
+#!/bin/sh
+set -x
+
+lease_path=$SNAP_DATA/state/dhcp
+public_lease_path=/run/NetworkManager/dhcp/
+
+if [ ! -e $public_lease_path ] ; then
+    mkdir -p $public_lease_path
+fi
+
+if [ ! -e $lease_path ] ; then
+    mkdir -p $lease_path
+fi
+
+# Copy all leases when we start to make sure we're in sync
+rm -f $public_lease_path/*
+cp $lease_path/* $public_lease_path
+
+# Now we wait until a lease changes, gets added or removed and when
+# that happened we simply just move all leases files into the public
+# location.
+while $SNAP/usr/bin/inotifywait -e create,modify,delete,move $lease_path ; do
+    sleep 1
+    rm -f $public_lease_path/*
+    cp $lease_path/* $public_lease_path
+done
