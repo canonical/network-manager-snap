@@ -79,10 +79,6 @@ parts:
   networkmanager:
     plugin: autotools
     source: .
-    # TODO:
-    #   * none of the debian/patches are currently being applied
-    #   * there are build artifacts checked in, probably need to
-    #     to a manual clean of autotools generated files first...
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -93,10 +89,6 @@ parts:
       - libnl-route-3-dev
       - libnl-genl-3-dev
       - ppp-dev
-      # -libpolkit-gobject-1-dev      // not included in 1.2 snap
-      # -libpolkit-agent-1-dev        // not included in 1.2 snap
-      # -libselinux1-dev              // not included in 1.2 snap
-      # -libaudit-dev                 // not included in 1.2 snap
       - libgnutls28-dev
       - uuid-dev
       - systemd
@@ -105,15 +97,9 @@ parts:
       - libgirepository1.0-dev
       - gobject-introspection
       - python-gi
-      # not included in 1.2 snap; min version iw available in xenial/universe
       - libpsl-dev
-      # not included in 1.2 snap; nm 1.10 deb uses gnutls crypto by default
       - libcurl4-gnutls-dev
-      # build disabled in 1.2 snap:
-      # - gtk-doc-tools
-      # not included in 1.2 snap; min version iw available in xenial
       - perl
-      # not included in 1.2 snap; min version iw available in xenial
       - libyaml-perl
       - libglib2.0-doc
       - libmm-glib-dev
@@ -122,90 +108,53 @@ parts:
       - libnewt-dev
       - libteam-dev
       - libjansson-dev
-      # - libbluetooth-dev            // 1.2 snap doesn't support bluez
       - dbus
       - python-dbus
       - quilt
       - xsltproc
     configflags:
-      # from 1.2 snap, TODO: still needed?
       - --prefix=/usr
       - --libdir=/usr/lib
       - --disable-qt
+      # dhcp handled by systemd client
       - --with-dhcpcd=no
       - --with-dhclient=no
       - --with-dnsmasq=no
-      # from 1.2 snap, however 1.10 deb uses native journal
-      # logging by default; TODO confirm this works...
-      #- --with-systemd-journal=no
-      # Removes dependency on libicudata which weights 25M. Also libsoup
-      # is only used to verify a domain in the DNS resolve process has a
-      # valid format and to check if a valid internet connection is available.
-      - --with-libsoup=no
-      # ======================================================
+      - --with-systemd-journal=yes
       # from 1.10 deb:
       - --libexecdir=/usr/lib/NetworkManager
-      # TODO: autotools plugin bug?  The plugin hands this as an
-      # arg to ./configure, however its not a recognized arg.
-      # - --runstatedir=/run
-      #
-      # TODO: should pppd be enabled?
-      # - --with-pppd-plugin-dir=$(PPPD_PLUGIN_DIR)
-      # -	--with-pppd=/usr/sbin/pppd
-      # TODO: what does this control?
-      # - --with-resolvconf=no
-      #
-      # TODO: The 1.2 snap doesn't use dhclient, as there were
-      # issues with confinement.
-      # - --with-dhclient=/sbin/dhclient
+      - --with-pppd=/usr/sbin/pppd
+      - --with-resolvconf=no
       #
       # TODO: iptables & dnsmasq are used for AP mode; not
       # currently supported by the snap:
       # - --with-iptables=/sbin/iptables
       # - --with-dnsmasq=/usr/sbin/dnsmasq
-      # TODO: dnssec support?
-      # - TODO
-      # --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script: what is these used for?
-      # - --with-systemdsystemunitdir=/lib/systemd/system
-      # - --with-udev-dir=/lib/udev
-      # Use gnutls (same as deb); note nss is NM default
+      - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
+      - --with-systemdsystemunitdir=/lib/systemd/system
+      - --with-udev-dir=/lib/udev
       - --with-crypto=gnutls
-      # session tracking explicitly disabled in 1.2 snap
+      # Explicitly disable session tracking, as it's not applicable on Ubuntu Core
       - --with-session-tracking=no
       - --with-suspend-resume=systemd
       - --with-modem-manager-1
-      # 1.2 snap doesn't explicitly enable Tcl client
       - --with-nmtui=no
       - --with-nmcli=yes
-      # no need for selinux on Ubuntu
-      # --with-selinux \
+      - --with-selinux=no
       - --with-tests
-      # TODO: what does this control?
-      # --with-libaudit
-      #
+      - --with-libaudit=no
       - --without-dhcpcanon
-      # 1.2 snap explicitly disables polkit, as it's
-      # not used on Ubuntu Core:
+      # Explicitly disable polkit, as it's not applicable on Ubuntu Core
       - --disable-polkit
       - --disable-polkit-agent
-      # see above re: pppd; 1.2 snap includes pppd plugin
-      # - --enable-ppp
-      # TODO: double check what this enables (ENI plugin?)
-      # - --enable-ifupdown
-      # 1.2 snap explicitly disables:
+      - --enable-ppp
+      - --enable-ifupdown
       - --disable-config-plugin-ibft
-      # 1.2 snap doesn't explicity enable
       - --enable-introspection
-      # 1.2 snap doesn't ship gtk-doc, so disable
       - --disable-gtk-doc
-      # Explicitly disable concheck:
-      - --disable-concheck
+      - --enable-concheck
       - --enable-teamdctl
       - --enable-json-validation
-      # Explicitly disable BT & vala
-      - --disable-bluez5-dun
-      - --disable-vala
-      # TODO: what do these control?
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
@@ -305,7 +254,6 @@ parts:
         # Things we don't support yet and don't have to ship
         - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
         - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
-        - -usr/lib/NetworkManager/libnm-settings-plugin-ibft.so
 
         # Unwanted content coming from the stage debian packages
         - -etc/
