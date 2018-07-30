@@ -79,12 +79,13 @@ parts:
   networkmanager:
     plugin: autotools
     source: .
+    build-attributes: [no-system-libraries]
     build-packages:
       - intltool
       - libdbus-glib-1-dev
       - libdbus-1-dev
-      - libiw-dev
       - libglib2.0-dev
+      - libiw-dev
       - libnl-3-dev
       - libnl-route-3-dev
       - libnl-genl-3-dev
@@ -167,19 +168,33 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
-      - libc6
+      - libasn1-8-heimdal
       - libdbus-glib-1-2
+      - libcurl3-gnutls
+      - libgssapi3-heimdal
+      - libgssapi-krb5-2
+      - libhcrypto4-heimdal
+      - libheimbase1-heimdal
+      - libheimntlm0-heimdal
+      - libhx509-5-heimdal
       - libidn2-0
       - libjansson4
+      - libkeyutils1
+      - libkrb5-3
+      - libkrb5-26-heimdal
+      - libkrb5support0
+      - libk5crypto3
+      - libldap-2.4-2
       - libmm-glib0
+      - libnghttp2-14
+      - libroken18-heimdal
       - libndp0
       - libpsl5
       - libreadline7
+      - librtmp1
+      - libsasl2-2
       - libteamdctl0
       - libunistring2
-
-# stage-packages added due to snapcraft warning about
-# the following dependencies being added automatically:
       - libblkid1
       - libgcrypt20
       - libgpg-error0
@@ -188,18 +203,6 @@ parts:
       - libnl-3-200
       - libpcre3
       - libselinux1
-# snapcraft produces warnings that these two snaps have
-# been automatically included in the snaps as they're
-# dependencies of network-manager. It warns that this
-# feature will be removed, and suggests adding these
-# packages to 'stage-packages', but as these snaps are
-# supposed to be provided by the core snap, this doesn't
-# seem correct. See:
-#
-# https://forum.snapcraft.io/t/preventing-dependencies-from-a-base-snap-from-being-included/5731
-#
-#     - libsystemd0
-#     - libudev1
       - libtinfo5
       - libuuid1
       - zlib1g
@@ -210,6 +213,7 @@ parts:
       - libnettle6
       - libp11-kit0
       - libtasn1-6
+      - libwind0-heimdal
 
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
