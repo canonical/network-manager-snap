@@ -139,7 +139,7 @@ parts:
       - --with-session-tracking=no
       - --with-suspend-resume=systemd
       - --with-modem-manager-1
-      - --with-nmtui=no
+      - --with-nmtui=yes
       - --with-nmcli=yes
       - --with-selinux=no
       - --with-tests
