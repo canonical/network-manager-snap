@@ -165,6 +165,9 @@ parts:
       echo "networkmanager override-build called <patches go here>"
       export QUILT_PATCHES=debian/patches
       quilt push -a
+
+      # remove configure to trigger autotools
+      rm ./configure
       snapcraftctl build
 
       # Run all tests NetworkManager ships by default
