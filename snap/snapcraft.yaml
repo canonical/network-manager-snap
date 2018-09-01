@@ -27,8 +27,9 @@ plugs:
 hooks:
   configure:
     plugs:
-      - nmcli
-      - network-setup-control
+      # network is needed to avoid some denials when using snapctl
+      - network
+      - network-setup-observe
 apps:
   nmcli:
     command: usr/bin/nmcli
@@ -38,15 +39,6 @@ apps:
     daemon: simple
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control]
-    # FIXME: This will create currently a symlink inside /snap/bin
-    # which points nowhere as the service isn't exposed as application
-    # for the user. Instead snapd needs to gain support to handle
-    # aliases for services differently by adding the Alias= option
-    # within the systemd unit file instead for example. Until this
-    # is implemented we keep the alias disabled.
-    #
-    # aliases: [NetworkManager]
-
 parts:
   hooks:
     plugin: dump
@@ -173,6 +165,7 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
+      - iputils-arping
       - libasn1-8-heimdal
       - libdbus-glib-1-2
       - libcurl3-gnutls
@@ -227,73 +220,29 @@ parts:
     # here are the results of the network manager build.
     filesets:
       binaries:
+        - usr/bin/arping
         - usr/bin/nmcli
         - usr/lib/*/NetworkManager
-        # TODO: figure out pppd
-        #- usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+        - usr/lib/pppd/2.4.5/nm-pppd-plugin.so
         - usr/lib/NetworkManager
         - usr/sbin/NetworkManager
-        - usr/lib/*/libnm-*
       configs:
         - etc/NetworkManager/*
       docs:
-        - usr/share/doc
-      rdepends:
-        - lib64/*
-        - lib/*/
-        - usr/lib/*
+        - usr/share/doc/*/copyright
       unwanted:
-        # We don't want anything in usr/share but the doc folder
-        # to carry all copyright information
-        - -usr/share/bash-completion
-        - -usr/share/bug
-        - -usr/share/dbus-1
-        - -usr/share/gir-1.0
-        - -usr/share/glib-2.0
-        - -usr/share/gtk-doc
-        - -usr/share/lintian
-        - -usr/share/locale
-        - -usr/share/man
-        - -usr/share/pam-configs
-        - -usr/share/polkit-1
-        - -usr/share/upstart
-
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
         # Things we don't support yet and don't have to ship
         - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
         - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
 
-        # Unwanted content coming from the stage debian packages
-        - -etc/
-        # Contains many libraries which are already present in usr/lib/
-        - -lib/
-        - -usr/include/
-        - -usr/etc
-        - -usr/sbin/invoke-rc.d
-        - -usr/sbin/service
-        - -usr/sbin/update-rc.d
-        - -usr/lib/dbus-1.0/
-        - -usr/lib/tmpfiles.d/
-        - -usr/lib/*/pkgconfig
+        # Some additional build artifacts we do not need
         - -usr/lib/pkgconfig
-        - -usr/lib/gcc/
-        - -usr/lib/*/gconv/
-        - -usr/lib/girepository-1.0/
-        - -usr/lib/systemd/
-        - -usr/lib/udev/
-        - -usr/lib/*.a
-        - -usr/lib/*/*.a
-        - -usr/lib/*.la
-        - -usr/lib/*/*.la
-        - -usr/lib/*/*.o
-        - -usr/lib/*/systemd-shim
-        - -usr/lib/*/systemd-shim-cgroup-release-agent
     prime:
       - $binaries
       - $configs
       - $docs
-      - $rdepends
       - $unwanted
 
   
