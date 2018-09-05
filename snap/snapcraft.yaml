@@ -201,7 +201,6 @@ parts:
       - libnl-3-200
       - libpcre3
       - libselinux1
-      - libtinfo5
       - libuuid1
       - zlib1g
       - libgmp10
@@ -230,6 +229,32 @@ parts:
         - etc/NetworkManager/*
       docs:
         - usr/share/doc/*/copyright
+      libs:
+        - usr/lib/libnm*
+        - usr/lib/*/libasn1*
+        - usr/lib/*/libcurl-gnutls*
+        - usr/lib/*/libdbus-glib*
+        - usr/lib/*/libgssapi*
+        - -usr/lib/*/libgssapi_krb5*
+        - usr/lib/*/libhcrypto*
+        - usr/lib/*/libheimbase*
+        - usr/lib/*/libheimntlm*
+        - usr/lib/*/libhx509*
+        # required for teamdctl
+        - usr/lib/*/libjansson*
+        - usr/lib/*/libkrb5*26*
+        - usr/lib/*/liblber-2.4*
+        - usr/lib/*/libldap_r-2.4*
+        - usr/lib/*/liblzma*
+        - usr/lib/*/libmm-glib*
+        - usr/lib/*/libndp*
+        - usr/lib/*/libnghttp2*
+        - usr/lib/*/libpsl*
+        - usr/lib/*/libroken*
+        - usr/lib/*/librtmp*
+        - usr/lib/*/libsasl2*
+        - usr/lib/*/libteamdctl*
+        - usr/lib/*/libwind*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
@@ -243,6 +268,7 @@ parts:
       - $binaries
       - $configs
       - $docs
+      - $libs
       - $unwanted
 
   
