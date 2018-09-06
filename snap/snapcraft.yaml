@@ -11,7 +11,7 @@ description: |
   VPN serivces.
   Please find the source code at: https://code.launchpad.net/~network-manager/network-manager/+git/ubuntu/+ref/snap-1.10
 base: core18
-confinement: strict
+confinement: devmode
 grade: stable
 
 slots:
