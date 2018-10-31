@@ -149,6 +149,28 @@ _switch_debug_enable() {
     fi
 }
 
+# Enable/disable connectivity check
+# $1: uri
+# $2: interval
+# $3: response
+_switch_connectivity_check() {
+    path=$SNAP_DATA/conf.d/connectivity.conf
+    if [ -z "$1" ]; then
+        rm -f "$path"
+        return
+    fi
+
+    content=$(printf "[connectivity]\nuri=%s" "$1")
+    if [ -n "$2" ]; then
+        content=$(printf "%s\ninterval=%s" "$content" "$2")
+    fi
+    if [ -n "$3" ]; then
+        content=$(printf "%s\nresponse=%s" "$content" "$3")
+    fi
+
+    _replace_file_if_diff "$path" "$content"
+}
+
 . "$SNAP"/bin/snap-prop.sh
 
 apply_snap_config() {
@@ -156,4 +178,7 @@ apply_snap_config() {
     _switch_wifi_wake_on_wlan "$(get_wifi_wake_on_wlan)" "$(get_wifi_wake_on_password)"
     _switch_ethernet "$(get_ethernet_enable)"
     _switch_debug_enable "$(get_debug_enable)"
+    _switch_connectivity_check "$(get_property connectivity.uri)" \
+                               "$(get_property connectivity.interval)" \
+                               "$(get_property connectivity.response)"
 }

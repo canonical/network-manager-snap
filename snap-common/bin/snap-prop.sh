@@ -16,6 +16,12 @@
 
 # Getters for snap properties. They write the current value to stdout.
 
+# Generic one, that sets no defaults
+# $1: property name
+get_property() {
+    snapctl get "$1"
+}
+
 get_wifi_powersave() {
     value=$(snapctl get wifi.powersave) || true
     if [ -z "$value" ]; then
