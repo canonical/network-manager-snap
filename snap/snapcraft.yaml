@@ -119,6 +119,8 @@ parts:
       - python-dbus
       - quilt
       - xsltproc
+      - iptables
+      - gtk-doc-tools
     configflags:
       - --prefix=/usr
       - --libdir=/usr/lib
