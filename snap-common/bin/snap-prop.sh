@@ -17,7 +17,7 @@
 # Getters for snap properties. They write the current value to stdout.
 
 get_wifi_powersave() {
-    value=$(snapctl get wifi.powersave)
+    value=$(snapctl get wifi.powersave) || true
     if [ -z "$value" ]; then
         value=disabled
     fi
@@ -25,7 +25,7 @@ get_wifi_powersave() {
 }
 
 get_wifi_wake_on_wlan() {
-    value=$(snapctl get wifi.wake-on-wlan)
+    value=$(snapctl get wifi.wake-on-wlan) || true
     if [ -z "$value" ]; then
         value=disabled
     fi
@@ -33,11 +33,11 @@ get_wifi_wake_on_wlan() {
 }
 
 get_wifi_wake_on_password() {
-    snapctl get wifi.wake-on-wlan-password
+    snapctl get wifi.wake-on-wlan-password || true
 }
 
 get_ethernet_enable() {
-    value=$(snapctl get ethernet.enable)
+    value=$(snapctl get ethernet.enable) || true
     if [ -z "$value" ]; then
         # If this file was already present, assume NM is wanted to handle
         # ethernet in the device. Ideally this should be handled by setting
@@ -52,7 +52,7 @@ get_ethernet_enable() {
 }
 
 get_debug_enable() {
-    value=$(snapctl get debug.enable)
+    value=$(snapctl get debug.enable) || true
     if [ -z "$value" ]; then
         value=false
     fi
