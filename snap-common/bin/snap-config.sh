@@ -22,7 +22,7 @@
 _replace_file_if_diff() {
     old_content=
     if [ -e "$1" ]; then
-        old_content=$(cat "$1")
+        old_content=$(cat "$1") || true
     fi
     if [ "$2" != "$old_content" ]; then
         echo "Replacing $1"
@@ -45,7 +45,7 @@ _switch_wifi_powersave() {
             ;;
         *)
             echo "WARNING: invalid value '$1' supplied for wifi.powersave configuration option"
-            exit 1
+            return
             ;;
     esac
     _replace_file_if_diff "$path" "$content"
@@ -90,8 +90,8 @@ _switch_wifi_wake_on_wlan() {
             value=256
             ;;
         *)
-            echo "ERROR: Invalid value provided for wifi.wake-on-wlan"
-            exit 1
+            echo "WARNING: Invalid value provided for wifi.wake-on-wlan"
+            return
             ;;
     esac
     password=$2
@@ -124,8 +124,8 @@ _switch_ethernet() {
             rm -f "$path"
             ;;
         *)
-            echo "ERROR: Invalid value provided for ethernet"
-            exit 1
+            echo "WARNING: Invalid value provided for ethernet"
+            return
     esac
 }
 
