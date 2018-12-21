@@ -52,11 +52,6 @@ apps:
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe]
 parts:
-  hooks:
-    plugin: dump
-    source: hooks
-    organize:
-      configure: meta/hooks/configure
   networkmanager-common:
     plugin: dump
     source: snap-common
