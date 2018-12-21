@@ -44,6 +44,15 @@ if [ -e "$SNAP_DATA"/NetworkManager.conf ]; then
     NM_CONF=$SNAP_DATA/NetworkManager.conf
 fi
 
+# Use right DNS settings depending on UC series
+. "$SNAP"/bin/utils.sh
+dns_conf_file="$SNAP_DATA"/conf.d/10-dns.conf
+if [ "$(get_target_system)" = "16" ]; then
+    printf "[main]\ndns=default\nrc-manager=resolvconf\n" > "$dns_conf_file"
+else
+    printf "[main]\ndns=systemd-resolved\n" > "$dns_conf_file"
+fi
+
 # If netplan is not configured to render by default to NetworkManager
 # configuration files we disable management of any ethernet device
 # as this will clash with any configuration netplan puts in place
