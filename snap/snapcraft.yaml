@@ -80,7 +80,6 @@ parts:
   networkmanager:
     plugin: autotools
     source: .
-    build-attributes: [no-system-libraries]
     build-packages:
       - intltool
       - libdbus-glib-1-dev
