@@ -47,7 +47,7 @@ fi
 # Use right DNS settings depending on UC series
 . "$SNAP"/bin/utils.sh
 dns_conf_file="$SNAP_DATA"/conf.d/10-dns.conf
-if [ "$(get_target_system)" = "16" ]; then
+if [ "$(get_series_major_version)" = "16" ]; then
     printf "[main]\ndns=default\nrc-manager=resolvconf\n" > "$dns_conf_file"
 else
     printf "[main]\ndns=systemd-resolved\n" > "$dns_conf_file"
