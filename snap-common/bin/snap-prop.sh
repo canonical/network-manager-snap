@@ -42,21 +42,6 @@ get_wifi_wake_on_password() {
     snapctl get wifi.wake-on-wlan-password || true
 }
 
-get_ethernet_enable() {
-    value=$(snapctl get ethernet.enable) || true
-    if [ -z "$value" ]; then
-        # If this file was already present, assume NM is wanted to handle
-        # ethernet in the device. Ideally this should be handled by setting
-        # NM's ethernet.enable property in the gadget snap though.
-        if [ -e /etc/netplan/00-default-nm-renderer.yaml ]; then
-            value=true
-        else
-            value=false
-        fi
-    fi
-    echo "$value"
-}
-
 get_debug_enable() {
     value=$(snapctl get debug.enable) || true
     if [ -z "$value" ]; then

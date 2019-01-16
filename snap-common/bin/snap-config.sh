@@ -111,24 +111,6 @@ _switch_wifi_wake_on_wlan() {
     _replace_file_if_diff "$path" "$content"
 }
 
-# Change netplan renderer to NM
-# $1: true/false literal string
-_switch_ethernet() {
-    path=/etc/netplan/00-default-nm-renderer.yaml
-    case "$1" in
-        true)
-            content=$(printf "network:\n  renderer: NetworkManager")
-            _replace_file_if_diff "$path" "$content"
-            ;;
-        false)
-            rm -f "$path"
-            ;;
-        *)
-            echo "WARNING: Invalid value provided for ethernet"
-            return
-    esac
-}
-
 # Enable debug mode
 # $1: true/false literal string
 _switch_debug_enable() {
@@ -176,7 +158,6 @@ _switch_connectivity_check() {
 apply_snap_config() {
     _switch_wifi_powersave "$(get_wifi_powersave)"
     _switch_wifi_wake_on_wlan "$(get_wifi_wake_on_wlan)" "$(get_wifi_wake_on_password)"
-    _switch_ethernet "$(get_ethernet_enable)"
     _switch_debug_enable "$(get_debug_enable)"
     _switch_connectivity_check "$(get_property connectivity.uri)" \
                                "$(get_property connectivity.interval)" \

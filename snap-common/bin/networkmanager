@@ -53,43 +53,6 @@ else
     printf "[main]\ndns=systemd-resolved\n" > "$dns_conf_file"
 fi
 
-# If netplan is not configured to render by default to NetworkManager
-# configuration files we disable management of any ethernet device
-# as this will clash with any configuration netplan puts in place
-# for networkd.
-if [ ! -e "/etc/netplan/00-default-nm-renderer.yaml" ] ; then
-    if [ ! -e "$SNAP_DATA"/conf.d/disable-ethernet.conf ] ; then
-        echo "[keyfile]" > "$SNAP_DATA"/conf.d/disable-ethernet.conf
-        echo "unmanaged-devices+=interface-name:eth*,interface-name:enx*" >> \
-             "$SNAP_DATA"/conf.d/disable-ethernet.conf
-    fi
-else
-    # Enable ethernet management again if the user switched the netplan
-    # backend and wants us to manage ethernet
-    if [ -e "$SNAP_DATA"/conf.d/disable-ethernet.conf ] ; then
-        rm -f "$SNAP_DATA"/conf.d/disable-ethernet.conf
-    fi
-
-    # If the snapd configuration for netplan is not present or empty
-    # we will start managing all ethernet ports automatically. Because
-    # of that we need to remove any previously created configuration files
-    # which prevented us from doing that.
-    if [ ! -e /etc/netplan/00-snapd-config.yaml ] ||
-           [ -s /etc/netplan/00-snapd-config.yaml ] ; then
-        rm -f "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
-    else
-        if [ ! -e "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf ] ; then
-            # If we're running as the only network management service
-            # and are configured via netplan on first boot then we should
-            # not try to auto configure ethernet ports as this is up to
-            # netplan and will be the same for networkd.
-            echo "[main]" > "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
-            echo "no-auto-default=interface-name:eth*,interface-name:enx*" >> \
-                 "$SNAP_DATA"/conf.d/no-auto-default-ethernet.conf
-        fi
-    fi
-fi
-
 # HACK: Until we've fixed probert to look in $SNAP_DATA/state/dhcp or
 # somewhere else for our lease files we use inotifywatch to monitor
 # our lease files and copy all over when something has changed. This
