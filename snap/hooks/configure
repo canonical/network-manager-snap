@@ -26,7 +26,6 @@ _create_props_content() {
     printf "wifi_powersave=%s\n" "$wifi_powersave"
     printf "wifi_wake_on_wlan=%s\n" "$wifi_wake_on_wlan"
     printf "wifi_wake_on_password=%s\n" "$wifi_wake_on_password"
-    printf "ethernet_enable=%s\n" "$ethernet_enable"
     printf "debug_enable=%s\n" "$debug_enable"
     printf "connectivity_uri=%s\n" "$connectivity_uri"
     printf "connectivity_interval=%s\n" "$connectivity_interval"
@@ -36,7 +35,6 @@ _create_props_content() {
 wifi_powersave=$(get_wifi_powersave)
 wifi_wake_on_wlan=$(get_wifi_wake_on_wlan)
 wifi_wake_on_password=$(get_wifi_wake_on_password)
-ethernet_enable=$(get_ethernet_enable)
 debug_enable=$(get_debug_enable)
 connectivity_uri=$(get_property "connectivity.uri")
 connectivity_interval=$(get_property "connectivity.interval")
@@ -46,7 +44,6 @@ connectivity_response=$(get_property "connectivity.response")
 snapctl set wifi.powersave="$wifi_powersave"
 snapctl set wifi.wake-on-wlan="$wifi_wake_on_wlan"
 snapctl set wifi.wake-on-wlan-password="$wifi_wake_on_password"
-snapctl set ethernet.enable="$ethernet_enable"
 snapctl set debug.enable="$debug_enable"
 snapctl set connectivity.uri="$connectivity_uri"
 snapctl set connectivity.interval="$connectivity_interval"
