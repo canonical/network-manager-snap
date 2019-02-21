@@ -153,6 +153,21 @@ _switch_connectivity_check() {
     _replace_file_if_diff "$path" "$content"
 }
 
+# Set/unset NM as default netplan renderer
+# $1: true/false
+_switch_defaultrenderer() {
+    path=/etc/netplan/00-default-nm-renderer.yaml
+    if [ "$1" = true ] || [ "$1" = yes ]; then
+        if [ ! -f "$path" ]; then
+            printf "network:\n  renderer: NetworkManager\n" > "$path"
+            # TODO When implemented by snapd, call netplan apply
+        fi
+    elif [ -f "$path" ]; then
+        rm -f "$path"
+        # TODO When implemented by snapd, call netplan apply
+    fi
+}
+
 . "$SNAP"/bin/snap-prop.sh
 
 apply_snap_config() {
@@ -162,4 +177,5 @@ apply_snap_config() {
     _switch_connectivity_check "$(get_property connectivity.uri)" \
                                "$(get_property connectivity.interval)" \
                                "$(get_property connectivity.response)"
+    _switch_defaultrenderer "$(get_defaultrenderer)"
 }

@@ -49,3 +49,11 @@ get_debug_enable() {
     fi
     echo "$value"
 }
+
+get_defaultrenderer() {
+    value=$(snapctl get defaultrenderer) || true
+    if [ -z "$value" ]; then
+        value=true
+    fi
+    echo "$value"
+}
