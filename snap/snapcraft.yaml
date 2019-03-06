@@ -161,6 +161,8 @@ parts:
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
+      # Set explicitly CFLAGS until lp: #1791946 is solved
+      - CFLAGS=-O2 -g
     override-build: |
       echo "networkmanager override-build called <patches go here>"
       export QUILT_PATCHES=debian/patches
