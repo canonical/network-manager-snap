@@ -5,9 +5,9 @@ execute: |
     # home which is outside of the home directory of our current user.
     snap install --devmode documentation-builder
 
-    outdir=$PROJECT_PATH/docs/build
+    outdir=$PROJECT_PATH/docs/snap/build
 
-    cd $PROJECT_PATH/docs
+    cd $PROJECT_PATH/docs/snap
     /snap/bin/documentation-builder --output-path $outdir
 
     # Ensure we have some files in the output directory
