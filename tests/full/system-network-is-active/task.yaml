@@ -1,0 +1,9 @@
+summary: Ethernet network should be managed by NetworkManager
+
+execute: |
+    . $TESTSLIB/utilities.sh
+    # Verify NetworManager handles ethernet and marks it as connected
+    test -e /etc/netplan/00-default-nm-renderer.yaml
+    wait_for_network_manager
+    /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
+    networkctl status eth0 | grep unmanaged

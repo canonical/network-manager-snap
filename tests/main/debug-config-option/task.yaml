@@ -1,0 +1,19 @@
+summary: Test network-manager snap debug configuration
+
+execute: |
+    . $TESTSLIB/utilities.sh
+
+    test "$(snap get network-manager debug.enable)" = "false"
+    ! journalctl --no-pager -u snap.network-manager.networkmanager.service | MATCH "<debug>"
+
+    snap set network-manager debug.enable=true
+    test "$(snap get network-manager debug.enable)" = "true"
+    # NM will create the file after being re-started by the hook, wait a bit
+    repeat_until_done "test -e /var/snap/network-manager/current/.debug_enabled" 5
+    network-manager.nmcli g log | MATCH "^DEBUG"
+
+    snap set network-manager debug.enable=false
+    test "$(snap get network-manager debug.enable)" = "false"
+    # NM will create the file after being re-started by the hook, wait a bit
+    repeat_until_done "test ! -e /var/snap/network-manager/current/.debug_enabled" 5
+    network-manager.nmcli g log | MATCH "^INFO"

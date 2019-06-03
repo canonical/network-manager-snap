@@ -1,0 +1,10 @@
+summary: Verify that netplan configuration files are immutable
+
+execute: |
+    # Ensure we're using a configuration generated from netplan
+    test -e /etc/netplan/00-snapd-config.yaml
+    test -e /run/NetworkManager/system-connections/netplan-eth0
+
+    /snap/bin/network-manager.nmcli c | MATCH 'netplan.eth0.*eth0'
+    # Try to change the DNS server used on this connection
+    test ! `/snap/bin/network-manager.nmcli c modify netplan-eth0 ipv4.dns 8.8.8.8`

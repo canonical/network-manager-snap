@@ -1,0 +1,14 @@
+summary: Test connection to a secured WiFi AP
+
+environment:
+    WIFI_SSID: Ubuntu
+    WIFI_PASSPHRASE: Test1234
+
+execute: |
+    . $TESTSLIB/utilities.sh
+
+    create_ap "$WIFI_SSID" "$WIFI_PASSPHRASE"
+
+    # Connect to the AP and ensure the connection was established
+    /snap/bin/network-manager.nmcli d wifi connect $WIFI_SSID password $WIFI_PASSPHRASE
+    /snap/bin/network-manager.nmcli d | grep 'wlan1.*connected'

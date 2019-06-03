@@ -1,0 +1,10 @@
+summary: When no specific configuration is in place NM manages ethernet
+
+execute: |
+    . $TESTSLIB/utilities.sh
+    # Whenever we can call netplan from the NM snap, the following line won't
+    # be needed
+    systemctl restart systemd-networkd
+    networkctl | grep 'eth0.*unmanaged'
+    wait_for_network_manager
+    /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'

@@ -1,0 +1,11 @@
+summary: Verify the NetworkManager snap is allowed to modify the iptables firewall configuration
+
+execute: |
+    # Running a simple command in the runtime environment of our service
+    # binary will tell us if we're allowed to execute the iptables binary
+    # from the core snap or not.
+    snap run --shell network-manager.networkmanager <<EOF
+    set -ex
+    export LD_LIBRARY_PATH=/snap/network-manager/current/lib:/snap/network-manager/current/usr/lib:/snap/network-manager/current/lib/$(arch)-linux-gnu:/snap/network-manager/current/usr/lib/$(arch)-linux-gnu:/snap/network-manager/current/usr/lib/NetworkManager
+    /snap/network-manager/current/sbin/iptables -L
+    EOF

@@ -1,0 +1,77 @@
+summary: Verify WiFi WoWLAN can be enabled via a snap config option
+
+environment:
+    WIFI_WOWL_CONF_PATH: /var/snap/network-manager/current/conf.d/wifi-wowlan.conf
+
+execute: |
+    . $TESTSLIB/utilities.sh
+
+    # The mac80211_hwsim driver does not support WoWLAN so we can't
+    # check this reliable on the hardware level and will only check
+    # in the following that the correct configuration for
+    # NetworkManager itself is written out.
+
+    test `snap get network-manager wifi.wake-on-wlan` = disabled
+    grep "^wifi.wake-on-wlan=0$" $WIFI_WOWL_CONF_PATH
+
+    test "`snap get network-manager wifi.wake-on-wlan-password`" = ""
+    grep -v "^wifi.wake-on-wlan-password=.*$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan-password=Test1234
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan-password=Test1234$" $WIFI_WOWL_CONF_PATH
+    # Setting the password alone should keep the actual WoWLAN value
+    # still unset so that NetworkManager uses its default.
+    grep -v "^wifi.wake-on-wlan=.*$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=magic
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=8$" $WIFI_WOWL_CONF_PATH
+    grep "^wifi.wake-on-wlan-password=Test1234$" $WIFI_WOWL_CONF_PATH
+
+    # Test all other possible keys for the wifi.wake-on-wlan option
+    snap set network-manager wifi.wake-on-wlan=disabled
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=0$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=any
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=2$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=disconnect
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=4$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=magic
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=8$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=gtk-rekey-failure
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=16$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=eap-identity-request
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=32$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=4way-handshake
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=64$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=rfkill-release
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=128$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=tcp
+    wait_for_network_manager
+    grep "^wifi.wake-on-wlan=256$" $WIFI_WOWL_CONF_PATH
+
+    # Not setting any concrete value should remove the configuration
+    snap set network-manager wifi.wake-on-wlan-password=
+    wait_for_network_manager
+    grep -v "^wifi.wake-on-wlan-password=.*$" $WIFI_WOWL_CONF_PATH
+
+    snap set network-manager wifi.wake-on-wlan=
+    wait_for_network_manager
+    grep -v "^wifi.wake-on-wlan=.*$" $WIFI_WOWL_CONF_PATH
+    grep -v "^wifi.wake-on-wlan-password=.*$" $WIFI_WOWL_CONF_PATH

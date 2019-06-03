@@ -1,0 +1,70 @@
+summary: Test IPv6 address assignment via router advertisements
+
+restore: |
+    # Ensure that the created virtual network interfaces are removed
+    # in any case when we're done
+    if [ -e /sys/class/net/veth0 ] ; then
+        ip link delete veth0
+    fi
+
+execute: |
+    . $TESTSLIB/utilities.sh
+
+    # Ensure that we have IPv6 support enabled in the kernel
+    test -e /proc/net/if_inet6
+
+    snap install --devmode se-test-tools
+    snap connect se-test-tools:home core
+    snap connect se-test-tools:network-control core
+
+    # Create virtual ethernet interface pair
+    sudo ip link add dev veth0 type veth peer name veth1
+
+    # As the virtual ethernet devices don't get IPv6 setup
+    # correctly by default we have to do this
+    sudo sysctl -w net.ipv6.conf.veth0.disable_ipv6=0
+    sudo sysctl -w net.ipv6.conf.veth1.disable_ipv6=0
+    veth0_lla=$(mac_to_ipv6 `cat /sys/class/net/veth0/address`)
+    veth1_lla=$(mac_to_ipv6 `cat /sys/class/net/veth1/address`)
+
+    # The radvd daemon will send out router advertisements on veth1
+    # so that we can receive them on veth0 end
+    cat <<-EOF > /home/test/radvd.conf
+    interface veth1 {
+        AdvSendAdvert on;
+        prefix 2001:db8:1:2::/64 {};
+    };
+    EOF
+
+    # To ensure that nobody touches veth1 we tell NetworkManager
+    # explicitly to do that.
+    /snap/bin/network-manager.nmcli d set veth1 managed no
+
+    # Assign our link-local addresses
+    if ! ip addr show dev veth0 | grep 'inet6.*scope link.*' ; then
+        sudo ip addr add dev veth0 scope link $veth0_lla
+    fi
+    if ! ip addr show dev veth1 | grep 'inet6.*scope link.*' ; then
+        sudo ip addr add dev veth1 scope link $veth1_lla
+    fi
+
+    # This will get our router advertisement daemon started and we
+    # now configure NetworkManager
+    sudo se-test-tools.radvd -C /home/test/radvd.conf -n -d 5 -m stderr -p /home/test/radvd.pid &
+
+    # Give things a bit more time to settle
+    sleep 10
+    ip addr show dev veth0
+
+    # At this point veth0 should have now a global IPv6 address
+    # assigned via router advertisements
+    ip addr show dev veth0 | grep 'inet6 2001:db8:1:2:.*/64 scope global'
+    # but veth1 should not have any
+    ip addr show dev veth1 | grep -v 'inet6.*scope global'
+
+    # NetworkManager should report the same addresses for IPv6
+    /snap/bin/network-manager.nmcli d show veth0 | grep 'GENERAL.STATE.*connected'
+    /snap/bin/network-manager.nmcli d show veth0 | grep 'IP6.ADDRESS.*2001:db8:1:2.*/64'
+
+    # Stop the radvd daemon
+    kill -TERM `cat /home/test/radvd.pid`
