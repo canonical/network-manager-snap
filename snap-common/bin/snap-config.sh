@@ -119,15 +119,9 @@ _switch_debug_enable() {
     # We create/remove the file for future executions and also change
     # the logging level of the running daemon.
     if [ "$1" = "true" ]; then
-        if [ ! -f "$DEBUG_FILE" ]; then
-            touch "$DEBUG_FILE"
-            "$SNAP"/bin/nmcli-internal g log level DEBUG
-        fi
+        touch "$DEBUG_FILE"
     else
-        if [ -f "$DEBUG_FILE" ]; then
-            rm -f "$DEBUG_FILE"
-            "$SNAP"/bin/nmcli-internal g log level INFO
-        fi
+        rm -f "$DEBUG_FILE"
     fi
 }
 
