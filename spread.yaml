@@ -1,0 +1,85 @@
+#
+# Copyright (C) 2015, 2016 Canonical Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 3 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+project: network-manager
+
+environment:
+    PROJECT_PATH: /home/network-manager
+    TESTSLIB: $PROJECT_PATH/tests/lib
+    SNAP_NAME: network-manager
+    # Allow the host to pass the channel to use for the test run
+    SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
+
+backends:
+    qemu:
+        systems:
+            - ubuntu-core-16:
+                username: test
+                password: test
+
+# Put this somewhere where we have read-write access
+path: /home/network-manager
+
+exclude:
+  - .git
+
+prepare: |
+  . $TESTSLIB/prepare-all.sh
+
+prepare-each: |
+  # Cleanup logs so we can just dump what has happened in the debug-each
+  # step below after a test case ran.
+  journalctl --rotate
+  sleep .1
+  journalctl --vacuum-time=1ms
+  dmesg -c > /dev/null
+
+debug-each: |
+  journalctl
+  dmesg | grep DENIED || true
+
+# Default is 15 min but we use a higher one here as we build the entire
+# network-manager snap inside the global prepare step so we need quite
+# some time. Once we can reuse artifacts from other builds we can change
+# this back to the default.
+kill-timeout: 30m
+
+suites:
+    tests/main/:
+        summary: Full-system tests for NetworkManager without ethernet support
+        systems:
+            - ubuntu-core-16
+        prepare: |
+            . $TESTSLIB/prepare.sh
+        restore-each: |
+            . $TESTSLIB/restore-each.sh
+    tests/full/:
+        summary: Full-system tests for NetworkManager being the only network management service
+        systems:
+            - ubuntu-core-16
+        prepare: |
+            . $TESTSLIB/utilities.sh
+            stop_after_first_reboot
+            switch_netplan_to_network_manager
+            . $TESTSLIB/prepare.sh
+            REBOOT
+        restore-each: |
+            . $TESTSLIB/restore-each.sh
+        restore: |
+            . $TESTSLIB/utilities.sh
+            stop_after_first_reboot
+            switch_netplan_to_networkd
+            REBOOT
