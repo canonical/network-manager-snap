@@ -123,15 +123,15 @@ parts:
       - --with-dhcpcd=no
       - --with-dhclient=no
       - --with-dnsmasq=no
+      - --with-iptables=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/iptables
       - --with-systemd-journal=yes
       # from 1.10 deb:
       - --libexecdir=/usr/lib/NetworkManager
       - --with-pppd=/usr/sbin/pppd
       - --with-resolvconf=no
       #
-      # TODO: iptables & dnsmasq are used for AP mode; not
+      # TODO: dnsmasq is used for AP mode; not
       # currently supported by the snap:
-      # - --with-iptables=/sbin/iptables
       # - --with-dnsmasq=/usr/sbin/dnsmasq
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
@@ -175,6 +175,7 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
+      - iptables
       - iputils-arping
       - libasn1-8-heimdal
       - libdbus-glib-1-2
@@ -231,6 +232,7 @@ parts:
     # here are the results of the network manager build.
     filesets:
       binaries:
+        - sbin/*tables*
         - usr/bin/arping
         - usr/bin/nmcli
         - usr/bin/nmtui
@@ -258,6 +260,8 @@ parts:
         - usr/lib/*/libheimbase*
         - usr/lib/*/libheimntlm*
         - usr/lib/*/libhx509*
+        - usr/lib/*/libip4tc*
+        - usr/lib/*/libip6tc*
         # required for teamdctl
         - usr/lib/*/libjansson*
         - usr/lib/*/libkrb5*26*
@@ -273,6 +277,7 @@ parts:
         - usr/lib/*/libsasl2*
         - usr/lib/*/libteamdctl*
         - usr/lib/*/libwind*
+        - usr/lib/*/libxtables*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
