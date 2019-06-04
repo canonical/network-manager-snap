@@ -58,7 +58,8 @@ restore_and_update_tests_extras() {
 # hidden directory which is re-used since then.
 
 # Find snap to use in the tests
-snaps=$(find . -maxdepth 1 -type f -name 'network-manager_*snap')
+snaps=$(find . -maxdepth 1 -type f -name \
+             "network-manager_*_$(dpkg-architecture -q DEB_HOST_ARCH).snap")
 while read -r snap_file; do
     if [ -n "$snap" ]; then
         printf "More than one snap revision in the folder\n"
