@@ -127,8 +127,8 @@ parts:
       - --with-systemd-journal=yes
       # from 1.10 deb:
       - --libexecdir=/usr/lib/NetworkManager
-      - --with-pppd=/usr/sbin/pppd
-      - --with-resolvconf=no
+      - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
+      - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
       #
       # TODO: dnsmasq is used for AP mode; not
       # currently supported by the snap:
@@ -224,6 +224,7 @@ parts:
       - libslang2
       - libtasn1-6
       - libwind0-heimdal
+      - ppp
 
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
@@ -239,6 +240,7 @@ parts:
         - usr/bin/nmtui-connect
         - usr/bin/nmtui-edit
         - usr/bin/nmtui-hostname
+        - usr/sbin/pppd
         - usr/lib/*/NetworkManager
         - usr/lib/pppd/2.4.5/nm-pppd-plugin.so
         - usr/lib/NetworkManager
@@ -271,6 +273,7 @@ parts:
         - usr/lib/*/libmm-glib*
         - usr/lib/*/libndp*
         - usr/lib/*/libnghttp2*
+        - usr/lib/*/libpcap*
         - usr/lib/*/libpsl*
         - usr/lib/*/libroken*
         - usr/lib/*/librtmp*
@@ -294,5 +297,6 @@ parts:
       - $libs
       - $unwanted
 
-  
-
+  resolvconf:
+    plugin: dump
+    source: snap-resolvconf
