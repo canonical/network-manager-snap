@@ -151,6 +151,11 @@ _switch_connectivity_check() {
 # $1: true/false
 _switch_defaultrenderer() {
     path=/etc/netplan/00-default-nm-renderer.yaml
+
+    # Remove related configuration file from older NM snap versions.
+    # We let netplan do whatever is needed.
+    rm -f "$SNAP_DATA"/conf.d/disable-ethernet.conf
+
     if [ "$1" = true ] || [ "$1" = yes ]; then
         if [ ! -f "$path" ]; then
             printf "network:\n  renderer: NetworkManager\n" > "$path"
