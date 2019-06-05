@@ -1,0 +1,60 @@
+summary: Verify that wake-on-lan is enabled by default for all ethernet connections
+
+execute: |
+    . $TESTSLIB/utilities.sh
+    nmcli=/snap/bin/network-manager.nmcli
+    case "$SPREAD_REBOOT" in
+        0)
+            # For correct timing if the device has just booted
+            wait_for_network_manager
+
+            # The config file needs to be present and have the correct default set
+            test -e /var/snap/network-manager/current/conf.d/enable-wol.conf
+            cat /var/snap/network-manager/current/conf.d/enable-wol.conf | grep '802-3-ethernet.wake-on-lan=64'
+
+            # Precondition is a existing network connection
+            $nmcli d | grep 'eth0.*connected'
+
+            # The netplan configuration file has WoL disabled by default as
+            # the default one the core snap provides does not explicitly
+            # enable WoL.
+            connection=$($nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
+            $nmcli -m multiline -f connection.id c show $connection | grep 'netplan-eth0'
+            $nmcli -m multiline -f connection.type c show $connection | grep '802-3-ethernet'
+            $nmcli -m multiline -f 802-3-ethernet.wake-on-lan c show $connection |
+                grep '^802-3-ethernet.wake-on-lan: *--$'
+
+            # Now prepare for the next boot where we will run without a netplan
+            # config to get eth0 correctly configured.
+            rm /etc/netplan/00-snapd-config.yaml
+            REBOOT
+            ;;
+        1)
+            # For correct timing if the device has just booted
+            wait_for_network_manager
+
+            # Precondition is a existing network connection
+            $nmcli d | grep 'eth0.*connected'
+
+            # Connection should have the default wake-on-lan setting
+            connection=$($nmcli -m multiline -f UUID c show | awk '{print$2;exit}')
+            $nmcli -m multiline -f connection.type c show $connection | grep '802-3-ethernet'
+            # wake-on-lan should be set to respect the global defaults here
+            $nmcli -m multiline -f 802-3-ethernet.wake-on-lan c show $connection | grep 'default'
+
+            # We can sadly only verify that the value was correctly applied when
+            # we're running the tests on a real device. QEMU doesn't support setting
+            # the WoL value of the ethernet network device.
+            if [ -z "`cat /proc/cpuinfo | grep QEMU`" ] ; then
+                # Get the tools snap to have the ethtool tool available
+                snap install --devmode --edge se-test-tools
+                snap connect se-test-tools:network core
+                snap connect se-test-tools:network-bind core
+                snap connect se-test-tools:network-control core
+
+                # See `man ethtool` for details; 'g' means 'wakeup when magic packet comes in'
+                # and is the default behavior we want.
+                /snap/bin/se-test-tools.ethtool eth0 | grep 'Wake-up: g'
+            fi
+            ;;
+    esac

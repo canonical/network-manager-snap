@@ -1,0 +1,47 @@
+summary: Verify correct DNS setup
+
+execute: |
+    . $TESTSLIB/utilities.sh
+    case $SPREAD_REBOOT in
+        0)
+            # For correct timing if the device has just booted
+            wait_for_network_manager
+
+            # Precondition is a existing network connection
+            /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
+
+            # We get a default nameserver from the gateway
+            if [ "$SPREAD_BACKEND" = "qemu" ] ; then
+                cat /etc/resolv.conf | grep 'nameserver 10.0.2.3'
+            fi
+
+            # Ensure we can resolve a hostname correctly; must give a
+            # valid IP address
+            address=`python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))'  2> /dev/null || echo "invalid"`
+            [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+
+            # Now lets switch to a system where we have a configuration
+            # for ethernet we can change
+            rm /etc/netplan/00-snapd-config.yaml
+            REBOOT
+            ;;
+        1)
+            /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
+            /snap/bin/network-manager.nmcli d | grep -v netplan
+
+            connection=$(/snap/bin/network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
+            /snap/bin/network-manager.nmcli c modify $connection ipv4.dns 8.8.8.8
+            # We need to bring up the connection again here to get the DNS
+            # server really applied to the system.
+            /snap/bin/network-manager.nmcli c up $connection
+
+            # Give system a moment to settle
+            sleep 1
+
+            grep 'nameserver 8.8.8.8' /etc/resolv.conf
+            address=`python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))'  2> /dev/null || echo "invalid"`
+            [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            ;;
+        *)
+            ;;
+    esac

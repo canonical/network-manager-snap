@@ -1,0 +1,41 @@
+summary: Verify ethernet is auto-connected when no default netplan configuration exists
+
+prepare: |
+    cp /etc/netplan/00-snapd-config.yaml /etc/netplan/00-snapd-config.yaml.orig
+
+restore: |
+    mv /etc/netplan/00-snapd-config.yaml.orig /etc/netplan/00-snapd-config.yaml
+
+execute: |
+    . $TESTSLIB/utilities.sh
+    case "$SPREAD_REBOOT" in
+        0)
+            # Remove all configuration files from netplan to get a system
+            # without generated configuration files from netplan
+            if [ -e /usr/lib/snapd/generate-network-conf ] ; then
+                echo "" > /etc/netplan/00-snapd-config.yaml
+            else
+                rm /etc/netplan/00-snapd-config.yaml
+            fi
+            REBOOT
+            ;;
+        1)
+            # We should be automatically connected now and not via a configuration
+            # generated from netplan
+            wait_for_network_manager
+            /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
+            networkctl status eth0 | grep unmanaged
+            /snap/bin/network-manager.nmcli c show --active | grep eth0 | grep -v netplan
+
+            # We should only have a single active configuration
+            test `/snap/bin/network-manager.nmcli -m multiline -f UUID c show --active | wc -l` -eq 1
+
+            # Verify that we can modify the automatically created connection
+            connection=$(/snap/bin/network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
+            /snap/bin/network-manager.nmcli c modify $connection 802-3-ethernet.wake-on-lan magic
+            wol_value=$(/snap/bin/network-manager.nmcli -f 802-3-ethernet.wake-on-lan c show $connection | xargs | cut -d':' -f 2)
+            test "$wol_value" = " magic"
+            ;;
+        *)
+            ;;
+    esac
