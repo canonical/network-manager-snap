@@ -125,8 +125,7 @@ parts:
       - --with-dnsmasq=no
       - --with-iptables=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/iptables
       - --with-systemd-journal=yes
-      # from 1.10 deb:
-      - --libexecdir=/usr/lib/NetworkManager
+      - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
       - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
       #

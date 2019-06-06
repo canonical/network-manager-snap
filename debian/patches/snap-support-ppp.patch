@@ -1,0 +1,134 @@
+Index: build/src/ppp/nm-ppp-manager-call.c
+===================================================================
+--- build.orig/src/ppp/nm-ppp-manager-call.c
++++ build/src/ppp/nm-ppp-manager-call.c
+@@ -30,7 +30,7 @@
+ #include "nm-core-utils.h"
+ #include "nm-ppp-plugin-api.h"
+ 
+-#define PPP_PLUGIN_PATH NMPLUGINDIR "/libnm-ppp-plugin.so"
++#define PPP_PLUGIN_PATH "libnm-ppp-plugin.so"
+ 
+ /*****************************************************************************/
+ 
+@@ -39,42 +39,45 @@ static NMPPPOps *ppp_ops = NULL;
+ NMPPPManager *
+ nm_ppp_manager_create (const char *iface, GError **error)
+ {
+-	NMPPPManager *ret;
++	NMPPPManager *ret = NULL;
+ 	GModule *plugin;
+ 	GError *error_local = NULL;
+ 	NMPPPOps *ops;
+ 	struct stat st;
+ 	int errsv;
++	char *libnm_ppp_path;
++
++	libnm_ppp_path = g_strdup_printf ("%s/%s", nm_utils_get_plugin_dir (), PPP_PLUGIN_PATH);
+ 
+ 	if (G_UNLIKELY (!ppp_ops)) {
+-		if (stat (PPP_PLUGIN_PATH, &st) != 0) {
++		if (stat (libnm_ppp_path, &st) != 0) {
+ 			errsv = errno;
+-			g_set_error_literal (error,
+-			                     NM_MANAGER_ERROR, NM_MANAGER_ERROR_MISSING_PLUGIN,
+-			                     "the PPP plugin " PPP_PLUGIN_PATH " is not installed");
+-			return NULL;
++			g_set_error (error,
++						 NM_MANAGER_ERROR, NM_MANAGER_ERROR_MISSING_PLUGIN,
++						 "the PPP plugin %s is not installed", libnm_ppp_path);
++			goto end;
+ 		}
+ 
+-		if (!nm_utils_validate_plugin (PPP_PLUGIN_PATH, &st, &error_local)) {
++		if (!nm_utils_validate_plugin (libnm_ppp_path, &st, &error_local)) {
+ 			g_set_error (error, NM_MANAGER_ERROR, NM_MANAGER_ERROR_MISSING_PLUGIN,
+-			             "could not load the PPP plugin " PPP_PLUGIN_PATH ": %s",
+-			             error_local->message);
++			             "could not load the PPP plugin %s: %s",
++			             libnm_ppp_path, error_local->message);
+ 			g_clear_error (&error_local);
+-			return NULL;
++			goto end;
+ 		}
+ 
+-		plugin = g_module_open (PPP_PLUGIN_PATH, G_MODULE_BIND_LOCAL);
++		plugin = g_module_open (libnm_ppp_path, G_MODULE_BIND_LOCAL);
+ 		if (!plugin) {
+ 			g_set_error (error, NM_MANAGER_ERROR, NM_MANAGER_ERROR_MISSING_PLUGIN,
+-			             "could not load the PPP plugin " PPP_PLUGIN_PATH ": %s",
+-			             g_module_error ());
+-			return NULL;
++			             "could not load the PPP plugin %s: %s",
++			             libnm_ppp_path, g_module_error ());
++			goto end;
+ 		}
+ 
+ 		if (!g_module_symbol (plugin, "ppp_ops", (gpointer) &ops)) {
+ 			g_set_error (error, NM_MANAGER_ERROR, NM_MANAGER_ERROR_MISSING_PLUGIN,
+ 			             "error loading the PPP plugin: %s", g_module_error ());
+-			return NULL;
++			goto end;
+ 		}
+ 
+ 		/* after loading glib types from the plugin, we cannot unload the library anymore.
+@@ -90,11 +93,14 @@ nm_ppp_manager_create (const char *iface
+ 
+ 		ppp_ops = ops;
+ 
+-		nm_log_info (LOGD_CORE | LOGD_PPP, "loaded PPP plugin " PPP_PLUGIN_PATH);
++		nm_log_info (LOGD_CORE | LOGD_PPP, "loaded PPP plugin %s", libnm_ppp_path);
+ 	}
+ 
+ 	ret = ppp_ops->create (iface);
+ 	g_return_val_if_fail (ret, NULL);
++
++end:
++	g_free (libnm_ppp_path);
+ 	return ret;
+ }
+ 
+Index: build/src/nm-core-utils.c
+===================================================================
+--- build.orig/src/nm-core-utils.c
++++ build/src/nm-core-utils.c
+@@ -1171,10 +1171,38 @@ const char *const NM_PATHS_DEFAULT[] = {
+ 	NULL,
+ };
+ 
++const char *const *
++utils_get_search_paths(void)
++{
++	static char **paths;
++
++	const char *snap_path;
++
++	if (paths)
++		return (const char *const *) paths;
++
++	snap_path = getenv("SNAP");
++	if (snap_path) {
++		unsigned np, i;
++
++		np = g_strv_length((char **) NM_PATHS_DEFAULT);
++		paths = malloc(sizeof(char *)*(np*2 + 1));
++		for (i = 0; i < np; ++i) {
++			paths[i] = g_strdup_printf("%s%s", snap_path, NM_PATHS_DEFAULT[i]);
++			paths[np + i] = g_strdup(NM_PATHS_DEFAULT[i]);
++		}
++		paths[2*np] = NULL;
++	} else {
++		paths = g_strdupv((char **) NM_PATHS_DEFAULT);;
++	}
++
++	return (const char *const *) paths;
++}
++
+ const char *
+ nm_utils_find_helper(const char *progname, const char *try_first, GError **error)
+ {
+-	return nm_utils_file_search_in_paths (progname, try_first, NM_PATHS_DEFAULT, G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
++	return nm_utils_file_search_in_paths (progname, try_first, utils_get_search_paths (), G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
+ }
+ 
+ /*****************************************************************************/
