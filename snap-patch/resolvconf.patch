@@ -1,0 +1,31 @@
+--- a/etc/resolvconf/update.d/libc	2017-11-29 19:26:46.000000000 +0100
++++ b/etc/resolvconf/update.d/libc	2019-06-07 08:55:49.486028633 +0200
+@@ -18,7 +18,7 @@
+ set -e
+ PATH=/sbin:/bin
+ 
+-[ -x /lib/resolvconf/list-records ] || exit 1
++[ -x "$SNAP"/lib/resolvconf/list-records ] || exit 1
+ 
+ # Default override
+ [ -r /etc/default/resolvconf ] && . /etc/default/resolvconf
+@@ -107,7 +107,7 @@
+ 	done
+ }
+ 
+-RSLVCNFFILES="$(/lib/resolvconf/list-records)"
++RSLVCNFFILES="$($SNAP/lib/resolvconf/list-records)"
+ 
+ [ -f "$BASEFILE" ] && RSLVCNFFILES="$RSLVCNFFILES
+ $BASEFILE"
+--- a/sbin/resolvconf	2019-05-06 10:39:40.000000000 +0200
++++ b/sbin/resolvconf	2019-06-07 08:55:49.514029312 +0200
+@@ -63,7 +63,7 @@
+ update_and_exit()
+ {
+ 	rm -f "$POSTPONED_UPDATE_FLAGFILE"
+-	exec run-parts ${1:+--arg="$1"} ${2:+--arg="$2"} /etc/resolvconf/update.d
++	exec run-parts ${1:+--arg="$1"} ${2:+--arg="$2"} "$SNAP"/etc/resolvconf/update.d
+ }
+ 
+ # Handle commands that don't require normalized_stdin()

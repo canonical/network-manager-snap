@@ -224,6 +224,11 @@ parts:
       - libtasn1-6
       - libwind0-heimdal
       - ppp
+      - resolvconf
+
+    override-stage: |
+      snapcraftctl stage
+      patch -p1 < "$SNAPCRAFT_PART_SRC"/snap-patch/resolvconf.patch
 
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
@@ -233,6 +238,7 @@ parts:
     filesets:
       binaries:
         - sbin/*tables*
+        - sbin/resolvconf
         - usr/bin/arping
         - usr/bin/nmcli
         - usr/bin/nmtui
@@ -246,9 +252,11 @@ parts:
         - usr/sbin/NetworkManager
       configs:
         - etc/NetworkManager/*
+        - etc/resolvconf/update.d/libc
       docs:
         - usr/share/doc/*/copyright
       libs:
+        - lib/resolvconf/list-records
         - lib/*/libnewt*
         - lib/*/libslang*
         - usr/lib/libnm*
@@ -295,7 +303,3 @@ parts:
       - $docs
       - $libs
       - $unwanted
-
-  resolvconf:
-    plugin: dump
-    source: snap-resolvconf
