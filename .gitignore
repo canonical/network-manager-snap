@@ -2,3 +2,6 @@
 /parts/
 /prime/
 /snap/.snapcraft
+/tests-extras/
+
+network-manager_*_*.snap
