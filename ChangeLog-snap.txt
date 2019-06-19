@@ -1,0 +1,35 @@
+2019-06-19 network-manager 1.10.6-1
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * gitignore: ignore snaps and folder created by run-tests.sh
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/network-manager/+git/network-manager/+merge/368906
+
+  [ unknown ]
+  * This is manual merge of the NM 1.2 snap changes re-based on top
+    of NM 1.10. It's also the first release of the snap from this git
+    repository (vs. the network-manager snappy-hwe-team git repo).
+    This branch was created from the bionic distro branch, and uses
+    the distro patches, a snap support patch, and direct commits for
+    snap packaging changes.
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+
