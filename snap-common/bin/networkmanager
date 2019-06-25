@@ -31,6 +31,11 @@ mkdir -p "$SNAP_DATA"/conf.d
 mkdir -p "$SNAP_DATA"/state
 mkdir -p "$SNAP_DATA"/state/dhcp
 
+# Folders needed by dnsmasq
+mkdir -p "$SNAP_DATA"/var/lib/misc
+mkdir -p "$SNAP_DATA"/etc
+mkdir -p "$SNAP_DATA"/var/run
+
 # Apply current snapctl settings
 . "$SNAP"/bin/snap-config.sh
 apply_snap_config
