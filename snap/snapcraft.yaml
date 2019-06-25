@@ -52,6 +52,10 @@ apps:
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe]
 
+layout:
+  /usr/lib/x86_64-linux-gnu/xtables:
+    bind: $SNAP/usr/lib/x86_64-linux-gnu/xtables
+
 parts:
   networkmanager-common:
     plugin: dump
@@ -308,6 +312,7 @@ parts:
         - usr/lib/*/libteamdctl*
         - usr/lib/*/libwind*
         - usr/lib/*/libxtables*
+        - usr/lib/*/xtables/*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
