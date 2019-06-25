@@ -1,15 +1,51 @@
-From 9ea193cdba9b2e1b57bf3925b8cd794634218b7f Mon Sep 17 00:00:00 2001
+From af88af919499e84978510024b447c42f5bf59fda Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
  <alfonso.sanchez-beato@canonical.com>
-Date: Tue, 25 Jun 2019 12:49:20 +0200
-Subject: [PATCH] snap: do not change group id on start
+Date: Tue, 25 Jun 2019 14:51:01 +0200
+Subject: [PATCH] snap: adapt dnsmasq to snapd restrictions
+
+* Do not change group id on start
 
 The snap does not have permissions for this, and also it is not needed
 as even as root user we are running confined.
----
- src/dnsmasq.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
 
+* Set writable locations for dnsmasq configuration files
+---
+ src/config.h  |  6 +++---
+ src/dnsmasq.c | 16 ++++++++--------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/src/config.h b/src/config.h
+index ecefb87..25b92ba 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -190,7 +190,7 @@ RESOLVFILE
+ #   elif defined(__ANDROID__)
+ #      define LEASEFILE "/data/misc/dhcp/dnsmasq.leases"
+ #   else
+-#      define LEASEFILE "/var/lib/misc/dnsmasq.leases"
++#      define LEASEFILE "/var/snap/network-manager/current/var/lib/misc/dnsmasq.leases"
+ #   endif
+ #endif
+ 
+@@ -198,7 +198,7 @@ RESOLVFILE
+ #   if defined(__FreeBSD__)
+ #      define CONFFILE "/usr/local/etc/dnsmasq.conf"
+ #   else
+-#      define CONFFILE "/etc/dnsmasq.conf"
++#      define CONFFILE "/var/snap/network-manager/current/etc/dnsmasq.conf"
+ #   endif
+ #endif
+ 
+@@ -214,7 +214,7 @@ RESOLVFILE
+ #   if defined(__ANDROID__)
+ #      define RUNFILE "/data/dnsmasq.pid"
+ #    else
+-#      define RUNFILE "/var/run/dnsmasq.pid"
++#      define RUNFILE "/var/snap/network-manager/current/var/run/dnsmasq.pid"
+ #    endif
+ #endif
+ 
 diff --git a/src/dnsmasq.c b/src/dnsmasq.c
 index ce44809..fb425f2 100644
 --- a/src/dnsmasq.c
