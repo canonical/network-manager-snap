@@ -1,19 +1,13 @@
-From af88af919499e84978510024b447c42f5bf59fda Mon Sep 17 00:00:00 2001
+From 8e829e18fc739f05b1a25cc40ce1722f65831950 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
  <alfonso.sanchez-beato@canonical.com>
-Date: Tue, 25 Jun 2019 14:51:01 +0200
-Subject: [PATCH] snap: adapt dnsmasq to snapd restrictions
+Date: Tue, 25 Jun 2019 17:36:41 +0200
+Subject: [PATCH] snap: do not tinker with uid/gid, change fixed paths
 
-* Do not change group id on start
-
-The snap does not have permissions for this, and also it is not needed
-as even as root user we are running confined.
-
-* Set writable locations for dnsmasq configuration files
 ---
  src/config.h  |  6 +++---
- src/dnsmasq.c | 16 ++++++++--------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ src/dnsmasq.c | 30 +++++++++++++++---------------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/src/config.h b/src/config.h
 index ecefb87..25b92ba 100644
@@ -47,9 +41,20 @@ index ecefb87..25b92ba 100644
  #endif
  
 diff --git a/src/dnsmasq.c b/src/dnsmasq.c
-index ce44809..fb425f2 100644
+index ce44809..17c451b 100644
 --- a/src/dnsmasq.c
 +++ b/src/dnsmasq.c
+@@ -548,8 +548,8 @@ int main (int argc, char **argv)
+ 		 of the directory containing the file. That directory will
+ 		 need to by owned by the dnsmasq user, and the ownership of the
+ 		 file has to match, to keep systemd >273 happy. */
+-	      if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1)
+-		chown_warn = errno;
++	      /* if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1) */
++	      /*   chown_warn = errno; */
+ 
+ 	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), 0))
+ 		err = 1;
 @@ -595,16 +595,16 @@ int main (int argc, char **argv)
    if (!option_bool(OPT_DEBUG) && getuid() == 0)   
      {
@@ -75,6 +80,23 @@ index ce44809..fb425f2 100644
    
        if (ent_pw && ent_pw->pw_uid != 0)
  	{     
+@@ -654,11 +654,11 @@ int main (int argc, char **argv)
+ 	    }
+ 	  
+ 	  /* finally drop root */
+-	  if (setuid(ent_pw->pw_uid) == -1)
+-	    {
+-	      send_event(err_pipe[1], EVENT_USER_ERR, errno, daemon->username);
+-	      _exit(0);
+-	    }     
++	  /* if (setuid(ent_pw->pw_uid) == -1) */
++	  /*   { */
++	  /*     send_event(err_pipe[1], EVENT_USER_ERR, errno, daemon->username); */
++	  /*     _exit(0); */
++	  /*   }      */
+ 
+ #ifdef HAVE_LINUX_NETWORK
+ 	  if (is_dad_listeners() || option_bool(OPT_CLEVERBIND))
 -- 
 2.17.1
 
