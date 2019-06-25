@@ -51,10 +51,30 @@ apps:
     daemon: simple
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe]
+
 parts:
   networkmanager-common:
     plugin: dump
     source: snap-common
+
+  dnsmasq:
+    plugin: make
+    source: https://git.launchpad.net/ubuntu/+source/dnsmasq
+    source-type: git
+    source-branch: applied/ubuntu/bionic
+    build-packages:
+      - build-essential
+    make-parameters:
+      - PREFIX=/
+    override-build: |
+      git apply ../../../snap-patch/dnsmasq.patch
+      snapcraftctl build
+    filesets:
+      binaries:
+        - sbin/dnsmasq
+    prime:
+      - $binaries
+
   #
   # TODO: investigate whether this HACK is still needed. The script
   # dhcp-lease-mover relies on inotifywait to determine if any DHCP

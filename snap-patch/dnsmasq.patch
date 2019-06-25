@@ -1,0 +1,44 @@
+From 9ea193cdba9b2e1b57bf3925b8cd794634218b7f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Tue, 25 Jun 2019 12:49:20 +0200
+Subject: [PATCH] snap: do not change group id on start
+
+The snap does not have permissions for this, and also it is not needed
+as even as root user we are running confined.
+---
+ src/dnsmasq.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/dnsmasq.c b/src/dnsmasq.c
+index ce44809..fb425f2 100644
+--- a/src/dnsmasq.c
++++ b/src/dnsmasq.c
+@@ -595,16 +595,16 @@ int main (int argc, char **argv)
+   if (!option_bool(OPT_DEBUG) && getuid() == 0)   
+     {
+       int bad_capabilities = 0;
+-      gid_t dummy;
++      /* gid_t dummy; */
+       
+       /* remove all supplementary groups */
+-      if (gp && 
+-	  (setgroups(0, &dummy) == -1 ||
+-	   setgid(gp->gr_gid) == -1))
+-	{
+-	  send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname);
+-	  _exit(0);
+-	}
++      /* if (gp &&  */
++      /*     (setgroups(0, &dummy) == -1 || */
++      /*      setgid(gp->gr_gid) == -1)) */
++      /*   { */
++      /*     send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname); */
++      /*     _exit(0); */
++      /*   } */
+   
+       if (ent_pw && ent_pw->pw_uid != 0)
+ 	{     
+-- 
+2.17.1
+
