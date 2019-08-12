@@ -50,7 +50,7 @@ apps:
     command: bin/networkmanager
     daemon: simple
     slots: [service]
-    plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe, kernel-module-control]
+    plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe]
 
 layout:
   /usr/lib/x86_64-linux-gnu/xtables:
