@@ -61,6 +61,13 @@ parts:
     plugin: dump
     source: snap-common
 
+  changelog:
+    plugin: nil
+    override-build: |
+      cp "$SNAPCRAFT_PROJECT_DIR"/ChangeLog-snap.txt "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    organize:
+      ChangeLog: usr/share/doc/network-manager/ChangeLog
+
   dnsmasq:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
