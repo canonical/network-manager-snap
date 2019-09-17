@@ -1,3 +1,21 @@
+2019-09-17 network-manager 1.10.6-2
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Add missing bits to enable sharing connections and be able to access points. Fixes LP: #1832494.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/network-manager/+git/network-manager/+merge/369325
+  * snap: remove debug info
+    
+    Remove debug info, which was inadvertingly introduced in a previous
+    commit. This reduces the snap size in two thirds.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/network-manager/+git/network-manager/+merge/370807
+  * snap: remove kernel-module-control interface
+    
+    The firewall-control interface already provides a kmod plug that makes
+    sure the modules needed by ip tables are pre-loaded on boot.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/network-manager/+git/network-manager/+merge/371197
+  * snap: copy changelog to package
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/network-manager/+git/network-manager/+merge/372526
+
 2019-06-19 network-manager 1.10.6-1
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
