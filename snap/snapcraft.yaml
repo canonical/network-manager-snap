@@ -255,7 +255,34 @@ parts:
         - etc/NetworkManager/*
         - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/*/copyright
+        - usr/share/doc/dnsmasq/copyright
+        - usr/share/doc/iputils-arping/copyright
+        - usr/share/doc/libasn1-8-heimdal/copyright
+        - usr/share/doc/libcurl3-gnutls/copyright
+        - usr/share/doc/libdbus-glib-1-2/copyright
+        - usr/share/doc/libgssapi3-heimdal/copyright
+        - usr/share/doc/libhcrypto4-heimdal/copyright
+        - usr/share/doc/libheimbase1-heimdal/copyright
+        - usr/share/doc/libheimntlm0-heimdal/copyright
+        - usr/share/doc/libhx509-5-heimdal/copyright
+        - usr/share/doc/libjansson4/copyright
+        - usr/share/doc/libkrb5-26-heimdal/copyright
+        - usr/share/doc/libldap-2.4-2/copyright
+        - usr/share/doc/libmm-glib0/copyright
+        - usr/share/doc/libndp0/copyright
+        - usr/share/doc/libnewt0.52/copyright
+        - usr/share/doc/libnghttp2-14/copyright
+        - usr/share/doc/libpcap0.8/copyright
+        - usr/share/doc/libpsl5/copyright
+        - usr/share/doc/libroken18-heimdal/copyright
+        - usr/share/doc/librtmp1/copyright
+        - usr/share/doc/libsasl2-2/copyright
+        - usr/share/doc/libslang2/copyright
+        - usr/share/doc/libteamdctl0/copyright
+        - usr/share/doc/libwind0-heimdal/copyright
+        - usr/share/doc/network-manager/copyright
+        - usr/share/doc/ppp/copyright
+        - usr/share/doc/resolvconf/copyright
       libs:
         - lib/resolvconf/list-records
         - lib/*/libnewt*
