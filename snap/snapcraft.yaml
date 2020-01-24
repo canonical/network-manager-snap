@@ -53,10 +53,6 @@ apps:
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control,
             hardware-observe, network-setup-control]
 
-layout:
-  /usr/lib/x86_64-linux-gnu/xtables:
-    bind: $SNAP/usr/lib/x86_64-linux-gnu/xtables
-
 parts:
   networkmanager-common:
     plugin: dump
@@ -155,7 +151,7 @@ parts:
       - --with-dhcpcd=no
       - --with-dhclient=no
       - --with-dnsmasq=no
-      - --with-iptables=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/iptables
+      - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
@@ -206,7 +202,6 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
-      - iptables
       - iputils-arping
       - libasn1-8-heimdal
       - libdbus-glib-1-2
@@ -244,7 +239,6 @@ parts:
     # here are the results of the network manager build.
     filesets:
       binaries:
-        - sbin/*tables*
         - sbin/resolvconf
         - usr/bin/arping
         - usr/bin/nmcli
@@ -294,8 +288,6 @@ parts:
         - usr/lib/*/libsasl2*
         - usr/lib/*/libteamdctl*
         - usr/lib/*/libwind*
-        - usr/lib/*/libxtables*
-        - usr/lib/*/xtables/*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
