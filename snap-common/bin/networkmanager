@@ -63,7 +63,8 @@ fi
 # our lease files and copy all over when something has changed. This
 # background process gets stopped when our systemd service unit gets
 # stopped.
-"$SNAP"/bin/dhcp-lease-mover &
+# Do not call: dhcp-lease-mover fails as we do not stage inotify anymore
+#"$SNAP"/bin/dhcp-lease-mover &
 
 # Identify if we are in debug mode or not
 LOG_LEVEL=INFO
