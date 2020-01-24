@@ -55,7 +55,8 @@ dns_conf_file="$SNAP_DATA"/conf.d/10-dns.conf
 if [ "$(get_series_major_version)" = "16" ]; then
     printf "[main]\ndns=default\nrc-manager=resolvconf\n" > "$dns_conf_file"
 else
-    printf "[main]\ndns=systemd-resolved\n" > "$dns_conf_file"
+    printf "[main]\ndns=systemd-resolved\nrc-manager=symlink\n" > \
+           "$dns_conf_file"
 fi
 
 # HACK: Until we've fixed probert to look in $SNAP_DATA/state/dhcp or
