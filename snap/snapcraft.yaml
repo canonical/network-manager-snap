@@ -1,7 +1,5 @@
 name: network-manager
 version: 1.10.6-3-dev
-version-script: |
-    echo $SNAPCRAFT_PROJECT_VERSION-$(date +%Y%m%d)+$(git rev-parse --short HEAD)
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
