@@ -330,3 +330,20 @@ parts:
       - $docs
       - $libs
       - $unwanted
+
+  # This part is to make sure we get notifications from the review tools
+  networkmanager-phony:
+    plugin: nil
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
+    source-type: git
+    build-packages:
+      - python3-minimal
+      - python3-yaml
+    stage-packages:
+      - network-manager
+      - dnsmasq-base
+    # Check versions and make sure nothing from the staged packages is installed
+    override-build: |
+      ./build-tools/cmp-stage-build.py \
+          networkmanager network-manager dnsmasq dnsmasq-base
+      rm -rf ../install/*
