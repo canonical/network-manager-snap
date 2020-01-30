@@ -9,7 +9,7 @@ description: |
   when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
-  Please find the source code at: https://code.launchpad.net/~network-manager/network-manager/+git/ubuntu/+ref/snap-1.10
+  Please find the source code at: https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
 base: core18
 confinement: strict
 grade: stable
@@ -69,13 +69,13 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/bionic
+    source-branch: applied/2.79-1
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
     override-build: |
-      git apply ../../../snap-patch/dnsmasq.patch
+      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
     filesets:
       binaries:
@@ -107,7 +107,9 @@ parts:
   #    - $wanted
   networkmanager:
     plugin: autotools
-    source: .
+    source: https://git.launchpad.net/ubuntu/+source/network-manager
+    source-type: git
+    source-branch: applied/1.10.6-2ubuntu1.2
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -191,9 +193,9 @@ parts:
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
     override-build: |
-      echo "networkmanager override-build called <patches go here>"
-      export QUILT_PATCHES=debian/patches
-      quilt push -a
+      git config user.email "snapcraft@canonical.com"
+      git config user.name "snapcraft"
+      git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
 
       # remove configure to trigger autotools
       rm ./configure
@@ -230,7 +232,7 @@ parts:
 
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "$SNAPCRAFT_PART_SRC"/snap-patch/resolvconf.patch
+      patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
