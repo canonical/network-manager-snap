@@ -1,7 +1,5 @@
 name: network-manager
-version: 1.10.6-2
-version-script: |
-    echo $SNAPCRAFT_PROJECT_VERSION-$(date +%Y%m%d)+$(git rev-parse --short HEAD)
+version: 1.10.6-3-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -9,7 +7,7 @@ description: |
   when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
-  Please find the source code at: https://code.launchpad.net/~network-manager/network-manager/+git/ubuntu/+ref/snap-1.10
+  Please find the source code at: https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
 base: core18
 confinement: strict
 grade: stable
@@ -50,11 +48,8 @@ apps:
     command: bin/networkmanager
     daemon: simple
     slots: [service]
-    plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control, hardware-observe]
-
-layout:
-  /usr/lib/x86_64-linux-gnu/xtables:
-    bind: $SNAP/usr/lib/x86_64-linux-gnu/xtables
+    plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control,
+            hardware-observe, network-setup-control]
 
 parts:
   networkmanager-common:
@@ -72,13 +67,13 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/bionic
+    source-branch: applied/2.79-1
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
     override-build: |
-      git apply ../../../snap-patch/dnsmasq.patch
+      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
     filesets:
       binaries:
@@ -110,7 +105,9 @@ parts:
   #    - $wanted
   networkmanager:
     plugin: autotools
-    source: .
+    source: https://git.launchpad.net/ubuntu/+source/network-manager
+    source-type: git
+    source-branch: applied/1.10.6-2ubuntu1.2
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -154,7 +151,7 @@ parts:
       - --with-dhcpcd=no
       - --with-dhclient=no
       - --with-dnsmasq=no
-      - --with-iptables=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/iptables
+      - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
@@ -194,9 +191,9 @@ parts:
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
     override-build: |
-      echo "networkmanager override-build called <patches go here>"
-      export QUILT_PATCHES=debian/patches
-      quilt push -a
+      git config user.email "snapcraft@canonical.com"
+      git config user.name "snapcraft"
+      git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
 
       # remove configure to trigger autotools
       rm ./configure
@@ -205,24 +202,17 @@ parts:
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
-      - iptables
       - iputils-arping
       - libasn1-8-heimdal
       - libdbus-glib-1-2
       - libcurl3-gnutls
       - libgssapi3-heimdal
-      - libgssapi-krb5-2
       - libhcrypto4-heimdal
       - libheimbase1-heimdal
       - libheimntlm0-heimdal
       - libhx509-5-heimdal
-      - libidn2-0
       - libjansson4
-      - libkeyutils1
-      - libkrb5-3
       - libkrb5-26-heimdal
-      - libkrb5support0
-      - libk5crypto3
       - libldap-2.4-2
       - libmm-glib0
       - libnewt0.52
@@ -230,36 +220,17 @@ parts:
       - libroken18-heimdal
       - libndp0
       - libpsl5
-      - libreadline7
       - librtmp1
       - libsasl2-2
       - libteamdctl0
-      - libunistring2
-      - libblkid1
-      - libgcrypt20
-      - libgpg-error0
-      - liblzma5
-      - libmount1
-      - libnl-3-200
-      - libpcre3
-      - libselinux1
-      - libuuid1
-      - zlib1g
-      - libgmp10
-      - libgnutls30
-      - libhogweed4
-      - liblz4-1
-      - libnettle6
-      - libp11-kit0
       - libslang2
-      - libtasn1-6
       - libwind0-heimdal
       - ppp
       - resolvconf
 
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "$SNAPCRAFT_PART_SRC"/snap-patch/resolvconf.patch
+      patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
     # Filter files pulled in by stage-packages so they aren't
     # included in the final snap. We only need them to build
@@ -268,7 +239,6 @@ parts:
     # here are the results of the network manager build.
     filesets:
       binaries:
-        - sbin/*tables*
         - sbin/resolvconf
         - usr/bin/arping
         - usr/bin/nmcli
@@ -285,7 +255,34 @@ parts:
         - etc/NetworkManager/*
         - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/*/copyright
+        - usr/share/doc/dnsmasq/copyright
+        - usr/share/doc/iputils-arping/copyright
+        - usr/share/doc/libasn1-8-heimdal/copyright
+        - usr/share/doc/libcurl3-gnutls/copyright
+        - usr/share/doc/libdbus-glib-1-2/copyright
+        - usr/share/doc/libgssapi3-heimdal/copyright
+        - usr/share/doc/libhcrypto4-heimdal/copyright
+        - usr/share/doc/libheimbase1-heimdal/copyright
+        - usr/share/doc/libheimntlm0-heimdal/copyright
+        - usr/share/doc/libhx509-5-heimdal/copyright
+        - usr/share/doc/libjansson4/copyright
+        - usr/share/doc/libkrb5-26-heimdal/copyright
+        - usr/share/doc/libldap-2.4-2/copyright
+        - usr/share/doc/libmm-glib0/copyright
+        - usr/share/doc/libndp0/copyright
+        - usr/share/doc/libnewt0.52/copyright
+        - usr/share/doc/libnghttp2-14/copyright
+        - usr/share/doc/libpcap0.8/copyright
+        - usr/share/doc/libpsl5/copyright
+        - usr/share/doc/libroken18-heimdal/copyright
+        - usr/share/doc/librtmp1/copyright
+        - usr/share/doc/libsasl2-2/copyright
+        - usr/share/doc/libslang2/copyright
+        - usr/share/doc/libteamdctl0/copyright
+        - usr/share/doc/libwind0-heimdal/copyright
+        - usr/share/doc/network-manager/copyright
+        - usr/share/doc/ppp/copyright
+        - usr/share/doc/resolvconf/copyright
       libs:
         - lib/resolvconf/list-records
         - lib/*/libnewt*
@@ -318,8 +315,6 @@ parts:
         - usr/lib/*/libsasl2*
         - usr/lib/*/libteamdctl*
         - usr/lib/*/libwind*
-        - usr/lib/*/libxtables*
-        - usr/lib/*/xtables/*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
@@ -335,3 +330,20 @@ parts:
       - $docs
       - $libs
       - $unwanted
+
+  # This part is to make sure we get notifications from the review tools
+  networkmanager-phony:
+    plugin: nil
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
+    source-type: git
+    build-packages:
+      - python3-minimal
+      - python3-yaml
+    stage-packages:
+      - network-manager
+      - dnsmasq-base
+    # Check versions and make sure nothing from the staged packages is installed
+    override-build: |
+      ./build-tools/cmp-stage-build.py \
+          networkmanager network-manager dnsmasq dnsmasq-base
+      rm -rf ../install/*

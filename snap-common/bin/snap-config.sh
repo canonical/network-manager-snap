@@ -159,11 +159,15 @@ _switch_defaultrenderer() {
     if [ "$1" = true ] || [ "$1" = yes ]; then
         if [ ! -f "$path" ]; then
             printf "network:\n  renderer: NetworkManager\n" > "$path"
-            # TODO When implemented by snapd, call netplan apply
+            dbus-send --system --type=method_call --print-reply \
+                      --dest=io.netplan.Netplan /io/netplan/Netplan \
+                      io.netplan.Netplan.Apply
         fi
     elif [ -f "$path" ]; then
         rm -f "$path"
-        # TODO When implemented by snapd, call netplan apply
+        dbus-send --system --type=method_call --print-reply \
+                  --dest=io.netplan.Netplan /io/netplan/Netplan \
+                  io.netplan.Netplan.Apply
     fi
 }
 

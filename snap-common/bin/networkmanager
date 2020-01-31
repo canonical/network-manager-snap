@@ -55,7 +55,8 @@ dns_conf_file="$SNAP_DATA"/conf.d/10-dns.conf
 if [ "$(get_series_major_version)" = "16" ]; then
     printf "[main]\ndns=default\nrc-manager=resolvconf\n" > "$dns_conf_file"
 else
-    printf "[main]\ndns=systemd-resolved\n" > "$dns_conf_file"
+    printf "[main]\ndns=systemd-resolved\nrc-manager=symlink\n" > \
+           "$dns_conf_file"
 fi
 
 # HACK: Until we've fixed probert to look in $SNAP_DATA/state/dhcp or
@@ -63,7 +64,8 @@ fi
 # our lease files and copy all over when something has changed. This
 # background process gets stopped when our systemd service unit gets
 # stopped.
-"$SNAP"/bin/dhcp-lease-mover &
+# Do not call: dhcp-lease-mover fails as we do not stage inotify anymore
+#"$SNAP"/bin/dhcp-lease-mover &
 
 # Identify if we are in debug mode or not
 LOG_LEVEL=INFO

@@ -1,7 +1,8 @@
-From: =?utf-8?q?Alfonso_S=C3=A1nchez-Beato?=
+From 705afc81b686388c4f5e5cf1d3e3fb5bd29a7227 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
  <alfonso.sanchez-beato@canonical.com>
 Date: Fri, 13 Jul 2018 11:54:30 +0200
-Subject: Support for WoWLAN
+Subject: [PATCH 1/6] Support for WoWLAN
 
 This add supports for WoWLAN by backporting upstream patches:
 
@@ -17,28 +18,28 @@ c6e40215e devices: restore past WoWLAN when disconnecting wifi
 a3289400d wifi: ensure wake-on-wlan restore only acts once
 2c3a14fed platform/wifi: drop *_get_wowlan()
 ---
- clients/common/nm-meta-setting-desc.c  |  14 ++++
+ clients/common/nm-meta-setting-desc.c  |  14 +++
  clients/common/settings-docs.c         |   1 +
  clients/common/settings-docs.c.in      |   1 +
- libnm-core/nm-setting-wireless.c       |  72 +++++++++++++++++
- libnm-core/nm-setting-wireless.h       |  46 +++++++++++
+ libnm-core/nm-setting-wireless.c       |  72 +++++++++++++
+ libnm-core/nm-setting-wireless.h       |  46 ++++++++
  libnm/libnm.ver                        |   2 +
- src/devices/wifi/nm-device-wifi.c      | 102 +++++++++++++++++++++++-
- src/nm-manager.c                       |  27 ++++---
- src/platform/nm-linux-platform.c       |  19 ++++-
- src/platform/nm-platform.c             |  20 +++++
- src/platform/nm-platform.h             |   5 ++
- src/platform/wifi/wifi-utils-nl80211.c | 139 ++++++++++++++++++++++++---------
+ src/devices/wifi/nm-device-wifi.c      | 102 +++++++++++++++++-
+ src/nm-manager.c                       |  27 +++--
+ src/platform/nm-linux-platform.c       |  19 +++-
+ src/platform/nm-platform.c             |  20 ++++
+ src/platform/nm-platform.h             |   5 +
+ src/platform/wifi/wifi-utils-nl80211.c | 139 ++++++++++++++++++-------
  src/platform/wifi/wifi-utils-private.h |   8 +-
- src/platform/wifi/wifi-utils.c         |  28 ++++---
+ src/platform/wifi/wifi-utils.c         |  28 +++--
  src/platform/wifi/wifi-utils.h         |   7 +-
  15 files changed, 425 insertions(+), 66 deletions(-)
 
 diff --git a/clients/common/nm-meta-setting-desc.c b/clients/common/nm-meta-setting-desc.c
-index 94404e9..21763a8 100644
+index addcdef71..eeca822c8 100644
 --- a/clients/common/nm-meta-setting-desc.c
 +++ b/clients/common/nm-meta-setting-desc.c
-@@ -7271,6 +7271,20 @@ static const NMMetaPropertyInfo *const property_infos_WIRELESS[] = {
+@@ -7279,6 +7279,20 @@ static const NMMetaPropertyInfo *const property_infos_WIRELESS[] = {
  			.typ_flags =                NM_META_PROPERTY_TYP_FLAG_ENUM_GET_PARSABLE_TEXT,
  		),
  	),
@@ -60,7 +61,7 @@ index 94404e9..21763a8 100644
  };
  
 diff --git a/clients/common/settings-docs.c b/clients/common/settings-docs.c
-index bf5753c..911164a 100644
+index bf5753c57..911164acc 100644
 --- a/clients/common/settings-docs.c
 +++ b/clients/common/settings-docs.c
 @@ -21,6 +21,7 @@
@@ -72,7 +73,7 @@ index bf5753c..911164a 100644
  #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_GROUP N_("A list of group/broadcast encryption algorithms which prevents connections to Wi-Fi networks that do not utilize one of the algorithms in the list.  For maximum compatibility leave this property empty.  Each list element may be one of \"wep40\", \"wep104\", \"tkip\", or \"ccmp\".")
  #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_KEY_MGMT N_("Key management used for the connection.  One of \"none\" (WEP), \"ieee8021x\" (Dynamic WEP), \"wpa-none\" (Ad-Hoc WPA-PSK), \"wpa-psk\" (infrastructure WPA-PSK), or \"wpa-eap\" (WPA-Enterprise).  This property must be set for any Wi-Fi connection that uses security.")
 diff --git a/clients/common/settings-docs.c.in b/clients/common/settings-docs.c.in
-index bf5753c..911164a 100644
+index b022b2d9e..992d3fa41 100644
 --- a/clients/common/settings-docs.c.in
 +++ b/clients/common/settings-docs.c.in
 @@ -21,6 +21,7 @@
@@ -84,7 +85,7 @@ index bf5753c..911164a 100644
  #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_GROUP N_("A list of group/broadcast encryption algorithms which prevents connections to Wi-Fi networks that do not utilize one of the algorithms in the list.  For maximum compatibility leave this property empty.  Each list element may be one of \"wep40\", \"wep104\", \"tkip\", or \"ccmp\".")
  #define DESCRIBE_DOC_NM_SETTING_WIRELESS_SECURITY_KEY_MGMT N_("Key management used for the connection.  One of \"none\" (WEP), \"ieee8021x\" (Dynamic WEP), \"wpa-none\" (Ad-Hoc WPA-PSK), \"wpa-psk\" (infrastructure WPA-PSK), or \"wpa-eap\" (WPA-Enterprise).  This property must be set for any Wi-Fi connection that uses security.")
 diff --git a/libnm-core/nm-setting-wireless.c b/libnm-core/nm-setting-wireless.c
-index 0a3915b..7500c97 100644
+index 0a3915bfc..7500c9740 100644
 --- a/libnm-core/nm-setting-wireless.c
 +++ b/libnm-core/nm-setting-wireless.c
 @@ -63,6 +63,7 @@ typedef struct {
@@ -207,7 +208,7 @@ index 0a3915b..7500c97 100644
 +		                    G_PARAM_STATIC_STRINGS));
  }
 diff --git a/libnm-core/nm-setting-wireless.h b/libnm-core/nm-setting-wireless.h
-index b0ef475..4c1850f 100644
+index b0ef47568..4c1850fbb 100644
 --- a/libnm-core/nm-setting-wireless.h
 +++ b/libnm-core/nm-setting-wireless.h
 @@ -41,6 +41,48 @@ G_BEGIN_DECLS
@@ -278,7 +279,7 @@ index b0ef475..4c1850f 100644
  
  #endif /* __NM_SETTING_WIRELESS_H__ */
 diff --git a/libnm/libnm.ver b/libnm/libnm.ver
-index 7646a93..3376848 100644
+index 6e0d9277d..e2d3755d9 100644
 --- a/libnm/libnm.ver
 +++ b/libnm/libnm.ver
 @@ -1276,6 +1276,8 @@ global:
@@ -291,7 +292,7 @@ index 7646a93..3376848 100644
  	nm_tc_action_equal;
  	nm_tc_action_get_attribute;
 diff --git a/src/devices/wifi/nm-device-wifi.c b/src/devices/wifi/nm-device-wifi.c
-index bf02109..e06aa32 100644
+index bf021095a..e06aa328a 100644
 --- a/src/devices/wifi/nm-device-wifi.c
 +++ b/src/devices/wifi/nm-device-wifi.c
 @@ -119,6 +119,8 @@ typedef struct {
@@ -468,10 +469,10 @@ index bf02109..e06aa32 100644
  	parent_class->state_changed = device_state_changed;
  
 diff --git a/src/nm-manager.c b/src/nm-manager.c
-index e60b6c6..fc8a97e 100644
+index 09dc8fa6c..c34401ec1 100644
 --- a/src/nm-manager.c
 +++ b/src/nm-manager.c
-@@ -1315,6 +1315,12 @@ _parent_notify_changed (NMManager *self,
+@@ -1319,6 +1319,12 @@ _parent_notify_changed (NMManager *self,
  	}
  }
  
@@ -484,7 +485,7 @@ index e60b6c6..fc8a97e 100644
  static void
  remove_device (NMManager *self,
                 NMDevice *device,
-@@ -1324,14 +1330,19 @@ remove_device (NMManager *self,
+@@ -1328,14 +1334,19 @@ remove_device (NMManager *self,
  	NMManagerPrivate *priv = NM_MANAGER_GET_PRIVATE (self);
  	gboolean unmanage = FALSE;
  
@@ -509,7 +510,7 @@ index e60b6c6..fc8a97e 100644
  			/* the device is already gone. Unmanage it. */
  			unmanage = TRUE;
  		}
-@@ -4763,12 +4774,6 @@ done:
+@@ -4767,12 +4778,6 @@ done:
  	g_clear_object (&subject);
  }
  
@@ -523,7 +524,7 @@ index e60b6c6..fc8a97e 100644
  sleep_devices_add (NMManager *self, NMDevice *device, gboolean suspending)
  {
 diff --git a/src/platform/nm-linux-platform.c b/src/platform/nm-linux-platform.c
-index e5961c7..a061fc3 100644
+index e5961c7ec..a061fc396 100644
 --- a/src/platform/nm-linux-platform.c
 +++ b/src/platform/nm-linux-platform.c
 @@ -6119,6 +6119,21 @@ wifi_indicate_addressing_running (NMPlatform *platform, int ifindex, gboolean ru
@@ -567,7 +568,7 @@ index e5961c7..a061fc3 100644
  	platform_class->mesh_get_channel = mesh_get_channel;
  	platform_class->mesh_set_channel = mesh_set_channel;
 diff --git a/src/platform/nm-platform.c b/src/platform/nm-platform.c
-index c7ed90e..7387a1d 100644
+index c7ed90e3f..7387a1dad 100644
 --- a/src/platform/nm-platform.c
 +++ b/src/platform/nm-platform.c
 @@ -2767,6 +2767,26 @@ nm_platform_wifi_indicate_addressing_running (NMPlatform *self, int ifindex, gbo
@@ -598,7 +599,7 @@ index c7ed90e..7387a1d 100644
  nm_platform_mesh_get_channel (NMPlatform *self, int ifindex)
  {
 diff --git a/src/platform/nm-platform.h b/src/platform/nm-platform.h
-index f6bf02b..0c167ee 100644
+index f6bf02bf5..0c167ee57 100644
 --- a/src/platform/nm-platform.h
 +++ b/src/platform/nm-platform.h
 @@ -32,6 +32,7 @@
@@ -628,7 +629,7 @@ index f6bf02b..0c167ee 100644
  guint32     nm_platform_mesh_get_channel      (NMPlatform *self, int ifindex);
  gboolean    nm_platform_mesh_set_channel      (NMPlatform *self, int ifindex, guint32 channel);
 diff --git a/src/platform/wifi/wifi-utils-nl80211.c b/src/platform/wifi/wifi-utils-nl80211.c
-index a5f25b0..3a09244 100644
+index a5f25b026..3a092440e 100644
 --- a/src/platform/wifi/wifi-utils-nl80211.c
 +++ b/src/platform/wifi/wifi-utils-nl80211.c
 @@ -495,6 +495,103 @@ nla_put_failure:
@@ -792,7 +793,7 @@ index a5f25b0..3a09244 100644
  	_LOGI (LOGD_PLATFORM | LOGD_WIFI,
  	       "(%s): using nl80211 for WiFi device control",
 diff --git a/src/platform/wifi/wifi-utils-private.h b/src/platform/wifi/wifi-utils-private.h
-index 11a0f06..18f6131 100644
+index 11a0f060d..18f613198 100644
 --- a/src/platform/wifi/wifi-utils-private.h
 +++ b/src/platform/wifi/wifi-utils-private.h
 @@ -35,6 +35,12 @@ struct WifiData {
@@ -818,7 +819,7 @@ index 11a0f06..18f6131 100644
  
  	guint32 (*get_mesh_channel) (WifiData *data);
 diff --git a/src/platform/wifi/wifi-utils.c b/src/platform/wifi/wifi-utils.c
-index d005212..f76bf95 100644
+index d00521212..f76bf9578 100644
 --- a/src/platform/wifi/wifi-utils.c
 +++ b/src/platform/wifi/wifi-utils.c
 @@ -115,6 +115,25 @@ wifi_utils_set_powersave (WifiData *data, guint32 powersave)
@@ -864,7 +865,7 @@ index d005212..f76bf95 100644
  wifi_utils_deinit (WifiData *data)
  {
 diff --git a/src/platform/wifi/wifi-utils.h b/src/platform/wifi/wifi-utils.h
-index 705717b..776b3c9 100644
+index 705717b07..776b3c90b 100644
 --- a/src/platform/wifi/wifi-utils.h
 +++ b/src/platform/wifi/wifi-utils.h
 @@ -25,6 +25,7 @@
@@ -890,3 +891,6 @@ index 705717b..776b3c9 100644
  
  /* OLPC Mesh-only functions */
  guint32 wifi_utils_get_mesh_channel (WifiData *data);
+-- 
+2.17.1
+

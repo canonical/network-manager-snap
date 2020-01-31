@@ -1,7 +1,62 @@
-Index: build/src/ppp/nm-ppp-manager-call.c
-===================================================================
---- build.orig/src/ppp/nm-ppp-manager-call.c
-+++ build/src/ppp/nm-ppp-manager-call.c
+From 72b96e130664e28b73d9f9b34d4c6d829e840e27 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Thu, 30 Jan 2020 13:29:46 +0100
+Subject: [PATCH 6/6] Add snap support for ppp
+
+---
+ src/nm-core-utils.c           | 30 +++++++++++++++++++++++++-
+ src/ppp/nm-ppp-manager-call.c | 40 ++++++++++++++++++++---------------
+ 2 files changed, 52 insertions(+), 18 deletions(-)
+
+diff --git a/src/nm-core-utils.c b/src/nm-core-utils.c
+index b33203681..775291edd 100644
+--- a/src/nm-core-utils.c
++++ b/src/nm-core-utils.c
+@@ -1171,10 +1171,38 @@ const char *const NM_PATHS_DEFAULT[] = {
+ 	NULL,
+ };
+ 
++const char *const *
++utils_get_search_paths(void)
++{
++	static char **paths;
++
++	const char *snap_path;
++
++	if (paths)
++		return (const char *const *) paths;
++
++	snap_path = getenv("SNAP");
++	if (snap_path) {
++		unsigned np, i;
++
++		np = g_strv_length((char **) NM_PATHS_DEFAULT);
++		paths = malloc(sizeof(char *)*(np*2 + 1));
++		for (i = 0; i < np; ++i) {
++			paths[i] = g_strdup_printf("%s%s", snap_path, NM_PATHS_DEFAULT[i]);
++			paths[np + i] = g_strdup(NM_PATHS_DEFAULT[i]);
++		}
++		paths[2*np] = NULL;
++	} else {
++		paths = g_strdupv((char **) NM_PATHS_DEFAULT);;
++	}
++
++	return (const char *const *) paths;
++}
++
+ const char *
+ nm_utils_find_helper(const char *progname, const char *try_first, GError **error)
+ {
+-	return nm_utils_file_search_in_paths (progname, try_first, NM_PATHS_DEFAULT, G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
++	return nm_utils_file_search_in_paths (progname, try_first, utils_get_search_paths (), G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
+ }
+ 
+ /*****************************************************************************/
+diff --git a/src/ppp/nm-ppp-manager-call.c b/src/ppp/nm-ppp-manager-call.c
+index ad3307a9d..12fe18338 100644
+--- a/src/ppp/nm-ppp-manager-call.c
++++ b/src/ppp/nm-ppp-manager-call.c
 @@ -30,7 +30,7 @@
  #include "nm-core-utils.h"
  #include "nm-ppp-plugin-api.h"
@@ -72,7 +127,7 @@ Index: build/src/ppp/nm-ppp-manager-call.c
  		}
  
  		/* after loading glib types from the plugin, we cannot unload the library anymore.
-@@ -90,11 +93,14 @@ nm_ppp_manager_create (const char *iface
+@@ -90,11 +93,14 @@ nm_ppp_manager_create (const char *iface, GError **error)
  
  		ppp_ops = ops;
  
@@ -88,47 +143,6 @@ Index: build/src/ppp/nm-ppp-manager-call.c
  	return ret;
  }
  
-Index: build/src/nm-core-utils.c
-===================================================================
---- build.orig/src/nm-core-utils.c
-+++ build/src/nm-core-utils.c
-@@ -1171,10 +1171,38 @@ const char *const NM_PATHS_DEFAULT[] = {
- 	NULL,
- };
- 
-+const char *const *
-+utils_get_search_paths(void)
-+{
-+	static char **paths;
-+
-+	const char *snap_path;
-+
-+	if (paths)
-+		return (const char *const *) paths;
-+
-+	snap_path = getenv("SNAP");
-+	if (snap_path) {
-+		unsigned np, i;
-+
-+		np = g_strv_length((char **) NM_PATHS_DEFAULT);
-+		paths = malloc(sizeof(char *)*(np*2 + 1));
-+		for (i = 0; i < np; ++i) {
-+			paths[i] = g_strdup_printf("%s%s", snap_path, NM_PATHS_DEFAULT[i]);
-+			paths[np + i] = g_strdup(NM_PATHS_DEFAULT[i]);
-+		}
-+		paths[2*np] = NULL;
-+	} else {
-+		paths = g_strdupv((char **) NM_PATHS_DEFAULT);;
-+	}
-+
-+	return (const char *const *) paths;
-+}
-+
- const char *
- nm_utils_find_helper(const char *progname, const char *try_first, GError **error)
- {
--	return nm_utils_file_search_in_paths (progname, try_first, NM_PATHS_DEFAULT, G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
-+	return nm_utils_file_search_in_paths (progname, try_first, utils_get_search_paths (), G_FILE_TEST_IS_EXECUTABLE, NULL, NULL, error);
- }
- 
- /*****************************************************************************/
+-- 
+2.17.1
+

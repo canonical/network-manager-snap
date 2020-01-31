@@ -1,5 +1,19 @@
+From e613ccfb5358c867c7d77b7d0e1d9f30e9f63e05 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Thu, 30 Jan 2020 13:28:52 +0100
+Subject: [PATCH 5/6] Disable tests that fail on LP build
+
+---
+ src/devices/tests/test-arping.c      | 3 +++
+ src/platform/tests/test-address.c    | 3 +++
+ src/platform/tests/test-link.c       | 9 +++++++--
+ src/platform/tests/test-nmp-object.c | 2 +-
+ src/platform/tests/test-route.c      | 3 +++
+ 5 files changed, 17 insertions(+), 3 deletions(-)
+
 diff --git a/src/devices/tests/test-arping.c b/src/devices/tests/test-arping.c
-index bcbc1140..2de53b2b 100644
+index bcbc1140d..2de53b2b0 100644
 --- a/src/devices/tests/test-arping.c
 +++ b/src/devices/tests/test-arping.c
 @@ -135,6 +135,9 @@ _nmtstp_init_tests (int *argc, char ***argv)
@@ -13,7 +27,7 @@ index bcbc1140..2de53b2b 100644
  	g_test_add ("/arping/2", test_fixture, NULL, fixture_setup, test_arping_2, fixture_teardown);
  }
 diff --git a/src/platform/tests/test-address.c b/src/platform/tests/test-address.c
-index 93851ff7..a6e53c83 100644
+index 93851ff7e..a6e53c833 100644
 --- a/src/platform/tests/test-address.c
 +++ b/src/platform/tests/test-address.c
 @@ -368,6 +368,9 @@ _nmtstp_init_tests (int *argc, char ***argv)
@@ -27,7 +41,7 @@ index 93851ff7..a6e53c83 100644
  	add_test_func ("/address/ipv4/general", test_ip4_address_general);
  	add_test_func ("/address/ipv6/general", test_ip6_address_general);
 diff --git a/src/platform/tests/test-link.c b/src/platform/tests/test-link.c
-index ef78cc24..37189d9f 100644
+index ef78cc244..37189d9f4 100644
 --- a/src/platform/tests/test-link.c
 +++ b/src/platform/tests/test-link.c
 @@ -475,13 +475,15 @@ test_bond (void)
@@ -59,7 +73,7 @@ index ef78cc24..37189d9f 100644
  	g_test_add_func ("/link/loopback", test_loopback);
  	g_test_add_func ("/link/internal", test_internal);
 diff --git a/src/platform/tests/test-nmp-object.c b/src/platform/tests/test-nmp-object.c
-index 3228de83..7f7174f5 100644
+index 3228de834..7f7174f51 100644
 --- a/src/platform/tests/test-nmp-object.c
 +++ b/src/platform/tests/test-nmp-object.c
 @@ -587,7 +587,7 @@ main (int argc, char **argv)
@@ -72,7 +86,7 @@ index 3228de83..7f7174f5 100644
  
  	result = g_test_run ();
 diff --git a/src/platform/tests/test-route.c b/src/platform/tests/test-route.c
-index 13648f16..665a5937 100644
+index 13648f16e..665a59370 100644
 --- a/src/platform/tests/test-route.c
 +++ b/src/platform/tests/test-route.c
 @@ -885,6 +885,9 @@ _nmtstp_init_tests (int *argc, char ***argv)
@@ -85,3 +99,6 @@ index 13648f16..665a5937 100644
  #define add_test_func(testpath, test_func) nmtstp_env1_add_test_func(testpath, test_func, TRUE)
  #define add_test_func_data(testpath, test_func, arg) nmtstp_env1_add_test_func_data(testpath, test_func, arg, TRUE)
  	add_test_func ("/route/ip4", test_ip4_route);
+-- 
+2.17.1
+
