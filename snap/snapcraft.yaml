@@ -59,7 +59,7 @@ parts:
   changelog:
     plugin: nil
     override-build: |
-      cp "$SNAPCRAFT_PROJECT_DIR"/ChangeLog-snap.txt "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+      cp "$SNAPCRAFT_PROJECT_DIR"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
     organize:
       ChangeLog: usr/share/doc/network-manager/ChangeLog
 
