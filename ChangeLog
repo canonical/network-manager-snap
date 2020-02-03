@@ -1,3 +1,172 @@
+2020-02-03 network-manager 1.10.6-3
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Remove patches from the debian folder
+    We take them from snap-patch now.
+    
+    Add phony part to stage compiled packages
+    
+    Remove version-script
+    version-script is now deprecated.
+    
+    Add patches specific to the NM snap to snap-patch
+    
+    Follow applied branches from auto-import repos
+    
+    tests: run iptables from core snap now
+    
+    Set rc-manager=symlink for UC18 and later
+    Otherwise, NM will call resolvconf even though it fails if UC version is
+    newer than 16. To properly set DNS we need to set both dns and
+    rc-manager options, but we were doing this only for the former. However,
+    this did not have adverse effects as, as said, the call to resolvconf
+    failed, while systemd-resolved was properly updated.
+    
+    Do not call dhcp-lease-mover anymore
+    As it was not actually working anymore since we were not staging inotify
+    anymore since a while.
+    
+    Specify explicitly copyrights to include
+    Previously there were copyright files included from non-staged
+    packages.
+    
+    Add unstage.txt file
+    This file contains a list of debian package that we are not actually
+    staging, although snapcraft adds them to manifest.yaml. CI now
+    recognizes this file, and manually removes the listed packages from the
+    manifest when releasing a snap to the store.
+    
+    Do not stage iptables/xtables
+    iptables and all needed libraries are now included in the core18 snap,
+    since revision 1049 (2019-06-27).
+    
+    Do not stage libs already in core18
+    The libraries were not really included finally in the snap, but they
+    were triggering CVE warnings from the review tools that did not actually
+    apply.
+    
+    snap: call netplan apply using DBus
+    Use DBus netplan interface to re-start network services after setting
+    NetworkManager as the default renderer.
+    
+    snap: add network-setup-control interface
+    Add network-setup-control interface so we can call 'netplan apply' from
+    the snap.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378377
+  * Change changelog file name to the standard one
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378390
+  * Unstage some packages from networkmananger-phony
+    The networkmananger-phony part was staging as dependencies packages that
+    we were not actually including in the snap. Add to the list of packages
+    to unstage on release.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378467
+
+  [ Changes in staged packages ]
+
+  libnm0 (1.10.6-2ubuntu1.2): new staged package
+
+  dnsmasq-base (2.79-1): new staged package
+
+  network-manager (1.10.6-2ubuntu1.2): new staged package
+  
+  libpcap0.8 (built from libpcap) updated from 1.8.1-6ubuntu1 to 1.8.1-6ubuntu1.18.04.1:
+  
+    libpcap (1.8.1-6ubuntu1.18.04.1) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: pcapng reading buffer over-read.
+        - debian/patches/CVE-2019-15165-1.patch: do sanity checks on PHB
+          header length before allocating memory.
+        - debian/patches/CVE-2019-15165-2.patch: fix introduced format
+          warning
+        - CVE-2019-15165
+  
+     -- Steve Beattie <sbeattie@ubuntu.com>  Thu, 21 Nov 2019 16:52:20 -0800
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27~101-g0780600+dfsg-3ubuntu2 to 2.1.27~101-g0780600+dfsg-3ubuntu2.1:
+  
+    cyrus-sasl2 (2.1.27~101-g0780600+dfsg-3ubuntu2.1) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: Off-by-one
+        - debian/patches/CVE-2019-19906.patch: fix in _sasl_add_string function
+        - CVE-2019-19906
+      * Thanks Debian for the patch provide that (Closes: #947043)
+  
+     -- Leonidas S. Barbosa <leo.barbosa@canonical.com>  Mon, 27 Jan 2020 16:25:33 -0300
+  
+  libkeyutils1: not staged anymore
+  
+  libgmp10: not staged anymore
+  
+  libldap-common: not staged anymore
+  
+  libk5crypto3: not staged anymore
+  
+  libtasn1-6: not staged anymore
+  
+  libip4tc0: not staged anymore
+  
+  libidn2-0: not staged anymore
+  
+  libffi6: not staged anymore
+  
+  libgcrypt20: not staged anymore
+  
+  libmount1: not staged anymore
+  
+  libkrb5support0: not staged anymore
+  
+  zlib1g: not staged anymore
+  
+  libiptc0: not staged anymore
+  
+  libxtables12: not staged anymore
+  
+  libcom-err2: not staged anymore
+  
+  libuuid1: not staged anymore
+  
+  libunistring2: not staged anymore
+  
+  libdbus-1-3: not staged anymore
+  
+  libselinux1: not staged anymore
+  
+  libpcre3: not staged anymore
+  
+  libssl1.1: not staged anymore
+  
+  libnettle6: not staged anymore
+  
+  libip6tc0: not staged anymore
+  
+  libgpg-error0: not staged anymore
+  
+  libglib2.0-0: not staged anymore
+  
+  libkrb5-3: not staged anymore
+  
+  libgssapi-krb5-2: not staged anymore
+  
+  iptables: not staged anymore
+  
+  libgnutls30: not staged anymore
+  
+  libblkid1: not staged anymore
+  
+  liblz4-1: not staged anymore
+  
+  libp11-kit0: not staged anymore
+  
+  init-system-helpers: not staged anymore
+  
+  libsqlite3-0: not staged anymore
+  
+  liblzma5: not staged anymore
+  
+  libhogweed4: not staged anymore
+  
+  libsasl2-modules-db: not staged anymore
+  
 2019-09-17 network-manager 1.10.6-2
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
