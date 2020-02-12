@@ -333,6 +333,7 @@ parts:
 
   # This part is to make sure we get notifications from the review tools
   networkmanager-phony:
+    after: [ networkmanager-common, changelog, dnsmasq, networkmanager ]
     plugin: nil
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
     source-type: git
@@ -347,3 +348,8 @@ parts:
       ./build-tools/cmp-stage-build.py \
           networkmanager network-manager dnsmasq dnsmasq-base
       rm -rf ../install/*
+    # Find out packages not primed in the end, for CI consumption
+    override-prime: |
+      mkdir -p snap
+      "$SNAPCRAFT_PART_SRC"/build-tools/find-non-primed-pkgs.sh \
+          "$SNAPCRAFT_PROJECT_DIR" snap/unstage.txt
