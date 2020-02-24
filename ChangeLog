@@ -1,3 +1,22 @@
+2020-02-24 network-manager 1.10.6-4
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Find non-primed packages in an automated way
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378943
+
+  [ Changes in staged packages ]
+  
+  ppp (built from ppp) updated from 2.4.7-2+2ubuntu1.1 to 2.4.7-2+2ubuntu1.2:
+  
+    ppp (2.4.7-2+2ubuntu1.2) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: rhostname buffer overflow
+        - debian/patches/CVE-2020-8597.patch: fix bounds check in EAP code in
+          pppd/eap.c.
+        - CVE-2020-8597
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 11 Feb 2020 10:05:26 -0500
+  
 2020-02-03 network-manager 1.10.6-3
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
