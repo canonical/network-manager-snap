@@ -150,7 +150,7 @@ parts:
       # dhcp handled by systemd client
       - --with-dhcpcd=no
       - --with-dhclient=no
-      - --with-dnsmasq=
+      - --with-dnsmasq=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/dnsmasq
       - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
