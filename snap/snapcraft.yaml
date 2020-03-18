@@ -7,7 +7,8 @@ description: |
   when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
-  Please find the source code at: https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
+  Please find the source code for this track at:
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
 base: core18
 confinement: strict
 grade: stable
@@ -28,6 +29,7 @@ hooks:
       # network is needed to avoid some denials when using snapctl
       - network
       - network-setup-observe
+
 apps:
   nmcli:
     command: usr/bin/nmcli
@@ -81,33 +83,11 @@ parts:
     prime:
       - $binaries
 
-  #
-  # TODO: investigate whether this HACK is still needed. The script
-  # dhcp-lease-mover relies on inotifywait to determine if any DHCP
-  # DHCP leases stored under $SNAP_DATA are created or modified, and
-  # if so, it triggers a copy of the files to /run/NetworkManager/dhcp.
-  # This is done so that subiquity's hardware probing tool (probert) is
-  # able to detect active leases.
-  #
-  #inotify-tools:
-  #  plugin: nil
-  #  stage-packages:
-  #    - libinotifytools0
-  #    - inotify-tools
-  #  filesets:
-  #    wanted:
-  #      - usr/share/doc/inotify-tools/copyright
-  #      - usr/bin/inotifywait
-  #      - usr/share/doc/libinotifytools0/copyright
-  #      - usr/lib/libinotifytools.so.0.4.1
-  #      - usr/lib/libinotifytools.so.0
-  #  snap:
-  #    - $wanted
   networkmanager:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/1.10.6-2ubuntu1.2
+    source-branch: applied/1.10.6-2ubuntu1.4
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -228,11 +208,6 @@ parts:
       snapcraftctl stage
       patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
-    # Filter files pulled in by stage-packages so they aren't
-    # included in the final snap. We only need them to build
-    # NetworkManager. All runtime dependencies are pulled in with
-    # the rdepends part below. The only left items specified
-    # here are the results of the network manager build.
     filesets:
       binaries:
         - sbin/resolvconf
@@ -317,7 +292,6 @@ parts:
         # Things we don't support yet and don't have to ship
         - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
         - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
-
         # Some additional build artifacts we do not need
         - -usr/lib/pkgconfig
     prime:
