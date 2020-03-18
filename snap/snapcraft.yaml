@@ -150,16 +150,12 @@ parts:
       # dhcp handled by systemd client
       - --with-dhcpcd=no
       - --with-dhclient=no
-      - --with-dnsmasq=no
+      - --with-dnsmasq=
       - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
       - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
-      #
-      # TODO: dnsmasq is used for AP mode; not
-      # currently supported by the snap:
-      # - --with-dnsmasq=/usr/sbin/dnsmasq
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
       - --with-udev-dir=/lib/udev
