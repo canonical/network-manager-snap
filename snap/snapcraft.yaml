@@ -9,7 +9,7 @@ description: |
   VPN serivces.
   Please find the source code for this track at:
     https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
-base: core18
+base: core20
 confinement: strict
 grade: stable
 
