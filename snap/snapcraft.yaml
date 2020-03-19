@@ -157,7 +157,6 @@ parts:
       - --disable-polkit-agent
       - --enable-ppp
       - --enable-ifupdown
-      - --disable-config-plugin-ibft
       - --enable-introspection
       - --disable-gtk-doc
       - --enable-concheck
