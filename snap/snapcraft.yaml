@@ -210,6 +210,10 @@ parts:
       snapcraftctl stage
       patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
+    organize:
+      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
+
     filesets:
       binaries:
         - sbin/resolvconf
