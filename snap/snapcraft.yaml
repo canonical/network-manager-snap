@@ -136,6 +136,7 @@ parts:
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
+      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/
       - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
