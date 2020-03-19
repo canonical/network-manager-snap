@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.10.6-6-dev
+version: 1.22.10-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -8,7 +8,7 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.22
 base: core20
 confinement: strict
 grade: stable
