@@ -8,6 +8,6 @@ if [ ! -e "$SNAP_DATA"/conf.d/enable-wol.conf ] ; then
 		[connection]
 		# Value 64 maps to the 'magic' setting; see man nm-settings
 		# for more information.
-		802-3-ethernet.wake-on-lan=64
+		ethernet.wake-on-lan=64
 	EOF
 fi
