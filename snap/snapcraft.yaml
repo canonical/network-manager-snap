@@ -313,8 +313,8 @@ parts:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
         # Things we don't support yet and don't have to ship
-        - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
-        - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
+        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
+        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
         - -usr/lib/pkgconfig
     prime:
