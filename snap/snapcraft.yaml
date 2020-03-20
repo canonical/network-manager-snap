@@ -30,6 +30,16 @@ hooks:
       - network
       - network-setup-observe
 
+layout:
+  /usr/lib/NetworkManager:
+    bind: $SNAP/usr/lib/NetworkManager
+  /etc/NetworkManager:
+    bind: $SNAP_DATA/etc/NetworkManager
+  /usr/var/lib/NetworkManager:
+    bind: $SNAP_DATA/usr/var/lib/NetworkManager
+  /var/lib/NetworkManager:
+    bind: $SNAP_DATA/var/lib/NetworkManager
+
 apps:
   nmcli:
     command: usr/bin/nmcli
@@ -126,7 +136,9 @@ parts:
       - gtk-doc-tools
     configflags:
       - --prefix=/usr
-      - --libdir=/usr/lib
+      - --sysconfdir=/etc
+      - --localstatedir=/var
+      - --runstatedir=/run
       - --disable-qt
       # dhcp handled by systemd client
       - --with-dhcpcd=no
