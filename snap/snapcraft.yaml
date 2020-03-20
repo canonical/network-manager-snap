@@ -181,6 +181,7 @@ parts:
     stage-packages:
       - iputils-arping
       - libasn1-8-heimdal
+      - libbrotli1
       - libdbus-glib-1-2
       - libcurl3-gnutls
       - libgssapi3-heimdal
@@ -201,6 +202,7 @@ parts:
       - libsasl2-2
       - libteamdctl0
       - libslang2
+      - libssh-4
       - libwind0-heimdal
       - ppp
       - resolvconf
@@ -234,6 +236,7 @@ parts:
         - usr/share/doc/dnsmasq/copyright
         - usr/share/doc/iputils-arping/copyright
         - usr/share/doc/libasn1-8-heimdal/copyright
+        - usr/share/doc/libbrotli1/copyright
         - usr/share/doc/libcurl3-gnutls/copyright
         - usr/share/doc/libdbus-glib-1-2/copyright
         - usr/share/doc/libgssapi3-heimdal/copyright
@@ -254,6 +257,7 @@ parts:
         - usr/share/doc/librtmp1/copyright
         - usr/share/doc/libsasl2-2/copyright
         - usr/share/doc/libslang2/copyright
+        - usr/share/doc/libssh-4/copyright
         - usr/share/doc/libteamdctl0/copyright
         - usr/share/doc/libwind0-heimdal/copyright
         - usr/share/doc/network-manager/copyright
@@ -265,6 +269,7 @@ parts:
         - lib/*/libslang*
         - usr/lib/libnm*
         - usr/lib/*/libasn1*
+        - usr/lib/*/libbrotli*
         - usr/lib/*/libcurl-gnutls*
         - usr/lib/*/libdbus-glib*
         - usr/lib/*/libgssapi*
@@ -289,6 +294,7 @@ parts:
         - usr/lib/*/libroken*
         - usr/lib/*/librtmp*
         - usr/lib/*/libsasl2*
+        - usr/lib/*/libssh*
         - usr/lib/*/libteamdctl*
         - usr/lib/*/libwind*
       unwanted:
