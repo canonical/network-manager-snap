@@ -1,0 +1,27 @@
+From 33ae5fe298bab3019ee053d42a8c53918531782d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Mon, 23 Mar 2020 09:10:15 +0100
+Subject: [PATCH] dnsmasq: use NMRUNDIR instead of RUNSTATEDIR
+
+RUNSTATEDIR is not allowed under the current snapd apparmor rules
+---
+ src/dnsmasq/nm-dnsmasq-manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dnsmasq/nm-dnsmasq-manager.c b/src/dnsmasq/nm-dnsmasq-manager.c
+index 735605eec..8514ceb98 100644
+--- a/src/dnsmasq/nm-dnsmasq-manager.c
++++ b/src/dnsmasq/nm-dnsmasq-manager.c
+@@ -331,7 +331,7 @@ nm_dnsmasq_manager_new (const char *iface)
+ 
+ 	priv = NM_DNSMASQ_MANAGER_GET_PRIVATE (manager);
+ 	priv->iface = g_strdup (iface);
+-	priv->pidfile = g_strdup_printf (RUNSTATEDIR "/nm-dnsmasq-%s.pid", iface);
++	priv->pidfile = g_strdup_printf (NMRUNDIR "/nm-dnsmasq-%s.pid", iface);
+ 
+ 	return manager;
+ }
+-- 
+2.17.1
+
