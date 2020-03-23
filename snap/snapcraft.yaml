@@ -34,7 +34,9 @@ layout:
   /usr/lib/NetworkManager:
     bind: $SNAP/usr/lib/NetworkManager
   /etc/NetworkManager:
-    bind: $SNAP_DATA/etc/NetworkManager
+    # Using 'conf' to keep compatibility with older NM snaps. Another option
+    # would be to copy around the systems connections when refreshing.
+    bind: $SNAP_DATA/conf
   /usr/var/lib/NetworkManager:
     bind: $SNAP_DATA/usr/var/lib/NetworkManager
   /var/lib/NetworkManager:
