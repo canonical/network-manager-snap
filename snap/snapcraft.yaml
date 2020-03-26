@@ -179,6 +179,7 @@ parts:
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
+      - --without-nm-cloud-setup
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
     override-build: |
