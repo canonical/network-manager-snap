@@ -51,7 +51,8 @@ apps:
     daemon: simple
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control,
-            hardware-observe, network-setup-control]
+            hardware-observe, network-setup-control, login-session-observe,
+            network-observe]
 
 parts:
   networkmanager-common:
