@@ -165,9 +165,10 @@ _switch_defaultrenderer() {
             # Flush ips of devices that now we control. Workaround
             # until LP:#1870561 is fixed.
             for conn_f in /run/NetworkManager/system-connections/*; do
-                ifname=${conn_f##*netplan-}
-                ifname=${ifname%.*}
-                ip address flush dev "$ifname" || true
+                if ifname=$(grep ^interface-name= "$conn_f"); then
+                    ifname=${ifname#interface-name=}
+                    ip address flush dev "$ifname" || true
+                fi
             done
         fi
     elif [ -f "$path" ]; then
