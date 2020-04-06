@@ -162,6 +162,14 @@ _switch_defaultrenderer() {
             dbus-send --system --type=method_call --print-reply \
                       --dest=io.netplan.Netplan /io/netplan/Netplan \
                       io.netplan.Netplan.Apply
+            # Flush ips of devices that now we control. Workaround
+            # until LP:#1870561 is fixed.
+            for conn_f in /run/NetworkManager/system-connections/*; do
+                if ifname=$(grep ^interface-name= "$conn_f"); then
+                    ifname=${ifname#interface-name=}
+                    ip address flush dev "$ifname" || true
+                fi
+            done
         fi
     elif [ -f "$path" ]; then
         rm -f "$path"
