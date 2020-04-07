@@ -1,3 +1,38 @@
+2020-04-07 network-manager 1.10.6-5
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * snap: update to newer NM deb package
+    snap: set dnsmasq path to the one in the snap
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/380836
+  * Flush IPs of devices we are taking control of in the wrapper, after
+    calling netplan apply and before starting NetworkManager. netplan
+    leaves IPs configured by networkd around and that confuses
+    NetworkManager. This is a workaround until LP:#1870561 is fixed. As
+    we are using the 'ip' command for this, we need to add network-observe
+    to the list of interfaces we want.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/381733
+
+  [ Changes in staged packages ]
+  
+  libnm0, network-manager (built from network-manager) updated from 1.10.6-2ubuntu1.2 to 1.10.6-2ubuntu1.4:
+  
+    network-manager (1.10.6-2ubuntu1.4) bionic; urgency=medium
+  
+      * d/p/start-ip-conf-when-master-carrier-goes-up.patch: device: start IP
+        configuration when master carrier goes up (LP: #1794478)
+  
+     -- Seyeong Kim <seyeong.kim@canonical.com>  Wed, 19 Feb 2020 14:59:10 +0900
+  
+    network-manager (1.10.6-2ubuntu1.3) bionic; urgency=medium
+  
+      * d/t/control: nm test requires dnsmasq-base (LP: #1850267)
+      * d/t/killswitches-no-urfkill, d/t/urfkill-integration,
+        d/t/wpa-dhclient, d/t/nm, d/t/control:
+        - skip tests on s390 due to missing wireless kernel support
+          (LP: #1855009)
+  
+     -- Dan Streetman <ddstreet@canonical.com>  Wed, 04 Dec 2019 12:17:37 -0500
+  
 2020-02-24 network-manager 1.10.6-4
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
