@@ -3,8 +3,14 @@ summary: When defaultrender is set NM manages ethernet
 execute: |
     . $TESTSLIB/utilities.sh
     snap set network-manager defaultrenderer=true
+    # Needed because netplan bug not backported to xenial
+    # Make it succeed - there are races with other systmectl restart calls
+    systemctl restart systemd-networkd || true
     sleep 5
     networkctl | grep 'eth0.*unmanaged'
     wait_for_network_manager
     /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
     snap set network-manager defaultrenderer=false
+    # Needed because netplan bug not backported to xenial
+    # Make it succeed - there are races with other systmectl restart calls
+    systemctl restart systemd-networkd || true
