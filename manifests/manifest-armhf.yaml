@@ -1,0 +1,954 @@
+snapcraft-version: 3.10.2
+snapcraft-started-at: '2020-04-07T16:41:42.142328Z'
+snapcraft-os-release-id: ubuntu
+snapcraft-os-release-version-id: '18.04'
+name: network-manager
+version: 1.10.6-5
+summary: Network Manager
+description: |
+  NetworkManager is a system network service that manages your network
+  devices and connections, attempting to keep active network connectivity
+  when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
+  PPPoE devices, provides VPN integration with a variety of different
+  VPN serivces.
+  Please find the source code for this track at:
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.10
+base: core18
+confinement: strict
+grade: stable
+slots:
+  service: network-manager
+plugs:
+  nmcli: network-manager
+  wpa:
+    bus: system
+    interface: dbus
+    name: fi.w1.wpa_supplicant1
+hooks:
+  configure:
+    plugs:
+    - network
+    - network-setup-observe
+apps:
+  networkmanager:
+    adapter: legacy
+    command: bin/networkmanager
+    daemon: simple
+    plugs:
+    - modem-manager
+    - ppp
+    - network-setup-observe
+    - wpa
+    - firewall-control
+    - hardware-observe
+    - network-setup-control
+    - login-session-observe
+    - network-observe
+    slots:
+    - service
+  nmcli:
+    adapter: legacy
+    command: usr/bin/nmcli
+    plugs:
+    - nmcli
+  nmtui:
+    adapter: legacy
+    command: usr/bin/nmtui
+    plugs:
+    - nmcli
+  nmtui-connect:
+    adapter: legacy
+    command: usr/bin/nmtui-connect
+    plugs:
+    - nmcli
+  nmtui-edit:
+    adapter: legacy
+    command: usr/bin/nmtui-edit
+    plugs:
+    - nmcli
+  nmtui-hostname:
+    adapter: legacy
+    command: usr/bin/nmtui-hostname
+    plugs:
+    - nmcli
+parts:
+  changelog:
+    build-packages: []
+    installed-packages: []
+    installed-snaps:
+    - core18=1706
+    - snapcraft=4235
+    - snapd=6958
+    organize:
+      ChangeLog: usr/share/doc/network-manager/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-kzwz648gn02oxid2"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+
+'
+    plugin: nil
+    prime: []
+    stage: []
+    stage-packages: []
+    uname: 'Linux 4.4.0-176-generic #206-Ubuntu SMP Fri Feb 28 05:03:00 UTC 2020 armv7l
+      armv7l armv7l GNU/Linux'
+  dnsmasq:
+    build-packages:
+    - build-essential
+    - make
+    installed-packages: []
+    installed-snaps:
+    - core18=1706
+    - snapcraft=4235
+    - snapd=6958
+    make-parameters:
+    - PREFIX=/
+    override-build: |
+      git apply "/build/ci-network-manager-kzwz648gn02oxid2"/snap-patch/dnsmasq.patch
+      snapcraftctl build
+    plugin: make
+    prime:
+    - sbin/dnsmasq
+    source: https://git.launchpad.net/ubuntu/+source/dnsmasq
+    source-branch: applied/2.79-1
+    source-checksum: ''
+    source-commit: ''
+    source-tag: ''
+    source-type: git
+    stage: []
+    stage-packages: []
+    uname: 'Linux 4.4.0-176-generic #206-Ubuntu SMP Fri Feb 28 05:03:00 UTC 2020 armv7l
+      armv7l armv7l GNU/Linux'
+  networkmanager:
+    build-packages:
+    - autoconf
+    - automake
+    - autopoint
+    - dbus
+    - gobject-introspection
+    - gtk-doc-tools
+    - intltool
+    - iptables
+    - libcurl4-gnutls-dev
+    - libdbus-1-dev
+    - libdbus-glib-1-dev
+    - libgirepository1.0-dev
+    - libglib2.0-dev
+    - libglib2.0-doc
+    - libgnutls28-dev
+    - libiw-dev
+    - libjansson-dev
+    - libmm-glib-dev
+    - libndp-dev
+    - libnewt-dev
+    - libnl-3-dev
+    - libnl-genl-3-dev
+    - libnl-route-3-dev
+    - libpsl-dev
+    - libreadline-dev
+    - libsystemd-dev
+    - libteam-dev
+    - libtool
+    - libudev-dev
+    - libyaml-perl
+    - make
+    - perl
+    - ppp-dev
+    - python-dbus
+    - python-gi
+    - quilt
+    - systemd
+    - uuid-dev
+    - xsltproc
+    configflags:
+    - --prefix=/usr
+    - --libdir=/usr/lib
+    - --disable-qt
+    - --with-dhcpcd=no
+    - --with-dhclient=no
+    - --with-dnsmasq=/snap/network-manager/current/sbin/dnsmasq
+    - --with-iptables=/sbin/iptables
+    - --with-systemd-journal=yes
+    - --libexecdir=/snap/network-manager/current/usr/lib/NetworkManager
+    - --with-pppd=/snap/network-manager/current/usr/sbin/pppd
+    - --with-resolvconf=/snap/network-manager/current/sbin/resolvconf
+    - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
+    - --with-systemdsystemunitdir=/lib/systemd/system
+    - --with-udev-dir=/lib/udev
+    - --with-crypto=gnutls
+    - --with-session-tracking=no
+    - --with-suspend-resume=systemd
+    - --with-modem-manager-1
+    - --with-nmtui=yes
+    - --with-nmcli=yes
+    - --with-selinux=no
+    - --with-tests
+    - --with-libaudit=no
+    - --without-dhcpcanon
+    - --disable-polkit
+    - --disable-polkit-agent
+    - --enable-ppp
+    - --enable-ifupdown
+    - --disable-config-plugin-ibft
+    - --enable-introspection
+    - --disable-gtk-doc
+    - --enable-concheck
+    - --enable-teamdctl
+    - --enable-json-validation
+    - --disable-more-warnings
+    - --disable-modify-system
+    - --disable-ovs
+    - CFLAGS=-O2
+    installed-packages: []
+    installed-snaps:
+    - core18=1706
+    - snapcraft=4235
+    - snapd=6958
+    override-build: |
+      git config user.email "snapcraft@canonical.com"
+      git config user.name "snapcraft"
+      git am "/build/ci-network-manager-kzwz648gn02oxid2"/snap-patch/networkmanager/*.patch
+
+      # remove configure to trigger autotools
+      rm ./configure
+      snapcraftctl build
+
+      # Run all tests NetworkManager ships by default
+      make check
+    override-stage: |
+      snapcraftctl stage
+      patch -p1 < "/build/ci-network-manager-kzwz648gn02oxid2"/snap-patch/resolvconf.patch
+    plugin: autotools
+    prime:
+    - sbin/resolvconf
+    - usr/bin/arping
+    - usr/bin/nmcli
+    - usr/bin/nmtui
+    - usr/bin/nmtui-connect
+    - usr/bin/nmtui-edit
+    - usr/bin/nmtui-hostname
+    - usr/sbin/pppd
+    - usr/lib/*/NetworkManager
+    - usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+    - usr/lib/NetworkManager
+    - usr/sbin/NetworkManager
+    - etc/NetworkManager/*
+    - etc/resolvconf/update.d/libc
+    - usr/share/doc/dnsmasq/copyright
+    - usr/share/doc/iputils-arping/copyright
+    - usr/share/doc/libasn1-8-heimdal/copyright
+    - usr/share/doc/libcurl3-gnutls/copyright
+    - usr/share/doc/libdbus-glib-1-2/copyright
+    - usr/share/doc/libgssapi3-heimdal/copyright
+    - usr/share/doc/libhcrypto4-heimdal/copyright
+    - usr/share/doc/libheimbase1-heimdal/copyright
+    - usr/share/doc/libheimntlm0-heimdal/copyright
+    - usr/share/doc/libhx509-5-heimdal/copyright
+    - usr/share/doc/libjansson4/copyright
+    - usr/share/doc/libkrb5-26-heimdal/copyright
+    - usr/share/doc/libldap-2.4-2/copyright
+    - usr/share/doc/libmm-glib0/copyright
+    - usr/share/doc/libndp0/copyright
+    - usr/share/doc/libnewt0.52/copyright
+    - usr/share/doc/libnghttp2-14/copyright
+    - usr/share/doc/libpcap0.8/copyright
+    - usr/share/doc/libpsl5/copyright
+    - usr/share/doc/libroken18-heimdal/copyright
+    - usr/share/doc/librtmp1/copyright
+    - usr/share/doc/libsasl2-2/copyright
+    - usr/share/doc/libslang2/copyright
+    - usr/share/doc/libteamdctl0/copyright
+    - usr/share/doc/libwind0-heimdal/copyright
+    - usr/share/doc/network-manager/copyright
+    - usr/share/doc/ppp/copyright
+    - usr/share/doc/resolvconf/copyright
+    - lib/resolvconf/list-records
+    - lib/*/libnewt*
+    - lib/*/libslang*
+    - usr/lib/libnm*
+    - usr/lib/*/libasn1*
+    - usr/lib/*/libcurl-gnutls*
+    - usr/lib/*/libdbus-glib*
+    - usr/lib/*/libgssapi*
+    - -usr/lib/*/libgssapi_krb5*
+    - usr/lib/*/libhcrypto*
+    - usr/lib/*/libheimbase*
+    - usr/lib/*/libheimntlm*
+    - usr/lib/*/libhx509*
+    - usr/lib/*/libip4tc*
+    - usr/lib/*/libip6tc*
+    - usr/lib/*/libjansson*
+    - usr/lib/*/libkrb5*26*
+    - usr/lib/*/liblber-2.4*
+    - usr/lib/*/libldap_r-2.4*
+    - usr/lib/*/liblzma*
+    - usr/lib/*/libmm-glib*
+    - usr/lib/*/libndp*
+    - usr/lib/*/libnghttp2*
+    - usr/lib/*/libpcap*
+    - usr/lib/*/libpsl*
+    - usr/lib/*/libroken*
+    - usr/lib/*/librtmp*
+    - usr/lib/*/libsasl2*
+    - usr/lib/*/libteamdctl*
+    - usr/lib/*/libwind*
+    - -usr/lib/NetworkManager/nm-dhcp-helper
+    - -usr/lib/NetworkManager/libnm-device-plugin-adsl.so
+    - -usr/lib/NetworkManager/libnm-device-plugin-bluetooth.so
+    - -usr/lib/pkgconfig
+    source: https://git.launchpad.net/ubuntu/+source/network-manager
+    source-branch: applied/1.10.6-2ubuntu1.4
+    source-checksum: ''
+    source-commit: ''
+    source-tag: ''
+    source-type: git
+    stage: []
+    stage-packages:
+    - iputils-arping=3:20161105-1ubuntu3
+    - libasn1-8-heimdal=7.5.0+dfsg-1
+    - libcurl3-gnutls=7.58.0-2ubuntu3.8
+    - libdbus-glib-1-2=0.110-2
+    - libgssapi3-heimdal=7.5.0+dfsg-1
+    - libhcrypto4-heimdal=7.5.0+dfsg-1
+    - libheimbase1-heimdal=7.5.0+dfsg-1
+    - libheimntlm0-heimdal=7.5.0+dfsg-1
+    - libhx509-5-heimdal=7.5.0+dfsg-1
+    - libjansson4=2.11-1
+    - libkrb5-26-heimdal=7.5.0+dfsg-1
+    - libldap-2.4-2=2.4.45+dfsg-1ubuntu1.4
+    - libmm-glib0=1.10.0-1~ubuntu18.04.2
+    - libndp0=1.6-1
+    - libnewt0.52=0.52.20-1ubuntu1
+    - libnghttp2-14=1.30.0-1ubuntu1
+    - libpcap0.8=1.8.1-6ubuntu1.18.04.1
+    - libpsl5=0.19.1-5build1
+    - libroken18-heimdal=7.5.0+dfsg-1
+    - librtmp1=2.4+20151223.gitfa8646d.1-1
+    - libsasl2-2=2.1.27~101-g0780600+dfsg-3ubuntu2.1
+    - libslang2=2.3.1a-3ubuntu1
+    - libteamdctl0=1.26-1
+    - libwind0-heimdal=7.5.0+dfsg-1
+    - ppp=2.4.7-2+2ubuntu1.2
+    - resolvconf=1.79ubuntu10.18.04.3
+    uname: 'Linux 4.4.0-176-generic #206-Ubuntu SMP Fri Feb 28 05:03:00 UTC 2020 armv7l
+      armv7l armv7l GNU/Linux'
+  networkmanager-common:
+    build-packages: []
+    installed-packages: []
+    installed-snaps:
+    - core18=1706
+    - snapcraft=4235
+    - snapd=6958
+    plugin: dump
+    prime: []
+    source: snap-common
+    stage: []
+    stage-packages: []
+    uname: 'Linux 4.4.0-176-generic #206-Ubuntu SMP Fri Feb 28 05:03:00 UTC 2020 armv7l
+      armv7l armv7l GNU/Linux'
+  networkmanager-phony:
+    build-packages:
+    - python3-minimal
+    - python3-yaml
+    installed-packages:
+    - adduser=3.116ubuntu1
+    - advancecomp=2.1-1ubuntu0.18.04.1
+    - apparmor=2.12-4ubuntu5.1
+    - apt=1.6.12
+    - autoconf=2.69-11
+    - automake=1:1.15.1-3ubuntu2
+    - autopoint=0.19.8.1-6ubuntu0.3
+    - autotools-dev=20180224.1
+    - base-files=10.1ubuntu2.8
+    - base-passwd=3.5.44
+    - bash=4.4.18-2ubuntu1.2
+    - binutils-arm-linux-gnueabihf=2.30-21ubuntu1~18.04.2
+    - binutils-common=2.30-21ubuntu1~18.04.2
+    - binutils=2.30-21ubuntu1~18.04.2
+    - bsdmainutils=11.1.2ubuntu1
+    - bsdutils=1:2.31.1-0.4ubuntu3.6
+    - build-essential=12.4ubuntu1
+    - bzip2=1.0.6-8.1ubuntu0.2
+    - ca-certificates=20180409
+    - coreutils=8.28-1ubuntu1
+    - cpp-7=7.5.0-3ubuntu1~18.04
+    - cpp=4:7.4.0-1ubuntu2.3
+    - dash=0.5.8-2.10
+    - dbus=1.12.2-1ubuntu1.1
+    - debconf=1.5.66ubuntu1
+    - debianutils=4.8.4
+    - diffstat=1.61-1build1
+    - diffutils=1:3.6-1
+    - docbook-to-man=1:2.0.0-41
+    - docbook-xml=4.5-8
+    - docbook-xsl=1.79.1+dfsg-2
+    - docbook=4.5-6
+    - dpkg-dev=1.19.0.5ubuntu2.3
+    - dpkg=1.19.0.5ubuntu2.3
+    - e2fsprogs=1.44.1-1ubuntu1.3
+    - fakeroot=1.22-2ubuntu1
+    - fdisk=2.31.1-0.4ubuntu3.6
+    - file=1:5.32-2ubuntu0.3
+    - findutils=4.6.0+git+20170828-2
+    - fuse=2.9.7-1ubuntu1
+    - g++-7=7.5.0-3ubuntu1~18.04
+    - g++=4:7.4.0-1ubuntu2.3
+    - gcc-7-base=7.5.0-3ubuntu1~18.04
+    - gcc-7=7.5.0-3ubuntu1~18.04
+    - gcc-8-base=8.4.0-1ubuntu1~18.04
+    - gcc=4:7.4.0-1ubuntu2.3
+    - gettext-base=0.19.8.1-6ubuntu0.3
+    - gettext=0.19.8.1-6ubuntu0.3
+    - gir1.2-freedesktop=1.56.1-1
+    - gir1.2-glib-2.0=1.56.1-1
+    - gir1.2-modemmanager-1.0=1.10.0-1~ubuntu18.04.2
+    - git-man=1:2.17.1-1ubuntu0.5
+    - git=1:2.17.1-1ubuntu0.5
+    - gobject-introspection=1.56.1-1
+    - gpg-agent=2.2.4-1ubuntu1.2
+    - gpg=2.2.4-1ubuntu1.2
+    - gpgconf=2.2.4-1ubuntu1.2
+    - gpgv=2.2.4-1ubuntu1.2
+    - grep=3.1-2build1
+    - gtk-doc-tools=1.27-3
+    - gzip=1.6-5ubuntu1
+    - highlight-common=3.41-1
+    - highlight=3.41-1
+    - hostname=3.20
+    - init-system-helpers=1.51
+    - init=1.51
+    - intltool=0.51.0-5ubuntu1
+    - iptables=1.6.1-2ubuntu2
+    - libacl1=2.2.52-3build1
+    - libapparmor1=2.12-4ubuntu5.1
+    - libapt-pkg5.0=1.6.12
+    - libargon2-0=0~20161029-1.1
+    - libasan4=7.5.0-3ubuntu1~18.04
+    - libasn1-8-heimdal=7.5.0+dfsg-1
+    - libassuan0=2.5.1-2
+    - libatomic1=8.4.0-1ubuntu1~18.04
+    - libattr1=1:2.4.47-2build1
+    - libaudit-common=1:2.8.2-1ubuntu1
+    - libaudit1=1:2.8.2-1ubuntu1
+    - libbinutils=2.30-21ubuntu1~18.04.2
+    - libblkid1=2.31.1-0.4ubuntu3.6
+    - libbsd0=0.8.7-1ubuntu0.1
+    - libbz2-1.0=1.0.6-8.1ubuntu0.2
+    - libc-bin=2.27-3ubuntu1
+    - libc-dev-bin=2.27-3ubuntu1
+    - libc6-dev=2.27-3ubuntu1
+    - libc6=2.27-3ubuntu1
+    - libcap-ng0=0.7.7-3.1
+    - libcap2=1:2.25-1.2
+    - libcc1-0=8.4.0-1ubuntu1~18.04
+    - libcilkrts5=7.5.0-3ubuntu1~18.04
+    - libcom-err2=1.44.1-1ubuntu1.3
+    - libcroco3=0.6.12-2
+    - libcryptsetup12=2:2.0.2-1ubuntu1.1
+    - libcurl3-gnutls=7.58.0-2ubuntu3.8
+    - libcurl4-gnutls-dev=7.58.0-2ubuntu3.8
+    - libdb5.3=5.3.28-13.1ubuntu1.1
+    - libdbus-1-3=1.12.2-1ubuntu1.1
+    - libdbus-1-dev=1.12.2-1ubuntu1.1
+    - libdbus-glib-1-2=0.110-2
+    - libdbus-glib-1-dev=0.110-2
+    - libdebconfclient0=0.213ubuntu1
+    - libdevmapper1.02.1=2:1.02.145-4.1ubuntu3.18.04.2
+    - libdpkg-perl=1.19.0.5ubuntu2.3
+    - libedit2=3.1-20170329-1
+    - libelf1=0.170-0.4ubuntu0.1
+    - libencode-locale-perl=1.05-1
+    - liberror-perl=0.17025-1
+    - libevent-2.1-6=2.1.8-stable-4build1
+    - libexpat1=2.2.5-3ubuntu0.2
+    - libext2fs2=1.44.1-1ubuntu1.3
+    - libfakeroot=1.22-2ubuntu1
+    - libfdisk1=2.31.1-0.4ubuntu3.6
+    - libffi-dev=3.2.1-8
+    - libffi6=3.2.1-8
+    - libfile-listing-perl=6.04-1
+    - libfuse2=2.9.7-1ubuntu1
+    - libgcc-7-dev=7.5.0-3ubuntu1~18.04
+    - libgcc1=1:8.4.0-1ubuntu1~18.04
+    - libgcrypt20=1.8.1-4ubuntu1.2
+    - libgdbm-compat4=1.14.1-6
+    - libgdbm5=1.14.1-6
+    - libgirepository-1.0-1=1.56.1-1
+    - libgirepository1.0-dev=1.56.1-1
+    - libglib2.0-0=2.56.4-0ubuntu0.18.04.6
+    - libglib2.0-bin=2.56.4-0ubuntu0.18.04.6
+    - libglib2.0-data=2.56.4-0ubuntu0.18.04.6
+    - libglib2.0-dev-bin=2.56.4-0ubuntu0.18.04.6
+    - libglib2.0-dev=2.56.4-0ubuntu0.18.04.6
+    - libglib2.0-doc=2.56.4-0ubuntu0.18.04.6
+    - libgmp-dev=2:6.1.2+dfsg-2
+    - libgmp10=2:6.1.2+dfsg-2
+    - libgmpxx4ldbl=2:6.1.2+dfsg-2
+    - libgnutls-dane0=3.5.18-1ubuntu1.3
+    - libgnutls-openssl27=3.5.18-1ubuntu1.3
+    - libgnutls28-dev=3.5.18-1ubuntu1.3
+    - libgnutls30=3.5.18-1ubuntu1.3
+    - libgnutlsxx28=3.5.18-1ubuntu1.3
+    - libgomp1=8.4.0-1ubuntu1~18.04
+    - libgpg-error0=1.27-6
+    - libgssapi-krb5-2=1.16-2ubuntu0.1
+    - libgssapi3-heimdal=7.5.0+dfsg-1
+    - libhcrypto4-heimdal=7.5.0+dfsg-1
+    - libheimbase1-heimdal=7.5.0+dfsg-1
+    - libheimntlm0-heimdal=7.5.0+dfsg-1
+    - libhogweed4=3.4-1
+    - libhtml-parser-perl=3.72-3build1
+    - libhtml-tagset-perl=3.20-3
+    - libhtml-tree-perl=5.07-1
+    - libhttp-cookies-perl=6.04-1
+    - libhttp-date-perl=6.02-1
+    - libhttp-message-perl=6.14-1
+    - libhttp-negotiate-perl=6.00-2
+    - libhx509-5-heimdal=7.5.0+dfsg-1
+    - libicu60=60.2-3ubuntu3.1
+    - libidn11=1.33-2.1ubuntu1.2
+    - libidn2-0-dev=2.0.4-1.1ubuntu0.2
+    - libidn2-0=2.0.4-1.1ubuntu0.2
+    - libidn2-dev=2.0.4-1.1ubuntu0.2
+    - libio-html-perl=1.001-1
+    - libio-socket-ssl-perl=2.060-3~ubuntu18.04.1
+    - libip4tc0=1.6.1-2ubuntu2
+    - libip6tc0=1.6.1-2ubuntu2
+    - libiptc0=1.6.1-2ubuntu2
+    - libisl19=0.19-1
+    - libiw-dev=30~pre9-12ubuntu1
+    - libiw30=30~pre9-12ubuntu1
+    - libjansson-dev=2.11-1
+    - libjansson4=2.11-1
+    - libjson-c3=0.12.1-1.3
+    - libk5crypto3=1.16-2ubuntu0.1
+    - libkeyutils1=1.5.9-9.2ubuntu2
+    - libkmod2=24-1ubuntu3.2
+    - libkrb5-26-heimdal=7.5.0+dfsg-1
+    - libkrb5-3=1.16-2ubuntu0.1
+    - libkrb5support0=1.16-2ubuntu0.1
+    - libldap-2.4-2=2.4.45+dfsg-1ubuntu1.4
+    - libldap-common=2.4.45+dfsg-1ubuntu1.4
+    - liblockfile-bin=1.14-1.1
+    - liblockfile1=1.14-1.1
+    - liblua5.2-0=5.2.4-1.1build1
+    - liblwp-mediatypes-perl=6.02-1
+    - liblwp-protocol-https-perl=6.07-2
+    - liblz4-1=0.0~r131-2ubuntu3
+    - liblzma5=5.2.2-1.3
+    - liblzo2-2=2.08-1.2
+    - libmagic-mgc=1:5.32-2ubuntu0.3
+    - libmagic1=1:5.32-2ubuntu0.3
+    - libmm-glib-dev=1.10.0-1~ubuntu18.04.2
+    - libmm-glib0=1.10.0-1~ubuntu18.04.2
+    - libmnl0=1.0.4-2
+    - libmount1=2.31.1-0.4ubuntu3.6
+    - libmpc3=1.1.0-1
+    - libmpdec2=2.4.2-1ubuntu1
+    - libmpfr6=4.0.1-1
+    - libncurses5=6.1-1ubuntu1.18.04
+    - libncursesw5=6.1-1ubuntu1.18.04
+    - libndp-dev=1.6-1
+    - libndp0=1.6-1
+    - libnet-http-perl=6.17-1
+    - libnet-ssleay-perl=1.84-1ubuntu0.2
+    - libnetfilter-conntrack3=1.0.6-2
+    - libnettle6=3.4-1
+    - libnewt-dev=0.52.20-1ubuntu1
+    - libnewt0.52=0.52.20-1ubuntu1
+    - libnfnetlink0=1.0.1-3
+    - libnghttp2-14=1.30.0-1ubuntu1
+    - libnl-3-200=3.2.29-0ubuntu3
+    - libnl-3-dev=3.2.29-0ubuntu3
+    - libnl-cli-3-200=3.2.29-0ubuntu3
+    - libnl-genl-3-200=3.2.29-0ubuntu3
+    - libnl-genl-3-dev=3.2.29-0ubuntu3
+    - libnl-nf-3-200=3.2.29-0ubuntu3
+    - libnl-route-3-200=3.2.29-0ubuntu3
+    - libnl-route-3-dev=3.2.29-0ubuntu3
+    - libnpth0=1.5-3
+    - libosp5=1.5.2-13ubuntu2
+    - libp11-kit-dev=0.23.9-2
+    - libp11-kit0=0.23.9-2
+    - libpam-modules-bin=1.1.8-3.6ubuntu2.18.04.1
+    - libpam-modules=1.1.8-3.6ubuntu2.18.04.1
+    - libpam-runtime=1.1.8-3.6ubuntu2.18.04.1
+    - libpam0g=1.1.8-3.6ubuntu2.18.04.1
+    - libpcre16-3=2:8.39-9
+    - libpcre3-dev=2:8.39-9
+    - libpcre32-3=2:8.39-9
+    - libpcre3=2:8.39-9
+    - libpcrecpp0v5=2:8.39-9
+    - libperl5.26=5.26.1-6ubuntu0.3
+    - libpng-dev=1.6.34-1ubuntu0.18.04.2
+    - libpng16-16=1.6.34-1ubuntu0.18.04.2
+    - libprocps6=2:3.3.12-3ubuntu1.2
+    - libpsl-dev=0.19.1-5build1
+    - libpsl5=0.19.1-5build1
+    - libpython-stdlib=2.7.15~rc1-1
+    - libpython2.7-minimal=2.7.17-1~18.04
+    - libpython2.7-stdlib=2.7.17-1~18.04
+    - libpython3-stdlib=3.6.7-1~18.04
+    - libpython3.6-minimal=3.6.9-1~18.04
+    - libpython3.6-stdlib=3.6.9-1~18.04
+    - libreadline-dev=7.0-3
+    - libreadline7=7.0-3
+    - libroken18-heimdal=7.5.0+dfsg-1
+    - librtmp1=2.4+20151223.gitfa8646d.1-1
+    - libsasl2-2=2.1.27~101-g0780600+dfsg-3ubuntu2.1
+    - libsasl2-modules-db=2.1.27~101-g0780600+dfsg-3ubuntu2.1
+    - libseccomp2=2.4.1-0ubuntu0.18.04.2
+    - libselinux1=2.7-2build2
+    - libsemanage-common=2.7-2build2
+    - libsemanage1=2.7-2build2
+    - libsepol1=2.7-1
+    - libsigsegv2=2.12-1
+    - libslang2-dev=2.3.1a-3ubuntu1
+    - libslang2=2.3.1a-3ubuntu1
+    - libsmartcols1=2.31.1-0.4ubuntu3.6
+    - libsqlite3-0=3.22.0-1ubuntu0.3
+    - libss2=1.44.1-1ubuntu1.3
+    - libssl1.0.0=1.0.2n-1ubuntu5.3
+    - libssl1.1=1.1.1-1ubuntu2.1~18.04.5
+    - libstdc++-7-dev=7.5.0-3ubuntu1~18.04
+    - libstdc++6=8.4.0-1ubuntu1~18.04
+    - libsystemd-dev=237-3ubuntu10.39
+    - libsystemd0=237-3ubuntu10.39
+    - libtasn1-6-dev=4.13-2
+    - libtasn1-6=4.13-2
+    - libteam-dev=1.26-1
+    - libteam5=1.26-1
+    - libteamdctl0=1.26-1
+    - libtimedate-perl=2.3000-2
+    - libtinfo-dev=6.1-1ubuntu1.18.04
+    - libtinfo5=6.1-1ubuntu1.18.04
+    - libtool=2.4.6-2
+    - libtry-tiny-perl=0.30-1
+    - libubsan0=7.5.0-3ubuntu1~18.04
+    - libudev-dev=237-3ubuntu10.39
+    - libudev1=237-3ubuntu10.39
+    - libunbound2=1.6.7-1ubuntu2.2
+    - libunistring2=0.9.9-0ubuntu2
+    - liburi-perl=1.73-1
+    - libuuid1=2.31.1-0.4ubuntu3.6
+    - libwind0-heimdal=7.5.0+dfsg-1
+    - libwrap0=7.6.q-27
+    - libwww-perl=6.31-1ubuntu0.1
+    - libwww-robotrules-perl=6.01-1
+    - libxml-parser-perl=2.44-2build3
+    - libxml2=2.9.4+dfsg1-6.1ubuntu1.3
+    - libxslt1.1=1.1.29-5ubuntu0.2
+    - libxtables12=1.6.1-2ubuntu2
+    - libyaml-0-2=0.1.7-2ubuntu3
+    - libyaml-perl=1.24-1
+    - libzstd1=1.3.3+dfsg-2ubuntu1.1
+    - linux-libc-dev=4.15.0-96.97
+    - lockfile-progs=0.1.17build1
+    - login=1:4.5-1ubuntu2
+    - lsb-base=9.20170808ubuntu1
+    - m4=1.4.18-1
+    - make=4.1-9.1ubuntu1
+    - mawk=1.3.3-17ubuntu3
+    - mime-support=3.60ubuntu1
+    - modemmanager-dev=1.10.0-1~ubuntu18.04.2
+    - mount=2.31.1-0.4ubuntu3.6
+    - multiarch-support=2.27-3ubuntu1
+    - ncurses-base=6.1-1ubuntu1.18.04
+    - ncurses-bin=6.1-1ubuntu1.18.04
+    - netbase=5.4
+    - nettle-dev=3.4-1
+    - opensp=1.5.2-13ubuntu2
+    - openssh-client=1:7.6p1-4ubuntu0.3
+    - openssl=1.1.1-1ubuntu2.1~18.04.5
+    - optipng=0.7.6-1.1
+    - passwd=1:4.5-1ubuntu2
+    - patch=2.7.6-2ubuntu1.1
+    - perl-base=5.26.1-6ubuntu0.3
+    - perl-modules-5.26=5.26.1-6ubuntu0.3
+    - perl-openssl-defaults=3build1
+    - perl=5.26.1-6ubuntu0.3
+    - pinentry-curses=1.1.0-1
+    - pkg-config=0.29.1-0ubuntu2
+    - pkgbinarymangler=138.18.04.1
+    - policyrcd-script-zg2=0.1-3
+    - ppp-dev=2.4.7-2+2ubuntu1.2
+    - procps=2:3.3.12-3ubuntu1.2
+    - python-dbus=1.2.6-1
+    - python-funcsigs=1.0.2-4
+    - python-gi=3.26.1-2ubuntu1
+    - python-minimal=2.7.15~rc1-1
+    - python-mock=2.0.0-3
+    - python-pbr=3.1.1-3ubuntu3
+    - python-pkg-resources=39.0.1-2
+    - python-six=1.11.0-2
+    - python2.7-minimal=2.7.17-1~18.04
+    - python2.7=2.7.17-1~18.04
+    - python3-distutils=3.6.9-1~18.04
+    - python3-lib2to3=3.6.9-1~18.04
+    - python3-mako=1.0.7+ds1-1
+    - python3-markupsafe=1.0-1build1
+    - python3-minimal=3.6.7-1~18.04
+    - python3-yaml=3.12-1build2
+    - python3.6-minimal=3.6.9-1~18.04
+    - python3.6=3.6.9-1~18.04
+    - python3=3.6.7-1~18.04
+    - python=2.7.15~rc1-1
+    - quilt=0.63-8.2
+    - readline-common=7.0-3
+    - sed=4.4-2
+    - sensible-utils=0.0.12
+    - sgml-base=1.29
+    - sgml-data=2.0.10
+    - snapd=2.42.1+18.04
+    - socat=1.7.3.2-2ubuntu2
+    - squashfs-tools=1:4.3-6ubuntu0.18.04.1
+    - squashfuse=0.1.100-0ubuntu2
+    - sudo=1.8.21p2-3ubuntu1.2
+    - systemd-sysv=237-3ubuntu10.39
+    - systemd=237-3ubuntu10.39
+    - sysvinit-utils=2.88dsf-59.10ubuntu1
+    - tar=1.29b-2ubuntu0.1
+    - tzdata=2019c-0ubuntu0.18.04
+    - ubuntu-keyring=2018.09.18.1~18.04.0
+    - udev=237-3ubuntu10.39
+    - util-linux=2.31.1-0.4ubuntu3.6
+    - uuid-dev=2.31.1-0.4ubuntu3.6
+    - xml-core=0.18
+    - xsltproc=1.1.29-5ubuntu0.2
+    - xz-utils=5.2.2-1.3
+    - zlib1g-dev=1:1.2.11.dfsg-0ubuntu2
+    - zlib1g=1:1.2.11.dfsg-0ubuntu2
+    installed-snaps:
+    - core18=1706
+    - snapcraft=4235
+    - snapd=6958
+    override-build: |
+      ./build-tools/cmp-stage-build.py \
+          networkmanager network-manager dnsmasq dnsmasq-base
+      rm -rf ../install/*
+    override-prime: |
+      mkdir -p snap
+      "$SNAPCRAFT_PART_SRC"/build-tools/find-non-primed-pkgs.sh \
+          "/build/ci-network-manager-kzwz648gn02oxid2" snap/unstage.txt
+    plugin: nil
+    prime: []
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
+    source-branch: ''
+    source-checksum: ''
+    source-commit: dba8657fd3258717f5f60f95093f26ee353ccfba
+    source-tag: ''
+    source-type: git
+    stage: []
+    stage-packages:
+    - dnsmasq-base=2.79-1
+    - libasn1-8-heimdal=7.5.0+dfsg-1
+    - libcurl3-gnutls=7.58.0-2ubuntu3.8
+    - libgssapi3-heimdal=7.5.0+dfsg-1
+    - libhcrypto4-heimdal=7.5.0+dfsg-1
+    - libheimbase1-heimdal=7.5.0+dfsg-1
+    - libheimntlm0-heimdal=7.5.0+dfsg-1
+    - libhx509-5-heimdal=7.5.0+dfsg-1
+    - libjansson4=2.11-1
+    - libkrb5-26-heimdal=7.5.0+dfsg-1
+    - libldap-2.4-2=2.4.45+dfsg-1ubuntu1.4
+    - libmm-glib0=1.10.0-1~ubuntu18.04.2
+    - libndp0=1.6-1
+    - libnewt0.52=0.52.20-1ubuntu1
+    - libnghttp2-14=1.30.0-1ubuntu1
+    - libnm0=1.10.6-2ubuntu1.4
+    - libpsl5=0.19.1-5build1
+    - libroken18-heimdal=7.5.0+dfsg-1
+    - librtmp1=2.4+20151223.gitfa8646d.1-1
+    - libsasl2-2=2.1.27~101-g0780600+dfsg-3ubuntu2.1
+    - libteamdctl0=1.26-1
+    - libwind0-heimdal=7.5.0+dfsg-1
+    - network-manager=1.10.6-2ubuntu1.4
+    uname: 'Linux 4.4.0-176-generic #206-Ubuntu SMP Fri Feb 28 05:03:00 UTC 2020 armv7l
+      armv7l armv7l GNU/Linux'
+architectures:
+- armhf
+image-info:
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-kzwz648gn02oxid2/+build/897718
+build-packages:
+- autoconf=2.69-11
+- automake=1:1.15.1-3ubuntu2
+- autopoint=0.19.8.1-6ubuntu0.3
+- autotools-dev=20180224.1
+- bsdmainutils=11.1.2ubuntu1
+- dbus=1.12.2-1ubuntu1.1
+- diffstat=1.61-1build1
+- docbook-to-man=1:2.0.0-41
+- docbook-xml=4.5-8
+- docbook-xsl=1.79.1+dfsg-2
+- docbook=4.5-6
+- file=1:5.32-2ubuntu0.3
+- gettext-base=0.19.8.1-6ubuntu0.3
+- gettext=0.19.8.1-6ubuntu0.3
+- gir1.2-freedesktop=1.56.1-1
+- gir1.2-glib-2.0=1.56.1-1
+- gir1.2-modemmanager-1.0=1.10.0-1~ubuntu18.04.2
+- gobject-introspection=1.56.1-1
+- gtk-doc-tools=1.27-3
+- highlight-common=3.41-1
+- highlight=3.41-1
+- intltool=0.51.0-5ubuntu1
+- iptables=1.6.1-2ubuntu2
+- libcroco3=0.6.12-2
+- libcurl4-gnutls-dev=7.58.0-2ubuntu3.8
+- libdbus-1-3=1.12.2-1ubuntu1.1
+- libdbus-1-dev=1.12.2-1ubuntu1.1
+- libdbus-glib-1-2=0.110-2
+- libdbus-glib-1-dev=0.110-2
+- libelf1=0.170-0.4ubuntu0.1
+- libencode-locale-perl=1.05-1
+- libevent-2.1-6=2.1.8-stable-4build1
+- libffi-dev=3.2.1-8
+- libfile-listing-perl=6.04-1
+- libgirepository-1.0-1=1.56.1-1
+- libgirepository1.0-dev=1.56.1-1
+- libglib2.0-0=2.56.4-0ubuntu0.18.04.6
+- libglib2.0-bin=2.56.4-0ubuntu0.18.04.6
+- libglib2.0-data=2.56.4-0ubuntu0.18.04.6
+- libglib2.0-dev-bin=2.56.4-0ubuntu0.18.04.6
+- libglib2.0-dev=2.56.4-0ubuntu0.18.04.6
+- libglib2.0-doc=2.56.4-0ubuntu0.18.04.6
+- libgmp-dev=2:6.1.2+dfsg-2
+- libgmpxx4ldbl=2:6.1.2+dfsg-2
+- libgnutls-dane0=3.5.18-1ubuntu1.3
+- libgnutls-openssl27=3.5.18-1ubuntu1.3
+- libgnutls28-dev=3.5.18-1ubuntu1.3
+- libgnutlsxx28=3.5.18-1ubuntu1.3
+- libhtml-parser-perl=3.72-3build1
+- libhtml-tagset-perl=3.20-3
+- libhtml-tree-perl=5.07-1
+- libhttp-cookies-perl=6.04-1
+- libhttp-date-perl=6.02-1
+- libhttp-message-perl=6.14-1
+- libhttp-negotiate-perl=6.00-2
+- libicu60=60.2-3ubuntu3.1
+- libidn2-0-dev=2.0.4-1.1ubuntu0.2
+- libidn2-dev=2.0.4-1.1ubuntu0.2
+- libio-html-perl=1.001-1
+- libio-socket-ssl-perl=2.060-3~ubuntu18.04.1
+- libip6tc0=1.6.1-2ubuntu2
+- libiptc0=1.6.1-2ubuntu2
+- libiw-dev=30~pre9-12ubuntu1
+- libiw30=30~pre9-12ubuntu1
+- libjansson-dev=2.11-1
+- libjansson4=2.11-1
+- liblua5.2-0=5.2.4-1.1build1
+- liblwp-mediatypes-perl=6.02-1
+- liblwp-protocol-https-perl=6.07-2
+- libmagic-mgc=1:5.32-2ubuntu0.3
+- libmagic1=1:5.32-2ubuntu0.3
+- libmm-glib-dev=1.10.0-1~ubuntu18.04.2
+- libmm-glib0=1.10.0-1~ubuntu18.04.2
+- libmnl0=1.0.4-2
+- libndp-dev=1.6-1
+- libndp0=1.6-1
+- libnet-http-perl=6.17-1
+- libnet-ssleay-perl=1.84-1ubuntu0.2
+- libnetfilter-conntrack3=1.0.6-2
+- libnewt-dev=0.52.20-1ubuntu1
+- libnewt0.52=0.52.20-1ubuntu1
+- libnfnetlink0=1.0.1-3
+- libnl-3-200=3.2.29-0ubuntu3
+- libnl-3-dev=3.2.29-0ubuntu3
+- libnl-cli-3-200=3.2.29-0ubuntu3
+- libnl-genl-3-200=3.2.29-0ubuntu3
+- libnl-genl-3-dev=3.2.29-0ubuntu3
+- libnl-nf-3-200=3.2.29-0ubuntu3
+- libnl-route-3-200=3.2.29-0ubuntu3
+- libnl-route-3-dev=3.2.29-0ubuntu3
+- libosp5=1.5.2-13ubuntu2
+- libp11-kit-dev=0.23.9-2
+- libpcre16-3=2:8.39-9
+- libpcre3-dev=2:8.39-9
+- libpcre32-3=2:8.39-9
+- libpcrecpp0v5=2:8.39-9
+- libpng-dev=1.6.34-1ubuntu0.18.04.2
+- libpsl-dev=0.19.1-5build1
+- libpython-stdlib=2.7.15~rc1-1
+- libpython2.7-minimal=2.7.17-1~18.04
+- libpython2.7-stdlib=2.7.17-1~18.04
+- libreadline-dev=7.0-3
+- libsigsegv2=2.12-1
+- libslang2-dev=2.3.1a-3ubuntu1
+- libslang2=2.3.1a-3ubuntu1
+- libsystemd-dev=237-3ubuntu10.39
+- libtasn1-6-dev=4.13-2
+- libteam-dev=1.26-1
+- libteam5=1.26-1
+- libteamdctl0=1.26-1
+- libtimedate-perl=2.3000-2
+- libtinfo-dev=6.1-1ubuntu1.18.04
+- libtool=2.4.6-2
+- libtry-tiny-perl=0.30-1
+- libudev-dev=237-3ubuntu10.39
+- libunbound2=1.6.7-1ubuntu2.2
+- liburi-perl=1.73-1
+- libwww-perl=6.31-1ubuntu0.1
+- libwww-robotrules-perl=6.01-1
+- libxml-parser-perl=2.44-2build3
+- libxml2=2.9.4+dfsg1-6.1ubuntu1.3
+- libxslt1.1=1.1.29-5ubuntu0.2
+- libxtables12=1.6.1-2ubuntu2
+- libyaml-0-2=0.1.7-2ubuntu3
+- libyaml-perl=1.24-1
+- m4=1.4.18-1
+- modemmanager-dev=1.10.0-1~ubuntu18.04.2
+- netbase=5.4
+- nettle-dev=3.4-1
+- opensp=1.5.2-13ubuntu2
+- perl-openssl-defaults=3build1
+- pkg-config=0.29.1-0ubuntu2
+- ppp-dev=2.4.7-2+2ubuntu1.2
+- python-dbus=1.2.6-1
+- python-funcsigs=1.0.2-4
+- python-gi=3.26.1-2ubuntu1
+- python-minimal=2.7.15~rc1-1
+- python-mock=2.0.0-3
+- python-pbr=3.1.1-3ubuntu3
+- python-pkg-resources=39.0.1-2
+- python-six=1.11.0-2
+- python2.7-minimal=2.7.17-1~18.04
+- python2.7=2.7.17-1~18.04
+- python3-distutils=3.6.9-1~18.04
+- python3-lib2to3=3.6.9-1~18.04
+- python3-mako=1.0.7+ds1-1
+- python3-markupsafe=1.0-1build1
+- python3-yaml=3.12-1build2
+- python=2.7.15~rc1-1
+- quilt=0.63-8.2
+- sgml-base=1.29
+- sgml-data=2.0.10
+- uuid-dev=2.31.1-0.4ubuntu3.6
+- xml-core=0.18
+- xsltproc=1.1.29-5ubuntu0.2
+- zlib1g-dev=1:1.2.11.dfsg-0ubuntu2
+build-snaps: []
+primed-stage-packages:
+- iputils-arping=3:20161105-1ubuntu3
+- libasn1-8-heimdal=7.5.0+dfsg-1
+- libcurl3-gnutls=7.58.0-2ubuntu3.8
+- libdbus-glib-1-2=0.110-2
+- libgssapi3-heimdal=7.5.0+dfsg-1
+- libhcrypto4-heimdal=7.5.0+dfsg-1
+- libheimbase1-heimdal=7.5.0+dfsg-1
+- libheimntlm0-heimdal=7.5.0+dfsg-1
+- libhx509-5-heimdal=7.5.0+dfsg-1
+- libjansson4=2.11-1
+- libkrb5-26-heimdal=7.5.0+dfsg-1
+- libldap-2.4-2=2.4.45+dfsg-1ubuntu1.4
+- libmm-glib0=1.10.0-1~ubuntu18.04.2
+- libndp0=1.6-1
+- libnewt0.52=0.52.20-1ubuntu1
+- libnghttp2-14=1.30.0-1ubuntu1
+- libpcap0.8=1.8.1-6ubuntu1.18.04.1
+- libpsl5=0.19.1-5build1
+- libroken18-heimdal=7.5.0+dfsg-1
+- librtmp1=2.4+20151223.gitfa8646d.1-1
+- libsasl2-2=2.1.27~101-g0780600+dfsg-3ubuntu2.1
+- libslang2=2.3.1a-3ubuntu1
+- libteamdctl0=1.26-1
+- libwind0-heimdal=7.5.0+dfsg-1
+- ppp=2.4.7-2+2ubuntu1.2
+- resolvconf=1.79ubuntu10.18.04.3
