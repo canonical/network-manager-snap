@@ -3,14 +3,8 @@ summary: When defaultrender is set NM manages ethernet
 execute: |
     . $TESTSLIB/utilities.sh
     snap set network-manager defaultrenderer=true
-    netplan apply
-    # Whenever we can call netplan from the NM snap, the following line won't
-    # be needed
-    systemctl restart systemd-networkd
     sleep 5
     networkctl | grep 'eth0.*unmanaged'
     wait_for_network_manager
     /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
     snap set network-manager defaultrenderer=false
-    netplan apply
-    systemctl restart systemd-networkd
