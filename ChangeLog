@@ -1,3 +1,18 @@
+2020-05-07 network-manager 1.10.6-6
+
+  [ Changes in staged packages ]
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.45+dfsg-1ubuntu1.4 to 2.4.45+dfsg-1ubuntu1.5:
+  
+    openldap (2.4.45+dfsg-1ubuntu1.5) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: denial of service via nested search filters
+        - debian/patches/CVE-2020-12243.patch: limit depth of nested filters in
+          servers/slapd/filter.c.
+        - CVE-2020-12243
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 01 May 2020 13:11:02 -0400
+  
 2020-04-07 network-manager 1.10.6-5
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
