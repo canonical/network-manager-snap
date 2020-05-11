@@ -170,6 +170,7 @@ parts:
       - gtk-doc-tools
       - libnss3-dev
       - libnetplan-dev
+      - libyaml-dev
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
