@@ -136,7 +136,7 @@ parts:
       - xsltproc
       - iptables
       - gtk-doc-tools
-    configflags:
+    autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
       - --localstatedir=/var
@@ -187,8 +187,8 @@ parts:
       git config user.name "snapcraft"
       git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
 
-      # remove configure to trigger autotools
-      rm ./configure
+      # re-create configure
+      ./autogen.sh
       snapcraftctl build
 
       # Run all tests NetworkManager ships by default
