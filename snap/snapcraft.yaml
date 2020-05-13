@@ -280,7 +280,6 @@ parts:
         - usr/share/doc/resolvconf/copyright
       libs:
         - lib/resolvconf/list-records
-        - lib/*/libnewt*
         - lib/*/libslang*
         - usr/lib/libnm*
         - usr/lib/*/libasn1*
@@ -302,6 +301,7 @@ parts:
         - usr/lib/*/libldap_r-2.4*
         - usr/lib/*/liblzma*
         - usr/lib/*/libmm-glib*
+        - usr/lib/*/libnewt*
         - usr/lib/*/libndp*
         - usr/lib/*/libnghttp2*
         - usr/lib/*/libpcap*
