@@ -339,13 +339,6 @@ parts:
     stage-packages:
       - network-manager
       - dnsmasq-base
-    # Check versions and make sure nothing from the staged packages is installed
+    # Make sure nothing from the staged packages is installed
     override-build: |
-      ./build-tools/cmp-stage-build.py \
-          networkmanager network-manager dnsmasq dnsmasq-base
       rm -rf ../install/*
-    # Find out packages not primed in the end, for CI consumption
-    override-prime: |
-      mkdir -p snap
-      "$SNAPCRAFT_PART_SRC"/build-tools/find-non-primed-pkgs.sh \
-          "$SNAPCRAFT_PROJECT_DIR" snap/unstage.txt
