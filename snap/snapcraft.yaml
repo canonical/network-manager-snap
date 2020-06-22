@@ -282,7 +282,6 @@ parts:
         - etc/NetworkManager/*
         - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/dnsmasq/copyright
         - usr/share/doc/iputils-arping/copyright
         - usr/share/doc/libasn1-8-heimdal/copyright
         - usr/share/doc/libbrotli1/copyright
@@ -309,7 +308,6 @@ parts:
         - usr/share/doc/libssh-4/copyright
         - usr/share/doc/libteamdctl0/copyright
         - usr/share/doc/libwind0-heimdal/copyright
-        - usr/share/doc/network-manager/copyright
         - usr/share/doc/ppp/copyright
         - usr/share/doc/resolvconf/copyright
       libs:
