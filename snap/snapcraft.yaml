@@ -117,6 +117,8 @@ parts:
     make-parameters:
       - PREFIX=/
     override-build: |
+      set -ex
+      "$SNAPCRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
       git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
     filesets:
@@ -213,6 +215,8 @@ parts:
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
     override-build: |
+      set -ex
+      "$SNAPCRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
       git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
