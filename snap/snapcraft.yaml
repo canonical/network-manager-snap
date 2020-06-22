@@ -111,7 +111,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/2.80-1.1ubuntu1
+    source-branch: applied/ubuntu/focal
     build-packages:
       - build-essential
     make-parameters:
@@ -130,7 +130,7 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/1.22.10-1ubuntu1
+    source-branch: applied/ubuntu/focal-updates
     build-packages:
       - intltool
       - libdbus-glib-1-dev
