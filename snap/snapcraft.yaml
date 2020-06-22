@@ -107,6 +107,7 @@ parts:
       - usr/share/doc/dnsmasq-base
 
   dnsmasq:
+    after: [ stack-snaps-tools ]
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
@@ -125,6 +126,7 @@ parts:
       - $binaries
 
   networkmanager:
+    after: [ stack-snaps-tools ]
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
