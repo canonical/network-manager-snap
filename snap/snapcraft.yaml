@@ -351,6 +351,7 @@ parts:
         - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
         - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
+        - -usr/lib/NetworkManager/*/*.la
         - -usr/lib/pkgconfig
     prime:
       - $binaries
