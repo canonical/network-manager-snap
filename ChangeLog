@@ -1,3 +1,1986 @@
+2020-06-25 network-manager 1.22.10-1
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Remove now unneeded networkmanager-phony
+    Coyrights now come from stack-snap-tools part for dnsmasq and NM
+    Check version of build packages against staged ones
+    Build using latest released package for focal
+    Build dnsmasq and NM after getting tools
+    Add stack-snaps-tools to get tools and stage copyright
+    Push ChangeLog to snap folder
+    Do not dump copyright files from snap-common folder
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/386194
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (2.80-1.1ubuntu1): new primed package
+  
+  libbrotli1 (1.0.7-6build1): new primed package
+  
+  libnm0 (1.22.10-1ubuntu2.1): new primed package
+  
+  libssh-4 (0.9.3-2ubuntu2): new primed package
+  
+  network-manager (1.22.10-1ubuntu2.1): new primed package
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.8 to 7.68.0-1ubuntu2.1:
+  
+    curl (7.68.0-1ubuntu2.1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: Partial password leak over DNS on HTTP redirect
+        - debian/patches/CVE-2020-8169.patch: make the updated credentials
+          URL-encoded in the URL in lib/url.c, tests/data/test1168,
+          tests/data/Makefile.inc.
+        - CVE-2020-8169
+      * SECURITY UPDATE: curl overwrite local file with -J
+        - debian/patches/CVE-2020-8177.patch: -i is not OK if -J is used in
+          src/tool_cb_hdr.c, src/tool_getparam.c.
+        - CVE-2020-8177
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Jun 2020 09:03:28 -0400
+  
+    curl (7.68.0-1ubuntu2) focal; urgency=medium
+  
+      * debian/patches/git_tls13_gnutls.patch:
+        - Ensure TLS 1.3 works with GnuTLS, thanks Dirkjan Bussink for writting
+          the patch and pointing it out on launchpad! (lp: #1872698)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 15 Apr 2020 08:27:03 +0200
+  
+    curl (7.68.0-1ubuntu1) focal; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Sun, 23 Feb 2020 12:33:45 -0800
+  
+    curl (7.68.0-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Bump Standards-Version to 4.5.0 (no changes needed)
+      * Update symbols files
+      * Configure default CA file with OpenSSL again (Closes: #948441)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 22 Feb 2020 14:37:19 +0000
+  
+    curl (7.67.0-2ubuntu1) focal; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 13 Feb 2020 11:01:54 -0800
+  
+    curl (7.67.0-2) unstable; urgency=medium
+  
+      * Restore :native annotation for python3 Build-Depends.
+        Thanks to Helmut Grohne for the patch (Closes: #945928)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sun, 01 Dec 2019 13:29:28 +0000
+  
+    curl (7.67.0-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Replace python with python3 in Build-Depends (Closes: #942984)
+      * Bump Standards-Version to 4.4.1 (no changes needed)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 30 Nov 2019 12:45:07 +0000
+  
+    curl (7.66.0-1ubuntu1) focal; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+      * Dropped changes, included upstream:
+        - debian/patches/CVE-2019-5481.patch: update lib/security.c to avoid
+           double-free on large memory allocation failures
+        - debian/patches/CVE-2019-5482.patch: ensure to use the correct block
+          size when calling recvfrom() if the server returns an OACK without
+          specifying a block size in lib/tftp.c
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 12 Nov 2019 17:05:51 -0800
+  
+    curl (7.66.0-1) unstable; urgency=medium
+  
+      * New upstream release (Closes: #940024)
+        + Fix FTP-KRB double-free as per CVE-2019-5481 (Closes: #940009)
+          https://curl.haxx.se/docs/CVE-2019-5481.html
+        + Fix TFTP small blocksize heap buffer overflow as per CVE-2019-5482
+          (Closes: #940010)
+          https://curl.haxx.se/docs/CVE-2019-5482.html
+      * Refresh patches
+      * Enable brotli support (Closes: #940129)
+      * Update *.symbols files
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sun, 15 Sep 2019 15:47:05 +0100
+  
+    curl (7.65.3-1ubuntu4) focal; urgency=medium
+  
+      * No-change rebuild against libnettle7
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 31 Oct 2019 22:10:02 +0000
+  
+    curl (7.65.3-1ubuntu3) eoan; urgency=medium
+  
+      * SECURITY UPDATE: double-free when using kerberos over FTP may cause
+        denial-of-service
+        - debian/patches/CVE-2019-5481.patch: update lib/security.c to avoid
+          double-free on large memory allocation failures
+        - CVE-2019-5481
+      * SECURITY UPDATE: heap buffer overflow when receiving TFTP data may
+        cause denial-of-service or remote code-execution
+        - debian/patches/CVE-2019-5482.patch: ensure to use the correct block
+          size when calling recvfrom() if the server returns an OACK without
+          specifying a block size in lib/tftp.c
+        - CVE-2019-5482
+  
+     -- Alex Murray <alex.murray@canonical.com>  Fri, 06 Sep 2019 14:52:01 +0930
+  
+    curl (7.65.3-1ubuntu2) eoan; urgency=medium
+  
+      * No-change upload with strops.h and sys/strops.h removed in glibc.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 05 Sep 2019 13:37:38 +0200
+  
+    curl (7.65.3-1ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 10 Aug 2019 09:40:03 +0200
+  
+    curl (7.65.3-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Drop 12_fix-man-errors.patch (merged upstream)
+      * Remove Ian Jackson from Uploaders as he has never done an upload
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Fri, 09 Aug 2019 19:45:02 +0100
+  
+    curl (7.65.1-1ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 15 Jul 2019 15:20:26 +0200
+  
+    curl (7.65.1-1) unstable; urgency=medium
+  
+      * New upstream release
+        + Reduce verbose output (Closes: #926148)
+        + Fix parsing URLs with link local addresses (Closes: #926812)
+      * Drop patches merged upstream
+      * Refresh patches
+      * Bump STandards-Version to 4.4.0 (no changes needed)
+      * Update entry in copyright for renamed files
+      * Fix some man errors.
+        Thanks to Bjarni Ingi Gislason for the patch (Closes: #926352)
+      * Add Build-Depends-Package field to symbols files
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 13 Jul 2019 12:37:09 +0100
+  
+    curl (7.64.0-4ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/control, debian/rules: build with libssh instead of libssh2.
+      * Dropped changes, included in Debian:
+        - SECURITY UPDATE: Integer overflows in curl_url_set()
+        - SECURITY UPDATE: TFTP receive buffer overflow
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Wed, 19 Jun 2019 22:50:09 -0700
+  
+    curl (7.64.0-4) unstable; urgency=medium
+  
+      * Fix TFTP receive buffer overflow as per CVE-2019-5436 (Closes: #929351)
+        https://curl.haxx.se/docs/CVE-2019-5436.html
+      * Fix integer overflow in curl_url_set() as per CVE-2019-5435 (Closes: #929352)
+        https://curl.haxx.se/docs/CVE-2019-5435.html
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Fri, 14 Jun 2019 19:23:32 +0100
+  
+    curl (7.64.0-3ubuntu2) eoan; urgency=medium
+  
+      * SECURITY UPDATE: Integer overflows in curl_url_set()
+        - debian/patches/CVE-2019-5435.patch: limit sizes in lib/setopt.c,
+          lib/urlapi.c, lib/urldata.h, tests/data/Makefile.inc,
+          tests/data/test1559, tests/libtest/Makefile.inc,
+          tests/libtest/lib1559.c.
+        - CVE-2019-5435
+      * SECURITY UPDATE: TFTP receive buffer overflow
+        - debian/patches/CVE-2019-5436.patch: use the current blksize in
+          lib/tftp.c.
+        - CVE-2019-5436
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 22 May 2019 09:36:43 -0400
+  
+    curl (7.64.0-3ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+      * debian/control, debian/rules:
+        - build with libssh instead of libssh2, that's a better maintained
+          library and it's in Ubuntu main (lp: #311029)
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 13 May 2019 10:02:19 +0200
+  
+    curl (7.64.0-3) unstable; urgency=medium
+  
+      * Fix potential crash in HTTP/2 code and busy loop at the end of connections
+        (Closes: #927471)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 04 May 2019 12:51:06 +0100
+  
+    curl (7.64.0-2ubuntu1) disco; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+      * debian/control, debian/rules:
+        - build with libssh instead of libssh2, that's a better maintained
+          library and it's in Ubuntu main (lp: #311029)
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 05 Apr 2019 17:50:51 +0200
+  
+    curl (7.64.0-2) unstable; urgency=medium
+  
+      * Fix infinite loop when fetching URLs with unreachable IPv6 (Closes: #922554)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Thu, 07 Mar 2019 20:02:35 +0000
+  
+    curl (7.64.0-1ubuntu1) disco; urgency=medium
+  
+      * Resynchronize with Debian, remaining change
+      * debian/control, debian/rules:
+        - build with libssh instead of libssh2, that's a better maintained
+          library and it's in Ubuntu main (lp: #311029)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 14 Feb 2019 16:49:23 +0100
+  
+    curl (7.64.0-1) unstable; urgency=medium
+  
+      * New upstream release
+        + Fix NTLM type-2 out-of-bounds buffer read as per CVE-2018-16890
+          https://curl.haxx.se/docs/CVE-2018-16890.html
+        + Fix NTLMv2 type-3 header stack buffer overflow as per CVE-2019-3822
+          https://curl.haxx.se/docs/CVE-2019-3822.html
+        + Fix SMTP end-of-response out-of-bounds read as per CVE-2019-3823
+          https://curl.haxx.se/docs/CVE-2019-3823.html
+        + Fix HTTP negotiation with POST requests (Closes: #920267)
+      * Refresh patches
+      * Import fixes for zsh completion script generator (Closes: #92145)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Wed, 06 Feb 2019 22:33:05 +0000
+  
+    curl (7.63.0-1) unstable; urgency=medium
+  
+      * New upstream release
+        + Fix IPv6 numeral address parser (Closes: #915520)
+        + Fix timeout handling (Closes: #914793)
+        + Fix HTTP auth to include query in URI (Closes: #913214)
+      * Drop 12_fix-runtests-curl.patch (merged upstream)
+      * Update symbols
+      * Update copyright for removed files
+      * Bump debhlper compat level to 12
+      * Bump Standards-Version to 4.3.0 (no changes needed)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Tue, 15 Jan 2019 20:47:40 +0000
+  
+    curl (7.62.0-1) unstable; urgency=medium
+  
+      * New upstream release
+        + Fix NTLM password overflow via integer overflow as per CVE-2018-14618
+          (Closes: #908327) https://curl.haxx.se/docs/CVE-2018-14618.html
+        + Fix SASL password overflow via integer overflow as per CVE-2018-16839
+          https://curl.haxx.se/docs/CVE-2018-16839.html
+        + Fix use-after-free in handle close as per CVE-2018-16840
+          https://curl.haxx.se/docs/CVE-2018-16840.html
+        + Fix warning message out-of-buffer read as per CVE-2018-16842
+          https://curl.haxx.se/docs/CVE-2018-16842.html
+        + Fix broken terminal output (closes: #911333)
+      * Refresh patches
+      * Add 12_fix-runtests-curl.patch to fix running curl in tests
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Wed, 31 Oct 2018 22:42:44 +0000
+  
+    curl (7.61.0-1) unstable; urgency=medium
+  
+      * New upstream release
+        + Fix SMTP send heap buffer overflow as per CVE-2018-0500 (Closes: #903546)
+          https://curl.haxx.se/docs/adv_2018-70a2.html
+        + Fix some crashes related to HTTP/2 (Closes: #902628)
+      * Disable libssh2 on Ubuntu.
+        Thanks to Gianfranco Costamagna for the patch (Closes: #888449)
+      * Bump Standards-Version to 4.2.0 (no changes needed)
+      * Don't configure default CA bundle with OpenSSL and GnuTLS (Closes: #883174)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 11 Aug 2018 13:32:28 +0100
+  
+    curl (7.60.0-2) unstable; urgency=medium
+  
+      [ Steve Langasek ]
+      * Build-depend on libssl-dev instead of libssl1.0-dev.
+      * Rename libcurl3 to libcurl4, because libcurl exposes an SSL_CTX via
+        CURLOPT_SSL_CTX_FUNCTION, and this object changes incompatibly between
+        openssl 1.0 and openssl 1.1.
+      * debian/patches/03_keep_symbols_compat.patch: drop, since we are no longer
+        claiming compatibility.
+      * debian/patches/90_gnutls.patch: Retain symbol versioning compatibility for
+        non-OpenSSL builds.  Closes: #858398.
+      * Adjust libssl1.1 vs libssl1.0 Suggests/Conflicts; thanks, Adrian Bunk
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Wed, 23 May 2018 20:25:39 +0100
+  
+    curl (7.60.0-1) unstable; urgency=medium
+  
+      * New upstream release (Closes: #891997, #893546, #898856)
+        + Fix use of IPv6 literals with NO_PROXY
+        + Fix NIL byte out of bounds write due to FTP path trickery
+          as per CVE-2018-1000120
+          https://curl.haxx.se/docs/adv_2018-9cd6.html
+        + Fix LDAP NULL pointer dereference as per CVE-2018-1000121
+          https://curl.haxx.se/docs/adv_2018-97a2.html
+        + Fix RTSP RTP buffer over-read as per CVE-2018-1000122
+          https://curl.haxx.se/docs/adv_2018-b047.html
+        + Fix heap buffer overflow when closing down an FTP connection
+          with very long server command replies as per CVE-2018-1000300
+          https://curl.haxx.se/docs/adv_2018-82c2.html
+        + Fix heap buffer over-read when parsing bad RTSP headers
+          as per CVE-2018-1000301
+          https://curl.haxx.se/docs/adv_2018-b138.html
+      * Refresh patches
+      * Bump Standards-Version to 4.1.4 (no changes needed)
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Fri, 18 May 2018 20:21:17 +0100
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27~101-g0780600+dfsg-3ubuntu2.1 to 2.1.27+dfsg-2:
+  
+    cyrus-sasl2 (2.1.27+dfsg-2) unstable; urgency=medium
+  
+      [ Salvatore Bonaccorso ]
+      * Off-by-one in _sasl_add_string function (CVE-2019-19906) (Closes: #947043)
+  
+     -- Roberto C. Sanchez <roberto@debian.org>  Thu, 26 Dec 2019 09:48:32 -0500
+  
+    cyrus-sasl2 (2.1.27+dfsg-1) unstable; urgency=medium
+  
+      [ Ryan Tandy ]
+      * Fix libsasl2-2 incorrectly depending on GSSAPI libraries.
+        (Closes: #917129)
+      * Restore changes from NMU versions
+        2.1.27~101-g0780600+dfsg-3 and 2.1.27~101-g0780600+dfsg-3.1
+        (Closes: #917140)
+  
+      [ Ondřej Surý ]
+      * Upload to unstable.
+  
+     -- Ondřej Surý <ondrej@debian.org>  Tue, 22 Jan 2019 08:53:59 +0000
+  
+    cyrus-sasl2 (2.1.27+dfsg-1~exp1) experimental; urgency=medium
+  
+      [ Roberto C. Sanchez ]
+      * Change email in d/control
+      * Apply uversionmangle option in d/watch for correct upstream version
+        sort
+  
+      [ Helmut Grohne ]
+      * Fix FTCBFS (Closes: #792851)
+        + 0033-cross.patch: Drop -ldb from make depends.
+      * Use $(CC) instead of gcc in d/sample/Makefile
+  
+      [ Ondřej Surý ]
+      * Add upstream tarball signing key
+      * Update d/watch and d/copyright to use gbp import-orig ability to
+        repack the tarball
+      * New upstream version 2.1.27+dfsg
+      * Bump policy to current version and debhelper compat level to 12
+      * Upstream supports only a single plugindir now, switch to M-A plugindir
+      * Build libsasl2-modules-gssapi-heimdal against heimdal 
+        + Install heimdal build into separate tmp directory and strip rpath
+          from it (Closes: #880393)
+      * Replace extra priority with optional
+      * Add Pre-Depends: ${misc:Pre-Depends} to sasl2-bin for systemd predepends
+      * Add libpod-pom-view-restructured-perl to B-D to regenerate documentation
+      * Add a patch to stop importing docutils_version in sphinx-build manpage helper
+  
+     -- Ondřej Surý <ondrej@debian.org>  Mon, 21 Jan 2019 09:47:50 +0000
+  
+    cyrus-sasl2 (2.1.27~rc8-1) unstable; urgency=medium
+  
+      * New upstream version 2.1.27~rc8
+      * Rebase patches for Cyrus SASL 2.1.27~rc8
+      * Cleanup d/control
+  
+     -- Ondřej Surý <ondrej@debian.org>  Tue, 02 Oct 2018 08:05:10 +0000
+  
+    cyrus-sasl2 (2.1.27~rc4-1) unstable; urgency=medium
+  
+      * New upstream version 2.1.27~rc4
+      * Refresh patches for 2.4.27~rc4 release
+  
+     -- Ondřej Surý <ondrej@debian.org>  Tue, 19 Sep 2017 09:53:57 +0200
+  
+    cyrus-sasl2 (2.1.27~101-g0780600+dfsg-3.1) unstable; urgency=medium
+  
+      * Non-maintainer upload with maintainer permission.
+      * Add support for build-profiles. (Closes: #894297)
+  
+     -- Karsten Merker <merker@debian.org>  Sat, 21 Apr 2018 18:20:16 +0200
+  
+  libdbus-glib-1-2 (built from dbus-glib) updated from 0.110-2 to 0.110-5fakssync1:
+  
+    dbus-glib (0.110-5fakssync1) focal; urgency=medium
+  
+      * d/salsa-ci.yml: Request standard CI on salsa.debian.org
+      * d/rules: Remove migration path from libdbus-glib-1-2-dbg, which
+        was not in stretch or buster
+      * Standards-Version: 4.4.1 (no changes required)
+      * d/tests/build: Use correct compiler for proposed autopkgtest
+        cross-architecture testing support. Thanks, Steve Langasek
+        (Closes: #946303)
+      * d/tests/build: Remove support for ancient autopkgtest versions.
+        AUTOPKGTEST_TMP is now required to be set, and we do not fall back
+        to the deprecated ADTTMP.
+  
+     -- Simon McVittie <smcv@debian.org>  Mon, 09 Dec 2019 17:16:57 +0000
+  
+    dbus-glib (0.110-4) unstable; urgency=medium
+  
+      [ Helmut Grohne ]
+      * When cross-compiling, use the build architecture's dbus-binding-tool
+        by build-depending on libdbus-glib-1-dev-bin (Closes: #908798)
+  
+      [ Ondřej Nový ]
+      * d/changelog: Remove trailing whitespaces
+  
+      [ Simon McVittie ]
+      * d/tests/build: Add a compile/link/execute autopkgtest for dynamic
+        linking
+      * Standards-Version: 4.3.0
+      * d/libdbus-glib-1-dev-bin.lintian-overrides:
+        Override capitalization-error-in-description. The Description is
+        careful to distinguish between D-Bus (a protocol) and dbus
+        (a package implementing the D-Bus protocol).
+      * d/libdbus-glib-1-2.symbols: Add Build-Depends-Package
+  
+     -- Simon McVittie <smcv@debian.org>  Tue, 29 Jan 2019 09:44:28 +0000
+  
+    dbus-glib (0.110-3) unstable; urgency=medium
+  
+      [ Helmut Grohne ]
+      * Split dbus-binding-tool to a Multi-Arch: foreign package
+        (Closes: #905553)
+  
+      [ Simon McVittie ]
+      * Set libdbus-glib-1-dev Multi-Arch: same (Closes: #873617)
+      * Don't install upstream ChangeLog. The upstream NEWS file remains
+        available in libdbus-glib-1-doc.
+      * Standards-Version: 4.2.0
+  
+     -- Simon McVittie <smcv@debian.org>  Mon, 06 Aug 2018 12:37:40 +0100
+  
+  libasn1-8-heimdal, libgssapi3-heimdal, libhcrypto4-heimdal, libheimbase1-heimdal, libheimntlm0-heimdal, libhx509-5-heimdal, libkrb5-26-heimdal, libroken18-heimdal, libwind0-heimdal (built from heimdal) updated from 7.5.0+dfsg-1 to 7.7.0+dfsg-1ubuntu1:
+  
+    heimdal (7.7.0+dfsg-1ubuntu1) focal; urgency=medium
+  
+      * Build using python3.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 30 Mar 2020 12:30:53 +0200
+  
+    heimdal (7.7.0+dfsg-1) unstable; urgency=medium
+  
+      * New upstream version.
+      * Fix CVE-2019-14870: The DelegationNotAllowed Kerberos feature restriction
+        was not being applied when processing protocol
+        transition requests (S4U2Self), in the AD DC KDC. Closes: #946786.
+  
+     -- Brian May <bam@debian.org>  Tue, 17 Dec 2019 20:23:41 +1100
+  
+    heimdal (7.5.0+dfsg-3) unstable; urgency=high
+  
+      * CVE-2018-16860: Samba AD DC S4U2Self/S4U2Proxy unkeyed checksum.
+        Closes: #928966.
+      * CVE-2019-12098: Always confirm PA-PKINIT-KX for anon PKINIT.
+        Closes: #929064.
+      * Update test certificates to pre 2038 expiry. Closes: #923930.
+  
+     -- Brian May <bam@debian.org>  Tue, 21 May 2019 18:04:35 +1000
+  
+    heimdal (7.5.0+dfsg-2.1) unstable; urgency=medium
+  
+      * Non-maintainer upload
+      * Add patch to create headers before building (Closes: 906623)
+  
+     -- Hilko Bengen <bengen@debian.org>  Sun, 28 Oct 2018 15:10:44 +0100
+  
+    heimdal (7.5.0+dfsg-2) unstable; urgency=medium
+  
+      * Replace "MAXHOSTNAMELEN" with "MaxHostNameLen" in kdc/kx509.c for The
+        Hurd. Closes: #900079.
+  
+     -- Brian May <bam@debian.org>  Sat, 02 Jun 2018 10:01:46 +1000
+  
+  iputils-arping (built from iputils) updated from 3:20161105-1ubuntu3 to 3:20190709-3:
+  
+    iputils (3:20190709-3) unstable; urgency=medium
+  
+      * Incorporate upstream fix for getaddrinfo handling. Thanks to Benjamin
+      * Poirier <benjamin.poirier@gmail.com>
+        (Closes: #947921)
+  
+     -- Noah Meyerhans <noahm@debian.org>  Thu, 30 Jan 2020 15:11:23 -0800
+  
+    iputils (3:20190709-2) unstable; urgency=medium
+  
+      * Incorporate upstream fix for arping exit code regression
+        (Closes: #936080)
+      * Follow local file diversions when manipulating ACLs and file modes on
+        installed binaries.
+  
+     -- Noah Meyerhans <noahm@debian.org>  Sat, 05 Oct 2019 07:34:12 -0700
+  
+    iputils (3:20190709-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Update to standards version 4.4.0 (no changes needed)
+  
+     -- Noah Meyerhans <noahm@debian.org>  Tue, 09 Jul 2019 21:06:58 -0700
+  
+    iputils (3:20190515-2) unstable; urgency=medium
+  
+      * Import upstream fix for FTBFS issue when setcap is not
+        installed. (Closes: #931491)
+  
+     -- Noah Meyerhans <noahm@debian.org>  Sun, 07 Jul 2019 11:21:17 -0700
+  
+    iputils (3:20190515-1) sid; urgency=medium
+  
+      * New upstream snapshot (Closes: #907327, #869202, #869202)
+      * Refresh and modernize debian/rules using dh (Closes: #648033, #928334)
+      * Set Multi-Arch: foreign on all binary packages (Closes: #878100)
+      * Raise libcap2-bin from Recommends to Depends (Closes: #780721)
+      * Update to standards version 4.3.0
+  
+     -- Noah Meyerhans <noahm@debian.org>  Fri, 05 Jul 2019 15:49:21 -0700
+  
+    iputils (3:20180629-2) unstable; urgency=medium
+  
+      * Upstream no longer maintains the RELNOTES or README files in a useful
+        way, so we won't install them. (Closes: #904912)
+  
+     -- Noah Meyerhans <noahm@debian.org>  Fri, 03 Aug 2018 09:53:09 -0700
+  
+    iputils (3:20180629-1) unstable; urgency=medium
+  
+      * New upstream snapshot. (Closes: #858272, #898978, #477569, #883982)
+      * Update build deps to reflect changes to documentation generation
+        process.
+      * Update Vcs links in debian/control to reflect the salsa migration.
+      * Update standards version to 4.1.4
+      * Change Priority: extra to Priority: optional per policy 4.0.1
+  
+     -- Noah Meyerhans <noahm@debian.org>  Fri, 29 Jun 2018 22:03:19 -0700
+  
+  libjansson4 (built from jansson) updated from 2.11-1 to 2.12-1build1:
+  
+    jansson (2.12-1build1) disco; urgency=medium
+  
+      * No change rebuild to see if fPIC is picked up
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 12 Jan 2019 12:18:17 +0100
+  
+    jansson (2.12-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Bump Standards-Version to 4.2.1 (no change needed)
+      * Mark libjansson-doc Multi-Arch: foreign
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sat, 15 Dec 2018 12:04:59 +0000
+  
+  libndp0 (built from libndp) updated from 1.6-1 to 1.7-0ubuntu1:
+  
+    libndp (1.7-0ubuntu1) eoan; urgency=medium
+  
+      * New upstream version
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Sat, 24 Aug 2019 14:38:16 +0300
+  
+  libpcap0.8 (built from libpcap) updated from 1.8.1-6ubuntu1.18.04.1 to 1.9.1-3:
+  
+    libpcap (1.9.1-3) unstable; urgency=medium
+  
+      * Drop debian/patches/bluez-build.diff (closes: #954181).
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Mon, 23 Mar 2020 20:17:44 +0100
+  
+    libpcap (1.9.1-2) unstable; urgency=medium
+  
+      * Fix FTBFS on Hurd.
+      * Bump Standards-Version to 4.4.1.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Tue, 08 Oct 2019 13:37:31 +0200
+  
+    libpcap (1.9.1-1) unstable; urgency=medium
+  
+      * New upstream release, fixes CVE-2018-16301 and CVE-2019-15165
+        (closes: #941697).
+      * Export new symbol `pcap_datalink_val_to_description_or_dlt'.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sun, 06 Oct 2019 17:54:57 +0200
+  
+    libpcap (1.9.0-2) unstable; urgency=medium
+  
+      [ Luca Boccassi ]
+      * Install upstream pkg-config file (closes: #922219).
+  
+      [ Romain Francoise ]
+      * Bump Standards-Version to 4.4.0.
+      * Upload to unstable.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sat, 13 Jul 2019 20:48:26 +0200
+  
+    libpcap (1.9.0-1) experimental; urgency=medium
+  
+      * New upstream release:
+        + API additions: pcap_bufsize(), pcap_dump_ftell64(),
+          pcap_get_required_select_timeout() and pcap_set_protocol_linux()
+          (only on Linux).
+        + Fixes issues with capture length for D-Bus (closes: #846241).
+      * Cherry-pick commit dcda937d4715 from upstream Git to fix issues with
+        VLAN filtering (closes: #909749).
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sun, 04 Nov 2018 18:18:37 +0100
+  
+  libpsl5 (built from libpsl) updated from 0.19.1-5build1 to 0.21.0-1ubuntu1:
+  
+    libpsl (0.21.0-1ubuntu1) focal; urgency=medium
+  
+      * Make autopkgtests cross-arch-friendly: don't include a test dep on
+        diffutils, which is essential.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 31 Mar 2020 09:33:53 -0700
+  
+    libpsl (0.21.0-1) unstable; urgency=medium
+  
+      * New upstream release
+      * standards-version: bump to 4.5.0 (no changes needed)
+      * wrap-and-sort -ast for d/tests/control
+      * move to dh 12
+      * import patches from upstream (closes: #945243)
+      * added Build-Depends line to libpsl5.symbols
+      * install manpages from upstream installation, not source
+      * deliberately avoid installing .la files
+      * dh_missing: use --fail-missing
+      * avoid lintian warnings about fuzzer inputs
+  
+     -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Wed, 04 Mar 2020 12:39:16 -0500
+  
+    libpsl (0.20.2-2) unstable; urgency=medium
+  
+      * correct dependencies for autopkgtest
+      * Standards-Version: bump to 4.2.1 (no changes needed)
+      * d/watch: go simple, avoid uupdate
+  
+     -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Mon, 15 Oct 2018 15:11:19 -0400
+  
+    libpsl (0.20.2-1) unstable; urgency=medium
+  
+      * new upstream version
+      * Standards-Version: bump to 4.1.4 (no changes needed)
+      * refresh patches (dropping those already applied upstream)
+      * drop trailing whitepsace from debian/changelog
+  
+     -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Thu, 31 May 2018 10:55:01 -0400
+  
+    libpsl (0.20.1-1) unstable; urgency=medium
+  
+      * New upstream version
+      * refresh patches
+      * fix upstream spelling errors
+      * d/changelog: fix spelling errors
+  
+     -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Fri, 23 Mar 2018 11:30:17 +0000
+  
+  libteamdctl0 (built from libteam) updated from 1.26-1 to 1.30-1:
+  
+    libteam (1.30-1) unstable; urgency=medium
+  
+      * New upstream release.
+      * Standards-Version: 4.4.1.
+      * Re-named: "debian/TODO.Debian" --> "debian/TODO".
+  
+     -- Dmitry Smirnov <onlyjob@debian.org>  Mon, 13 Jan 2020 12:55:39 +1100
+  
+    libteam (1.29-1) unstable; urgency=medium
+  
+      * New upstream release (Closes: #934610).
+  
+     -- Dmitry Smirnov <onlyjob@debian.org>  Fri, 15 Nov 2019 20:55:40 +1100
+  
+    libteam (1.28-1) unstable; urgency=medium
+  
+      [ OndĹej NovĂ˝ ]
+      * d/copyright: Change Format URL to correct one
+  
+      [ Dmitry Smirnov ]
+      * New upstream release (Closes: #919675).
+      * Standards-Version: 4.3.0.
+  
+     -- Dmitry Smirnov <onlyjob@debian.org>  Sun, 27 Jan 2019 20:16:14 +1100
+  
+    libteam (1.27-1) unstable; urgency=medium
+  
+      * New upstream release.
+      * Vcs URLs to Salsa.
+      * Standards-Version: 4.1.5.
+      * debhelper & compat to version 11.
+  
+     -- Dmitry Smirnov <onlyjob@debian.org>  Fri, 27 Jul 2018 03:00:18 +1000
+  
+  libmm-glib0 (built from modemmanager) updated from 1.10.0-1~ubuntu18.04.2 to 1.12.8-1:
+  
+    modemmanager (1.12.8-1) unstable; urgency=medium
+  
+      * New upstream version
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 10 Apr 2020 17:34:03 +0200
+  
+    modemmanager (1.12.6-1) unstable; urgency=medium
+  
+      * New upstream version
+      * debian/control:
+        - updated qmi requirement
+      * debian/libmm-glib0.symbols:
+        - refreshed the symbols for the new version
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 27 Feb 2020 21:23:17 +0100
+  
+    modemmanager (1.10.4-0.1) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * New upstream release
+      * debian/patches/error-propagation-fix.patch: Removed, included
+        upstream.
+      * debian/control: Update build dependencies as now libqmi >= 1.22.4 is
+        required.
+      * debian/modemmanager.install: Also install /usr/share/ModemManager,
+        for the new carrier mapping files.
+      * debian/libmm-glib0.symbols: Updated symbols.
+  
+     -- Till Kamppeter <till.kamppeter@gmail.com>  Tue, 20 Aug 2019 20:37:03 +0200
+  
+    modemmanager (1.10.0-1) unstable; urgency=medium
+  
+      * New upstream release
+      * debian/control: Update build dependencies as now libmbim >= 1.18.0 and
+        libqmi >= 1.22.0 are required.
+      * debian/libmm-glib0.symbols: update symbols for new release.
+  
+     -- Till Kamppeter <till.kamppeter@gmail.com>  Tue, 05 Feb 2019 23:40:29 +0100
+  
+  libnewt0.52 (built from newt) updated from 0.52.20-1ubuntu1 to 0.52.21-4ubuntu2:
+  
+    newt (0.52.21-4ubuntu2) focal; urgency=medium
+  
+      * No-change rebuild to drop python3.7.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Tue, 18 Feb 2020 10:21:04 +0100
+  
+    newt (0.52.21-4ubuntu1) focal; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Add correct build-dependencies on python3-all-dbg and
+          libpython3-all-dbg, needed due to debian/patches/snack.patch.
+        - Revert Debian's dropping of /etc/newt/palette.original, used as an
+          alternative in Ubuntu.
+        - Remove libnewt0.52.preinst altogether, which contains destructive
+          operations with none of the appropriate version guards.
+        - Drop call to update-alternatives --auto in our postinst, which would
+          clobber the user's settings.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 13 Feb 2020 11:44:47 -0800
+  
+    newt (0.52.21-4) unstable; urgency=medium
+  
+      * Switch from sgmltools-lite to docbook-utils for py2, sgmltools orphaned.
+        Closes: #946880
+      * Standards-Version: 4.4.1.0
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Tue, 17 Dec 2019 07:32:55 +0000
+  
+    newt (0.52.21-3ubuntu1) focal; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Add correct build-dependencies on python3-all-dbg and
+          libpython3-all-dbg, needed due to debian/patches/snack.patch.
+        - Revert Debian's dropping of /etc/newt/palette.original, used as an
+          alternative in Ubuntu.
+        - Remove libnewt0.52.preinst altogether, which contains destructive
+          operations with none of the appropriate version guards.
+        - Drop call to update-alternatives --auto in our postinst, which would
+          clobber the user's settings.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 18 Oct 2019 14:54:37 -0700
+  
+    newt (0.52.21-3) unstable; urgency=medium
+  
+      * Move to Standards-Version: 4.4.0
+      * Drop reference to libpython-dev. Closes: #937133
+      * Use debhelper-compat (= 12)
+      * Drop --add-udeb in dh_makeshlibs, for dh 12
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Sun, 01 Sep 2019 16:59:14 +0100
+  
+    newt (0.52.21-2ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Add correct build-dependencies on python3-all-dbg and
+          libpython3-all-dbg, needed due to debian/patches/snack.patch.
+        - Revert Debian's dropping of /etc/newt/palette.original, used as an
+          alternative in Ubuntu.
+        - Remove libnewt0.52.preinst altogether, which contains destructive
+          operations with none of the appropriate version guards.
+        - Drop call to update-alternatives --auto in our postinst, which would
+          clobber the user's settings.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 15 Jul 2019 22:16:32 -0700
+  
+    newt (0.52.21-2) unstable; urgency=medium
+  
+      * Standards-Version: 4.3.0
+      * Drop python-newt for python2 transition
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Sun, 14 Jul 2019 12:14:59 +0100
+  
+    newt (0.52.21-1ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Add correct build-dependencies on python{3,}-all-dbg, needed due to
+          debian/patches/snack.patch.
+        - Revert Debian's dropping of /etc/newt/palette.original, used as an
+          alternative in Ubuntu.
+        - Remove libnewt0.52.preinst altogether, which contains destructive
+          operations with none of the appropriate version guards.
+        - Drop call to update-alternatives --auto in our postinst, which would
+          clobber the user's settings.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Wed, 19 Jun 2019 14:05:19 -0700
+  
+    newt (0.52.21-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Use debhelper 12
+      * example files now ship in ./ not ./build-tree/*/*§
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Sun, 16 Jun 2019 13:56:51 +0100
+  
+    newt (0.52.20-8ubuntu2) eoan; urgency=medium
+  
+      * Revert Debian's dropping of /etc/newt/palette.original, used as an
+        alternative in Ubuntu.
+      * Remove libnewt0.52.preinst altogether, which contains destructive
+        operations with none of the appropriate version guards.
+      * Drop call to update-alternatives --auto in our postinst, which would
+        clobber the user's settings.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 29 Apr 2019 15:54:40 -0700
+  
+    newt (0.52.20-8ubuntu1) eoan; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Fix python-* package descriptions.
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+      * Dropped changes:
+        - "Revert the stage1 changes": not a delta that's worth carrying.
+        - Install library into /lib instead of /usr/lib: no longer relevant as
+          /usr is now guaranteed to be mounted early in boot.
+        - Install whiptail in /bin instead of /usr/bin: no longer relevant.
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 29 Apr 2019 10:41:12 -0700
+  
+    newt (0.52.20-8) unstable; urgency=medium
+  
+      * Don't ship /etc/newt/palette.original. Closes: #909030
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Thu, 27 Sep 2018 12:36:41 +0100
+  
+    newt (0.52.20-7) unstable; urgency=medium
+  
+      * Standards-Version: 4.2.1; no changes required
+      * Don't hard-code Automake version. Closes: #908739
+      * Grammar fix in description. Closes: #908740
+      * Close vcs reference bug. Closes: #572753
+      * Delete old palette.original files, too. Closes: #784390
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Mon, 17 Sep 2018 13:58:51 +0100
+  
+    newt (0.52.20-6ubuntu2) disco; urgency=medium
+  
+      * No-change rebuild to build without python3.6 support.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sat, 03 Nov 2018 12:07:52 +0000
+  
+    newt (0.52.20-6ubuntu1) cosmic; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Fix python-* package descriptions.
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Install whiptail in /bin instead of /usr/bin.
+        - Install library into /lib instead of /usr/lib.
+        - Revert the stage1 changes, the package can be cross-built without it.
+        - Follow /lib install change for udeb as well
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 13 Sep 2018 12:16:53 +0200
+  
+    newt (0.52.20-6) unstable; urgency=medium
+  
+      * Bump automake version to 1.16. Closes: #906494
+      * Standards=Version: 4.2.0; no changes required
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Sat, 18 Aug 2018 17:32:23 +0100
+  
+    newt (0.52.20-5) unstable; urgency=medium
+  
+      * Drop ancient X-Python*-Version statements from d/control
+      * Standards-Version: 4.1.4; no changes required
+      * Rebuild against python3.7
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Thu, 28 Jun 2018 09:50:38 +0100
+  
+    newt (0.52.20-4ubuntu3) cosmic; urgency=medium
+  
+      * Renable libnewt0.52-udeb as this is needed by cdebconf-terminal
+        and transitivly debian-installer.
+  
+     -- Andy Whitcroft <apw@canonical.com>  Wed, 15 Aug 2018 16:51:43 +0100
+  
+    newt (0.52.20-4ubuntu2) cosmic; urgency=medium
+  
+      * No-change rebuild to build for python3.7.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 28 Jun 2018 06:53:58 +0000
+  
+    newt (0.52.20-4ubuntu1) cosmic; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Fix python-* package descriptions.
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Install whiptail in /bin instead of /usr/bin.
+        - Install library into /lib instead of /usr/lib.
+        - Revert the stage1 changes, the package can be cross-built without it.
+      * Follow /lib install change for udeb as well
+      * Disable libnewt0.52-udeb for now
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Mon, 28 May 2018 17:39:26 +0200
+  
+    newt (0.52.20-4) unstable; urgency=medium
+  
+      * Drop Priority: important for whiptail, to minimize system size.
+        Closes: #893563
+      * Replace dependency of newt-tcl from tcl8.3 | tcl8.4 | tcl8.5 to tcl8.6
+        since the package is built using Tcl 8.6. Closes: #893136
+      * Minor corrections to whiptail.1 by Bjarni Ingi Gislason. 
+        Closes: #890044
+      * Drop references to obsolete dbg packages, dependencies
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Mon, 19 Mar 2018 13:07:22 +0000
+  
+    newt (0.52.20-3) unstable; urgency=medium
+  
+      * Create udeb. Closes: #871033
+      * Update watch file to look at releases.pagure.io
+      * Delete obsolete patches
+      * Set VCS to salsa.debian.org/mckinstry/newt
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Wed, 07 Mar 2018 15:31:56 +0000
+  
+    newt (0.52.20-2) unstable; urgency=medium
+  
+      * Standards-Version: 4.1.3
+      * Drop Priority: extra in favour of optional
+      * Drop Priority: important on lib package
+      * Drop dh-autoconf, autoconf B-D as automatic on DH 10
+      * Change homepage to https://pagure.io/newt
+      * Drop broken VCS-Git
+      * Drop obsolete pre-depends
+      * Drop obsolete alternatives. Closes: #868056
+      * Delete old /etc/newt/palette if left over on previous install
+      * Fix fail-to-crossbuild due to Python dependencies.
+        Thanks to Helmut Grohe. Closes: #888300
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Tue, 30 Jan 2018 08:46:27 +0000
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.30.0-1ubuntu1 to 1.40.0-1build1:
+  
+    nghttp2 (1.40.0-1build1) focal; urgency=medium
+  
+      * No-change rebuild for libgcc-s1 package name change.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sun, 22 Mar 2020 16:51:32 +0100
+  
+    nghttp2 (1.40.0-1) unstable; urgency=medium
+  
+      * New upstream release 1.40.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Tue, 19 Nov 2019 09:15:49 +0100
+  
+    nghttp2 (1.39.2-1) unstable; urgency=medium
+  
+      * New upstream release 1.39.2 (Closes: #934762)
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Thu, 15 Aug 2019 21:14:38 +0200
+  
+    nghttp2 (1.39.1-1) experimental; urgency=medium
+  
+      * New upstream release 1.39.1
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 22 Jun 2019 13:14:11 +0200
+  
+    nghttp2 (1.38.0-1) experimental; urgency=medium
+  
+      * New upstream release 1.38.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sun, 05 May 2019 16:45:50 +0200
+  
+    nghttp2 (1.37.0-1) unstable; urgency=medium
+  
+      * New upstream release 1.37.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sun, 17 Mar 2019 12:41:37 +0100
+  
+    nghttp2 (1.36.0-2) unstable; urgency=medium
+  
+      * d/*: drop support for spdy (Closes: #920988)
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sun, 03 Feb 2019 10:53:17 -0800
+  
+    nghttp2 (1.36.0-1) unstable; urgency=medium
+  
+      * Packaging refresh (debhelper 12, std-ver 4.3.0)
+      * New upstream release 1.36.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Wed, 23 Jan 2019 09:32:13 +0100
+  
+    nghttp2 (1.35.1-1) unstable; urgency=medium
+  
+      * New upstream version 1.35.1
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Fri, 14 Dec 2018 10:03:56 +0100
+  
+    nghttp2 (1.35.0-1) unstable; urgency=medium
+  
+      * New upstream version 1.35.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Mon, 26 Nov 2018 00:35:43 +0100
+  
+    nghttp2 (1.34.0-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.34.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Thu, 11 Oct 2018 08:04:01 +0200
+  
+    nghttp2 (1.33.0-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.33.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Fri, 07 Sep 2018 00:49:22 +0200
+  
+    nghttp2 (1.32.1-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.32.1
+      * Update debian control with "cme fix dpkg-control"
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 01 Sep 2018 12:02:10 +0200
+  
+    nghttp2 (1.32.0-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.32.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 19 May 2018 15:01:25 +0200
+  
+    nghttp2 (1.31.1-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.31.1 (fixes CVE-2018-1000168)
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 21 Apr 2018 19:35:33 +0200
+  
+    nghttp2 (1.31.0-1) unstable; urgency=medium
+  
+      * Imported upstream version 1.31.0
+      * Update symbols of libnghttp2
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Tue, 06 Mar 2018 00:06:34 +0100
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.45+dfsg-1ubuntu1.4 to 2.4.49+dfsg-2ubuntu1.2:
+  
+    openldap (2.4.49+dfsg-2ubuntu1.2) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: denial of service via nested search filters
+        - debian/patches/CVE-2020-12243.patch: limit depth of nested filters in
+          servers/slapd/filter.c.
+        - debian/patches/fix_test_timing.patch: fix FTBFS on riscv64 because of
+          test timing issue.
+        - CVE-2020-12243
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 01 May 2020 13:09:12 -0400
+  
+    openldap (2.4.49+dfsg-2ubuntu1) focal; urgency=medium
+  
+      * Merge with Debian unstable (LP: #1866303). Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+            [Dropped the ldap_gssapi_bind_s() hunk as that is already
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/rules:
+            - add nssov to CONTRIB_MODULES
+            - add sysconfdir to CONTRIB_MAKEVARS
+          - d/slapd.install:
+            - install nssov overlay
+          - d/slapd.manpages:
+            - install slapo-nssov(5) man page
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+        - d/p/contrib-makefiles: given the change in 2.4.47+dfsg-3 regarding
+          Debian bug #919136, we also have to patch the nssov makefile
+          accordingly and thus update this patch.
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Fri, 06 Mar 2020 11:39:12 -0300
+  
+    openldap (2.4.49+dfsg-2) unstable; urgency=medium
+  
+      * slapd.README.Debian: Document the initial setup performed by slapd's
+        maintainer scripts in more detail. Thanks to Karl O. Pinc.
+        (Closes: #952501)
+      * Import upstream patch to fix slapd crashing in certain configurations when
+        a client attempts a login to a locked account.
+        (ITS#9171) (Closes: #953150)
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Thu, 05 Mar 2020 12:59:46 -0800
+  
+    openldap (2.4.49+dfsg-1ubuntu1) focal; urgency=medium
+  
+      * Merge with Debian unstable. Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+            [Dropped the ldap_gssapi_bind_s() hunk as that is already
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/rules:
+            - add nssov to CONTRIB_MODULES
+            - add sysconfdir to CONTRIB_MAKEVARS
+          - d/slapd.install:
+            - install nssov overlay
+          - d/slapd.manpages:
+            - install slapo-nssov(5) man page
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+        - d/p/contrib-makefiles: given the change in 2.4.47+dfsg-3 regarding
+          Debian bug #919136, we also have to patch the nssov makefile
+          accordingly and thus update this patch.
+      * Dropped:
+        - d/control: slapd can depend on perl:any since it only uses perl for
+          some maintainer and helper scripts.
+          [In 2.4.49+dfsg-1]
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Mon, 10 Feb 2020 12:13:47 -0300
+  
+    openldap (2.4.49+dfsg-1) unstable; urgency=medium
+  
+      * New upstream release.
+        - Drop patch no-gnutls_global_set_mutex, applied upstream.
+      * When validating the DNS domain chosen for slapd's default suffix, set
+        LC_COLLATE explicitly for grep to ensure character ranges behave as
+        expected. Thanks to Fredrik Roubert. (Closes: #940908)
+      * Backport proposed upstream patch to emit detailed messages about errors in
+        the TLS configuration. (ITS#9086) (Closes: #837341)
+      * slapd.scripts-common: Delete unused copy_example_DB_CONFIG function.
+      * Remove debconf support for choosing a database backend. Always use the
+        LMDB backend for new installs, as recommended by upstream.
+      * Remove the empty olcBackend section from the default configuration.
+      * Remove the unused slapd.conf template from /usr/share/slapd. Continue
+        shipping it as an example in /usr/share/doc/slapd.
+      * Fix a typo in index-files-created-as-root patch.
+        Thanks to Quanah Gibson-Mount.
+      * Annotate slapd's Depends on perl with :any. Fixes installation of
+        foreign-arch slapd. Thanks to Andreas Hasenack.
+      * Rename 'stage1' build profile to 'pkg.openldap.noslapd'.
+        Thanks to Helmut Grohne. (Closes: #949722)
+      * Drop Build-Conflicts: libicu-dev as upstream's configure no longer tests
+        for or links with libicu.
+      * Note ITS#9126 recommendation in slapd.NEWS.
+      * Update Standards-Version to 4.5.0; no changes required.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Thu, 06 Feb 2020 10:08:12 -0800
+  
+    openldap (2.4.48+dfsg-1ubuntu4) focal; urgency=medium
+  
+      * d/control: slapd can depend on perl:any since it only uses perl for
+        some maintainer and helper scripts. The perl backend links against
+        the correct architecture perl libraries already. Can be dropped
+        after https://salsa.debian.org/openldap-team/openldap/commit/794c736
+        is in a Debian upload.
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Mon, 06 Jan 2020 16:46:11 -0300
+  
+    openldap (2.4.48+dfsg-1ubuntu3) focal; urgency=medium
+  
+      * No-change rebuild against libnettle7
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 31 Oct 2019 22:13:44 +0000
+  
+    openldap (2.4.48+dfsg-1ubuntu2) focal; urgency=medium
+  
+      * No-change rebuild for the perl update.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Fri, 18 Oct 2019 19:37:23 +0000
+  
+    openldap (2.4.48+dfsg-1ubuntu1) eoan; urgency=medium
+  
+      * Merge with Debian unstable. Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/rules:
+            - add nssov to CONTRIB_MODULES
+            - add sysconfdir to CONTRIB_MAKEVARS
+          - d/slapd.install:
+            - install nssov overlay
+          - d/slapd.manpages:
+            - install slapo-nssov(5) man page
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+        - d/p/contrib-makefiles: given the change in 2.4.47+dfsg-3 regarding
+          Debian bug #919136, we also have to patch the nssov makefile
+          accordingly and thus update this patch.
+      * Dropped:
+        - Fix sysv-generator unit file by customizing parameters (LP #1821343)
+          + d/slapd-remain-after-exit.conf: Override RemainAfterExit to allow
+            correct systemctl status for slapd daemon.
+          + d/slapd.install: place override file in correct location.
+          [Included in 2.4.48+dfsg-1]
+        - SECURITY UPDATE: rootDN proxyauthz not restricted to its own databases
+          + debian/patches/CVE-2019-13057-1.patch: add restriction to
+            servers/slapd/saslauthz.c.
+          + debian/patches/CVE-2019-13057-2.patch: add tests to
+            tests/data/idassert.out, tests/data/slapd-idassert.conf,
+            tests/data/test-idassert1.ldif, tests/scripts/test028-idassert.
+          + debian/patches/CVE-2019-13057-3.patch: fix typo in
+            tests/scripts/test028-idassert.
+          + debian/patches/CVE-2019-13057-4.patch: fix typo in
+            tests/scripts/test028-idassert.
+          + CVE-2019-13057
+          [Fixed upstream]
+        - SECURITY UPDATE: SASL SSF not initialized per connection
+          + debian/patches/CVE-2019-13565.patch: zero out sasl_ssf in
+            connection_init in servers/slapd/connection.c.
+          + CVE-2019-13565
+          [Fixed upstream]
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Wed, 31 Jul 2019 18:01:14 -0300
+  
+    openldap (2.4.48+dfsg-1) unstable; urgency=medium
+  
+      * New upstream release.
+        - fixed slapd to restrict rootDN proxyauthz to its own databases
+          (CVE-2019-13057) (ITS#9038) (Closes: #932997)
+        - fixed slapd to enforce sasl_ssf ACL statement on every connection
+          (CVE-2019-13565) (ITS#9052) (Closes: #932998)
+        - added new openldap.h header with OpenLDAP specific libldap interfaces
+          (ITS#8671)
+        - updated lastbind overlay to support forwarding authTimestamp updates
+          (ITS#7721) (Closes: #880656)
+      * Update Standards-Version to 4.4.0.
+      * Add a systemd drop-in to set RemainAfterExit=no on the slapd service, so
+        that systemd marks the service as dead after it crashes or is killed.
+        Thanks to Heitor Alves de Siqueira. (Closes: #926657, LP: #1821343)
+      * Use more entropy for generating a random admin password, if none was set
+        during initial configuration. Thanks to Judicael Courant.
+        (Closes: #932270)
+      * Replace debian/rules calls to dpkg-architecture and dpkg-parsechangelog
+        with variables provided by dpkg-dev includes.
+      * Declare R³: no.
+      * Create a simple autopkgtest that tests installing slapd and connecting to
+        it with an ldap tool.
+      * Install the new openldap.h header in libldap2-dev.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Thu, 25 Jul 2019 08:32:00 -0700
+  
+    openldap (2.4.47+dfsg-3ubuntu3) eoan; urgency=medium
+  
+      * SECURITY UPDATE: rootDN proxyauthz not restricted to its own databases
+        - debian/patches/CVE-2019-13057-1.patch: add restriction to
+          servers/slapd/saslauthz.c.
+        - debian/patches/CVE-2019-13057-2.patch: add tests to
+          tests/data/idassert.out, tests/data/slapd-idassert.conf,
+          tests/data/test-idassert1.ldif, tests/scripts/test028-idassert.
+        - debian/patches/CVE-2019-13057-3.patch: fix typo in
+          tests/scripts/test028-idassert.
+        - debian/patches/CVE-2019-13057-4.patch: fix typo in
+          tests/scripts/test028-idassert.
+        - CVE-2019-13057
+      * SECURITY UPDATE: SASL SSF not initialized per connection
+        - debian/patches/CVE-2019-13565.patch: zero out sasl_ssf in
+          connection_init in servers/slapd/connection.c.
+        - CVE-2019-13565
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 26 Jul 2019 13:21:00 -0400
+  
+    openldap (2.4.47+dfsg-3ubuntu2) disco; urgency=medium
+  
+      * Fix sysv-generator unit file by customizing parameters (LP: #1821343)
+        - d/slapd-remain-after-exit.conf: Override RemainAfterExit to allow
+          correct systemctl status for slapd daemon.
+        - d/slapd.install: place override file in correct location.
+  
+     -- Heitor Alves de Siqueira <halves@canonical.com>  Mon, 08 Apr 2019 12:39:12 -0300
+  
+    openldap (2.4.47+dfsg-3ubuntu1) disco; urgency=medium
+  
+      * Merge with Debian unstable. Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/rules:
+            - add nssov to CONTRIB_MODULES
+            - add sysconfdir to CONTRIB_MAKEVARS
+          - d/slapd.install:
+            - install nssov overlay
+          - d/slapd.manpages:
+            - install slapo-nssov(5) man page
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+      * Added changes:
+        - d/p/contrib-makefiles: given the change in 2.4.47+dfsg-3 regarding
+          Debian bug #919136, we also have to patch the nssov makefile
+          accordingly and thus update this patch.
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Mon, 11 Feb 2019 09:20:47 -0200
+  
+    openldap (2.4.47+dfsg-3) unstable; urgency=medium
+  
+      * Restore patches to contrib Makefiles to set CFLAGS, CPPFLAGS, and LDFLAGS
+        individually in the relevant command lines instead of overriding OPT. The
+        change to use OPT caused FTBFS on some ports arches where PIE enablement
+        uses spec files, by mixing compile-time and link-time flags.
+        (Closes: #919136)
+      * Fix architecture-specific path in smbk5pwd's binary-or-shlib-defines-rpath
+        Lintian override.
+      * Skip exporting cn=config to LDIF in preinst for upgrades where nothing
+        needs to be checked in it.
+      * Update Standards-Version to 4.3.0.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Sat, 02 Feb 2019 10:30:10 -0800
+  
+    openldap (2.4.47+dfsg-2ubuntu1) disco; urgency=medium
+  
+      * Merge from Debian unstable (LP: #1811630).  Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/rules:
+            - add nssov to CONTRIB_MODULES
+            - add sysconfdir to CONTRIB_MAKEVARS
+          - d/slapd.install:
+            - install nssov overlay
+          - d/slapd.manpages:
+            - install slapo-nssov(5) man page
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+      * Update nssov build and packaging for Debian changes:
+        - Drop patch nssov-build
+        - d/rules:
+          - add nssov to CONTRIB_MODULES
+          - add sysconfdir to CONTRIB_MAKEVARS
+        - d/slapd.install:
+          - install nssov overlay
+        - d/slapd.manpages:
+          - install slapo-nssov(5) man page
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Sun, 13 Jan 2019 04:47:09 +0000
+  
+    openldap (2.4.47+dfsg-2) unstable; urgency=medium
+  
+      * Reintroduce slapi-dev binary package. (Closes: #711469)
+        Thanks to Florian Schlichting.
+      * Do not call gnutls_global_set_mutex(). (Closes: #803197)
+      * Use dh_auto_* to build and install contrib modules.
+        - Stop patching the clean rule in smbk5pwd's Makefile.
+      * Explicitly list overlays and man pages installed by slapd package in
+        slapd.install and slapd.manpages files.
+      * Set common variables for contrib Makefiles by make(1) command line instead
+        of patching every Makefile.
+      * Build and install more contrib plugins in a new slapd-contrib package:
+        - pw-apr1 and pw-netscape (Closes: #592362)
+        - pw-pbkdf2 (Closes: #794999)
+      * Import the slapo-pw-pbkdf2 man page from upstream git master and install
+        it with the slapd-contrib package.
+      * Add smbk5pwd to slapd-contrib and turn slapd-smbk5pwd into a transitional
+        package. Drop smbk5pwd README since it now has a man page which is a
+        better resource for users.
+        - Use Breaks to ensure that slapd is not upgraded in between removing the
+          old smbk5pwd module and installing the new one.
+      * Include the apr1-atol.pl and apr1-lota.pl helper scripts in the
+        slapd-contrib package as examples.
+      * Merge remaining contrib Makefile patches into a single contrib-makefiles
+        patch.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Sat, 12 Jan 2019 11:18:03 -0800
+  
+    openldap (2.4.47+dfsg-1) unstable; urgency=medium
+  
+      * New upstream release.
+        - reverted GnuTLS handshake change in libldap as it regressed slapd
+          (Reopens: #861838)
+      * Update Standards-Version to 4.2.1.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Sun, 23 Dec 2018 12:50:40 -0800
+  
+    openldap (2.4.46+dfsg-5ubuntu3) disco; urgency=medium
+  
+      * d/apparmor-profile: update apparmor profile to allow reading of
+        files needed when slapd is behaving as a kerberos/gssapi client
+        and acquiring its own ticket. (LP: #1783183)
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Fri, 09 Nov 2018 21:29:51 -0200
+  
+    openldap (2.4.46+dfsg-5ubuntu2) disco; urgency=medium
+  
+      * No-change rebuild for the perl 5.28 transition.
+  
+     -- Adam Conrad <adconrad@ubuntu.com>  Fri, 02 Nov 2018 18:14:37 -0600
+  
+    openldap (2.4.46+dfsg-5ubuntu1) cosmic; urgency=medium
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/{patches/nssov-build,rules}: Apply, build and package the
+            nss overlay.
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 09 May 2018 13:44:37 +0200
+  
+    openldap (2.4.46+dfsg-5) unstable; urgency=medium
+  
+      * Restore slapd-smbk5pwd now that libldap is installable in unstable.
+        This reverts the changes from -3 and -4.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Fri, 04 May 2018 16:12:27 -0700
+  
+    openldap (2.4.46+dfsg-4) unstable; urgency=medium
+  
+      * Disable building the smbk5pwd plugin temporarily.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Fri, 04 May 2018 08:06:58 -0700
+  
+    openldap (2.4.46+dfsg-3) unstable; urgency=medium
+  
+      * Build without heimdal temporarily to resolve BD-Uninstallable loop.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Fri, 04 May 2018 07:36:58 -0700
+  
+    openldap (2.4.46+dfsg-2ubuntu1) cosmic; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - Enable AppArmor support:
+          - d/apparmor-profile: add AppArmor profile
+          - d/rules: use dh_apparmor
+          - d/control: Build-Depends on dh-apparmor
+          - d/slapd.README.Debian: add note about AppArmor
+        - Enable GSSAPI support:
+          - d/patches/gssapi.diff, thanks to Jerry Carter (Likewise):
+            - Add --with-gssapi support
+            - Make guess_service_principal() more robust when determining
+              principal
+          - d/configure.options: Configure with --with-gssapi
+          - d/control: Added heimdal-dev as a build depend
+          - d/rules:
+            - Explicitly add -I/usr/include/heimdal to CFLAGS.
+            - Explicitly add -I/usr/lib/<multiarch>/heimdal to LDFLAGS.
+        - Enable ufw support:
+          - d/control: suggest ufw.
+          - d/rules: install ufw profile.
+          - d/slapd.ufw.profile: add ufw profile.
+        - Enable nss overlay:
+          - d/{patches/nssov-build,rules}: Apply, build and package the
+            nss overlay.
+        - d/{rules,slapd.py}: Add apport hook.
+        - d/slapd.init.ldif: don't set olcRootDN since it's not defined in
+          either the default DIT nor via an Authn mapping.
+        - d/slapd.scripts-common:
+          - add slapcat_opts to local variables.
+          - Fix backup directory naming for multiple reconfiguration.
+        - d/{slapd.default,slapd.README.Debian}: use the new configuration style.
+        - d/rules: Enable -DLDAP_CONNECTIONLESS to build CLDAP (UDP) support
+          in the openldap library, as required by Likewise-Open
+        - Show distribution in version:
+          - d/control: added lsb-release
+          - d/patches/fix-ldap-distribution.patch: show distribution in version
+        - d/libldap-2.4-2.symbols: Add symbols not present in Debian.
+          - CLDAP (UDP) was added in 2.4.17-1ubuntu2
+          - GSSAPI support was enabled in 2.4.18-0ubuntu2
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 04 May 2018 10:19:24 +0200
+  
+    openldap (2.4.46+dfsg-2) unstable; urgency=medium
+  
+      * Remove version constraint from libldap-2.4-2 dependency on libldap-common.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Thu, 03 May 2018 14:16:49 -0700
+  
+    openldap (2.4.46+dfsg-1) unstable; urgency=medium
+  
+      * Move the repository to Salsa.
+        Update debian/control Vcs-* fields.
+      * Remove Matthijs Möhlmann from Uploaders. (Closes: #891308)
+        Thank you Matthijs for your past contributions.
+      * New upstream release.
+        - fixed slapd out-of-sync issue with delta-MMR and memberof overlay
+          (ITS#8444) (Closes: #877166)
+      * Rebase patch no-AM_INIT_AUTOMAKE to apply cleanly.
+      * Drop patch ITS8650-retry-gnutls_handshake-after-GNUTLS_E_AGAIN, applied
+        upstream.
+      * Really fix upgrades when the config contains backslash-escaped special
+        characters. The previous fix was incomplete and didn't fully fix upgrades
+        involving a database reload. (Closes: #864719)
+      * Update Standards-Version to 4.1.4.
+        - Change the Priority of libldap-2.4-2 and libldap-common to optional.
+      * Change download URL in debian/watch to https. Fixes a Lintian info.
+      * Override the binary-or-shlib-defines-rpath Lintian tag for slapd-smbk5pwd.
+        The rpath is set by krb5-config.heimdal; see bug #868840.
+  
+     -- Ryan Tandy <ryan@nardis.ca>  Thu, 03 May 2018 07:03:30 -0700
+  
+  ppp (built from ppp) updated from 2.4.7-2+2ubuntu1.2 to 2.4.7-2+4.1ubuntu5:
+  
+    ppp (2.4.7-2+4.1ubuntu5) focal; urgency=medium
+  
+      * SECURITY UPDATE: rhostname buffer overflow
+        - debian/patches/CVE-2020-8597.patch: fix bounds check in EAP code in
+          pppd/eap.c.
+        - CVE-2020-8597
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 11 Feb 2020 10:03:25 -0500
+  
+    ppp (2.4.7-2+4.1ubuntu4) eoan; urgency=medium
+  
+      * Stop producing udebs on i386 where we no longer have d-i or a kernel.
+  
+     -- Adam Conrad <adconrad@ubuntu.com>  Wed, 09 Oct 2019 14:11:51 -0600
+  
+    ppp (2.4.7-2+4.1ubuntu3) eoan; urgency=medium
+  
+      * No-change upload with strops.h and sys/strops.h removed in glibc.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 05 Sep 2019 11:06:52 +0000
+  
+    ppp (2.4.7-2+4.1ubuntu2) eoan; urgency=medium
+  
+      * debian/extra/ip-up.d/0000usepeerdns: Added NetworkManager check, which
+        lets the script exit when NetworkManager is in use (LP: #1778946).
+  
+     -- Till Kamppeter <till.kamppeter@gmail.com>  Fri, 08 Feb 2019 17:37:29 +0100
+  
+    ppp (2.4.7-2+4.1ubuntu1) disco; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/patches/load_ppp_generic_if_needed: load ppp_generic kernel
+          module if needed.
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 15 Mar 2019 13:18:08 +0100
+  
+    ppp (2.4.7-2+4.1) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * Apply upstream patch from
+        <https://github.com/paulusmack/ppp/commit/3c7b86229f7bd2600d74db14b1fe5b3896be3875>
+        to fix FTBFS with glibc 2.28. (Closes: #916163)
+  
+     -- Chris Lamb <lamby@debian.org>  Sat, 09 Mar 2019 14:48:25 +0000
+  
+    ppp (2.4.7-2+4ubuntu2) disco; urgency=medium
+  
+      * debian/patches/3c7b86229f7bd2600d74db14b1fe5b3896be3875.patch:
+        - upstream proposed fix for new glibc 2.28 (thanks <infinity>)
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 09 Nov 2018 19:32:52 +0100
+  
+    ppp (2.4.7-2+4ubuntu1) disco; urgency=low
+  
+      * Merge from Debian unstable. Remaining changes:
+        - debian/patches/load_ppp_generic_if_needed: load ppp_generic kernel
+          module if needed.
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 09 Nov 2018 10:53:51 +0100
+  
+    ppp (2.4.7-2+4) unstable; urgency=medium
+  
+      * Update EAP-TLS patch to version 1.102. (Closes: #912822)
+  
+     -- Chris Boot <bootc@debian.org>  Sun, 04 Nov 2018 12:56:54 +0000
+  
+    ppp (2.4.7-2+3ubuntu1) cosmic; urgency=low
+  
+      * Merge from Debian unstable.  Remaining changes:
+        - debian/patches/load_ppp_generic_if_needed: load ppp_generic kernel
+          module if needed.
+      * debian/ppp.symbols: updated for Ubuntu.
+      * Drop preinst change.
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 13 Jun 2018 14:01:31 +0200
+  
+    ppp (2.4.7-2+3) unstable; urgency=high
+  
+      * Update EAP-TLS patch to version 1.101. (CVE-2018-11574)
+      * Set urgency=high due to security fix.
+  
+     -- Chris Boot <bootc@debian.org>  Sat, 09 Jun 2018 14:20:01 +0100
+  
+  resolvconf (built from resolvconf) updated from 1.79ubuntu10.18.04.3 to 1.82:
+  
+    resolvconf (1.82) unstable; urgency=medium
+  
+      [ Andrej Shadura ]
+      * Update the debconf translation templates (Closes: #947164).
+      * Update translations.
+  
+      [ Helge Kreutzmann ]
+      * Update German debconf translation (Closes: #947171).
+  
+      [ Frans Spiesschaert ]
+      * Update Dutch debconf translation (Closes: #948037).
+  
+     -- Andrej Shadura <andrewsh@debian.org>  Fri, 03 Jan 2020 18:32:03 +0100
+  
+    resolvconf (1.81) unstable; urgency=medium
+  
+      [ Russell Coker ]
+      * Set correct SE Linux context on created directories and files
+        (Closes: #850783).
+  
+      [ Jakub Wilk ]
+      * Drop symlink resolving logic from the init script (Closes: #946609).
+  
+     -- Andrej Shadura <andrewsh@debian.org>  Thu, 19 Dec 2019 15:19:16 +0100
+  
+    resolvconf (1.80) unstable; urgency=medium
+  
+      [ Thomas Hood ]
+      * Bump Standards-Version; no changes required
+      * Fix postrm for Ubuntu (LP: 1593489)
+      * Update README to reflect the removal of pdnsd from the archive
+      * In unit file use network-pre.target (Closes: #847440
+        and LP: #1636912). Thanks to Ryan Harper.
+      * Add systemd predictable interface name patterns (Closes: #877695,
+        #905907). Thanks to Kevin Otte for the patch in LP: #1610479.
+  
+      [ Steve Langasek ]
+      * Eliminate all references to /etc/resolvconf/run.  This should all be done
+        directly in /run, there is no reason to support making any of this
+        configurable with a symlink since we already have a versioned dependency
+        on the version of initscripts that introduces the /run transition.
+      * etc/resolvconf/resolv.conf.d/head: add comment about
+        'systemd-resolve --status', since systemd-resolved is now in use in all
+        but the most unusual configurations, and expert users should be given
+        guidance where to find the actual nameservers for debugging purposes.
+        LP: #1638836.
+  
+      [ Martin Pitt ]
+      * debian/postinst: Make /etc/resolv.conf a relative symlink so that it
+        works when setting up chroots.
+  
+      [ Dimitri John Ledkov ]
+      * Drop ifupdown dependency.
+      * Drop upstart system job.
+      * Use readlink -m when checking the link's destination.
+        (LP: #924836)
+      * Dereference /etc/resolf.conf when creating runtime configuration when
+        migrating to resolvconf managed /etc/resolv.conf. The contents of
+        /etc/resolv.conf (rather than the symlink target information) is
+        needed in /run/resolvconf/resolv.conf and
+        /run/resolvconf/interface/original.resolvconf during migration until
+        resolvconf updates the config next. (LP: #1713149)
+      * Move resolvconf & resolved integration system units from src:systemd
+        to src:resolvconf. Also use a different unit name, to avoid
+        breaks/replaces.
+      * debian/postrm: if resolved managed stub config is available, migrate
+        to it upon resolvconf removal.
+  
+      [ Dan Streetman ]
+      * Filter out the edns0 option that systemd-resolved has recently added
+        to its stub-resolv.conf. Using the stub conf with edns0 set with
+        non-local DNS servers can break name resolution. (LP: #1817903)
+  
+      [ Alfonso Sánchez-Beato ]
+      * bin/resolvconf: use flock so resolvconf can be called in parallel
+        safely (LP: #1825194).
+  
+      [ Andrej Shadura ]
+      * Add /usr/sbin and /usr/bin to PATH (Closes: #832394).
+      * Update the team email address.
+      * Wrap and sort.
+      * Add myself as a co-maintainer.
+      * Verify ifquery is available before running it (we no longer require
+        ifupdown).
+      * Remove id-length from gbp.conf so commit hashes are not prepended
+        to the changelog entries.
+      * Port debian/rules to the dh 12 short form.
+      * d/copyright: Use https protocol in Format field.
+      * d/changelog: Remove trailing whitespaces.
+      * d/control: Set Vcs-* to salsa.debian.org.
+  
+      [ Théophile Helleboid ]
+      * Add vpn* to the interfaces-order list.
+  
+     -- Andrej Shadura <andrewsh@debian.org>  Tue, 10 Dec 2019 16:45:20 +0100
+  
+  librtmp1 (built from rtmpdump) updated from 2.4+20151223.gitfa8646d.1-1 to 2.4+20151223.gitfa8646d.1-2build1:
+  
+    rtmpdump (2.4+20151223.gitfa8646d.1-2build1) focal; urgency=medium
+  
+      * No-change rebuild against libnettle7
+  
+     -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 31 Oct 2019 22:15:13 +0000
+  
+    rtmpdump (2.4+20151223.gitfa8646d.1-2) unstable; urgency=medium
+  
+      [ Ondřej Nový ]
+      * d/control: Set Vcs-* to salsa.debian.org
+      * d/changelog: Remove trailing whitespaces
+  
+      [ Felipe Sateler ]
+      * Change maintainer address to debian-multimedia@lists.debian.org
+  
+      [ Sebastian Ramacher ]
+      * debian/: Bump debhelper compat level to 11.
+      * debian/control: Bump Standards-Version.
+  
+     -- Sebastian Ramacher <sramacher@debian.org>  Mon, 21 May 2018 15:33:27 +0200
+  
+  libslang2 (built from slang2) updated from 2.3.1a-3ubuntu1 to 2.3.2-4:
+  
+    slang2 (2.3.2-4) unstable; urgency=medium
+  
+      * Standards-Version: 4.4.0
+      * Move to debhelper compat level 12
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Wed, 17 Jul 2019 10:26:13 +0100
+  
+    slang2 (2.3.2-3) unstable; urgency=medium
+  
+      * Rebuild against unicode-data 12.1
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Fri, 26 Apr 2019 09:19:19 +0100
+  
+    slang2 (2.3.2-2) unstable; urgency=medium
+  
+      [OndĹej NovĂ˝]
+      * d/copyright: Use https protocol in Format field
+      * d/changelog: Remove trailing whitespaces
+      * d/control: Remove trailing whitespaces
+      * d/rules: Remove trailing whitespaces
+      * d/control: Fix wrong Vcs-*
+  
+      [Alastair McKinstry]
+      * Standards-Version: 4.3.0
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Sun, 20 Jan 2019 15:09:19 +0000
+  
+    slang2 (2.3.2-1) unstable; urgency=medium
+  
+      * New upstream release
+        - extended_terminfo.patch now included upstream
+      * Ack old bugs: Closes: #407835, #664075
+      * Set OBJDIR to src/x32objs on x32. Closes: #890545
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Mon, 19 Feb 2018 16:59:12 +0000
+  
 2020-04-07 network-manager 1.10.6-5
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
