@@ -76,18 +76,49 @@ parts:
     override-build: |
       cp "$SNAPCRAFT_PROJECT_DIR"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
     organize:
-      ChangeLog: usr/share/doc/network-manager/ChangeLog
+      ChangeLog: snap/ChangeLog
+
+  # Get aux scripts so they can be used in other parts. Also, stage
+  # packages we rebuild later to get copyright and ensure they are in
+  # the manifest.
+  stack-snaps-tools:
+    plugin: nil
+    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
+    source-type: git
+    build-packages:
+      - dpkg-dev
+      - git
+    stage-packages:
+      - dnsmasq-base
+      - network-manager
+    override-build: |
+      set -ex
+      find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
+                -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/network-manager*' \
+                -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/libnm0*' \
+           -and -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/dnsmasq-base*' \
+           -delete
+      find "$SNAPCRAFT_PART_INSTALL"/ -type d -empty -delete
+      mkdir -p "$SNAPCRAFT_PART_INSTALL"/build-tools
+      cp build-tools/* "$SNAPCRAFT_PART_INSTALL"/build-tools
+    prime:
+      - usr/share/doc/network-manager
+      - usr/share/doc/libnm0
+      - usr/share/doc/dnsmasq-base
 
   dnsmasq:
+    after: [ stack-snaps-tools ]
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/2.80-1.1ubuntu1
+    source-branch: applied/ubuntu/focal
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
     override-build: |
+      set -ex
+      "$SNAPCRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
       git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
     filesets:
@@ -97,10 +128,11 @@ parts:
       - $binaries
 
   networkmanager:
+    after: [ stack-snaps-tools ]
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/1.22.10-1ubuntu1
+    source-branch: applied/ubuntu/focal-updates
     build-packages:
       - intltool
       - libdbus-glib-1-dev
@@ -136,6 +168,7 @@ parts:
       - xsltproc
       - iptables
       - gtk-doc-tools
+      - libnss3-dev
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
@@ -183,6 +216,8 @@ parts:
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
     override-build: |
+      set -ex
+      "$SNAPCRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
       git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
@@ -248,7 +283,6 @@ parts:
         - etc/NetworkManager/*
         - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/dnsmasq/copyright
         - usr/share/doc/iputils-arping/copyright
         - usr/share/doc/libasn1-8-heimdal/copyright
         - usr/share/doc/libbrotli1/copyright
@@ -275,7 +309,6 @@ parts:
         - usr/share/doc/libssh-4/copyright
         - usr/share/doc/libteamdctl0/copyright
         - usr/share/doc/libwind0-heimdal/copyright
-        - usr/share/doc/network-manager/copyright
         - usr/share/doc/ppp/copyright
         - usr/share/doc/resolvconf/copyright
       libs:
@@ -319,6 +352,7 @@ parts:
         - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
         - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
+        - -usr/lib/NetworkManager/*/*.la
         - -usr/lib/pkgconfig
     prime:
       - $binaries
@@ -326,19 +360,3 @@ parts:
       - $docs
       - $libs
       - $unwanted
-
-  # This part is to make sure we get notifications from the review tools
-  networkmanager-phony:
-    after: [ networkmanager-common, changelog, dnsmasq, networkmanager ]
-    plugin: nil
-    source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
-    source-type: git
-    build-packages:
-      - python3-minimal
-      - python3-yaml
-    stage-packages:
-      - network-manager
-      - dnsmasq-base
-    # Make sure nothing from the staged packages is installed
-    override-build: |
-      rm -rf ../install/*
