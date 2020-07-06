@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -ex
 # shellcheck source=tests/lib/utilities.sh
 . "$TESTSLIB"/utilities.sh
+get_qemu_eth_iface eth_if
 
 echo "Wait for firstboot change to be ready"
 while ! snap changes | grep -q "Done"; do
@@ -36,6 +37,8 @@ sleep 2
 # Make sure the original netplan configuration is applied and active
 # (we do this before re-starting NM to avoid race conditions in some tests)
 netplan apply
+# Remove ipv6 addresses (see LP:#1870561)
+ip -6 address flush dev "$eth_if"
 systemctl start snap.network-manager.networkmanager
 wait_for_network_manager
 
