@@ -28,3 +28,5 @@ execute: |
         iw phy phy0 wowlan show | grep "WoWLAN is enabled"
         iw phy phy0 wowlan show | grep "wake up on special any trigger"
     fi
+
+    snap set network-manager wifi.wake-on-wlan=disabled
