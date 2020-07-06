@@ -2,6 +2,7 @@ summary: Verify that wake-on-lan is enabled by default for all ethernet connecti
 
 execute: |
     . $TESTSLIB/utilities.sh
+    get_qemu_eth_iface eth_if
     nmcli=/snap/bin/network-manager.nmcli
     # TODO remove when we can run tests on UC20
     # (netplan .nmconnection issues, snapd mountspace issues)
@@ -13,22 +14,22 @@ execute: |
 
             # The config file needs to be present and have the correct default set
             test -e /var/snap/network-manager/current/conf.d/enable-wol.conf
-            cat /var/snap/network-manager/current/conf.d/enable-wol.conf | grep '802-3-ethernet.wake-on-lan=64'
+            cat /var/snap/network-manager/current/conf.d/enable-wol.conf | grep 'ethernet.wake-on-lan=64'
 
             # Precondition is a existing network connection
-            $nmcli d | grep 'eth0.*connected'
+            $nmcli d | grep "$eth_if.*connected"
 
             # The netplan configuration file has WoL disabled by default as
             # the default one the core snap provides does not explicitly
             # enable WoL.
             connection=$($nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
-            $nmcli -m multiline -f connection.id c show $connection | grep 'netplan-eth0'
+            $nmcli -m multiline -f connection.id c show $connection | grep netplan-$eth_if
             $nmcli -m multiline -f connection.type c show $connection | grep '802-3-ethernet'
             $nmcli -m multiline -f 802-3-ethernet.wake-on-lan c show $connection |
                 grep '^802-3-ethernet.wake-on-lan: *--$'
 
             # Now prepare for the next boot where we will run without a netplan
-            # config to get eth0 correctly configured.
+            # config to get the ethernet correctly configured.
             rm /etc/netplan/00-snapd-config.yaml
             REBOOT
             ;;
@@ -37,7 +38,7 @@ execute: |
             wait_for_network_manager
 
             # Precondition is a existing network connection
-            $nmcli d | grep 'eth0.*connected'
+            $nmcli d | grep "$eth_if.*connected"
 
             # Connection should have the default wake-on-lan setting
             connection=$($nmcli -m multiline -f UUID c show | awk '{print$2;exit}')
@@ -57,7 +58,7 @@ execute: |
 
                 # See `man ethtool` for details; 'g' means 'wakeup when magic packet comes in'
                 # and is the default behavior we want.
-                /snap/bin/se-test-tools.ethtool eth0 | grep 'Wake-up: g'
+                /snap/bin/se-test-tools.ethtool $eth_if | grep 'Wake-up: g'
             fi
             ;;
     esac
