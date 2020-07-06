@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 snap_install() {
 	name=$1
@@ -163,4 +163,14 @@ repeat_until_done() {
       let i=i+1
   done
   test $i -lt $max_iterations
+}
+
+# Returns name of ethernet interface for qemu vm
+# $1: name of variable where to store the interface name
+get_qemu_eth_iface() {
+    local net_dev
+    net_dev=$(find /sys/class/net/ -print0 -type l | xargs -0 readlink |
+                  grep -v virtual | head -n 1)
+    net_dev=${net_dev##*/}
+    eval "$1"="$net_dev"
 }
