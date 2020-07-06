@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # shellcheck source=tests/lib/snap-names.sh
 . "$TESTSLIB"/snap-names.sh
 # shellcheck source=tests/lib/utilities.sh
 . "$TESTSLIB"/utilities.sh
+get_qemu_eth_iface eth_if
 
 # Remove all snaps not being the core, gadget, kernel or snap we're testing
 for snap in /snap/*; do
@@ -28,9 +29,14 @@ tar xzf "$SPREAD_PATH"/nm-state.tar.gz -C /
 # Wait a bit to avoid hitting re-start limit
 sleep 2
 
+snap install --dangerous $PROJECT_PATH/*_amd64.snap
+sleep 2
+
 # Make sure the original netplan configuration is applied and active
 # (we do this before re-starting NM to avoid race conditions in some tests)
 netplan apply
+# Remove ipv6 addresses (see LP:#1870561)
+ip -6 address flush dev "$eth_if"
 
 systemctl start snap.network-manager.networkmanager
 wait_for_network_manager
