@@ -94,4 +94,4 @@ done < <(yq r spread.yaml --printMode p 'backends.qemu.systems[*].*')
 echo "INFO: Executing tests runner"
 # shellcheck disable=SC2086
 cd $TESTS_EXTRAS_PATH &&
-    ./tests-runner.sh "$@" --snap="$snap" "$backends" "${@}" $EXTRA_ARGS
+    ./tests-runner.sh "$@" --snap="$snap" "$backends" $EXTRA_ARGS
