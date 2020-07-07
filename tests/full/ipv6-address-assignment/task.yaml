@@ -27,4 +27,4 @@ execute: |
 
     # Verify that NetworkManager assigned the correct IPv6 address
     # to the interface
-    ifconfig veth0 | grep 'abbe::cafe/128'
+    ip address show veth0 | grep 'abbe::cafe/128'

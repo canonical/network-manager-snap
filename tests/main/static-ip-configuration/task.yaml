@@ -35,7 +35,7 @@ execute: |
     ip addr show dev veth0 | grep $expected_veth0_address
 
     # Routing needs to be in place as well
-    expected_veth0_route="10.0.1.0/24 dev veth0  proto kernel  scope link  src 10.0.1.2  metric 101"
+    expected_veth0_route='10.0.1.0/24 dev veth0.*src 10.0.1.2'
     ip route | grep "$expected_veth0_route"
 
     # Disable connection and ensure IP configuration is removed

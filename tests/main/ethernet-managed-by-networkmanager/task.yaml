@@ -2,17 +2,15 @@ summary: When defaultrender is set NM manages ethernet
 
 execute: |
     . $TESTSLIB/utilities.sh
-    # TODO remove when we can run tests on UC20
-    # (netplan .nmconnection issues, snapd mountspace issues)
-    exit 0
+    get_qemu_eth_iface eth_if
     snap set network-manager defaultrenderer=true
     # Needed because netplan bug not backported to xenial
     # Make it succeed - there are races with other systmectl restart calls
     systemctl restart systemd-networkd || true
     sleep 5
-    networkctl | grep 'eth0.*unmanaged'
+    networkctl | grep "$eth_if.*unmanaged"
     wait_for_network_manager
-    /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
+    /snap/bin/network-manager.nmcli d | grep "$eth_if.*connected"
     snap set network-manager defaultrenderer=false
     # Needed because netplan bug not backported to xenial
     # Make it succeed - there are races with other systmectl restart calls

@@ -35,19 +35,19 @@ EOF
 
 # Clone the stack-snaps-tools repository
 clone_tests_extras() {
-	echo "INFO: Fetching stack-snaps-tools scripts into $TESTS_EXTRAS_PATH ..."
-	if ! git clone -b master $TESTS_EXTRAS_URL $TESTS_EXTRAS_PATH >/dev/null 2>&1; then
-		echo "ERROR: Failed to fetch the $TESTS_EXTRAS_URL repo, exiting.."
-		exit 1
-	fi
+    echo "INFO: Fetching stack-snaps-tools scripts into $TESTS_EXTRAS_PATH ..."
+    if ! git clone -b master $TESTS_EXTRAS_URL $TESTS_EXTRAS_PATH >/dev/null 2>&1; then
+        echo "ERROR: Failed to fetch the $TESTS_EXTRAS_URL repo, exiting.."
+        exit 1
+    fi
 }
 
 # Make sure the already cloned stack-snaps-tools repository is in a known and update
 # state before it is going to be used.
 restore_and_update_tests_extras() {
-	echo "INFO: Restoring and updating $TESTS_EXTRAS_PATH"
-	cd $TESTS_EXTRAS_PATH && git reset --hard && git clean -dfx && git pull
-	cd -
+    echo "INFO: Restoring and updating $TESTS_EXTRAS_PATH"
+    cd $TESTS_EXTRAS_PATH && git reset --hard && git clean -dfx && git pull
+    cd -
 }
 
 # ==============================================================================
@@ -71,9 +71,9 @@ done < <(printf "%s\n" "$snaps")
 [ ! -d "$TESTS_EXTRAS_PATH" ] && [ "$1" = "--help" ] && show_help
 
 if [ -d "$TESTS_EXTRAS_PATH" ]; then
-	restore_and_update_tests_extras
+    restore_and_update_tests_extras
 else
-	clone_tests_extras
+    clone_tests_extras
 fi
 
 # Any project-specific options for test-runner should be specified in
@@ -83,6 +83,15 @@ if [ -f ".tests_config" ]; then
     . .tests_config
 fi
 
+# Get backends
+backends="--backends="
+separator=""
+while read -r be; do
+    backends=$backends$separator${be##*.}
+    separator=,
+done < <(yq r spread.yaml --printMode p 'backends.qemu.systems[*].*')
+
 echo "INFO: Executing tests runner"
 # shellcheck disable=SC2086
-cd $TESTS_EXTRAS_PATH && ./tests-runner.sh "$@" --snap="$snap" $EXTRA_ARGS
+cd $TESTS_EXTRAS_PATH &&
+    ./tests-runner.sh "$@" --snap="$snap" "$backends" $EXTRA_ARGS
