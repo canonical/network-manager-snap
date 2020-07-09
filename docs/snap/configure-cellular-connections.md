@@ -5,6 +5,11 @@ table_of_contents: False
 
 # Configure Cellular Connections
 
+For cellular connections, first install the modem-manager snap with:
+```
+$ snap install modem-manager
+```
+
 Check whether a modem was properly detected via:
 
 ```
@@ -15,7 +20,7 @@ Found 1 modems:
 
 In this case we have just one modem, with index 0 (the number at the end of the DBus object path).
 
-Show detailed information about the modem:
+Show detailed information about the modem using that index:
 
 ```
 $ sudo modem-manager.mmcli -m 0
@@ -86,15 +91,20 @@ $ nmcli c add type gsm ifname <interface> con-name <name> apn <operator_apn>
 $ nmcli r wwan on
 ```
 
-where &lt;interface&gt; is the string listed as “primary port” in the output from 'sudo mmcli -m &lt;N&gt;'
-(as previously described),
-&lt;name&gt; is an arbitrary name used to identify the connection, and &lt;operator_apn&gt; is
-the APN name for your cellular data plan.  Note that &lt;interface&gt; is usually a serial
-port with pattern /dev/tty*, not a networking interface. The reason for ModemManager
-to use that instead of the networking interface is that this last one can appear/disappear
-dynamically while the ports do not if the hardware configuration remains unchanged.
-For instance, the networking interface can be ppp0, ppp1, etc., and it might be
-different each time it is possible to have other ppp connections with, say, VPNs.
+where &lt;interface&gt; is the string listed as “primary port” in the
+output from `sudo mmcli -m <N>` (as previously described),
+&lt;name&gt; is an arbitrary name used to identify the connection, and
+&lt;operator_apn&gt; is the APN name for your cellular data plan.
+Note that &lt;interface&gt; is usually a serial port with pattern
+tty\* or a cdc-wdm\* device, not a networking interface. As these
+interface names might change depending on the devices present in the
+system, a better alternative is to use the sysfs path shown by mmcli
+(device: ...) or use `'*'`, which will use any modem device detected
+by MM:
+
+```
+sudo nmcli c add type gsm ifname '*' con-name <name> apn <operator_apn>
+```
 
 After executing these commands, NetworkManager will automatically try to bring up
 the cellular connection whenever ModemManager reports that the modem has
@@ -115,9 +125,9 @@ $ nmcli c modify <name> connection.autoconnect [yes|no]
 $ nmcli c down <name>
 ```
 
-Finally, note that we can provide the PIN (so it is entered automatically) or more
-needed APN provisioning information when creating/modifying the WWAN connection.
-For instance:
+Finally, note that we can provide the PIN (so it is entered
+automatically) or additional APN provisioning information when
+creating/modifying the WWAN connection.  For instance:
 
 ```
 $ nmcli c add type gsm ifname <interface> con-name <name> apn <operator_apn> username <user> password <password> pin <PIN>

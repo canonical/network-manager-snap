@@ -5,10 +5,10 @@ table_of_contents: False
 
 # Logging Messages
 
-This section will show how to modify the logging levels by NetworkManager.
+This section shows how to modify the logging levels by NetworkManager.
 
 NetworkManager supports on the fly changing of the logging levels and allows for
-a fine control over what is logged.
+a fine grained control over what is logged.
 
 First check what is the current logging setup, type:
 
@@ -34,10 +34,10 @@ $ nmcli general logging [level <level> [domain <domain>]]
 The &lt;level&gt; is the desired log level. You can choose from the following:
 
 * **ERR:** will log only critical errors
-* **WARN:** will log warnin messages
+* **WARN:** will log warning messages
 * **INFO:** will log various informational messages
 * **DEBUG:** enables verbose logging for debugging purposes
 
 &lt;domain&gt; is the category of messages that shall be logged with given
 severity. **WIFI** will include only WiFi related messages, **IP4** will include
-only IPv4 related messages and so on..
+only IPv4 related messages, and so on.

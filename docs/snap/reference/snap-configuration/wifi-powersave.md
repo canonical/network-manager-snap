@@ -7,7 +7,7 @@ table_of_contents: True
 
 WiFi Powersave is a feature that allows a device to suspend its radio activity
 after a fixed period of inactivity. The device remains idle for a fixed time,
-usualy about 100ms, and once it is reached it wakes up to check if the
+usually about 100ms, and once it is reached it wakes up to check if the
 infrastructure has any packets queued up for it.
 
 The NetworkManager snap allows to configure this option by either enabling or

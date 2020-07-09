@@ -13,10 +13,14 @@ navigation:
         location: explore-network-status.md
       - title: Configure WiFi Connections
         location: configure-wifi-connections.md
+      - title: Configure WiFi Access Points
+        location: configure-wifi-access-points.md
       - title: Configure Cellular Connections
         location: configure-cellular-connections.md
-      - title: Enable Ethernet Support
-        location: enable-ethernet-support.md
+      - title: Configure shared connections
+        location: configure-a-shared-connection.md
+      - title: NetworkManager and netplan
+        location: networkmanager-and-netplan.md
       - title: Edit Connections
         location: edit-connections.md
       - title: Routing Tables
@@ -27,10 +31,12 @@ navigation:
     children:
       - title: Snap Configuration
         children:
-          - title: Ethernet Support
-            location: reference/configuration/ethernet_support.md
+          - title: Default renderer
+            location: reference/snap-configuration/default_renderer.md
           - title: Debug
             location: reference/snap-configuration/debug.md
+          - title: Connectivity check
+            location: reference/snap-configuration/connectivity-check.md
           - title: Wake on WLAN
             location: reference/snap-configuration/wowlan.md
           - title: WiFi Powersave

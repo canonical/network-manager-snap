@@ -6,11 +6,11 @@ table_of_contents: True
 # Configure WiFi Connections
 
 This section explains how to establish a WiFi connection. It covers creating and
-modyfying connections as well as directly connecting.
+modifying connections as well as directly connecting.
 
 ## Establish a Wireless Connection
 
-This section will show how to establish a wifi connection to the wireles
+This section will show how to establish a wifi connection to the wireless
 network. Note that directly connecting will implicitly create a connection (that
 can be seen with "nmcli c"). The naming of such will follow "SSID N" pattern,
 where N is a number.

@@ -17,3 +17,15 @@ NetworkManager service.
 
 An explanatory description of the command and available options are available
 [here](https://developer.gnome.org/NetworkManager/1.2/nmcli.html)
+
+## network-manager.nmtui
+
+nmtui is the Network Manager Text User Interface. It is a curses-based application
+that allows easy configuration of connections and networking settings. Besides
+network-manager.nmtui, these other three commands are available:
+
+* network-manager.nmtui-edit
+* network-manager.nmtui-connect
+* network-manager.nmtui-hostname
+
+More details can be found in the [manual page](https://developer.gnome.org/NetworkManager/stable/nmtui.html).

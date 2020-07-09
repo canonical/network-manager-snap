@@ -9,7 +9,7 @@ Debug is a feature that controls the amount of logs produced by the network-mana
 snap. It is useful for collecting information required to either report a bug or
 investigate a network-manager failure (if happens).
 
-It is disabled by default and has to be explicitely turned on for usage.
+It is disabled by default and has to be explicitly turned on for usage.
 
 Note that the debug logs may contain sensitive information.
 
@@ -47,5 +47,5 @@ The debug information, when enabled, will be available in the journal and can
 be viewed with:
 
 ```
-$ journalctl --no-pager -u snap.network-manager.networkmanager.service
+$ journalctl --no-pager -l -u snap.network-manager.networkmanager.service
 ```
