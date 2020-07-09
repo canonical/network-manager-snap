@@ -88,7 +88,7 @@ IPv4 and IPv6 settings.
 
 It is important to understand that every option can be modified using either the
 command-line or the editor. The advantage of the editor is that it shows which
-options are availabe for modification in contrast to the command-line which does
+options are available for modification in contrast to the command-line which does
 not.
 
 It is possible however to learn about the available settings from the

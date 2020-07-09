@@ -17,7 +17,7 @@ SSID for the AP that we are creating and that will be visible to
 devices connecting to it, and `<password>` is the access password
 (that needs to have between 8-63 characters or 64 hexadecimal
 characters). NM will create a connection called '`Hotspot <N>`' if
-the command is succesful.
+the command is successful.
 
 The created AP offers by default a shared connection, so devices
 connected to it should be able to access the Internet if the device

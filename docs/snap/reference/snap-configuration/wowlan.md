@@ -8,7 +8,7 @@ table_of_contents: True
 *Available since:* 1.2.2-11
 
 Wake on WLAN (called WoWLAN in the following) is a feature which allows a device
-to be woken up from standby power states to faciliate device management. It is based
+to be woken up from standby power states to facilitate device management. It is based
 on the well well-established standard for Wake on LAN. The functionality is not entirely
 equivalent to Wake on LAN and there are some limitations.
 
@@ -53,7 +53,7 @@ This configuration option accepts the following values:
  The content of the magic packet can be extended with the
  wifi.wake-on-wlan-password option to require the client to send a
  specific byte sequence functioning as a password so that not anyone
- unpriviledged can wake up the system.
+ unprivileged can wake up the system.
  * **gtk-rekey-failure:** A failure of a GTK rekey operation will cause the device to wake up.
  * **4way-handshake:** Reiteration of the 4way handshake will cause the device to wake up.
  * **rfkill-release:** Release of a rfkill will cause the device to wake up.
@@ -69,7 +69,7 @@ Example:
 
 This configuration option accepts a textual value. If specified, the value will
 be used in addition to the wireless device MAC address to function as a password
-that disallows unpriviledged actors to wake up the device.
+that disallows unprivileged actors to wake up the device.
 
 Example:
 

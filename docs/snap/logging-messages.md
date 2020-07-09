@@ -34,7 +34,7 @@ $ nmcli general logging [level <level> [domain <domain>]]
 The &lt;level&gt; is the desired log level. You can choose from the following:
 
 * **ERR:** will log only critical errors
-* **WARN:** will log warnin messages
+* **WARN:** will log warning messages
 * **INFO:** will log various informational messages
 * **DEBUG:** enables verbose logging for debugging purposes
 
