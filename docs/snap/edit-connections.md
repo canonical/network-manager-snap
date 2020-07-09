@@ -5,9 +5,9 @@ table_of_contents: True
 
 # Edit Connections
 
-This part will show you how to use a network-manager built-in editor to modify
-the connections as well as provide a reference for setting some of the
-settings.
+This section shows how to use the network-manager built-in editor to
+modify connections as well as provide a reference for changing some of
+the settings.
 
 ## Using nmcli Console
 

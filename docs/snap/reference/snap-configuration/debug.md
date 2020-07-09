@@ -47,5 +47,5 @@ The debug information, when enabled, will be available in the journal and can
 be viewed with:
 
 ```
-$ journalctl --no-pager -u snap.network-manager.networkmanager.service
+$ journalctl --no-pager -l -u snap.network-manager.networkmanager.service
 ```
