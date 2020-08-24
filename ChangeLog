@@ -1,3 +1,45 @@
+2020-08-24 network-manager 1.10.6-8
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.9 to 7.58.0-2ubuntu3.10:
+  
+    curl (7.58.0-2ubuntu3.10) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: wrong connect-only connection
+        - debian/patches/CVE-2020-8231.patch: remember last connection by id,
+          not by pointer in lib/connect.c, lib/easy.c, lib/multi.c, lib/url.c,
+          lib/urldata.h.
+        - CVE-2020-8231
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 13 Aug 2020 13:38:57 -0400
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.45+dfsg-1ubuntu1.5 to 2.4.45+dfsg-1ubuntu1.6:
+  
+    openldap (2.4.45+dfsg-1ubuntu1.6) bionic; urgency=medium
+  
+      [ Andreas Hasenack ]
+      * d/p/ITS-9171-Insert-callback-in-the-right-place.patch: Import upstream
+        patch to fix slapd crashing in certain configurations when a client
+        attempts a login to a locked account. (LP: #1866303)
+  
+      [ Sergio Durigan Junior ]
+      * d/apparmor-profile: Update apparmor profile to grant access to
+        the saslauthd socket, so that SASL authentication works.  (LP: #1557157)
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Wed, 01 Jul 2020 16:38:55 -0300
+  
+  ppp (built from ppp) updated from 2.4.7-2+2ubuntu1.2 to 2.4.7-2+2ubuntu1.3:
+  
+    ppp (2.4.7-2+2ubuntu1.3) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: arbitrary file disclosure vulnerability
+        - debian/patches/load_ppp_generic_if_needed: removed, ppp has been
+          built into Ubuntu kernels since at least 2012.
+        - CVE-2020-15704
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 23 Jul 2020 08:55:31 -0400
+  
 2020-06-25 network-manager 1.10.6-7
 
   [ Changes in primed packages ]
