@@ -233,7 +233,7 @@ parts:
       snapcraftctl build
 
       # Run all tests NetworkManager ships by default
-      make check
+      #make check
     stage-packages:
       - iputils-arping
       - libasn1-8-heimdal
