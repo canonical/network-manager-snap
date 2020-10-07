@@ -15,3 +15,7 @@ execute: |
     snap interfaces | grep -Pzq ":firewall-control +[a-z,-]*network-manager"
     snap interfaces | grep -Pzq ":network-setup-observe +[a-z,-]*network-manager"
     snap interfaces | grep -Pzq "network-manager:service +network-manager:nmcli"
+
+    # Check that we are using udev
+    sleep 10
+    journalctl --no-pager -u snap.network-manager.networkmanager.service | MATCH 'use udev'
