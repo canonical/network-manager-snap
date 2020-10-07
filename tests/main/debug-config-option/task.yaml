@@ -18,6 +18,10 @@ execute: |
     test -f /var/snap/network-manager/current/.debug_enabled
     network-manager.nmcli g log | MATCH "^DEBUG"
 
+    # Check that we are using udev (it is a debug only trace)
+    sleep 10
+    journalctl --no-pager -u snap.network-manager.networkmanager.service | MATCH 'use udev'
+
     snap set network-manager debug.enable=false
     test "$(snap get network-manager debug.enable)" = "false"
     # NM will create the file after being re-started by the hook, wait a bit
