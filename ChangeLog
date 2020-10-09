@@ -1,3 +1,94 @@
+2020-10-09 network-manager 1.22.10-2
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Run tests on UC20 images now
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/386964
+  * Enable again checks, after disabling some failing tests:
+    Some tests where failing due to limitations of the launchpad builders:
+    disable just those but run the rest of unit tests when building.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/387044
+  * docs: big documentation update
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/387143
+  * Add patch to use udev even when confined
+    
+    [PATCH] platform: use also statvfs() to check for udevd
+    
+    Check whether or not there is a running udevd by using statvfs() on
+    "/sys" and use access() as a fallback. This is in line with what is
+    done by systemd [1] and helps in case NM is not really running in a
+    container but has been confined by a MAC so it does not have full
+    access to sysfs (access() returns EACCES). Fixes LP:#1712918,
+    LP:#1893184.
+    
+    Upstream:
+    https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/commit/9c8275bedcc98d789fa83d2817b9e8ff58f3e7b6
+    
+    [1] https://github.com/systemd/systemd/blob/v246/src/basic/stat-util.c#L132
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/391889
+
+  [ Heather Ellsworth <heather.ellsworth@canonical.com> ]
+  * Add netplan patch
+    Merge-Proposal: https://code.launchpad.net/~hellsworth/snappy-hwe-snaps/+git/network-manager/+merge/391222
+
+  [ Changes in primed packages ]
+  
+  libbrotli1 (built from brotli) updated from 1.0.7-6build1 to 1.0.7-6ubuntu0.1:
+  
+    brotli (1.0.7-6ubuntu0.1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: Buffr overflow
+        - debian/patches/CVE-2020-8927.patch: fix potential overflow when
+          input chunk is >2GiB in c/common/*, c/dec/*, c/enc/*,
+          research/brotli_decoder.c, research/draw_histogram.cc,
+          scripts/.bintray.json, scripts/source.lst, setup.py.
+        - CVE-2020-8927
+  
+     -- Leonidas S. Barbosa <leo.barbosa@canonical.com>  Mon, 28 Sep 2020 14:25:38 -0300
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.1 to 7.68.0-1ubuntu2.2:
+  
+    curl (7.68.0-1ubuntu2.2) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: wrong connect-only connection
+        - debian/patches/CVE-2020-8231.patch: remember last connection by id,
+          not by pointer in lib/connect.c, lib/easy.c, lib/multi.c, lib/url.c,
+          lib/urldata.h.
+        - CVE-2020-8231
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 13 Aug 2020 13:34:56 -0400
+  
+  libssh-4 (built from libssh) updated from 0.9.3-2ubuntu2 to 0.9.3-2ubuntu2.1:
+  
+    libssh (0.9.3-2ubuntu2.1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: NULL pointer dereference
+        - debian/patches/CVE-2020-16135-*.patch: fix a NULL dereference
+          checking the return of ssh_buffer_new() and added others checks
+          in src/sftpservcer.c, src/buffer.c.
+        - CVE-2020-16135
+  
+     -- Leonidas S. Barbosa <leo.barbosa@canonical.com>  Fri, 31 Jul 2020 15:38:31 -0300
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.49+dfsg-2ubuntu1.2 to 2.4.49+dfsg-2ubuntu1.3:
+  
+    openldap (2.4.49+dfsg-2ubuntu1.3) focal; urgency=medium
+  
+      * d/apparmor-profile: Update apparmor profile to grant access to
+        the saslauthd socket, so that SASL authentication works.  (LP: #1557157)
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Fri, 12 Jun 2020 18:18:58 -0400
+  
+  ppp (built from ppp) updated from 2.4.7-2+4.1ubuntu5 to 2.4.7-2+4.1ubuntu5.1:
+  
+    ppp (2.4.7-2+4.1ubuntu5.1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: arbitrary file disclosure vulnerability
+        - debian/patches/load_ppp_generic_if_needed: removed, ppp has been
+          built into Ubuntu kernels since at least 2012.
+        - CVE-2020-15704
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 23 Jul 2020 08:39:04 -0400
+  
 2020-06-25 network-manager 1.22.10-1
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
