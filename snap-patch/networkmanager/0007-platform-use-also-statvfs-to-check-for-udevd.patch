@@ -1,0 +1,72 @@
+From 2634016d3df0e7a7698f6529c2a4faf09ea32a4f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Tue, 6 Oct 2020 18:30:11 +0200
+Subject: [PATCH 1/2] platform: use also statvfs() to check for udevd
+
+Check whether or not there is a running udevd by using statvfs() on
+"/sys" and use access() as a fallback. This is in line with what is
+done by systemd [1] and helps in case NM is not really running in a
+container but has been confined by a MAC so it does not have full
+access to sysfs (access() returns EACCES). Fixes LP:#1712918,
+LP:#1893184.
+
+Upstream: https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/commit/9c8275bedcc98d789fa83d2817b9e8ff58f3e7b6
+
+[1] https://github.com/systemd/systemd/blob/v246/src/basic/stat-util.c#L132
+---
+ src/platform/nm-linux-platform.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/src/platform/nm-linux-platform.c b/src/platform/nm-linux-platform.c
+index a061fc396..d6acb6099 100644
+--- a/src/platform/nm-linux-platform.c
++++ b/src/platform/nm-linux-platform.c
+@@ -25,6 +25,7 @@
+ #include <errno.h>
+ #include <unistd.h>
+ #include <sys/socket.h>
++#include <sys/statvfs.h>
+ #include <sys/ioctl.h>
+ #include <fcntl.h>
+ #include <dlfcn.h>
+@@ -3096,13 +3097,35 @@ G_DEFINE_TYPE (NMLinuxPlatform, nm_linux_platform, NM_TYPE_PLATFORM)
+ 
+ #define NM_LINUX_PLATFORM_GET_PRIVATE(self) _NM_GET_PRIVATE (self, NMLinuxPlatform, NM_IS_LINUX_PLATFORM, NMPlatform)
+ 
++/* Similar to systemd's path_is_read_only_fs(), at
++ * https://github.com/systemd/systemd/blob/v246/src/basic/stat-util.c#L132 */
++static int
++path_is_read_only_fs(const char *path)
++{
++	struct statvfs st;
++
++	if (statvfs (path, &st) < 0)
++		return -errno;
++
++	if (st.f_flag & ST_RDONLY)
++		return TRUE;
++
++	/* On NFS, statvfs() might not reflect whether we can actually
++	 * write to the remote share. Let's try again with
++	 * access(W_OK) which is more reliable, at least sometimes. */
++	if (access (path, W_OK) < 0 && errno == EROFS)
++		return TRUE;
++
++	return FALSE;
++}
++
+ NMPlatform *
+ nm_linux_platform_new (gboolean log_with_ptr, gboolean netns_support)
+ {
+ 	gboolean use_udev = FALSE;
+ 
+ 	if (   nmp_netns_is_initial ()
+-	    && access ("/sys", W_OK) == 0)
++	    && path_is_read_only_fs ("/sys") == FALSE)
+ 		use_udev = TRUE;
+ 
+ 	return g_object_new (NM_TYPE_LINUX_PLATFORM,
+-- 
+2.25.1
+

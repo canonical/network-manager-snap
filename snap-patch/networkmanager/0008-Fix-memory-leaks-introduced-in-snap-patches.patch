@@ -1,0 +1,28 @@
+From 8b106cc1163ba8f226afdf94285b78f47c66de5b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Wed, 18 Nov 2020 18:21:22 +0100
+Subject: [PATCH 2/2] Fix memory leaks introduced in snap patches
+
+Fix memory leaks that were introducing while adapting NM to use paths
+inside the snap (LP#1902271).
+---
+ src/nm-config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/nm-config.c b/src/nm-config.c
+index 1624453d2..c488e18ab 100644
+--- a/src/nm-config.c
++++ b/src/nm-config.c
+@@ -169,7 +169,7 @@ static void _set_config_data (NMConfig *self, NMConfigData *new_data, NMConfigCh
+ 
+ static const char *get_no_auto_default_file_path()
+ {
+-	const char *no_auto_default_file = NULL;
++	static const char *no_auto_default_file = NULL;
+ 
+ 	if (!no_auto_default_file)
+ 		no_auto_default_file = g_strdup_printf("%s/no-auto-default.state", nm_utils_get_state_dir());
+-- 
+2.25.1
+
