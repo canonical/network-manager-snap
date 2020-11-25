@@ -1,3 +1,59 @@
+2020-11-25 network-manager 1.10.6-9
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Backport patches from other branches
+    
+    -Fix memory leaks introduced in snap patches
+    -platform: use also statvfs() to check for udevd
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/394387
+
+  [ Changes in primed packages ]
+  
+  libpcap0.8 (built from libpcap) updated from 1.8.1-6ubuntu1.18.04.1 to 1.8.1-6ubuntu1.18.04.2:
+  
+    libpcap (1.8.1-6ubuntu1.18.04.2) bionic; urgency=medium
+  
+      * Install pkg-config file for libpcap (LP: #1865501).
+        - d/p/set-package-name-with-ac-init.patch: Set the PACKAGE_NAME
+          variable using autoconf's AC_INIT macro, so that we can use it
+          in the libpcap.pc.in file.
+        - d/p/use-m4-macro-to-get-version.patch: Use an M4 macro to
+          execute a "cat" command and obtain the version from the VERSION
+          file.
+        - d/p/install-pkg-config-file.patch: New patch from upstream,
+          which creates a libpcap.pc.in file and adjusts the Makefile to
+          install it.
+        - d/libpcap0.8-dev.install: Install libpcap.pc pkg-config file.
+          Thanks to Luca Boccassi for the Debian patch (Closes #922219).
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Mon, 29 Jun 2020 17:49:04 -0400
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.45+dfsg-1ubuntu1.6 to 2.4.45+dfsg-1ubuntu1.8:
+  
+    openldap (2.4.45+dfsg-1ubuntu1.8) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: assertion failure in Certificate List syntax
+        validation
+        - debian/patches/CVE-2020-25709.patch: properly handle error in
+          servers/slapd/schema_init.c.
+        - CVE-2020-25709
+      * SECURITY UPDATE: assertion failure in CSN normalization with invalid
+        input
+        - debian/patches/CVE-2020-25710.patch: properly handle error in
+          servers/slapd/schema_init.c.
+        - CVE-2020-25710
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 16 Nov 2020 08:40:57 -0500
+  
+    openldap (2.4.45+dfsg-1ubuntu1.7) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: DoS via NULL pointer dereference
+        - debian/patches/CVE-2020-25692.patch: skip normalization if there's no
+          equality rule in servers/slapd/modrdn.c.
+        - CVE-2020-25692
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 04 Nov 2020 09:44:26 -0500
+  
 2020-08-24 network-manager 1.10.6-8
 
   [ Changes in primed packages ]
