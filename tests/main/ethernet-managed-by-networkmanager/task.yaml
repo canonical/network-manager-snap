@@ -6,7 +6,9 @@ execute: |
     # Needed because netplan bug not backported to xenial
     # Make it succeed - there are races with other systmectl restart calls
     systemctl restart systemd-networkd || true
-    sleep 5
+    sleep 10
+    network-manager.nmcli c
+    networkctl
     networkctl | grep 'eth0.*unmanaged'
     wait_for_network_manager
     /snap/bin/network-manager.nmcli d | grep 'eth0.*connected'
