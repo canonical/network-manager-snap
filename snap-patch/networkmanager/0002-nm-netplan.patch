@@ -1,7 +1,7 @@
 From 2c8ce0635167a447df9c1cee1c3fbd8bc40b3e48 Mon Sep 17 00:00:00 2001
 From: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 Date: Mon, 16 Sep 2019 11:12:57 +0100
-Subject: [PATCH 01/80] Import structure based on ifcfg-rh
+Subject: [PATCH 01/82] Import structure based on ifcfg-rh
 
 ---
  configure.ac                                  |     7 +
@@ -22219,13 +22219,13 @@ index 0000000000000000000000000000000000000000..3cd571dfcf8e9e66090ef45485ba0193
 +	return g_test_run ();
 +}
 -- 
-2.25.1
+2.27.0
 
 
 From fc4c99372e09577918388f4303b52d7e07162e57 Mon Sep 17 00:00:00 2001
 From: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 Date: Fri, 1 Nov 2019 13:37:22 -0400
-Subject: [PATCH 02/80] first pass netplan plugin
+Subject: [PATCH 02/82] first pass netplan plugin
 
 ---
  Makefile.am                                   |    55 +
@@ -42544,13 +42544,13 @@ index 3cd571dfcf8e9e66090ef45485ba0193705036f2..00000000000000000000000000000000
 -	return g_test_run ();
 -}
 -- 
-2.25.1
+2.27.0
 
 
 From 004a88b6e6d61a409d8d1c0ba77ee1a5ed7efa30 Mon Sep 17 00:00:00 2001
 From: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 Date: Wed, 11 Dec 2019 17:14:32 -0500
-Subject: [PATCH 03/80] second pass NM plugin
+Subject: [PATCH 03/82] second pass NM plugin
 
 Signed-off-by: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 ---
@@ -49552,13 +49552,13 @@ index feb4c48fd1d414ad9743213959e3cf7ef79194cb..d0140fd99a5219b3333b4ecf39071dad
  	return TRUE;
  }
 -- 
-2.25.1
+2.27.0
 
 
 From 2ca98e5a9b0641ecfa018421f83a47d962ca5e12 Mon Sep 17 00:00:00 2001
 From: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 Date: Wed, 18 Dec 2019 14:59:23 -0500
-Subject: [PATCH 04/80] Use netplan's defines for WIFI mode rather than
+Subject: [PATCH 04/82] Use netplan's defines for WIFI mode rather than
  hard-coded values
 
 ---
@@ -49586,13 +49586,13 @@ index 03d827ab29d220df806fa78a6b24ebe2ef785216..72b641af9e95d44256a0755771c4eb85
  		} else {
  			g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_INVALID_CONNECTION,
 -- 
-2.25.1
+2.27.0
 
 
 From 09697cd0060f756b22cfe7154612e6326e83b246 Mon Sep 17 00:00:00 2001
 From: Mathieu Trudel-Lapierre <mathieu.trudel-lapierre@canonical.com>
 Date: Wed, 18 Dec 2019 15:24:22 -0500
-Subject: [PATCH 05/80] cleanup TODO comments
+Subject: [PATCH 05/82] cleanup TODO comments
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 34 ++++----
@@ -50049,14 +50049,14 @@ index d0140fd99a5219b3333b4ecf39071dad5be52bb3..8e58adbbb4e6febba3934f7ae0169ddd
  	return ret;
  }
 -- 
-2.25.1
+2.27.0
 
 
 From c9403d4dffcdce6a3dd3e2c18529076a7010768d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C5=81ukasz=20=27sil2100=27=20Zemczak?=
  <lukasz.zemczak@canonical.com>
 Date: Tue, 3 Mar 2020 15:59:13 +0100
-Subject: [PATCH 06/80] Make the netplan plugin buildable, attempt fixing
+Subject: [PATCH 06/82] Make the netplan plugin buildable, attempt fixing
  leftover files from deleted connections.
 
 ---
@@ -50354,14 +50354,14 @@ index 8e58adbbb4e6febba3934f7ae0169ddda254d93f..cf3470e056ea4e6bd10384d09e33de67
  	id = nm_connection_get_id (connection);
  	g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
 -- 
-2.25.1
+2.27.0
 
 
 From 2322d01eb58ff6a2b3c40c90915abbcfc60879e3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C5=81ukasz=20=27sil2100=27=20Zemczak?=
  <lukasz.zemczak@canonical.com>
 Date: Tue, 3 Mar 2020 16:45:51 +0100
-Subject: [PATCH 07/80] Missing pieces.
+Subject: [PATCH 07/82] Missing pieces.
 
 ---
  .../plugins/netplan/nms-netplan-storage.c       | 17 ++++++++++++++---
@@ -50407,14 +50407,14 @@ index 22e6c89c27e3699ee245b50c2113c6bc86422b29..536132fd8fe48e2aa0fdca50ab9ad9c1
  	c_list_unlink (&self->parent._storage_by_uuid_lst);
  	g_clear_object (&self->u.conn_data.connection);
 -- 
-2.25.1
+2.27.0
 
 
 From 24962881c84c17fdef2aec14c8af571e5e84d463 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C5=81ukasz=20=27sil2100=27=20Zemczak?=
  <lukasz.zemczak@canonical.com>
 Date: Mon, 9 Mar 2020 18:31:00 +0100
-Subject: [PATCH 08/80] Attempt fixing the netplan plugin's meson.build
+Subject: [PATCH 08/82] Attempt fixing the netplan plugin's meson.build
 
 ---
  src/settings/plugins/netplan/meson.build | 37 ++++++++++++++----------
@@ -50491,13 +50491,13 @@ index 692a863b851e3d34e5741e27fb7979f06f2f0250..9e446c7c4a8fe834cc64820cb446005d
 +  $(call check_so_symbols,$(builddir)/src/settings/plugins/netplan/.libs/libnm-settings-plugin-netplan.so)
  '''
 -- 
-2.25.1
+2.27.0
 
 
 From cbd7f0e83120fe1bf65955fd71d4a993a748620a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 26 Mar 2020 08:44:41 +0100
-Subject: [PATCH 09/80] Meson:options: add netplan plugin for Ubuntu
+Subject: [PATCH 09/82] Meson:options: add netplan plugin for Ubuntu
 
 ---
  meson_options.txt | 3 ++-
@@ -50518,13 +50518,13 @@ index 041d9bfc38532450f414c02777b45aa8b0b5d164..de95d49804b6120a4c8b20510782214f
  # handlers for resolv.conf
  option('resolvconf', type: 'string', value: '', description: 'Enable resolvconf support')
 -- 
-2.25.1
+2.27.0
 
 
 From d10607fb8d1358662890d575b0e8fc4eec4ecd6d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 26 Mar 2020 08:45:35 +0100
-Subject: [PATCH 10/80] settings:plugin:netplan: fix compilation
+Subject: [PATCH 10/82] settings:plugin:netplan: fix compilation
 
 ---
  src/settings/plugins/netplan/nms-netplan-storage.c | 5 +++--
@@ -50547,13 +50547,13 @@ index 536132fd8fe48e2aa0fdca50ab9ad9c1f930a96d..6666b132cab8f9dcd03983783f260837
  
  	c_list_unlink (&self->parent._storage_lst);
 -- 
-2.25.1
+2.27.0
 
 
 From 547aeeb9b0a314e31724339d88216cf312969382 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 27 Mar 2020 08:23:47 +0100
-Subject: [PATCH 11/80] settings:plugin:netplan: add some FIXME/TODO comments
+Subject: [PATCH 11/82] settings:plugin:netplan: add some FIXME/TODO comments
 
 ---
  .../plugins/netplan/nms-netplan-storage.c         | 15 +++++++++++++++
@@ -50622,13 +50622,13 @@ index cf3470e056ea4e6bd10384d09e33de6712d7fa4b..31b981eff8caf8bb74e6e9dd1f41a7b8
  	                  NM_SETTING_VLAN_SETTING_NAME,
  	                  NM_SETTING_WIRELESS_SETTING_NAME,
 -- 
-2.25.1
+2.27.0
 
 
 From f6fbaf72d2e68675e94c624c675d1c8f18da37b8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 27 Mar 2020 11:22:35 +0100
-Subject: [PATCH 12/80] settings:plugins:netplan: setup unit-tests
+Subject: [PATCH 12/82] settings:plugins:netplan: setup unit-tests
 
 ---
  Makefile.am                                   |  28 ++++
@@ -50916,13 +50916,13 @@ index 0000000000000000000000000000000000000000..7cc850b341c04d5247fcff7377071b03
 +        macaddress: "de:ad:be:ef:ca:fe"
 \ No newline at end of file
 -- 
-2.25.1
+2.27.0
 
 
 From 3692d5298939918635d9c37ee7058b55aeafb4a0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 27 Mar 2020 11:24:37 +0100
-Subject: [PATCH 13/80] settings:plugins:netplan: implement setting of
+Subject: [PATCH 13/82] settings:plugins:netplan: implement setting of
  NM_SETTING_WIRED_MAC_ADDRESS via match->macaddress
 
 ---
@@ -50962,13 +50962,13 @@ index f253704182768dcf418be0b9ac286c9b057d1ae8..6f882fff5ebd31245fc497c1952b2828
  	/* ===== IPv4 SETTING ===== */
  	s_ip4 = nm_connection_get_setting_ip4_config (connection);
 -- 
-2.25.1
+2.27.0
 
 
 From 15b09e561e9bab2277f28cb38396ec67067a05ec Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 27 Mar 2020 15:45:27 +0100
-Subject: [PATCH 14/80] netplan: add test, implement network_file, clear
+Subject: [PATCH 14/82] netplan: add test, implement network_file, clear
  netplans before each test
 
 ---
@@ -51226,13 +51226,13 @@ index 0000000000000000000000000000000000000000..ee887ceb4f57fa0035fd9eb36229e38b
 +    wired-default:
 +      renderer: NetworkManager
 -- 
-2.25.1
+2.27.0
 
 
 From b0881b15fce2f87a2ddab6c74d6a9f19b3ba0985 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 30 Mar 2020 10:47:32 +0200
-Subject: [PATCH 15/80] netplan: use connection name from NM backend, if set
+Subject: [PATCH 15/82] netplan: use connection name from NM backend, if set
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 5 +++++
@@ -51255,13 +51255,13 @@ index e4904b3c728be57d7ff9a1905a6a2d340b3cdbf3..b0c3a548cc26d2a2bd1d790c1de6b29d
  	name = nd->id;
  	if (name)
 -- 
-2.25.1
+2.27.0
 
 
 From 5fbc50a6261a9dd88b78b332095c63bae4cd81f0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 30 Mar 2020 11:08:46 +0200
-Subject: [PATCH 16/80] netplan: disable non-implemented default settings
+Subject: [PATCH 16/82] netplan: disable non-implemented default settings
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 8 ++++----
@@ -51294,13 +51294,13 @@ index b0c3a548cc26d2a2bd1d790c1de6b29d9a2b0444..af29c7a4c125d6c5c97d550803ac183c
  	              NM_SETTING_IP6_CONFIG_IP6_PRIVACY, NM_SETTING_IP6_CONFIG_PRIVACY_UNKNOWN,
  	              NULL);
 -- 
-2.25.1
+2.27.0
 
 
 From 22b55cb2bb04bb431235b272e3bc5c22c72c9f99 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 30 Mar 2020 12:35:17 +0200
-Subject: [PATCH 17/80] netplan: initial basic write + reread test
+Subject: [PATCH 17/82] netplan: initial basic write + reread test
 
 ---
  .../plugins/netplan/nms-netplan-writer.c      |  14 +-
@@ -51651,13 +51651,13 @@ index 46aacf607051aec67c93c5fcb23b8dc97c111592..c5f50c604371dc360a79a004a64c0c07
  	return g_test_run ();
  }
 -- 
-2.25.1
+2.27.0
 
 
 From 4265fe97b0f28c9353d5e64bf805256b60fe130c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 30 Mar 2020 15:39:24 +0200
-Subject: [PATCH 18/80] netplan: read+write static IP4
+Subject: [PATCH 18/82] netplan: read+write static IP4
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 68 ++++++--------
@@ -51992,13 +51992,13 @@ index c5f50c604371dc360a79a004a64c0c0797569ff7..a4fb1cfb15171989e5cb63d998d7e0cb
  	return g_test_run ();
  }
 -- 
-2.25.1
+2.27.0
 
 
 From 41214d2876b73a2d36a27e32f7408187ba6c19b1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 30 Mar 2020 16:44:27 +0200
-Subject: [PATCH 19/80] netplan: implement method/addresses/dns/gateway6
+Subject: [PATCH 19/82] netplan: implement method/addresses/dns/gateway6
  read+write for IP6
 
 FIXME: How can we differentiate dns-search domains between IP4/IP6
@@ -52196,13 +52196,13 @@ index a4fb1cfb15171989e5cb63d998d7e0cb8aa7f247..c709b347504928454f5e1626ad46124f
  
  	_writer_new_connection (connection,
 -- 
-2.25.1
+2.27.0
 
 
 From 94bad58d74aea5ab762a6837e288f44503efe7f8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 8 Apr 2020 11:58:36 +0200
-Subject: [PATCH 20/80] netplan: write combined IP4/6 addresses sequence
+Subject: [PATCH 20/82] netplan: write combined IP4/6 addresses sequence
 
 ---
  .../plugins/netplan/nms-netplan-writer.c      | 42 +++++++++----------
@@ -52297,13 +52297,13 @@ index c98df0f42a4ecde6db95897f1dfb07147af39910..5623c1003fd20d306b70f8deb75a6044
  	                        netplan);
  
 -- 
-2.25.1
+2.27.0
 
 
 From 5edb4a2b8e02ab6ccdef8401f76fb427397b18ad Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 8 Apr 2020 12:10:20 +0200
-Subject: [PATCH 21/80] netplan: write combined IP4/6
+Subject: [PATCH 21/82] netplan: write combined IP4/6
  nameservers:addresses:search: fields
 
 ---
@@ -52418,13 +52418,13 @@ index 5623c1003fd20d306b70f8deb75a6044ff83fe85..759b129ab889c36feea6f2141b21e758
  	                        netplan);
  
 -- 
-2.25.1
+2.27.0
 
 
 From c1053ca3e110d6e44f9040018a54a6e17e4a98ef Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 14 Apr 2020 14:05:54 +0200
-Subject: [PATCH 22/80] name/id cleanup & dhcp-hostname test
+Subject: [PATCH 22/82] name/id cleanup & dhcp-hostname test
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  22 ++-
@@ -52920,13 +52920,13 @@ index 0000000000000000000000000000000000000000..c3a0e86f5c51a2b85c36ab42290a081c
 +      networkmanager:
 +        stable-id: netplan-eth42-stable
 -- 
-2.25.1
+2.27.0
 
 
 From 6759ad21c3c105387cf11dc069acc4cf94044479 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 14 Apr 2020 14:19:36 +0200
-Subject: [PATCH 23/80] netplan: improve stable-id handling
+Subject: [PATCH 23/82] netplan: improve stable-id handling
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c        | 4 ++--
@@ -52986,13 +52986,13 @@ index c3a0e86f5c51a2b85c36ab42290a081cbb6d6554..992bddbbe987303dc15e42f4926fc724
 -      networkmanager:
 -        stable-id: netplan-eth42-stable
 -- 
-2.25.1
+2.27.0
 
 
 From 16499e014141eb96d8c3f9c35eaaf29fbeae242c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 14 Apr 2020 17:19:24 +0200
-Subject: [PATCH 24/80] netplan: wifi sec & mac, add field example test case
+Subject: [PATCH 24/82] netplan: wifi sec & mac, add field example test case
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 123 +++++++++---------
@@ -53289,13 +53289,13 @@ index 8c2741115b22d0a9cafad459944df96a97d4e9ee..1d37f8ac62da57e45c5f8dac02c9483c
  	return g_test_run ();
  }
 -- 
-2.25.1
+2.27.0
 
 
 From eca0fd7774c407bfbc6b43d5e311c8c612571823 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 15 Apr 2020 11:07:32 +0200
-Subject: [PATCH 25/80] netplan:reader: fix make_match_setting
+Subject: [PATCH 25/82] netplan:reader: fix make_match_setting
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 2 +-
@@ -53315,13 +53315,13 @@ index c79787e90181a288b8bcf1de5a939c6686b2677d..e173f11277fe9e3da2de6a633879d283
  
  	nm_setting_match_add_interface_name (s_match, v);
 -- 
-2.25.1
+2.27.0
 
 
 From 51cc69697abfd64445122dce5811351631a4c891 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 15 Apr 2020 11:15:22 +0200
-Subject: [PATCH 26/80] netplan: initial skeleton for read-write modem
+Subject: [PATCH 26/82] netplan: initial skeleton for read-write modem
  (GSM/CDMA) connections
 
 ---
@@ -53619,13 +53619,13 @@ index 1d37f8ac62da57e45c5f8dac02c9483c5debe239..170d6bd30d6a006831ec6e551ffc215b
  	return g_test_run ();
  }
 -- 
-2.25.1
+2.27.0
 
 
 From 27379b08fec486ac490629f6a5fed1d61dfe8756 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 15 Apr 2020 12:02:22 +0200
-Subject: [PATCH 27/80] netplan: read/write ip6 addr-gen-mode
+Subject: [PATCH 27/82] netplan: read/write ip6 addr-gen-mode
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 17 ++++---
@@ -53816,13 +53816,13 @@ index 170d6bd30d6a006831ec6e551ffc215bf20dcf10..806a8c5a1a08d4a95c87f6078dfc6106
  
  	nmtst_assert_connection_verifies (connection);
 -- 
-2.25.1
+2.27.0
 
 
 From 4f53619cf848d425b46c08c79d336bcc0e0bf178 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 15 Apr 2020 13:47:04 +0200
-Subject: [PATCH 28/80] netplan: implement GSM/CDMA modem settings
+Subject: [PATCH 28/82] netplan: implement GSM/CDMA modem settings
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  37 ++++++
@@ -54096,13 +54096,13 @@ index 806a8c5a1a08d4a95c87f6078dfc610687d4c92e..8f63db30a6b233e5efff0015a9eb48f7
  	g_test_add_func (TPATH "example/field/lte", test_example_field_lte);
  
 -- 
-2.25.1
+2.27.0
 
 
 From 3fc08b05c515244e409c42073fb0bcbd8876b0a6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 09:35:50 +0200
-Subject: [PATCH 29/80] netplan: test gsm auto-config & ip6-address-generation
+Subject: [PATCH 29/82] netplan: test gsm auto-config & ip6-address-generation
  eui64, fix CDMA test
 
 ---
@@ -54210,13 +54210,13 @@ index 8f63db30a6b233e5efff0015a9eb48f70a7815c3..6e6750cd5824ecd59ef3337dbdbd0a84
  	g_test_add_func (TPATH "modem/write/cdma", test_write_modem_cdma);
  
 -- 
-2.25.1
+2.27.0
 
 
 From 815f432fe97bb5767ca26a86bcf9a1d58e6bcacf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 12:43:20 +0200
-Subject: [PATCH 30/80] netplan: implement wake-on-wlan
+Subject: [PATCH 30/82] netplan: implement wake-on-wlan
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  3 +
@@ -54402,13 +54402,13 @@ index 6e6750cd5824ecd59ef3337dbdbd0a84882180b8..c678ed9a577adaf5f3cb801ca856415e
  	g_test_add_func (TPATH "modem/write/gsm", test_write_modem_gsm);
  	g_test_add_func (TPATH "modem/write/cdma", test_write_modem_cdma);
 -- 
-2.25.1
+2.27.0
 
 
 From dd64afc1c1216661a786b1f578770d9e6f7cb9e4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 14:26:00 +0200
-Subject: [PATCH 31/80] netplan: disable WEP wireless security handling
+Subject: [PATCH 31/82] netplan: disable WEP wireless security handling
 
 netplan currently supports only: none, psk, eap and 802.1x
 ---
@@ -54497,13 +54497,13 @@ index c678ed9a577adaf5f3cb801ca856415ec9926e8a..168432bdf51314dce9b2c5c77fac5f75
  	g_assert_true (nm_setting_wireless_get_wake_on_wlan (s_wireless) == NM_SETTING_WIRELESS_WAKE_ON_WLAN_ALL);
  	//g_assert_true (nm_setting_wireless_get_mac_address_randomization (s_wireless) == NM_SETTING_MAC_RANDOMIZATION_ALWAYS);
 -- 
-2.25.1
+2.27.0
 
 
 From 4dcfb8de755920b133ec61c3463ee8f6124da0e6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 16:19:22 +0200
-Subject: [PATCH 32/80] netplan: add wifi band
+Subject: [PATCH 32/82] netplan: add wifi band
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 16 +++-
@@ -54733,13 +54733,13 @@ index 0000000000000000000000000000000000000000..09b095cad5274419373cfa5581f92e86
 +        uuid: eda52185-2feb-41d7-a34d-cf7ad470a590
 +        device: wlan0
 -- 
-2.25.1
+2.27.0
 
 
 From 48b17b109de8715ffeca7a479af8bc74fb572e98 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 16:34:11 +0200
-Subject: [PATCH 33/80] netplan: implement wifi channel
+Subject: [PATCH 33/82] netplan: implement wifi channel
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 13 +++++++++----
@@ -54849,13 +54849,13 @@ index 09b095cad5274419373cfa5581f92e869b2a3b8a..1c96fffcb51d64253a5370df4aa33125
        dhcp6: yes
        ipv6-address-generation: stable-privacy
 -- 
-2.25.1
+2.27.0
 
 
 From 798079e9463b2905c40a9240a241fd47882c92de Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 17 Apr 2020 16:47:08 +0200
-Subject: [PATCH 34/80] netplan: implement wifi bssid
+Subject: [PATCH 34/82] netplan: implement wifi bssid
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c      |  7 ++++++-
@@ -54943,13 +54943,13 @@ index 1c96fffcb51d64253a5370df4aa331252ff558b7..9574d388ada7a0fd5b0c9d0a77d3b7c9
        dhcp6: yes
        ipv6-address-generation: stable-privacy
 -- 
-2.25.1
+2.27.0
 
 
 From b971fa0513eba4335904e353f517ef87c858a6bf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 20 Apr 2020 14:02:47 +0200
-Subject: [PATCH 35/80] netplan: handle unkonwn ifname
+Subject: [PATCH 35/82] netplan: handle unkonwn ifname
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  5 ++-
@@ -55135,13 +55135,13 @@ index 9574d388ada7a0fd5b0c9d0a77d3b7c91ae67bdd..53ae75f1f20b1ab1eb3b0296ccd67e48
          uuid: eda52185-2feb-41d7-a34d-cf7ad470a590
 -        device: wlan0
 -- 
-2.25.1
+2.27.0
 
 
 From 2761532bec269fda41cbf599b6ece9704a4df215 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 20 Apr 2020 16:57:20 +0200
-Subject: [PATCH 36/80] netplan: basic IP4 routes
+Subject: [PATCH 36/82] netplan: basic IP4 routes
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  19 +++
@@ -55393,13 +55393,13 @@ index 40b4b717f0b126b0d52ef166fb194c8197894d15..f0b36635294e9a93181b7ad4c4cd46c9
  	g_test_add_func (TPATH "wifi/write/band-a", test_write_wifi_band_a);
  	g_test_add_func (TPATH "wifi/write/band-bg", test_write_wifi_band_bg);
 -- 
-2.25.1
+2.27.0
 
 
 From a4fa025af47b6bf7ee13a1a99537d35a154c323d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 20 Apr 2020 17:05:28 +0200
-Subject: [PATCH 37/80] netplan: fix ip6 'disabled' method
+Subject: [PATCH 37/82] netplan: fix ip6 'disabled' method
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c        | 9 +++++++++
@@ -55489,13 +55489,13 @@ index ee887ceb4f57fa0035fd9eb36229e38b94fe9e15..00000000000000000000000000000000
 -    wired-default:
 -      renderer: NetworkManager
 -- 
-2.25.1
+2.27.0
 
 
 From 1c9a3d2061f67c7914929cc4be260745d45b82c5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 09:07:59 +0200
-Subject: [PATCH 38/80] netplan: basic IP6 routes
+Subject: [PATCH 38/82] netplan: basic IP6 routes
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 106 +++++-------------
@@ -55699,13 +55699,13 @@ index fcc4f9923c3376a10de139a5539fe3cfba989f13..a21a7b1058503023acf7c6a48711820a
  	nm_setting_ip_config_add_dns (s_ip6, "fade:0102:0103::face");
  	nm_setting_ip_config_add_dns (s_ip6, "cafe:ffff:eeee:dddd:cccc:bbbb:aaaa:feed");
 -- 
-2.25.1
+2.27.0
 
 
 From 5342126e2a20c8f2c3b2c4d82c37bad1960ef17b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 10:19:42 +0200
-Subject: [PATCH 39/80] netplan: combine IP4 & IP6 routes writing
+Subject: [PATCH 39/82] netplan: combine IP4 & IP6 routes writing
 
 The routes are saved in an array of hashTables.
 Each array element contains one route, with its
@@ -55924,13 +55924,13 @@ index 7a3b22b3bc7c9e3fae54afbe0a9b57069e7af26f..9230dac68125648fb119d6b4c4a2c48c
  	 * Write dhcp6-overrides
  	 */
 -- 
-2.25.1
+2.27.0
 
 
 From 9266f074bf6399a13ffc68e17d44310152c0786e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 12:42:08 +0200
-Subject: [PATCH 40/80] netplan: fix compiler warning with GSM/CDMA settings
+Subject: [PATCH 40/82] netplan: fix compiler warning with GSM/CDMA settings
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 8 ++++----
@@ -55959,13 +55959,13 @@ index 940a9537432573ed0ae9d8e0abcf9e2fe2f66696..6536b9f51e27c94d102c02f72d53dc8d
  	/* Make GSM only settings */
  	if (is_gsm) {
 -- 
-2.25.1
+2.27.0
 
 
 From d299afa1a59445f296fbfcfaeff1b4a9916034db Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 12:58:06 +0200
-Subject: [PATCH 41/80] netplan: ip routing rules (routing-policy)
+Subject: [PATCH 41/82] netplan: ip routing rules (routing-policy)
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  64 +++++------
@@ -56330,13 +56330,13 @@ index a21a7b1058503023acf7c6a48711820a3f5aea59..c6f62977daef9dfea45d495ef8714473
  	g_test_add_func (TPATH "wifi/write/band-a", test_write_wifi_band_a);
  	g_test_add_func (TPATH "wifi/write/band-bg", test_write_wifi_band_bg);
 -- 
-2.25.1
+2.27.0
 
 
 From f4fcff6da867545b402eb6169985e77d2203ce24 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 15:03:15 +0200
-Subject: [PATCH 42/80] netplan: add wake-on-lan, test mac-address +
+Subject: [PATCH 42/82] netplan: add wake-on-lan, test mac-address +
  cloned-mac-address
 
 ---
@@ -56528,13 +56528,13 @@ index 0000000000000000000000000000000000000000..cfb07f70c3d00dd419e8bbd1cec86055
 +        stable-id: stable-id-test-static
 +        device: eth42
 -- 
-2.25.1
+2.27.0
 
 
 From 3b8a7a9c960463818a77f805ed1ac7a0fba84295 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 21 Apr 2020 16:41:42 +0200
-Subject: [PATCH 43/80] netplan: fix wake-on-lan, apply certain wired settings
+Subject: [PATCH 43/82] netplan: fix wake-on-lan, apply certain wired settings
  only to physical devices
 
 ---
@@ -56652,13 +56652,13 @@ index 2786a0d1ecba5b2da59f4e8734503110fc578f28..a9e16766cce9db974a7057423eae6597
  	nm_connection_add_setting (connection, nm_setting_proxy_new ());
  	nmtst_assert_connection_equals (connection, FALSE, reread, FALSE);
 -- 
-2.25.1
+2.27.0
 
 
 From 57d9200b8d4d57bd7af615f0b69d7f622fffaae1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 12:29:34 +0200
-Subject: [PATCH 44/80] netplan: bond options, test framework improvement
+Subject: [PATCH 44/82] netplan: bond options, test framework improvement
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  73 +++++----
@@ -57115,13 +57115,13 @@ index 0000000000000000000000000000000000000000..e366e8d43e34b3e80875bf7b9e58ec85
 +        uuid: 005688e7-ee1d-4ed4-9bfd-a088ba6e80a9
 +        device: bond0
 -- 
-2.25.1
+2.27.0
 
 
 From 3779a237c61b468429e77306d54c70d5296d0bd4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 13:09:46 +0200
-Subject: [PATCH 45/80] netplan: improve bond option defaults & testing
+Subject: [PATCH 45/82] netplan: improve bond option defaults & testing
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  65 +++++---
@@ -57432,13 +57432,13 @@ index 0000000000000000000000000000000000000000..6cd256306b54835eee8b99a93b2497c9
 +        uuid: 005688e7-ee1d-4ed4-9bfd-a088ba6e80a9
 +        device: bond-rr
 -- 
-2.25.1
+2.27.0
 
 
 From f5cbc45de127c090323ffd29accf4e69fb9f9d68 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 15:08:09 +0200
-Subject: [PATCH 46/80] netplan: update (C)
+Subject: [PATCH 46/82] netplan: update (C)
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 3 ++-
@@ -57476,13 +57476,13 @@ index b3fe11bfc64344fddca40359aa483945a340d7d7..c2a9503143f3dea594c94cfd96c072c6
  
  #include "nm-default.h"
 -- 
-2.25.1
+2.27.0
 
 
 From 46c0cbd9724cb55482db03dc83005edfa47c9ef4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 15:30:53 +0200
-Subject: [PATCH 47/80] netplan: cleanup tests
+Subject: [PATCH 47/82] netplan: cleanup tests
 
 ---
  Makefile.am                                   |   1 +
@@ -58199,13 +58199,13 @@ index 7b103434eec61cc81c3d2d054cd731a91ff2d5ed..fb59b5a6097fddc62e014118e1faca8b
  /*****************************************************************************/
  
 -- 
-2.25.1
+2.27.0
 
 
 From 626c6cd4d42bc1ce4519a4de895fdf0961297e69 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 15:55:17 +0200
-Subject: [PATCH 48/80] netplan: cleanup test-suite a bit
+Subject: [PATCH 48/82] netplan: cleanup test-suite a bit
 
 ---
  .../netplan/tests/netplan-test-utils.h        |  63 ++++++
@@ -58620,13 +58620,13 @@ index 6cd256306b54835eee8b99a93b2497c9d0a51669..3716a8cfe473881aca00fb1b1db75bc1
          name: Test Write Bond RR
          uuid: 005688e7-ee1d-4ed4-9bfd-a088ba6e80a9
 -- 
-2.25.1
+2.27.0
 
 
 From 36c4b2ca03457de81403b4299efb31acf49d4971 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 17:31:13 +0200
-Subject: [PATCH 49/80] netplan: test: improve utils
+Subject: [PATCH 49/82] netplan: test: improve utils
 
 ---
  .../plugins/netplan/tests/netplan-test-utils.h   | 16 ++++++++--------
@@ -58734,13 +58734,13 @@ index 8184be455b1f7baec5119c16394bd0e3803365ad..bd170183e331a0db3a01d37862ac9063
  
  	_writer_new_connection (connection, TEST_SCRATCH_DIR, &testfile);
 -- 
-2.25.1
+2.27.0
 
 
 From 956b8ff3a2924ac9e779b6a7c269cf9ae594b647 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 22 Apr 2020 17:32:43 +0200
-Subject: [PATCH 50/80] netplan: basic VLAN support
+Subject: [PATCH 50/82] netplan: basic VLAN support
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 119 ++----------------
@@ -59077,13 +59077,13 @@ index 0000000000000000000000000000000000000000..0bce45c0e91b9b2e47c1e0fde1b2c98d
 +        uuid: 0f9f128b-3f77-4ff3-806d-bc1e85621c99
 +        device: enred
 -- 
-2.25.1
+2.27.0
 
 
 From 02dece8b6dcbb801b2e96f1de309609b3afefd50 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 24 Apr 2020 16:15:03 +0200
-Subject: [PATCH 51/80] netplan: allow empty IP config
+Subject: [PATCH 51/82] netplan: allow empty IP config
 
 ---
  src/settings/plugins/netplan/nms-netplan-writer.c | 9 ++++-----
@@ -59125,13 +59125,13 @@ index c2a9503143f3dea594c94cfd96c072c677008cff..399550574610c343c105f44143f9b5b1
  	                        netplan,
  	                        addresses,
 -- 
-2.25.1
+2.27.0
 
 
 From 1e4441a3ec3eda8c65952188ac696eed79afbc20 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 24 Apr 2020 16:16:05 +0200
-Subject: [PATCH 52/80] netplan: basic bridge[-port] support
+Subject: [PATCH 52/82] netplan: basic bridge[-port] support
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      | 100 +++++------
@@ -59700,13 +59700,13 @@ index 0000000000000000000000000000000000000000..47552045fd1f473860862a4cab7d5f4c
 +        path-cost:
 +          slave0: 33
 -- 
-2.25.1
+2.27.0
 
 
 From 06d17c879e586e26d3a9009f31671d89e2154dc6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 24 Apr 2020 17:24:32 +0200
-Subject: [PATCH 53/80] netplan: improve bridge-port test
+Subject: [PATCH 53/82] netplan: improve bridge-port test
 
 ---
  src/settings/plugins/netplan/nms-netplan-writer.c |  4 +++-
@@ -59804,13 +59804,13 @@ index 652900b3edcac19891f5a6d404ce63920f495acf..f2c32745dcc647f81b586e9166170319
 +        port-priority:
 +          slave1: 44
 -- 
-2.25.1
+2.27.0
 
 
 From d98958e3dfe7988097ddb0d5ef621e13bf6a4745 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 27 Apr 2020 17:40:49 +0200
-Subject: [PATCH 54/80] netplan: more WiFi testing
+Subject: [PATCH 54/82] netplan: more WiFi testing
 
 ---
  .../plugins/netplan/tests/test-netplan.c      | 52 +++++++++++++++++++
@@ -59912,13 +59912,13 @@ index 0000000000000000000000000000000000000000..2e76727d347155e4ea4c9a21d2a31367
 +        name: Test Write WiFi Main
 +        uuid: d5515a99-c7f1-4fd3-bc49-ecfd5ba01c93
 -- 
-2.25.1
+2.27.0
 
 
 From 5a0d832081f1041d5fac2a8de9324f05be3c608d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 28 Apr 2020 16:14:13 +0200
-Subject: [PATCH 55/80] netplan: WiFi auth mode wpa-eap / tls
+Subject: [PATCH 55/82] netplan: WiFi auth mode wpa-eap / tls
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  92 ++++++++++++--
@@ -60638,13 +60638,13 @@ literal 0
 HcmV?d00001
 
 -- 
-2.25.1
+2.27.0
 
 
 From 1c4fdc531de9c6632f0208ef76fddd87e800d205 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 28 Apr 2020 17:00:51 +0200
-Subject: [PATCH 56/80] netplan: Wifi auth method wpa-eap: ttls/mschapv2
+Subject: [PATCH 56/82] netplan: Wifi auth method wpa-eap: ttls/mschapv2
 
 ---
  .../plugins/netplan/nms-netplan-reader.c      |  5 +
@@ -60836,13 +60836,13 @@ index 787ebd91572044f2d0492aa8468f9987ab705bd7..cdca2ce81e2c48b6db8b88f622eb1f94
  	g_test_add_func (TPATH "wifi/write/band-bg", test_write_wifi_band_bg);
  	g_test_add_func (TPATH "wifi/write/wowlan-macrandom", test_wifi_wowlan_mac_randomization);
 -- 
-2.25.1
+2.27.0
 
 
 From 95c4a8cba210af03ab69d9d6c17ace344af068a2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 29 Apr 2020 10:58:06 +0200
-Subject: [PATCH 57/80] netplan: wifi wpa method eap-peap; improve wpa-eap
+Subject: [PATCH 57/82] netplan: wifi wpa method eap-peap; improve wpa-eap
  tests
 
 ---
@@ -61136,13 +61136,13 @@ index 0000000000000000000000000000000000000000..aafbb84273a886e7d0196cac5fc1a9ea
 +        name: Test Write Wifi WPA EAP-TTLS (MSCHAPv2)
 +        uuid: 2ac5e61f-990a-48b5-97a1-8c3e9e155fb4
 -- 
-2.25.1
+2.27.0
 
 
 From 33fe96d9df1ec880a316f56e9685bad2d63422e8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 29 Apr 2020 12:59:31 +0200
-Subject: [PATCH 58/80] netplan: cleanup tests
+Subject: [PATCH 58/82] netplan: cleanup tests
 
 ---
  .../plugins/netplan/tests/test-netplan.c      | 154 +++++++++---------
@@ -61489,13 +61489,13 @@ index 08d281678178f01af5f6431d300d2aabce2660cc..c6d021d491a6a35e848168b9e06f61d1
  
  /*****************************************************************************/
 -- 
-2.25.1
+2.27.0
 
 
 From b1fd8cb803ceabcaefe63191394dc55abbbb3d97 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 29 Apr 2020 15:49:28 +0200
-Subject: [PATCH 59/80] netplan: cleanup reader
+Subject: [PATCH 59/82] netplan: cleanup reader
 
 Get rid of all the ifcfg-rh boilerplate code.
 Keep only the NM setting names/function calls and IFCFG-RH setting names
@@ -63160,13 +63160,13 @@ index a3c5dbcdee0c5e3c52e30fb733a14e1ed3f81d56..1aedb6ea661ecf609656717151804167
  #endif
  
 -- 
-2.25.1
+2.27.0
 
 
 From 694708efa88608c22caa4127adc18218d9f5d66d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 09:55:47 +0200
-Subject: [PATCH 60/80] netplan: cleanup writer
+Subject: [PATCH 60/82] netplan: cleanup writer
 
 Get rid of all the ifcfg-rh boilerplate code.
 Keep only the NM setting names/function calls and IFCFG-RH setting names
@@ -65166,13 +65166,13 @@ index 686e412875ed2ee70e6db663ec337596b765ebba..b0d428fbc6c6725a67482d8a84e44859
  	if (!write_match_setting (connection, netplan, error))
  		return FALSE;
 -- 
-2.25.1
+2.27.0
 
 
 From 4a910ae287f993539106cc393d4207c72f08f7c2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 11:24:00 +0200
-Subject: [PATCH 61/80] netplan: fix compiler warning in storage
+Subject: [PATCH 61/82] netplan: fix compiler warning in storage
 
 ---
  .../plugins/netplan/nms-netplan-storage.c       | 17 +----------------
@@ -65214,13 +65214,13 @@ index 713dea262c74da038222e37a6c662876864fad17..7af15e83eed9e8fb8458980811c746be
  		g_file_delete (netplan_yaml, NULL, &error);
  		if (error)
 -- 
-2.25.1
+2.27.0
 
 
 From c3d10dffe228772b40390136262b332db49280d5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 11:30:46 +0200
-Subject: [PATCH 62/80] netplan:plugin: add note about order of loading
+Subject: [PATCH 62/82] netplan:plugin: add note about order of loading
  connections (YAML files)
 
 ---
@@ -65260,13 +65260,13 @@ index b0d428fbc6c6725a67482d8a84e4485966ba74ee..09f421d1129cad30b31edd74d8c837b8
  
  		netplan_yaml_path = g_build_filename (netplan_dir,
 -- 
-2.25.1
+2.27.0
 
 
 From dd14d635d2b3e43787816b84209963213b724e02 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 17:43:41 +0200
-Subject: [PATCH 63/80] meson: avoid line change, keep the plugin add-only
+Subject: [PATCH 63/82] meson: avoid line change, keep the plugin add-only
 
 ---
  meson_options.txt | 2 +-
@@ -65286,13 +65286,13 @@ index de95d49804b6120a4c8b20510782214ff56e1097..67830186d875c06bdc53b08af7de7bf1
  # handlers for resolv.conf
  option('resolvconf', type: 'string', value: '', description: 'Enable resolvconf support')
 -- 
-2.25.1
+2.27.0
 
 
 From 11dc6597425fac7709a8fcb40669127653015b74 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 17:43:56 +0200
-Subject: [PATCH 64/80] netplan: whitespace cleanups
+Subject: [PATCH 64/82] netplan: whitespace cleanups
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c       | 6 +++---
@@ -65376,13 +65376,13 @@ index 26f2b941a90762c7624d5433d68bce93b8bc563b..304495e643901579743bc7057a6d19f5
   */
  
 -- 
-2.25.1
+2.27.0
 
 
 From 47e1594a406da8f6d0308e7e93ecfa9f402726a5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Thu, 30 Apr 2020 17:51:12 +0200
-Subject: [PATCH 65/80] netplan: more whitespace cleanups
+Subject: [PATCH 65/82] netplan: more whitespace cleanups
 
 ---
  src/settings/plugins/netplan/nms-netplan-writer.c               | 2 +-
@@ -65414,13 +65414,13 @@ index 466ca0c4a36805532ac97bcda9bed5b45a7767f0..578ba5da6f9ba59d5063e475e10dac4e
 \ No newline at end of file
 +        macaddress: "de:ad:be:ef:ca:fe"
 -- 
-2.25.1
+2.27.0
 
 
 From c6a0ac0d7c7bc3d561c912409ceae77bed178daf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 4 May 2020 15:17:13 +0200
-Subject: [PATCH 66/80] netplan: avoid empty connection names
+Subject: [PATCH 66/82] netplan: avoid empty connection names
 
 ... which might cause segfaults.
 ---
@@ -65441,13 +65441,13 @@ index d9e5833a6cf75df96906229f6e876fcbea9963ce..3eed14db3f854f9cf5e2f68df49aa616
  
  	/* Otherwise construct a new NAME */
 -- 
-2.25.1
+2.27.0
 
 
 From 6e67b7cb13d150b82d86ea5c1e4c19fb604c84a6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 4 May 2020 15:34:03 +0200
-Subject: [PATCH 67/80] netplan: fix double free
+Subject: [PATCH 67/82] netplan: fix double free
 
 ---
  src/settings/plugins/netplan/nms-netplan-reader.c | 2 +-
@@ -65467,13 +65467,13 @@ index 3eed14db3f854f9cf5e2f68df49aa616a407ecd4..2010c855adb5a9102f6421d392738717
  	//int vint64, i_val;
  
 -- 
-2.25.1
+2.27.0
 
 
 From e074aaa921ac9871a1079bdaca63247a5a76ab26 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 5 May 2020 09:38:27 +0200
-Subject: [PATCH 68/80] netplan:test: whitespace cleanup
+Subject: [PATCH 68/82] netplan:test: whitespace cleanup
 
 ---
  .../plugins/netplan/tests/yaml/test1_key_and_cert.pem     | 8 ++++----
@@ -65502,13 +65502,13 @@ index dec9aa1b8fd7eb3a369f1cb6033e8e79bdbd297c..0da652f206d620aa4b776aef5ddd9df0
                  DirName:/C=US/ST=Berkshire/L=Newbury/O=My Company Ltd/OU=Testing/CN=test/emailAddress=test@test.com
                  serial:EB:E7:64:FB:79:F7:22:19
 -- 
-2.25.1
+2.27.0
 
 
 From 804942ae3c06eeec49a9bf0f9939e6497580b943 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Mon, 18 May 2020 16:01:07 +0200
-Subject: [PATCH 69/80] netplan: avoid duplicate connections, by deleting
+Subject: [PATCH 69/82] netplan: avoid duplicate connections, by deleting
  netplan's keyfiles
 
 NM was reading the connection profiles from the YAML file directly via
@@ -65567,13 +65567,13 @@ index 6c4b029a2ed9f7cf729d9598d868f4f8c211f6af..00ed2a64355af6be1570464cc11aadd9
  
  static void
 -- 
-2.25.1
+2.27.0
 
 
 From 014559538545f4b5413d381cf835ddc99f6bced3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Fri, 29 May 2020 14:59:28 +0200
-Subject: [PATCH 70/80] netplan: do not create an (empty) file, if we cannot
+Subject: [PATCH 70/82] netplan: do not create an (empty) file, if we cannot
  write the connection
 
 ---
@@ -65595,13 +65595,13 @@ index 00ed2a64355af6be1570464cc11aadd95de2fce5..81bdf30dcbd2bbf30b2b5a5970e42248
  	}
  
 -- 
-2.25.1
+2.27.0
 
 
 From fde72a35dc86b23cb5a974ba0564bd165af08c77 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 2 Jun 2020 14:59:04 +0200
-Subject: [PATCH 71/80] netplan: fix storage clear/delete segfault
+Subject: [PATCH 71/82] netplan: fix storage clear/delete segfault
 
 ---
  src/settings/plugins/netplan/nms-netplan-storage.c | 3 ++-
@@ -65624,13 +65624,13 @@ index 7af15e83eed9e8fb8458980811c746be57f20b77..36b778e277629ab1d70a193de782ffdb
  
  	c_list_unlink (&self->parent._storage_lst);
 -- 
-2.25.1
+2.27.0
 
 
 From 225a5e456521031a4cd5121fd310a093c7cd69c8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 08:33:11 +0200
-Subject: [PATCH 72/80] netplan: add simple test scripts to check connection
+Subject: [PATCH 72/82] netplan: add simple test scripts to check connection
  handling
 
 ---
@@ -65705,13 +65705,13 @@ index 0000000000000000000000000000000000000000..4363a7c539c62afbf36d13c7cbd34c3a
 +ls -la /etc/netplan/
 +ls -la /etc/NetworkManager/system-connections/
 -- 
-2.25.1
+2.27.0
 
 
 From 3b30f50dec2c1923e1f0b68055bdc8c5be954af8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 08:58:32 +0200
-Subject: [PATCH 73/80] netplan:writer: improve handling of YAML filename/path
+Subject: [PATCH 73/82] netplan:writer: improve handling of YAML filename/path
 
 ---
  .../plugins/netplan/nms-netplan-writer.c      | 28 ++++++++-----------
@@ -65813,13 +65813,13 @@ index 8adb17100b459d522071b5f58d268c4876183c21..bfd36938f9f14e6d005848d11840299c
  }
  
 -- 
-2.25.1
+2.27.0
 
 
 From 95fc6cca992ecfabef02375ae035c519ec09d748 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 09:10:52 +0200
-Subject: [PATCH 74/80] netplan: fix random memory corruption/segfaults
+Subject: [PATCH 74/82] netplan: fix random memory corruption/segfaults
 
 FIXME: We're accessing libnetplan's internal data structures here...
   We need to find a better way to clear the netplan netdefs, e.g.
@@ -66118,13 +66118,13 @@ index c6d021d491a6a35e848168b9e06f61d12d3d5cbe..93a3b48b26dc7099581c48536bca24e4
  
  	/* Connection setting */
 -- 
-2.25.1
+2.27.0
 
 
 From 455ad0b67c74c95e315ef497136bad078f758caf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 09:37:24 +0200
-Subject: [PATCH 75/80] netplan: add another test script
+Subject: [PATCH 75/82] netplan: add another test script
 
 ---
  src/settings/plugins/netplan/tests/loop.sh | 14 ++++++++++++++
@@ -66152,13 +66152,13 @@ index 0000000000000000000000000000000000000000..31c34a37a475d48d072f54dde9bd388f
 +    fi
 +done
 -- 
-2.25.1
+2.27.0
 
 
 From 32bac238cbc9ef85ac5bb84a378029e27e356491 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 10:21:00 +0200
-Subject: [PATCH 76/80] netplan:test: cleanup formatting
+Subject: [PATCH 76/82] netplan:test: cleanup formatting
 
 ---
  src/settings/plugins/netplan/tests/test-netplan.c | 2 +-
@@ -66178,13 +66178,13 @@ index 93a3b48b26dc7099581c48536bca24e4516d9dbf..a32af959dea227201163cc94ecc96e6f
  
  	nmtst_assert_connection_equals (connection, TRUE, reread, FALSE);
 -- 
-2.25.1
+2.27.0
 
 
 From 3dba59270b0f3ca46e85d786175bbf1e9a67bdc6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 10:26:45 +0200
-Subject: [PATCH 77/80] netplan:reader: fix out-of-bound memory access in
+Subject: [PATCH 77/82] netplan:reader: fix out-of-bound memory access in
  make_bond_setting
 
 ---
@@ -66227,13 +66227,13 @@ index 7ae8b35df86be7c4b276a4200e23c625454b6b1e..945c81863e842ae9444b5283b8085b5f
  		return NULL;
  
 -- 
-2.25.1
+2.27.0
 
 
 From ad407afd33be026a6c96e7bf4ce2d721aa23dea9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 3 Jun 2020 10:48:36 +0200
-Subject: [PATCH 78/80] netplan: add simple WiFi add-modify test script
+Subject: [PATCH 78/82] netplan: add simple WiFi add-modify test script
 
 ---
  src/settings/plugins/netplan/tests/add-mod.sh | 29 +++++++++++++++++++
@@ -66276,13 +66276,13 @@ index 0000000000000000000000000000000000000000..1a5ff89ddacfaa1b552b158293eab541
 +ls -la /etc/netplan/
 +ls -la /etc/NetworkManager/system-connections/
 -- 
-2.25.1
+2.27.0
 
 
 From e059c2e8dc1e830cd94dc360b11c88ea548808e3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Wed, 29 Jul 2020 16:59:54 +0200
-Subject: [PATCH 79/80] netplan: add nms-netplan-reader.c to POTFILES
+Subject: [PATCH 79/82] netplan: add nms-netplan-reader.c to POTFILES
 
 ---
  po/POTFILES.in | 1 +
@@ -66298,13 +66298,13 @@ index 0279f865fa4b29511195b8dd82840443f02abb93..61310bfae8e90b175be11b0ab05a6dd9
  src/settings/plugins/ifcfg-rh/tests/test-ifcfg-rh.c
 +src/settings/plugins/netplan/nms-netplan-reader.c
 -- 
-2.25.1
+2.27.0
 
 
 From b6eb05a07c16d32bf6683db030463da7e80e0d46 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 30 Jun 2020 15:34:42 +0200
-Subject: [PATCH 80/80] netplan:test: use relative paths
+Subject: [PATCH 80/82] netplan:test: use relative paths
 
 ---
  src/settings/plugins/netplan/tests/netplan-test-utils.h  | 9 +++++----
@@ -66380,5 +66380,250 @@ index aafbb84273a886e7d0196cac5fc1a9eaf5d6da99..25a36cf7e519fdfe8dc5b94166bec9d5
        dhcp6: yes
        ipv6-address-generation: stable-privacy
 -- 
-2.25.1
+2.27.0
+
+
+From 63781267e4fd1a843ca88148eeace2846a695ff6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
+Date: Fri, 18 Dec 2020 12:12:42 +0100
+Subject: [PATCH 81/82] netplan: support wifi hotspot (method=shared)
+
+As created via:
+nmcli dev wifi hotspot ifname wlan0 ssid hotspot-test password "test1234"
+---
+ .../plugins/netplan/nms-netplan-reader.c      | 22 +++++-
+ .../plugins/netplan/tests/test-netplan.c      | 67 ++++++++++++++++++-
+ .../netplan/tests/yaml/exp-wifi-hotspot.yaml  | 15 +++++
+ .../netplan/tests/yaml/exp-wifi-main.yaml     |  2 +-
+ 4 files changed, 102 insertions(+), 4 deletions(-)
+ create mode 100644 src/settings/plugins/netplan/tests/yaml/exp-wifi-hotspot.yaml
+
+diff --git a/src/settings/plugins/netplan/nms-netplan-reader.c b/src/settings/plugins/netplan/nms-netplan-reader.c
+index 945c81863e842ae9444b5283b8085b5f07504bf2..acdc18d0b752684accb89c1ce4fa94bb499d9c8b 100644
+--- a/src/settings/plugins/netplan/nms-netplan-reader.c
++++ b/src/settings/plugins/netplan/nms-netplan-reader.c
+@@ -381,6 +381,8 @@ make_ip4_setting (NetplanNetDefinition *nd, GError **error)
+ 	NMIPAddress *addr;
+ 	gs_free char *gateway = NULL;
+ 	GError *local = NULL;
++	GHashTableIter iter;
++	gpointer k, v;
+ 	char *method = NM_SETTING_IP4_CONFIG_METHOD_AUTO;
+ 
+ 	s_ip4 = (NMSettingIPConfig *) nm_setting_ip4_config_new ();
+@@ -399,6 +401,17 @@ IPV4_ROUTE_TABLE
+ 	if (nd->ip4_addresses)
+ 		method = NM_SETTING_IP4_CONFIG_METHOD_MANUAL;
+ 
++	/* Check for hotspot/shared mode */
++	if (nd->access_points) {
++		g_hash_table_iter_init (&iter, nd->access_points);
++		g_hash_table_iter_next (&iter, &k, &v);
++		if (v) {
++			NetplanWifiAccessPoint *ap = (NetplanWifiAccessPoint *) v;
++			if (ap->mode == NETPLAN_WIFI_MODE_AP)
++				method = NM_SETTING_IP4_CONFIG_METHOD_SHARED;
++		}
++	}
++
+ 	if (nd->gateway4)
+ 		g_object_set (s_ip4, NM_SETTING_IP_CONFIG_GATEWAY, nd->gateway4, NULL);
+ 
+@@ -457,8 +470,7 @@ NM_SETTING_IP4_CONFIG_DHCP_CLIENT_ID
+ 			nm_setting_ip_config_add_dns_search (s_ip4,
+ 												 g_array_index(nd->search_domains, char*, i));
+ 
+-#if 0  /* TODO: Implement read for connection sharing. */
+-NM_SETTING_IP4_CONFIG_METHOD_SHARED
++#if 0  /* TODO */
+ nm_setting_ip_config_add_dns (s_ip4, v)
+ nm_setting_ip_config_add_dns_search (s_ip4, *item)
+ ifcfg-rh:
+@@ -863,6 +875,12 @@ NM_SETTING_WIRELESS_SECURITY_WPS_METHOD
+ ifcfg-rh:
+ WPS_METHOD
+ #endif
++		/* FIXME: hardcoded defaults for hotspot mode */
++		if (ap->mode == NETPLAN_WIFI_MODE_AP) {
++			nm_setting_wireless_security_add_proto (wsec, "rsn");
++			nm_setting_wireless_security_add_group (wsec, "ccmp");
++			nm_setting_wireless_security_add_pairwise (wsec, "ccmp");
++		}
+ 
+ 		/* Pairwise and Group ciphers (only relevant for WPA/RSN) */
+ 		if (ap->auth.key_management == NETPLAN_AUTH_KEY_MANAGEMENT_WPA_PSK
+diff --git a/src/settings/plugins/netplan/tests/test-netplan.c b/src/settings/plugins/netplan/tests/test-netplan.c
+index a32af959dea227201163cc94ecc96e6f7d520a07..ce5e542ec8167756053ee27cacab64a3c18a4a99 100644
+--- a/src/settings/plugins/netplan/tests/test-netplan.c
++++ b/src/settings/plugins/netplan/tests/test-netplan.c
+@@ -497,7 +497,7 @@ test_write_wifi_main (void)
+ 	              NM_SETTING_WIRELESS_MAC_ADDRESS, "de:ad:be:ef:ca:fe",
+ 	              NM_SETTING_WIRELESS_CLONED_MAC_ADDRESS, "00:11:22:33:44:55",
+ 	              NM_SETTING_WIRELESS_MTU, mtu,
+-	              NM_SETTING_WIRELESS_MODE, NM_SETTING_WIRELESS_MODE_AP,
++	              NM_SETTING_WIRELESS_MODE, NM_SETTING_WIRELESS_MODE_INFRA,
+ 	              NM_SETTING_WIRELESS_SSID, ssid,
+ 	              NULL);
+ 
+@@ -521,6 +521,70 @@ test_write_wifi_main (void)
+ 	nmtst_assert_connection_equals (connection, TRUE, reread, FALSE);
+ }
+ 
++static void
++test_write_wifi_hotspot (void)
++{
++	nmtst_auto_unlinkfile char *testfile = NULL;
++	gs_unref_object NMConnection *connection = NULL;
++	gs_unref_object NMConnection *reread = NULL;
++	NMSettingConnection *s_con;
++	NMSettingWireless *s_wireless;
++	NMSettingWirelessSecurity *s_wsec;
++	NMSettingIPConfig *s_ip4;
++	NMSettingIPConfig *s_ip6;
++	GBytes *ssid;
++
++	connection = nm_simple_connection_new ();
++
++	/* Connection setting */
++	s_con = (NMSettingConnection *) nm_setting_connection_new ();
++	nm_connection_add_setting (connection, NM_SETTING (s_con));
++	g_object_set (s_con,
++	              NM_SETTING_CONNECTION_ID, "Hotspot",
++	              NM_SETTING_CONNECTION_UUID, "68a4746f-9ad9-409e-8b80-c5944806a1a5",
++	              NM_SETTING_CONNECTION_TYPE, NM_SETTING_WIRELESS_SETTING_NAME,
++	              //NM_SETTING_CONNECTION_AUTOCONNECT, FALSE,
++	              NM_SETTING_CONNECTION_INTERFACE_NAME, "wlan0",
++	              NULL);
++
++	/* Wireless setting */
++	s_wireless = (NMSettingWireless *) nm_setting_wireless_new ();
++	nm_connection_add_setting (connection, NM_SETTING (s_wireless));
++	ssid = g_bytes_new ("hotspot-test", 12);
++	g_object_set (s_wireless,
++	              NM_SETTING_WIRELESS_MODE, NM_SETTING_WIRELESS_MODE_AP,
++	              NM_SETTING_WIRELESS_SSID, ssid,
++	              NULL);
++
++	s_wsec = (NMSettingWirelessSecurity *) nm_setting_wireless_security_new ();
++	nm_connection_add_setting (connection, NM_SETTING (s_wsec));
++	g_object_set (s_wsec,
++	              NM_SETTING_WIRELESS_SECURITY_KEY_MGMT, "wpa-psk",
++	              NM_SETTING_WIRELESS_SECURITY_PSK, "s0s3cr3t",
++	              NULL);
++	nm_setting_wireless_security_add_proto (s_wsec, "rsn");
++	nm_setting_wireless_security_add_group (s_wsec, "ccmp");
++	nm_setting_wireless_security_add_pairwise (s_wsec, "ccmp");
++
++	/* Add IP4/6 settings. */
++	_add_ip_auto_settings (connection, &s_ip4, &s_ip6);
++	g_object_set (s_ip4, NM_SETTING_IP_CONFIG_METHOD,
++	              NM_SETTING_IP4_CONFIG_METHOD_SHARED,
++	              NULL);
++	g_object_set (s_ip6, NM_SETTING_IP_CONFIG_METHOD,
++	              NM_SETTING_IP6_CONFIG_METHOD_IGNORE,
++	              NULL);
++	nmtst_assert_connection_verifies (connection);
++
++	_writer_new_connec_exp (connection,
++	                        TEST_SCRATCH_DIR_TMP,
++	                        TEST_NETPLAN_DIR"/exp-wifi-hotspot.yaml",
++	                        &testfile);
++	reread = _connection_from_file (testfile, NULL, NULL, NULL);
++
++	nmtst_assert_connection_equals (connection, TRUE, reread, FALSE);
++}
++
+ static void
+ test_write_wifi_wpa_eap_tls (void)
+ {
+@@ -1674,6 +1738,7 @@ int main (int argc, char **argv)
+ 	g_test_add_func (TPATH "wired/write/routing-policy", test_write_routing_rules);
+ 
+ 	g_test_add_func (TPATH "wifi/write/main", test_write_wifi_main);
++	g_test_add_func (TPATH "wifi/write/hotspot", test_write_wifi_hotspot);
+ 	g_test_add_func (TPATH "wifi/write/eap-tls", test_write_wifi_wpa_eap_tls);
+ 	g_test_add_func (TPATH "wifi/write/eap-ttls", test_write_wifi_wpa_eap_ttls_mschapv2);
+ 	g_test_add_func (TPATH "wifi/write/eap-peap", test_write_wifi_wpa_eap_peap);
+diff --git a/src/settings/plugins/netplan/tests/yaml/exp-wifi-hotspot.yaml b/src/settings/plugins/netplan/tests/yaml/exp-wifi-hotspot.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..4b7a16f6407e69ddb2bf4ee0a8f358ddaee99b12
+--- /dev/null
++++ b/src/settings/plugins/netplan/tests/yaml/exp-wifi-hotspot.yaml
+@@ -0,0 +1,15 @@
++network:
++  version: 2
++  renderer: NetworkManager
++  wifis:
++    wlan0:
++      access-points:
++        hotspot-test:
++          mode: ap
++          auth:
++            key-management: psk
++          password: "s0s3cr3t"
++      networkmanager:
++        name: Hotspot
++        uuid: 68a4746f-9ad9-409e-8b80-c5944806a1a5
++        device: wlan0
+diff --git a/src/settings/plugins/netplan/tests/yaml/exp-wifi-main.yaml b/src/settings/plugins/netplan/tests/yaml/exp-wifi-main.yaml
+index 8320780e9b29d031a16c2242ff37c4d6dd027c6e..861d0fa02b91235669609308ffa7e27b9ce8b83c 100644
+--- a/src/settings/plugins/netplan/tests/yaml/exp-wifi-main.yaml
++++ b/src/settings/plugins/netplan/tests/yaml/exp-wifi-main.yaml
+@@ -8,7 +8,7 @@ network:
+       mtu: 1492
+       access-points:
+         my-net:
+-          mode: ap
++          mode: infrastructure
+           auth:
+             key-management: psk
+           password: "s0s3cr3t"
+-- 
+2.27.0
+
+
+From 4ead1af4a9dbbc71ca216d83c959206fbf7b80d6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
+Date: Fri, 18 Dec 2020 14:29:00 +0100
+Subject: [PATCH 82/82] netplan: TMP disable modem tests
+
+netplan.io < 0.101-0ubuntu3 is missing the backend settings. Test can be
+re-enabled after this version of netplan has been deployed.
+
+Currently you cannot read:
+...
+modems:
+  lte-connection:
+    ...
+    networkmanager:
+      name: ...
+      uuid: ...
+
+Functionallity is still there if you leave this part out of your YAML.
+---
+ src/settings/plugins/netplan/tests/test-netplan.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/settings/plugins/netplan/tests/test-netplan.c b/src/settings/plugins/netplan/tests/test-netplan.c
+index ce5e542ec8167756053ee27cacab64a3c18a4a99..4dd125ddef5b07522497dad01a5291a4217259be 100644
+--- a/src/settings/plugins/netplan/tests/test-netplan.c
++++ b/src/settings/plugins/netplan/tests/test-netplan.c
+@@ -1755,12 +1755,14 @@ int main (int argc, char **argv)
+ 	g_test_add_func (TPATH "bond/write/rr", test_write_bond_rr);
+ 	g_test_add_func (TPATH "bond/write/lacp", test_write_bond_lacp);
+ 
++	/* Modem/GSM/CDMA/LTE tests can be re-enabled after netplan.io 0.101-0ubuntu3 is deployed
+ 	g_test_add_func (TPATH "modem/write/gsm-auto-eui64", test_write_modem_gsm_auto_eui64);
+ 	g_test_add_func (TPATH "modem/write/gsm", test_write_modem_gsm);
+ 	g_test_add_func (TPATH "modem/write/cdma", test_write_modem_cdma);
++	*/
+ 
+ 	g_test_add_func (TPATH "example/field/wifi", test_example_field_wifi);
+-	g_test_add_func (TPATH "example/field/lte", test_example_field_lte);
++	//g_test_add_func (TPATH "example/field/lte", test_example_field_lte);
+ 
+ 	return g_test_run ();
+ }
+-- 
+2.27.0
 
