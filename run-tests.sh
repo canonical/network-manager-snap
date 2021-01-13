@@ -87,9 +87,9 @@ fi
 backends="--backends="
 separator=""
 while read -r be; do
-    backends=$backends$separator${be##*.}
+    backends=$backends$separator$be
     separator=,
-done < <(yq r spread.yaml --printMode p 'backends.qemu.systems[*].*')
+done < <(yq eval '.backends.qemu.systems[]' spread.yaml | sed -e '/^ /d' -e 's/://')
 
 echo "INFO: Executing tests runner"
 # shellcheck disable=SC2086
