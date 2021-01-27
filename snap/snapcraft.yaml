@@ -111,7 +111,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/focal
+    source-branch: applied/ubuntu/focal-updates
     build-packages:
       - build-essential
     make-parameters:
