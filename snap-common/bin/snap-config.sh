@@ -180,31 +180,26 @@ _switch_defaultrenderer() {
 }
 
 # Update NetworkManager.conf plugins
-# $1: true/false
-# $2: what the plugins should be
+# $1: what the plugins should be
 _switch_plugins() {
 
-    if [ "$1" = true ] || [ "$1" = yes ]; then
+    # Create custom NetworkManager.conf from template if it doesn't already exist.
+    # From now on, $SNAP_DATA/NetworkManager.conf will be used.
+    if [ ! -f "$SNAP"/NetworkManager.conf  ];then
+        cp /etc/NetworkManager/NetworkManager.conf "$SNAP_DATA"
+    fi
 
-        # Create custom NetworkManager.conf from template if it doesn't already exist.
-        # From now on, $SNAP_DATA/NetworkManager.conf will be used.
-        if [ ! -f "$SNAP"/NetworkManager.conf  ];then
-            cp /etc/NetworkManager/NetworkManager.conf "$SNAP_DATA"
-        fi
+    existing_plugins=$(grep ^plugins $SNAP_DATA/NetworkManager.conf | cut -d'=' -f2)
+    new_plugins=$1
 
-        existing_plugins=$(grep ^plugins $SNAP_DATA/NetworkManager.conf | cut -d'=' -f2)
-        new_plugins=$2
+    # Take no action if there is no change
+    if [ "$existing_plugins" = "$new_plugins" ];then
+        return
 
-        # Take no action if there is no change
-        if [ "$existing_plugins" = "$new_plugins" ];then
-            #echo "no change"
-            return
-        # Update the set of plugins
-        else
-            sed -i "s/^plugins=.*/plugins=$2/" NetworkManager.conf
-            existing_plugins=$(grep ^plugins NetworkManager.conf | cut -d'=' -f2)
-            #echo "existing plugins are: $existing_plugins"
-        fi
+    # Update the set of plugins
+    else
+        sed -i "s/^plugins=.*/plugins=$1/" NetworkManager.conf
+        existing_plugins=$(grep ^plugins NetworkManager.conf | cut -d'=' -f2)
     fi
 
 }

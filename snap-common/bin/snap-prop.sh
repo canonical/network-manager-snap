@@ -61,7 +61,7 @@ get_defaultrenderer() {
 get_plugins() {
     value=$(snapctl get plugins) || true
     if [ -z "$value" ]; then
-        value=true
+        value="netplan"
     fi
     echo "$value"
 }
