@@ -198,8 +198,7 @@ _switch_plugins() {
 
     # Update the set of plugins
     else
-        sed -i "s/^plugins=.*/plugins=$1/" NetworkManager.conf
-        existing_plugins=$(grep ^plugins NetworkManager.conf | cut -d'=' -f2)
+        sed -i "s/^plugins=.*/plugins=$1/" "$SNAP_DATA"/NetworkManager.conf
     fi
 
 }
