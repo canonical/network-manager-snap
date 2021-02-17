@@ -186,7 +186,7 @@ _switch_plugins() {
     # Create custom NetworkManager.conf from template if it doesn't already exist.
     # From now on, $SNAP_DATA/NetworkManager.conf will be used.
     if [ ! -f "$SNAP_DATA"/NetworkManager.conf  ];then
-        cp $SNAP/etc/NetworkManager/NetworkManager.conf $SNAP_DATA
+        cp "$SNAP"/etc/NetworkManager/NetworkManager.conf $SNAP_DATA
     fi
 
     sed -i "s/^plugins=.*/plugins=$1/" "$SNAP_DATA"/NetworkManager.conf
