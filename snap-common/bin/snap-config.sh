@@ -179,6 +179,20 @@ _switch_defaultrenderer() {
     fi
 }
 
+# Update NetworkManager.conf plugins
+# $1: what the plugins should be
+_switch_plugins() {
+
+    # Create custom NetworkManager.conf from template if it doesn't already exist.
+    # From now on, $SNAP_DATA/NetworkManager.conf will be used.
+    if [ ! -f "$SNAP_DATA"/NetworkManager.conf  ];then
+        cp "$SNAP"/etc/NetworkManager/NetworkManager.conf $SNAP_DATA
+    fi
+
+    sed -i "s/^plugins=.*/plugins=$1/" "$SNAP_DATA"/NetworkManager.conf
+}
+
+
 . "$SNAP"/bin/snap-prop.sh
 
 apply_snap_config() {
@@ -189,4 +203,5 @@ apply_snap_config() {
                                "$(get_property connectivity.interval)" \
                                "$(get_property connectivity.response)"
     _switch_defaultrenderer "$(get_defaultrenderer)"
+    _switch_plugins "$(get_plugins)"
 }

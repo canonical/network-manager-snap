@@ -31,6 +31,7 @@ _create_props_content() {
     printf "connectivity_interval=%s\n" "$connectivity_interval"
     printf "connectivity_response=%s\n" "$connectivity_response"
     printf "defaultrenderer=%s\n" "$defaultrenderer"
+    printf "plugins=%s\n" "$plugins"
 }
 
 wifi_powersave=$(get_wifi_powersave)
@@ -41,6 +42,7 @@ connectivity_uri=$(get_property "connectivity.uri")
 connectivity_interval=$(get_property "connectivity.interval")
 connectivity_response=$(get_property "connectivity.response")
 defaultrenderer=$(get_defaultrenderer)
+plugins=$(get_plugins)
 
 # Store always, so we show defaults when properties are set to empty strings
 snapctl set wifi.powersave="$wifi_powersave"
@@ -51,6 +53,7 @@ snapctl set connectivity.uri="$connectivity_uri"
 snapctl set connectivity.interval="$connectivity_interval"
 snapctl set connectivity.response="$connectivity_response"
 snapctl set defaultrenderer="$defaultrenderer"
+snapctl set plugins="$plugins"
 
 content=$(_create_props_content)
 
