@@ -1,3 +1,154 @@
+2021-02-23 network-manager 1.22.10-3
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Follow focal-updates branch for dnsmasq
+    
+    A new dnsmasq package has been released and the new sources branch
+    applied/ubuntu/focal-updates has been created. Use it so we get latest
+    changes (check-versions helped to discover this).
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/396987
+
+  [ Lukas Märdian <lukas.maerdian@canonical.com> ]
+  * None
+    Merge-Proposal: https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/395534
+
+  [ Heather Ellsworth <heather.ellsworth@canonical.com> ]
+  * Add plugins configure hook
+    Merge-Proposal: https://code.launchpad.net/~hellsworth/snappy-hwe-snaps/+git/network-manager/+merge/396213
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.2 to 7.68.0-1ubuntu2.4:
+  
+    curl (7.68.0-1ubuntu2.4) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: FTP redirect to malicious host via PASV response
+        - debian/patches/CVE-2020-8284.patch: use CURLOPT_FTP_SKIP_PASV_IP by
+          default in lib/url.c, src/tool_cfgable.c, docs/*, tests/data/*.
+        - CVE-2020-8284
+      * SECURITY UPDATE: FTP wildcard stack buffer overflow in libcurl
+        - debian/patches/CVE-2020-8285.patch: make wc_statemach loop instead of
+          recurse in lib/ftp.c.
+        - CVE-2020-8285
+      * SECURITY UPDATE: Inferior OCSP verification
+        - debian/patches/CVE-2020-8286.patch: make the OCSP verification verify
+          the certificate id in lib/vtls/openssl.c.
+        - CVE-2020-8286
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 30 Nov 2020 10:59:13 -0500
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.80-1.1ubuntu1 to 2.80-1.1ubuntu1.2:
+  
+    dnsmasq (2.80-1.1ubuntu1.2) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: Multiple security issues
+        - CVE-2020-25681: heap overflow in RRSets sorting
+        - CVE-2020-25682: buffer overflow in extracting names from DNS packets
+        - CVE-2020-25683: heap overflow in DNSSEC validation
+        - CVE-2020-25684: cache poisoning issue via address/port
+        - CVE-2020-25685: cache poisoning issue via weak hash
+        - CVE-2020-25686: birthday attack via incorrect existing requests check
+        - CVE-2020-25687: heap overflow in DNSSEC validation
+        - CVE-2019-14834: memory leak via DHCP response creation
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 08 Jan 2021 09:59:59 -0500
+  
+  libnm0, network-manager (built from network-manager) updated from 1.22.10-1ubuntu2.1 to 1.22.10-1ubuntu2.2:
+  
+    network-manager (1.22.10-1ubuntu2.2) focal; urgency=medium
+  
+      * platform: add the NM_SETTING_WIRELESS_WAKE_ON_WLAN_IGNORE status check
+        (LP: #1891632)
+  
+     -- Li-Hao Liao (Leon Liao) <leon.liao@canonical.com>  Wed, 16 Sep 2020 17:05:18 +0100
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.49+dfsg-2ubuntu1.3 to 2.4.49+dfsg-2ubuntu1.7:
+  
+    openldap (2.4.49+dfsg-2ubuntu1.7) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: DoS via malicious packet
+        - debian/patches/CVE-2021-27212.patch: fix issuerAndThisUpdateCheck in
+          servers/slapd/schema_init.c.
+        - CVE-2021-27212
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 18 Feb 2021 09:22:15 -0500
+  
+    openldap (2.4.49+dfsg-2ubuntu1.6) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: integer underflow in Certificate Exact Assertion
+        processing
+        - debian/patches/CVE-2020-36221-1.patch: fix serialNumberAndIssuerCheck
+          in servers/slapd/schema_init.c.
+        - debian/patches/CVE-2020-36221-2.patch: fix serialNumberAndIssuerCheck
+          in servers/slapd/schema_init.c.
+        - CVE-2020-36221
+      * SECURITY UPDATE: assert failure in saslAuthzTo validation
+        - debian/patches/CVE-2020-36222-1.patch: remove saslauthz asserts in
+          servers/slapd/saslauthz.c.
+        - debian/patches/CVE-2020-36222-2.patch: fix debug msg in
+          servers/slapd/saslauthz.c.
+        - CVE-2020-36222
+      * SECURITY UPDATE: crash in Values Return Filter control handling
+        - debian/patches/CVE-2020-36223.patch: fix vrfilter double-free in
+          servers/slapd/controls.c.
+        - CVE-2020-36223
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36224-1.patch: use ch_free on normalized DN
+          in servers/slapd/saslauthz.c.
+        - debian/patches/CVE-2020-36224-2.patch: use slap_sl_free in prev
+          commit in servers/slapd/saslauthz.c.
+        - CVE-2020-36224
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36225.patch: fix AVA_Sort on invalid RDN in
+          servers/slapd/dn.c.
+        - CVE-2020-36225
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36226.patch: fix slap_parse_user in
+          servers/slapd/saslauthz.c.
+        - CVE-2020-36226
+      * SECURITY UPDATE: infinite loop in cancel_extop Cancel operation
+        - debian/patches/CVE-2020-36227.patch: fix cancel exop in
+          servers/slapd/cancel.c.
+        - CVE-2020-36227
+      * SECURITY UPDATE: DoS in Certificate List Exact Assertion processing
+        - debian/patches/CVE-2020-36228.patch: fix issuerAndThisUpdateCheck in
+          servers/slapd/schema_init.c.
+        - CVE-2020-36228
+      * SECURITY UPDATE: DoS in X.509 DN parsing in ad_keystring
+        - debian/patches/CVE-2020-36229.patch: add more checks to
+          ldap_X509dn2bv in libraries/libldap/tls2.c.
+        - CVE-2020-36229
+      * SECURITY UPDATE: DoS in X.509 DN parsing in ber_next_element
+        - debian/patches/CVE-2020-36230.patch: check for invalid BER after RDN
+          count in libraries/libldap/tls2.c.
+        - CVE-2020-36230
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 02 Feb 2021 11:06:34 -0500
+  
+    openldap (2.4.49+dfsg-2ubuntu1.5) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: assertion failure in Certificate List syntax
+        validation
+        - debian/patches/CVE-2020-25709.patch: properly handle error in
+          servers/slapd/schema_init.c.
+        - CVE-2020-25709
+      * SECURITY UPDATE: assertion failure in CSN normalization with invalid
+        input
+        - debian/patches/CVE-2020-25710.patch: properly handle error in
+          servers/slapd/schema_init.c.
+        - CVE-2020-25710
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 16 Nov 2020 08:39:57 -0500
+  
+    openldap (2.4.49+dfsg-2ubuntu1.4) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: DoS via NULL pointer dereference
+        - debian/patches/CVE-2020-25692.patch: skip normalization if there's no
+          equality rule in servers/slapd/modrdn.c.
+        - CVE-2020-25692
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 04 Nov 2020 09:43:57 -0500
+  
 2020-10-09 network-manager 1.22.10-2
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
