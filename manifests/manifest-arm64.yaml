@@ -1,9 +1,9 @@
 snapcraft-version: 4.5.1
-snapcraft-started-at: '2021-02-23T07:42:26.533078Z'
+snapcraft-started-at: '2021-02-25T07:36:25.165302Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-3
+version: 1.22.10-4
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -397,7 +397,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3
-    - linux-libc-dev=5.4.0-65.73
+    - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -482,14 +482,14 @@ parts:
     - snapd=11043
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-f4udxyflmxi2paiu"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-ec0s1nqik88hdooa"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
 '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-135-generic #139-Ubuntu SMP Mon Jan 18 17:40:29 UTC 2021
+    uname: 'Linux 4.15.0-136-generic #140-Ubuntu SMP Thu Jan 28 05:23:14 UTC 2021
       aarch64 aarch64 aarch64 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -808,7 +808,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3
-    - linux-libc-dev=5.4.0-65.73
+    - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -895,8 +895,8 @@ parts:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-f4udxyflmxi2paiu/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-f4udxyflmxi2paiu"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-ec0s1nqik88hdooa/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -909,7 +909,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-135-generic #139-Ubuntu SMP Mon Jan 18 17:40:29 UTC 2021
+    uname: 'Linux 4.15.0-136-generic #140-Ubuntu SMP Thu Jan 28 05:23:14 UTC 2021
       aarch64 aarch64 aarch64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1307,7 +1307,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3
-    - linux-libc-dev=5.4.0-65.73
+    - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -1395,10 +1395,10 @@ parts:
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-f4udxyflmxi2paiu/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-ec0s1nqik88hdooa/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-f4udxyflmxi2paiu"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1408,7 +1408,7 @@ parts:
       make check
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-f4udxyflmxi2paiu"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1549,7 +1549,7 @@ parts:
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
-    uname: 'Linux 4.15.0-135-generic #139-Ubuntu SMP Mon Jan 18 17:40:29 UTC 2021
+    uname: 'Linux 4.15.0-136-generic #140-Ubuntu SMP Thu Jan 28 05:23:14 UTC 2021
       aarch64 aarch64 aarch64 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1867,7 +1867,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3
-    - linux-libc-dev=5.4.0-65.73
+    - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -1955,7 +1955,7 @@ parts:
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-135-generic #139-Ubuntu SMP Mon Jan 18 17:40:29 UTC 2021
+    uname: 'Linux 4.15.0-136-generic #140-Ubuntu SMP Thu Jan 28 05:23:14 UTC 2021
       aarch64 aarch64 aarch64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1990,7 +1990,7 @@ parts:
     source-type: git
     stage: []
     stage-packages:
-    - dnsmasq-base=2.80-1.1ubuntu1.2
+    - dnsmasq-base=2.80-1.1ubuntu1.3
     - gcc-10-base=10.2.0-5ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libaudit1=1:2.8.5-2ubuntu6
@@ -2041,12 +2041,12 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - network-manager=1.22.10-1ubuntu2.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
-    uname: 'Linux 4.15.0-135-generic #139-Ubuntu SMP Mon Jan 18 17:40:29 UTC 2021
+    uname: 'Linux 4.15.0-136-generic #140-Ubuntu SMP Thu Jan 28 05:23:14 UTC 2021
       aarch64 aarch64 aarch64 GNU/Linux'
 architectures:
 - arm64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-f4udxyflmxi2paiu/+build/1307955
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ec0s1nqik88hdooa/+build/1310784
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2220,7 +2220,7 @@ build-packages:
 build-snaps:
 - core20=907
 primed-stage-packages:
-- dnsmasq-base=2.80-1.1ubuntu1.2
+- dnsmasq-base=2.80-1.1ubuntu1.3
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
 - libbrotli1=1.0.7-6ubuntu0.1
