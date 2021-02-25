@@ -1,3 +1,23 @@
+2021-02-25 network-manager 1.22.10-4
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.80-1.1ubuntu1.2 to 2.80-1.1ubuntu1.3:
+  
+    dnsmasq (2.80-1.1ubuntu1.3) focal-security; urgency=medium
+  
+      * SECURITY REGRESSION: issue with multiple queries and issue with retries
+        (LP: #1916462)
+        - backport multiple upstream commits to fix regressions
+          + 04490bf622ac84891aad6f2dd2edf83725decdee
+          + 12af2b171de0d678d98583e2190789e544440e02
+          + 3f535da79e7a42104543ef5c7b5fa2bed819a78b
+          + 25e63f1e56f5acdcf91893a1b92ad1e0f2f552d8
+          + 141a26f979b4bc959d8e866a295e24f8cf456920
+          + 305cb79c5754d5554729b18a2c06fe7ce699687a
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 23 Feb 2021 07:58:11 -0500
+  
 2021-02-23 network-manager 1.22.10-3
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
