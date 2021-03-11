@@ -1,9 +1,9 @@
-snapcraft-version: 4.5.1
-snapcraft-started-at: '2021-02-25T07:39:12.057403Z'
+snapcraft-version: 4.5.4
+snapcraft-started-at: '2021-03-11T13:44:45.004770Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-4
+version: 1.22.10-5
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -16,6 +16,7 @@ description: |
 base: core20
 confinement: strict
 grade: stable
+epoch: 1
 slots:
   service: network-manager
 plugs:
@@ -135,8 +136,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.12.8-1
-    - git-man=1:2.25.1-1ubuntu3
-    - git=1:2.25.1-1ubuntu3
+    - git-man=1:2.25.1-1ubuntu3.1
+    - git=1:2.25.1-1ubuntu3.1
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.1
     - gpg=2.2.19-3ubuntu2.1
@@ -214,12 +215,12 @@ parts:
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.1
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.2
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
@@ -338,8 +339,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04
     - libpython2.7-stdlib=2.7.18-1~20.04
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04
-    - libpython3.8-stdlib=3.8.5-1~20.04
+    - libpython3.8-minimal=3.8.5-1~20.04.2
+    - libpython3.8-stdlib=3.8.5-1~20.04.2
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -393,7 +394,7 @@ parts:
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
-    - libzstd1=1.4.4+dfsg-3
+    - libzstd1=1.4.4+dfsg-3ubuntu0.1
     - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
@@ -410,7 +411,7 @@ parts:
     - netbase=6.1
     - nettle-dev=3.5.1+really3.5.1-2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.1
+    - openssh-client=1:8.2p1-4ubuntu0.2
     - openssl=1.1.1f-1ubuntu2.2
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04
@@ -443,8 +444,8 @@ parts:
     - python3-pygments=2.3.1+dfsg-1ubuntu2
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
-    - python3.8-minimal=3.8.5-1~20.04
-    - python3.8=3.8.5-1~20.04
+    - python3.8-minimal=3.8.5-1~20.04.2
+    - python3.8=3.8.5-1~20.04.2
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -475,11 +476,11 @@ parts:
     installed-snaps:
     - core18=1989
     - core20=906
-    - snapcraft=6049
-    - snapd=11042
+    - snapcraft=6125
+    - snapd=11118
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-ec0s1nqik88hdooa"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-tpgpw93p24xvq5pv"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
 '
     plugin: nil
@@ -543,8 +544,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.12.8-1
-    - git-man=1:2.25.1-1ubuntu3
-    - git=1:2.25.1-1ubuntu3
+    - git-man=1:2.25.1-1ubuntu3.1
+    - git=1:2.25.1-1ubuntu3.1
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.1
     - gpg=2.2.19-3ubuntu2.1
@@ -622,12 +623,12 @@ parts:
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.1
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.2
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
@@ -746,8 +747,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04
     - libpython2.7-stdlib=2.7.18-1~20.04
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04
-    - libpython3.8-stdlib=3.8.5-1~20.04
+    - libpython3.8-minimal=3.8.5-1~20.04.2
+    - libpython3.8-stdlib=3.8.5-1~20.04.2
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -801,7 +802,7 @@ parts:
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
-    - libzstd1=1.4.4+dfsg-3
+    - libzstd1=1.4.4+dfsg-3ubuntu0.1
     - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
@@ -818,7 +819,7 @@ parts:
     - netbase=6.1
     - nettle-dev=3.5.1+really3.5.1-2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.1
+    - openssh-client=1:8.2p1-4ubuntu0.2
     - openssl=1.1.1f-1ubuntu2.2
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04
@@ -851,8 +852,8 @@ parts:
     - python3-pygments=2.3.1+dfsg-1ubuntu2
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
-    - python3.8-minimal=3.8.5-1~20.04
-    - python3.8=3.8.5-1~20.04
+    - python3.8-minimal=3.8.5-1~20.04.2
+    - python3.8=3.8.5-1~20.04.2
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -883,14 +884,14 @@ parts:
     installed-snaps:
     - core18=1989
     - core20=906
-    - snapcraft=6049
-    - snapd=11042
+    - snapcraft=6125
+    - snapd=11118
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-ec0s1nqik88hdooa/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-tpgpw93p24xvq5pv/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-tpgpw93p24xvq5pv"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -1039,8 +1040,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.12.8-1
-    - git-man=1:2.25.1-1ubuntu3
-    - git=1:2.25.1-1ubuntu3
+    - git-man=1:2.25.1-1ubuntu3.1
+    - git=1:2.25.1-1ubuntu3.1
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.1
     - gpg=2.2.19-3ubuntu2.1
@@ -1118,12 +1119,12 @@ parts:
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.1
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.2
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
@@ -1242,8 +1243,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04
     - libpython2.7-stdlib=2.7.18-1~20.04
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04
-    - libpython3.8-stdlib=3.8.5-1~20.04
+    - libpython3.8-minimal=3.8.5-1~20.04.2
+    - libpython3.8-stdlib=3.8.5-1~20.04.2
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1297,7 +1298,7 @@ parts:
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
-    - libzstd1=1.4.4+dfsg-3
+    - libzstd1=1.4.4+dfsg-3ubuntu0.1
     - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
@@ -1314,7 +1315,7 @@ parts:
     - netbase=6.1
     - nettle-dev=3.5.1+really3.5.1-2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.1
+    - openssh-client=1:8.2p1-4ubuntu0.2
     - openssl=1.1.1f-1ubuntu2.2
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04
@@ -1347,8 +1348,8 @@ parts:
     - python3-pygments=2.3.1+dfsg-1ubuntu2
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
-    - python3.8-minimal=3.8.5-1~20.04
-    - python3.8=3.8.5-1~20.04
+    - python3.8-minimal=3.8.5-1~20.04.2
+    - python3.8=3.8.5-1~20.04.2
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1379,17 +1380,17 @@ parts:
     installed-snaps:
     - core18=1989
     - core20=906
-    - snapcraft=6049
-    - snapd=11042
+    - snapcraft=6125
+    - snapd=11118
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-ec0s1nqik88hdooa/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-tpgpw93p24xvq5pv/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-tpgpw93p24xvq5pv"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1399,7 +1400,7 @@ parts:
       make check
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-ec0s1nqik88hdooa"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-tpgpw93p24xvq5pv"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1596,8 +1597,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.12.8-1
-    - git-man=1:2.25.1-1ubuntu3
-    - git=1:2.25.1-1ubuntu3
+    - git-man=1:2.25.1-1ubuntu3.1
+    - git=1:2.25.1-1ubuntu3.1
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.1
     - gpg=2.2.19-3ubuntu2.1
@@ -1675,12 +1676,12 @@ parts:
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.1
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.1
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.2
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.2
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
@@ -1799,8 +1800,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04
     - libpython2.7-stdlib=2.7.18-1~20.04
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04
-    - libpython3.8-stdlib=3.8.5-1~20.04
+    - libpython3.8-minimal=3.8.5-1~20.04.2
+    - libpython3.8-stdlib=3.8.5-1~20.04.2
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1854,7 +1855,7 @@ parts:
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
-    - libzstd1=1.4.4+dfsg-3
+    - libzstd1=1.4.4+dfsg-3ubuntu0.1
     - linux-libc-dev=5.4.0-66.74
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
@@ -1871,7 +1872,7 @@ parts:
     - netbase=6.1
     - nettle-dev=3.5.1+really3.5.1-2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.1
+    - openssh-client=1:8.2p1-4ubuntu0.2
     - openssl=1.1.1f-1ubuntu2.2
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04
@@ -1904,8 +1905,8 @@ parts:
     - python3-pygments=2.3.1+dfsg-1ubuntu2
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
-    - python3.8-minimal=3.8.5-1~20.04
-    - python3.8=3.8.5-1~20.04
+    - python3.8-minimal=3.8.5-1~20.04.2
+    - python3.8=3.8.5-1~20.04.2
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1936,8 +1937,8 @@ parts:
     installed-snaps:
     - core18=1989
     - core20=906
-    - snapcraft=6049
-    - snapd=11042
+    - snapcraft=6125
+    - snapd=11118
     plugin: dump
     prime: []
     source: snap-common
@@ -1953,8 +1954,8 @@ parts:
     installed-snaps:
     - core18=1989
     - core20=906
-    - snapcraft=6049
-    - snapd=11042
+    - snapcraft=6125
+    - snapd=11118
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2034,7 +2035,7 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ec0s1nqik88hdooa/+build/1310783
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-tpgpw93p24xvq5pv/+build/1329799
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2072,12 +2073,12 @@ build-packages:
 - libfile-listing-perl=6.04-1
 - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
 - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-- libglib2.0-0=2.64.6-1~ubuntu20.04.1
-- libglib2.0-bin=2.64.6-1~ubuntu20.04.1
-- libglib2.0-data=2.64.6-1~ubuntu20.04.1
-- libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.1
-- libglib2.0-dev=2.64.6-1~ubuntu20.04.1
-- libglib2.0-doc=2.64.6-1~ubuntu20.04.1
+- libglib2.0-0=2.64.6-1~ubuntu20.04.2
+- libglib2.0-bin=2.64.6-1~ubuntu20.04.2
+- libglib2.0-data=2.64.6-1~ubuntu20.04.2
+- libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.2
+- libglib2.0-dev=2.64.6-1~ubuntu20.04.2
+- libglib2.0-doc=2.64.6-1~ubuntu20.04.2
 - libgmp-dev=2:6.2.0+dfsg-4
 - libgmpxx4ldbl=2:6.2.0+dfsg-4
 - libgnutls-dane0=3.6.13-2ubuntu1.3
