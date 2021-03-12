@@ -1,13 +1,5 @@
 #!/bin/bash
 
-snap_connect_ifaces() {
-    snap connect network-manager:firewall-control :firewall-control
-    snap connect network-manager:network :network    
-    snap connect network-manager:network-setup-observe :network-setup-observe
-    snap connect network-manager:ppp :ppp
-    snap connect network-manager:nmcli network-manager:service    
-}
-
 snap_install() {
 	name=$1
 	if [ -n "$SNAP_CHANNEL" ] ; then
@@ -16,8 +8,11 @@ snap_install() {
 			snap install --$SNAP_CHANNEL $name
 		fi
 	else
+		# Need first install from store to get all necessary assertions into
+		# place. Second local install will then bring in our locally built
+		# snap.
+		snap install $name $2
 		snap install --dangerous $PROJECT_PATH/$name*_amd64.snap
-		snap_connect_ifaces
 	fi
 }
 
