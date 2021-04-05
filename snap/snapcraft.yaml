@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.10.6-10-dev
+version: 1.10.6-10
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
