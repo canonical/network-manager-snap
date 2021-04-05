@@ -1,3 +1,120 @@
+2021-04-05 network-manager 1.10.6-10
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Update dnsmasq to applied/2.79-1ubuntu0.3
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/400597
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.10 to 7.58.0-2ubuntu3.13:
+  
+    curl (7.58.0-2ubuntu3.13) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: data leak via referer header field
+        - debian/patches/urlapi.patch: backport url api support in
+          include/curl/Makefile.am, include/curl/curl.h, include/curl/urlapi.h,
+          lib/Makefile.inc, lib/urlapi-int.h, lib/urlapi.c,
+          lib/curl_setup_once.h, lib/url.c, lib/url.h, lib/escape.c,
+          lib/escape.h, docs/libcurl/symbols-in-versions.
+        - debian/libcurl*.symbols: added new symbols.
+        - debian/patches/CVE-2021-22876.patch: strip credentials from the
+          auto-referer header field in lib/transfer.c.
+        - CVE-2021-22876
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 23 Mar 2021 09:13:58 -0400
+  
+    curl (7.58.0-2ubuntu3.12) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: FTP redirect to malicious host via PASV response
+        - debian/patches/CVE-2020-8284.patch: use CURLOPT_FTP_SKIP_PASV_IP by
+          default in lib/url.c, src/tool_cfgable.c, docs/*, tests/data/*.
+        - CVE-2020-8284
+      * SECURITY UPDATE: FTP wildcard stack buffer overflow in libcurl
+        - debian/patches/CVE-2020-8285.patch: make wc_statemach loop instead of
+          recurse in lib/ftp.c.
+        - CVE-2020-8285
+      * SECURITY UPDATE: Inferior OCSP verification
+        - debian/patches/CVE-2020-8286.patch: make the OCSP verification verify
+          the certificate id in lib/vtls/openssl.c.
+        - CVE-2020-8286
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 01 Dec 2020 13:01:10 -0500
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27~101-g0780600+dfsg-3ubuntu2.1 to 2.1.27~101-g0780600+dfsg-3ubuntu2.3:
+  
+    cyrus-sasl2 (2.1.27~101-g0780600+dfsg-3ubuntu2.3) bionic; urgency=medium
+  
+      * d/p/lp-1906627-01-Fix-GSS-SPNEGO-mechanism-s-incompatible-behavior.patch:
+        d/p/lp-1906627-02-Drop-unused-parameter-from-gssapi_spnego_ssf.patch:
+        - Fix GSS-SPNEGO implementation to be inter-operable with Microsoft
+          Active Directory, fixing the source of the recent adcli regression.
+          (LP: #1906627)
+  
+     -- Matthew Ruffell <matthew.ruffell@canonical.com>  Mon, 07 Dec 2020 10:54:47 +1300
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.45+dfsg-1ubuntu1.8 to 2.4.45+dfsg-1ubuntu1.10:
+  
+    openldap (2.4.45+dfsg-1ubuntu1.10) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: DoS via malicious packet
+        - debian/patches/CVE-2021-27212.patch: fix issuerAndThisUpdateCheck in
+          servers/slapd/schema_init.c.
+        - CVE-2021-27212
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 18 Feb 2021 09:22:42 -0500
+  
+    openldap (2.4.45+dfsg-1ubuntu1.9) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: integer underflow in Certificate Exact Assertion
+        processing
+        - debian/patches/CVE-2020-36221-1.patch: fix serialNumberAndIssuerCheck
+          in servers/slapd/schema_init.c.
+        - debian/patches/CVE-2020-36221-2.patch: fix serialNumberAndIssuerCheck
+          in servers/slapd/schema_init.c.
+        - CVE-2020-36221
+      * SECURITY UPDATE: assert failure in saslAuthzTo validation
+        - debian/patches/CVE-2020-36222-1.patch: remove saslauthz asserts in
+          servers/slapd/saslauthz.c.
+        - debian/patches/CVE-2020-36222-2.patch: fix debug msg in
+          servers/slapd/saslauthz.c.
+        - CVE-2020-36222
+      * SECURITY UPDATE: crash in Values Return Filter control handling
+        - debian/patches/CVE-2020-36223.patch: fix vrfilter double-free in
+          servers/slapd/controls.c.
+        - CVE-2020-36223
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36224-1.patch: use ch_free on normalized DN
+          in servers/slapd/saslauthz.c.
+        - debian/patches/CVE-2020-36224-2.patch: use slap_sl_free in prev
+          commit in servers/slapd/saslauthz.c.
+        - CVE-2020-36224
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36225.patch: fix AVA_Sort on invalid RDN in
+          servers/slapd/dn.c.
+        - CVE-2020-36225
+      * SECURITY UPDATE: DoS in saslAuthzTo processing
+        - debian/patches/CVE-2020-36226.patch: fix slap_parse_user in
+          servers/slapd/saslauthz.c.
+        - CVE-2020-36226
+      * SECURITY UPDATE: infinite loop in cancel_extop Cancel operation
+        - debian/patches/CVE-2020-36227.patch: fix cancel exop in
+          servers/slapd/cancel.c.
+        - CVE-2020-36227
+      * SECURITY UPDATE: DoS in Certificate List Exact Assertion processing
+        - debian/patches/CVE-2020-36228.patch: fix issuerAndThisUpdateCheck in
+          servers/slapd/schema_init.c.
+        - CVE-2020-36228
+      * SECURITY UPDATE: DoS in X.509 DN parsing in ad_keystring
+        - debian/patches/CVE-2020-36229.patch: add more checks to
+          ldap_X509dn2bv in libraries/libldap/tls2.c.
+        - CVE-2020-36229
+      * SECURITY UPDATE: DoS in X.509 DN parsing in ber_next_element
+        - debian/patches/CVE-2020-36230.patch: check for invalid BER after RDN
+          count in libraries/libldap/tls2.c.
+        - CVE-2020-36230
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 02 Feb 2021 11:08:14 -0500
+  
 2020-11-25 network-manager 1.10.6-9
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
