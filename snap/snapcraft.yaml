@@ -23,6 +23,15 @@ grade: stable
 # will be adjusted accordingly.
 epoch: 1
 
+# Some packages might land in the ubuntu-image PPA for making their way
+# into a Ubuntu Core base image and only later land in a LTS release.
+# This is especially the case with netplan.io v0.102
+# Enable ubuntu-image PPA once the --enable-experimental-package-repositories
+# flag is not needed anymore
+# package-repositories:
+#   - type: apt
+#     ppa: canonical-foundations/ubuntu-image
+
 slots:
   service: network-manager
 
@@ -181,6 +190,7 @@ parts:
       - libnss3-dev
       - libnetplan-dev
       - libyaml-dev
+      - software-properties-common # Can be removed once "package-repositories:" is working
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
@@ -235,6 +245,10 @@ parts:
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
       git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
+      # Upgrade netplan.io to v0.102, can be removed once LP: #1922898 is
+      # resolved and 0.102 is available from focal-updates
+      add-apt-repository -y ppa:canonical-foundations/ubuntu-image
+      apt-get -y install netplan.io
 
       # re-create configure
       ./autogen.sh
