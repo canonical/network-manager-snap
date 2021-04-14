@@ -279,6 +279,9 @@ parts:
       ./autogen.sh
       snapcraftctl build
 
+      # Simulate vendorized netplan generator binary to pass tests
+      mkdir -p /snap/network-manager/current/lib/netplan
+      ln -sf /lib/netplan/generate /snap/network-manager/current/lib/netplan/generate
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
