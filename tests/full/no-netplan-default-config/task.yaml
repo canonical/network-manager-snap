@@ -36,10 +36,7 @@ execute: |
             connection=$(/snap/bin/network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
             /snap/bin/network-manager.nmcli c modify $connection 802-3-ethernet.wake-on-lan magic
             wol_value=$(/snap/bin/network-manager.nmcli -f 802-3-ethernet.wake-on-lan c show $connection | xargs | cut -d':' -f 2)
-            # TODO netplan plugin does not support options for WOL, so this is
-            # " default" instead of " magic". Change when we have the new netplan
-            # plugin that supports fallthrough to keyfiles.
-            test "$wol_value" = " default"
+            test "$wol_value" = " magic"
             ;;
         *)
             ;;
