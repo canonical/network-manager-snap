@@ -146,6 +146,31 @@ parts:
     prime:
       - $binaries
 
+  netplan:
+    after: [ stack-snaps-tools ]
+    plugin: make
+    source: https://git.launchpad.net/ubuntu/+source/netplan.io
+    source-type: git
+    # can be switched to focal-updates once 0.102 is fully SRUed:
+    # https://bugs.launchpad.net/ubuntu/+source/netplan.io/+bug/1919453
+    source-branch: applied/ubuntu/focal-proposed
+    build-packages:
+      - build-essential
+      - libyaml-dev
+      - libglib2.0-dev
+      - uuid-dev
+      - libsystemd-dev
+      - pandoc
+    override-build: |
+      set -ex
+      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/netplan.patch
+      snapcraftctl build
+    filesets:
+      binaries:
+        - lib/netplan/generate
+    prime:
+      - $binaries
+
   networkmanager:
     after: [ stack-snaps-tools ]
     plugin: autotools
