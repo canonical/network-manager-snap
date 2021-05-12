@@ -1,8 +1,32 @@
-From 6325361b73de14817e3d0835b9190c4eeecef472 Mon Sep 17 00:00:00 2001
+From eeab09747ca4089fa63b700ff5c4bf8bb2c07a40 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 2 Feb 2021 15:52:05 +0100
 Subject: [PATCH] netplan: make use of libnetplan for YAML backend
 
+This patch modifies NetworkManager's nms-keyfile-plugin in a way to
+write YAML connections (according to the netplan spec) to
+/etc/netplan/*.yaml instead of NM's native keyfile connection profiles
+in /etc/NetworkManager/system-connections/*.nmconnection.
+
+Whenever a connection profile is to be written (add/modify) the keyfile,
+generated internally by NM, is passed into libnetplan's
+"netplan_parse_keyfile()" API, validated via "netplan_finish_parse()"
+and converted to a netplan YAML config by calling libnetplan's
+"write_netplan_conf()" API. The internal keyfile is thrown away
+afterwards.
+
+Whenever a connection profile is to be deleted the netplan-/netdef-id is
+extracted from the emphemeral keyfile in
+/run/NetworkManager/system-connections via
+"netplan_get_id_from_nm_filename()" and the corresponding YAML is
+updated/deleted by calling "netplan_delete_connection()".
+
+Each time the YAML data was modified, NetworkManager calls
+"netplan_generate()" to produce new emphemeral keyfile connections in
+/run/NetworkManager/system-connections for NM to read-back. This way the
+netplan generator can be used as intended (no need for duplicated
+keyfile export functionality) and the nms-keyfile-writer can be re-used
+without any patching needed.
 ---
  Makefile.am                                   |   5 +-
  meson.build                                   |   3 +
@@ -123,7 +147,7 @@ index fdb88d2a6d6218460fe191d7bc5be08b492886f5..548eda536354c9aa3a305540038bf4a0
  	       previous_filename,
  	       storage->is_meta_data ? "meta-data" : "profile",
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-utils.c b/src/settings/plugins/keyfile/nms-keyfile-utils.c
-index f03c601a56a6548c947f1b7cc6d4cd6b441e5b1d..f58dd4262b1125fc6669ba6033bce311908d0a22 100644
+index f03c601a56a6548c947f1b7cc6d4cd6b441e5b1d..44edabd37599187ee00da2dfea4c3a09fcb2cb9d 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-utils.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-utils.c
 @@ -9,6 +9,7 @@
@@ -138,10 +162,10 @@ index f03c601a56a6548c947f1b7cc6d4cd6b441e5b1d..f58dd4262b1125fc6669ba6033bce311
  
  /*****************************************************************************/
  
++/* This function can be removed, once https://pad.lv/1927350 is resolved */
 +gboolean
 +_fix_netplan_interface_name(const char* rootdir)
 +{
-+	/* This quirk can be removed, once https://pad.lv/1927350 is resolved */
 +	glob_t gl;
 +	mode_t orig_umask;
 +	int rc;
@@ -195,7 +219,7 @@ index f943d65ca6834efd2bc243397d122243d906712e..f9c29899990ffd70ca4aba50f42284fa
                                                 guint *out_uuid_len);
  
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-writer.c b/src/settings/plugins/keyfile/nms-keyfile-writer.c
-index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..1ff26303281709e1f739ce385ff5a31e89beab73 100644
+index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..d8b3ffd9251d5548eececfec68dddc2088cdf10c 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-writer.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-writer.c
 @@ -11,6 +11,10 @@
@@ -365,7 +389,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..1ff26303281709e1f739ce385ff5a31e
  {
 +	gchar *rootdir = g_strdup(keyfile_dir);
 +	if (g_str_has_suffix (keyfile_dir, "/run/NetworkManager/system-connections")) {
-+		rootdir[strlen(rootdir)-38] = '\0';
++		rootdir[strlen(rootdir)-38] = '\0'; /* 38 = strlen("/run/NetworkManager/...") */
 +	}
  	return _internal_write_connection (connection,
  	                                   FALSE,
