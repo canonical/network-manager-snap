@@ -1,4 +1,4 @@
-From eeab09747ca4089fa63b700ff5c4bf8bb2c07a40 Mon Sep 17 00:00:00 2001
+From 62f8a34fa65d3737d258e6bb0f106828f5b6a658 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 2 Feb 2021 15:52:05 +0100
 Subject: [PATCH] netplan: make use of libnetplan for YAML backend
@@ -16,13 +16,13 @@ and converted to a netplan YAML config by calling libnetplan's
 afterwards.
 
 Whenever a connection profile is to be deleted the netplan-/netdef-id is
-extracted from the emphemeral keyfile in
+extracted from the ephemeral keyfile in
 /run/NetworkManager/system-connections via
 "netplan_get_id_from_nm_filename()" and the corresponding YAML is
 updated/deleted by calling "netplan_delete_connection()".
 
 Each time the YAML data was modified, NetworkManager calls
-"netplan_generate()" to produce new emphemeral keyfile connections in
+"netplan_generate()" to produce new ephemeral keyfile connections in
 /run/NetworkManager/system-connections for NM to read-back. This way the
 netplan generator can be used as intended (no need for duplicated
 keyfile export functionality) and the nms-keyfile-writer can be re-used
