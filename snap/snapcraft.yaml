@@ -25,7 +25,6 @@ epoch: 1
 
 # Some packages might land in the ubuntu-image PPA for making their way
 # into a Ubuntu Core base image and only later land in a LTS release.
-# This is especially the case with netplan.io v0.102
 # Enable ubuntu-image PPA once the --enable-experimental-package-repositories
 # flag is not needed anymore
 # package-repositories:
@@ -151,9 +150,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/netplan.io
     source-type: git
-    # can be switched to focal-updates once 0.102 is fully SRUed:
-    # https://bugs.launchpad.net/ubuntu/+source/netplan.io/+bug/1919453
-    source-branch: applied/ubuntu/focal-proposed
+    source-branch: applied/ubuntu/focal-updates
     build-packages:
       - build-essential
       - libyaml-dev
@@ -270,10 +267,6 @@ parts:
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
       git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
-      # Upgrade netplan.io to v0.102, can be removed once LP: #1922898 is
-      # resolved and 0.102 is available from focal-updates
-      add-apt-repository -y ppa:canonical-foundations/ubuntu-image
-      apt-get -y install netplan.io
 
       # re-create configure
       ./autogen.sh
