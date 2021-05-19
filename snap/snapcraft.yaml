@@ -211,6 +211,7 @@ parts:
       - gtk-doc-tools
       - libnss3-dev
       - libnetplan-dev
+      - netplan.io
       - libyaml-dev
       - software-properties-common # Can be removed once "package-repositories:" is working
     autotools-configure-parameters:
