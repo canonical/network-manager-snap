@@ -36,7 +36,7 @@ tar czf "$SPREAD_PATH"/nm-state.tar.gz /var/snap/network-manager /etc/netplan
 sleep 2
 # Make sure the original netplan configuration is applied and active
 # (we do this before re-starting NM to avoid race conditions in some tests)
-netplan apply
+netplan generate
 # Remove ipv6 addresses (see LP:#1870561)
 ip -6 address flush dev "$eth_if"
 systemctl start snap.network-manager.networkmanager

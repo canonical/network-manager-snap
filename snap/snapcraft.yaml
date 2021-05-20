@@ -23,6 +23,14 @@ grade: stable
 # will be adjusted accordingly.
 epoch: 1
 
+# Some packages might land in the ubuntu-image PPA for making their way
+# into a Ubuntu Core base image and only later land in a LTS release.
+# Enable ubuntu-image PPA once the --enable-experimental-package-repositories
+# flag is not needed anymore
+# package-repositories:
+#   - type: apt
+#     ppa: canonical-foundations/ubuntu-image
+
 slots:
   service: network-manager
 
@@ -137,6 +145,29 @@ parts:
     prime:
       - $binaries
 
+  netplan:
+    after: [ stack-snaps-tools ]
+    plugin: make
+    source: https://git.launchpad.net/ubuntu/+source/netplan.io
+    source-type: git
+    source-branch: applied/ubuntu/focal-updates
+    build-packages:
+      - build-essential
+      - libyaml-dev
+      - libglib2.0-dev
+      - uuid-dev
+      - libsystemd-dev
+      - pandoc
+    override-build: |
+      set -ex
+      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/netplan.patch
+      snapcraftctl build
+    filesets:
+      binaries:
+        - lib/netplan/generate
+    prime:
+      - $binaries
+
   networkmanager:
     after: [ stack-snaps-tools ]
     plugin: autotools
@@ -180,7 +211,9 @@ parts:
       - gtk-doc-tools
       - libnss3-dev
       - libnetplan-dev
+      - netplan.io
       - libyaml-dev
+      - software-properties-common # Can be removed once "package-repositories:" is working
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
@@ -216,8 +249,6 @@ parts:
       - --disable-polkit-agent
       - --enable-ppp
       - --enable-ifupdown
-      # Enable building of netplan plugin, introduced via nm-netplan.patch
-      - --enable-netplan
       - --enable-introspection
       - --disable-gtk-doc
       - --enable-concheck
@@ -229,8 +260,8 @@ parts:
       - --without-nm-cloud-setup
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
-    # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/netplan-on-1.22.10
-    # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan.patch -- !(.gitignore)
+    # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
+    # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
       set -ex
       "$SNAPCRAFT_STAGE"/build-tools/check-versions network-manager yes
@@ -242,6 +273,9 @@ parts:
       ./autogen.sh
       snapcraftctl build
 
+      # Simulate vendorized netplan generator binary to pass tests
+      mkdir -p /snap/network-manager/current/lib/netplan
+      ln -sf /lib/netplan/generate /snap/network-manager/current/lib/netplan/generate
       # Run all tests NetworkManager ships by default
       make check
     stage-packages:
