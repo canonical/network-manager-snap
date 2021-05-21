@@ -1,3 +1,13 @@
+2021-05-21 network-manager 1.22.10-7
+
+  [ Lukas Märdian <lukas.maerdian@canonical.com> ]
+  * None
+    Merge-Proposal: https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/400398
+
+  [ Changes in primed packages ]
+  
+  No changes for primed packages
+  
 2021-05-06 network-manager 1.22.10-6
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
