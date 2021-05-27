@@ -1,4 +1,4 @@
-From 62f8a34fa65d3737d258e6bb0f106828f5b6a658 Mon Sep 17 00:00:00 2001
+From e5d3bc03eb28ee09351f947670b3b6608786491e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <lukas.maerdian@canonical.com>
 Date: Tue, 2 Feb 2021 15:52:05 +0100
 Subject: [PATCH] netplan: make use of libnetplan for YAML backend
@@ -28,15 +28,15 @@ netplan generator can be used as intended (no need for duplicated
 keyfile export functionality) and the nms-keyfile-writer can be re-used
 without any patching needed.
 ---
- Makefile.am                                   |   5 +-
- meson.build                                   |   3 +
- src/meson.build                               |   2 +
- .../plugins/keyfile/nms-keyfile-plugin.c      |  19 +++
- .../plugins/keyfile/nms-keyfile-utils.c       |  41 ++++++
- .../plugins/keyfile/nms-keyfile-utils.h       |   2 +
- .../plugins/keyfile/nms-keyfile-writer.c      | 124 ++++++++++++++----
- .../keyfile/tests/test-keyfile-settings.c     |  45 +++++--
- 8 files changed, 203 insertions(+), 38 deletions(-)
+ Makefile.am                                   |  5 +-
+ meson.build                                   |  3 +
+ src/meson.build                               |  2 +
+ .../plugins/keyfile/nms-keyfile-plugin.c      | 19 ++++
+ .../plugins/keyfile/nms-keyfile-utils.c       | 41 ++++++++
+ .../plugins/keyfile/nms-keyfile-utils.h       |  2 +
+ .../plugins/keyfile/nms-keyfile-writer.c      | 97 +++++++++++++++++++
+ .../keyfile/tests/test-keyfile-settings.c     | 45 +++++++--
+ 8 files changed, 205 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
 index b37aa4e712311cb23a675af70ec1287fcd3d63f5..2e4e146412de6102068bb953c38cb8091e7f010a 100644
@@ -219,7 +219,7 @@ index f943d65ca6834efd2bc243397d122243d906712e..f9c29899990ffd70ca4aba50f42284fa
                                                 guint *out_uuid_len);
  
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-writer.c b/src/settings/plugins/keyfile/nms-keyfile-writer.c
-index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..d8b3ffd9251d5548eececfec68dddc2088cdf10c 100644
+index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..fb1c0437a45ac0eae9a9fbb6d140abf7ad49bb00 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-writer.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-writer.c
 @@ -11,6 +11,10 @@
@@ -241,141 +241,100 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..d8b3ffd9251d5548eececfec68dddc20
                              GError **error)
  {
  	gs_unref_keyfile GKeyFile *kf_file = NULL;
-@@ -205,6 +210,7 @@ _internal_write_connection (NMConnection *connection,
- 	         || existing_path_read_only
- 	         || (   existing_path
- 	             && !nm_utils_file_is_in_path (existing_path, keyfile_dir));
-+	rename = FALSE; //netplan chooses a (YAML) name automatically
- 
- 	id = nm_connection_get_id (connection);
- 	nm_assert (id && *id);
-@@ -305,35 +311,6 @@ _internal_write_connection (NMConnection *connection,
- 		return FALSE;
- 	}
- 
--	if (   out_reread
--	    || out_reread_same) {
--		gs_free_error GError *reread_error = NULL;
--
--		reread = nms_keyfile_reader_from_keyfile (kf_file, path, NULL, profile_dir, FALSE, &reread_error);
--
--		if (   !reread
--		    || !nm_connection_normalize (reread, NULL, NULL, &reread_error)) {
--			nm_log_err (LOGD_SETTINGS, "BUG: the profile cannot be stored in keyfile format without becoming unusable: %s", reread_error->message);
--			g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
--			             "keyfile writer produces an invalid connection: %s",
--			             reread_error->message);
--			nm_assert_not_reached ();
--			return FALSE;
--		}
--
--		if (out_reread_same) {
--			reread_same = !!nm_connection_compare (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT);
--
--			nm_assert (reread_same == nm_connection_compare (connection, reread, NM_SETTING_COMPARE_FLAG_EXACT));
--			nm_assert (reread_same == ({
--			                                gs_unref_hashtable GHashTable *_settings = NULL;
--
--			                                (   nm_connection_diff (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT, &_settings)
--			                                 && !_settings);
--			                           }));
--		}
--	}
--
- 	nm_utils_file_set_contents (path,
- 	                            kf_content_buf,
- 	                            kf_content_len,
-@@ -364,6 +341,89 @@ _internal_write_connection (NMConnection *connection,
+@@ -364,6 +369,92 @@ _internal_write_connection (NMConnection *connection,
  	    && !nm_streq (path, existing_path))
  		unlink (existing_path);
  
-+	/* NETPLAN */
-+	g_autofree gchar* ssid = g_key_file_get_string(kf_file, "wifi", "ssid", NULL);
-+	g_autofree gchar* escaped_ssid = ssid ?
-+	                                 g_uri_escape_string(ssid, NULL, TRUE) : NULL;
-+	g_autofree gchar* netplan_id = existing_path ?
-+	                               netplan_get_id_from_nm_filename(existing_path, ssid) : NULL;
-+	netplan_clear_netdefs();
-+	if (!netplan_parse_keyfile(path, &local_err)) { // push keyfile into libnetplan for parsing
-+		g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
-+		                    "netplan: YAML translation failed");
-+		return FALSE;
-+	}
-+	gpointer netdef_id, netplan_connection;
-+	GHashTableIter iter;
-+	GHashTable* netdefs = netplan_finish_parse(&local_err); // get map of netdefs, contains only one connection here
-+	g_hash_table_iter_init (&iter, netdefs);
-+	g_hash_table_iter_next (&iter, &netdef_id, &netplan_connection); // get first (and only) netdef from map
-+	write_netplan_conf(netplan_connection, rootdir); // write netdef to YAML
-+	netplan_clear_netdefs();
-+
-+	/* Delete same connection-profile provided by legacy netplan plugin */
-+	g_autofree gchar* legacy_path = NULL;
-+	legacy_path = g_strdup_printf("/etc/netplan/NM-%s.yaml", nm_connection_get_uuid (connection));
-+	if (g_file_test(legacy_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)) {
-+		g_debug("Deleting legacy netplan connection: %s", legacy_path);
-+		unlink(legacy_path);
-+	}
-+
-+	/* Clear original keyfile in /etc/NetworkManager/system-connections/,
-+	 * we've written the /etc/netplan/*.yaml file instead. */
-+	unlink(path);
-+	g_free(path);
-+	if (!netplan_generate(rootdir)) {
-+		g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
-+		                    "netplan generate failed");
-+		return FALSE;
-+	}
-+	_fix_netplan_interface_name(rootdir);
-+	//XXX: path should be provided by netplan eventually
-+	if (existing_path) {
-+		// This is an update of an existing connection
-+		path = g_strdup(existing_path);
-+	} else {
-+		// This will add a new connection
-+		if (escaped_ssid)
-+			path = g_strdup_printf("%s/run/NetworkManager/system-connections/netplan-NM-%s-%s.nmconnection",
-+								rootdir ?: "", nm_connection_get_uuid (connection), escaped_ssid);
-+		else
-+			path = g_strdup_printf("%s/run/NetworkManager/system-connections/netplan-NM-%s.nmconnection",
-+								rootdir ?: "", nm_connection_get_uuid (connection));
-+	}
-+
-+	if (   out_reread
-+	    || out_reread_same) {
-+		gs_free_error GError *reread_error = NULL;
-+
-+		//XXX: why does the _from_keyfile function behave differently?
-+		//reread = nms_keyfile_reader_from_keyfile (kf_file, path, NULL, profile_dir, FALSE, &reread_error);
-+		reread = nms_keyfile_reader_from_file (path, profile_dir, NULL, NULL, NULL, NULL, NULL, &reread_error);
-+
-+		if (   !reread
-+		    || !nm_connection_normalize (reread, NULL, NULL, &reread_error)) {
-+			nm_log_err (LOGD_SETTINGS, "BUG: the profile cannot be stored in keyfile format without becoming unusable: %s", reread_error->message);
++	/* NETPLAN: write only non-volatile files to /etc/netplan/... */
++	if (!is_volatile) {
++		g_autofree gchar* ssid = g_key_file_get_string(kf_file, "wifi", "ssid", NULL);
++		g_autofree gchar* escaped_ssid = ssid ?
++		                                 g_uri_escape_string(ssid, NULL, TRUE) : NULL;
++		g_autofree gchar* netplan_id = (existing_path && strstr(existing_path, "system-connections/netplan-")) ?
++		                               netplan_get_id_from_nm_filename(existing_path, ssid) : NULL;
++		netplan_clear_netdefs();
++		if (!netplan_parse_keyfile(path, &local_err)) { // push keyfile into libnetplan for parsing
 +			g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
-+			             "keyfile writer produces an invalid connection: %s",
-+			             reread_error->message);
-+			nm_assert_not_reached ();
++			             "netplan: YAML translation failed");
 +			return FALSE;
 +		}
++		gpointer netdef_id, netplan_connection;
++		GHashTableIter iter;
++		GHashTable* netdefs = netplan_finish_parse(&local_err); // get map of netdefs, contains only one connection here
++		g_hash_table_iter_init (&iter, netdefs);
++		g_hash_table_iter_next (&iter, &netdef_id, &netplan_connection); // get first (and only) netdef from map
++		write_netplan_conf(netplan_connection, rootdir); // write netdef to YAML
++		netplan_clear_netdefs();
 +
-+		if (out_reread_same) {
-+			reread_same = !!nm_connection_compare (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT);
++		/* Delete same connection-profile provided by legacy netplan plugin */
++		g_autofree gchar* legacy_path = NULL;
++		legacy_path = g_strdup_printf("/etc/netplan/NM-%s.yaml", nm_connection_get_uuid (connection));
++		if (g_file_test(legacy_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)) {
++			g_debug("Deleting legacy netplan connection: %s", legacy_path);
++			unlink(legacy_path);
++		}
 +
-+			nm_assert (reread_same == nm_connection_compare (connection, reread, NM_SETTING_COMPARE_FLAG_EXACT));
-+			nm_assert (reread_same == ({
-+			                                gs_unref_hashtable GHashTable *_settings = NULL;
++		/* Clear original keyfile in /etc/NetworkManager/system-connections/,
++		 * we've written the /etc/netplan/*.yaml file instead. */
++		unlink(path);
++		g_free(path);
++		if (!netplan_generate(rootdir)) {
++			g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
++			             "netplan generate failed");
++			return FALSE;
++		}
++		_fix_netplan_interface_name(rootdir);
++		//XXX: path should be provided by netplan eventually
++		if (existing_path) {
++			// This is an update of an existing connection
++			path = g_strdup(existing_path);
++		} else {
++			// This will add a new connection
++			if (escaped_ssid)
++				path = g_strdup_printf("%s/run/NetworkManager/system-connections/netplan-NM-%s-%s.nmconnection",
++				                       rootdir ?: "", nm_connection_get_uuid (connection), escaped_ssid);
++			else
++				path = g_strdup_printf("%s/run/NetworkManager/system-connections/netplan-NM-%s.nmconnection",
++				                       rootdir ?: "", nm_connection_get_uuid (connection));
++		}
 +
-+			                                (   nm_connection_diff (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT, &_settings)
-+			                                 && !_settings);
-+			                           }));
++		/* re-read again: this time the connection profile newly generated by netplan in /run/... */
++		if (   out_reread
++			|| out_reread_same) {
++			gs_free_error GError *reread_error = NULL;
++
++			//XXX: why does the _from_keyfile function behave differently?
++			//reread = nms_keyfile_reader_from_keyfile (kf_file, path, NULL, profile_dir, FALSE, &reread_error);
++			reread = nms_keyfile_reader_from_file (path, profile_dir, NULL, NULL, NULL, NULL, NULL, &reread_error);
++
++			if (   !reread
++				|| !nm_connection_normalize (reread, NULL, NULL, &reread_error)) {
++				nm_log_err (LOGD_SETTINGS, "BUG: the profile cannot be stored in keyfile format without becoming unusable: %s", reread_error->message);
++				g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
++				             "keyfile writer produces an invalid connection: %s",
++				             reread_error->message);
++				nm_assert_not_reached ();
++				return FALSE;
++			}
++
++			if (out_reread_same) {
++				reread_same = !!nm_connection_compare (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT);
++
++				nm_assert (reread_same == nm_connection_compare (connection, reread, NM_SETTING_COMPARE_FLAG_EXACT));
++				nm_assert (reread_same == ({
++				                                gs_unref_hashtable GHashTable *_settings = NULL;
++
++				                                (   nm_connection_diff (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT, &_settings)
++				                                 && !_settings);
++				                           }));
++			}
 +		}
 +	}
 +
  	NM_SET_OUT (out_reread, g_steal_pointer (&reread));
  	NM_SET_OUT (out_reread_same, reread_same);
  	NM_SET_OUT (out_path, g_steal_pointer (&path));
-@@ -407,6 +467,7 @@ nms_keyfile_writer_connection (NMConnection *connection,
+@@ -407,6 +498,7 @@ nms_keyfile_writer_connection (NMConnection *connection,
  	                                   out_path,
  	                                   out_reread,
  	                                   out_reread_same,
@@ -383,7 +342,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..d8b3ffd9251d5548eececfec68dddc20
  	                                   error);
  }
  
-@@ -420,6 +481,10 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
+@@ -420,6 +512,10 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
                                      gboolean *out_reread_same,
                                      GError **error)
  {
@@ -394,7 +353,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..d8b3ffd9251d5548eececfec68dddc20
  	return _internal_write_connection (connection,
  	                                   FALSE,
  	                                   FALSE,
-@@ -438,5 +503,6 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
+@@ -438,5 +534,6 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
  	                                   out_path,
  	                                   out_reread,
  	                                   out_reread_same,
