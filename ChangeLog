@@ -1,3 +1,22 @@
+2021-06-07 network-manager 1.22.10-8
+
+  [ Lukas Märdian <lukas.maerdian@canonical.com> ]
+  * Refactor/cleanup the NM patch a bit, making it easier to merge with upstream changes.
+    Additionally, avoid creating new netplan YAML config in /etc/netplan/ for ".nmmeta.volatile=true" connection profile.
+    Merge-Proposal: https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/403276
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.80-1.1ubuntu1.3 to 2.80-1.1ubuntu1.4:
+  
+    dnsmasq (2.80-1.1ubuntu1.4) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: fixed port use when specific server is requested
+        - 74d4fcd756a85bc1823232ea74334f7ccfb9d5d2
+        - CVE-2021-3448
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 06 May 2021 12:34:24 -0400
+  
 2021-05-21 network-manager 1.22.10-7
 
   [ Lukas Märdian <lukas.maerdian@canonical.com> ]
