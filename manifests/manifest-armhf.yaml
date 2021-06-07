@@ -1,9 +1,9 @@
-snapcraft-version: 4.7.1
-snapcraft-started-at: '2021-05-21T15:16:11.497252Z'
+snapcraft-version: '4.8'
+snapcraft-started-at: '2021-06-07T08:51:09.525315Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-7
+version: 1.22.10-8
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -286,7 +286,7 @@ parts:
     - liblockfile1=1.16-1.1
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
-    - liblz4-1=1.9.2-2
+    - liblz4-1=1.9.2-2ubuntu0.20.04.1
     - liblzma5=5.2.4-1ubuntu1
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
@@ -332,11 +332,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.1
-    - libpam-modules=1.3.1-5ubuntu4.1
-    - libpam-runtime=1.3.1-5ubuntu4.1
+    - libpam-modules-bin=1.3.1-5ubuntu4.2
+    - libpam-modules=1.3.1-5ubuntu4.2
+    - libpam-runtime=1.3.1-5ubuntu4.2
     - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.1
+    - libpam0g=1.3.1-5ubuntu4.2
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -350,8 +350,8 @@ parts:
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
-    - libpolkit-agent-1-0=0.105-26ubuntu1
-    - libpolkit-gobject-1-0=0.105-26ubuntu1
+    - libpolkit-agent-1-0=0.105-26ubuntu1.1
+    - libpolkit-gobject-1-0=0.105-26ubuntu1.1
     - libprocps8=2:3.3.16-1ubuntu2.1
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
@@ -360,8 +360,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.2
-    - libpython3.8-stdlib=3.8.5-1~20.04.2
+    - libpython3.8-minimal=3.8.5-1~20.04.3
+    - libpython3.8-stdlib=3.8.5-1~20.04.3
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -418,7 +418,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-73.82
+    - linux-libc-dev=5.4.0-74.83
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -451,25 +451,25 @@ parts:
     - pinentry-curses=1.1.0-3build1
     - pkg-config=0.29.1-0ubuntu4
     - pkgbinarymangler=144
-    - policykit-1=0.105-26ubuntu1
+    - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
     - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.4
+    - python-apt-common=2.0.0ubuntu0.20.04.5
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.4
+    - python3-apt=2.0.0ubuntu0.20.04.5
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
-    - python3-distutils=3.8.5-1~20.04.1
+    - python3-distutils=3.8.10-0ubuntu1~20.04
     - python3-gi=3.36.0-1
     - python3-idna=2.8-1
-    - python3-lib2to3=3.8.5-1~20.04.1
+    - python3-lib2to3=3.8.10-0ubuntu1~20.04
     - python3-lxml=4.5.0-1ubuntu0.3
     - python3-mako=1.1.0+ds1-1ubuntu2
     - python3-markdown=3.1.1-3
@@ -486,8 +486,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.2
-    - python3.8=3.8.5-1~20.04.2
+    - python3.8-minimal=3.8.5-1~20.04.3
+    - python3.8=3.8.5-1~20.04.3
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -519,19 +519,19 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-otmhdluqb8ew82qm"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-l3k0331h8ozs1nd6"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
 '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
   dnsmasq:
     build-packages:
     - build-essential
@@ -737,7 +737,7 @@ parts:
     - liblockfile1=1.16-1.1
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
-    - liblz4-1=1.9.2-2
+    - liblz4-1=1.9.2-2ubuntu0.20.04.1
     - liblzma5=5.2.4-1ubuntu1
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
@@ -783,11 +783,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.1
-    - libpam-modules=1.3.1-5ubuntu4.1
-    - libpam-runtime=1.3.1-5ubuntu4.1
+    - libpam-modules-bin=1.3.1-5ubuntu4.2
+    - libpam-modules=1.3.1-5ubuntu4.2
+    - libpam-runtime=1.3.1-5ubuntu4.2
     - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.1
+    - libpam0g=1.3.1-5ubuntu4.2
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -801,8 +801,8 @@ parts:
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
-    - libpolkit-agent-1-0=0.105-26ubuntu1
-    - libpolkit-gobject-1-0=0.105-26ubuntu1
+    - libpolkit-agent-1-0=0.105-26ubuntu1.1
+    - libpolkit-gobject-1-0=0.105-26ubuntu1.1
     - libprocps8=2:3.3.16-1ubuntu2.1
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
@@ -811,8 +811,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.2
-    - libpython3.8-stdlib=3.8.5-1~20.04.2
+    - libpython3.8-minimal=3.8.5-1~20.04.3
+    - libpython3.8-stdlib=3.8.5-1~20.04.3
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -869,7 +869,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-73.82
+    - linux-libc-dev=5.4.0-74.83
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -902,25 +902,25 @@ parts:
     - pinentry-curses=1.1.0-3build1
     - pkg-config=0.29.1-0ubuntu4
     - pkgbinarymangler=144
-    - policykit-1=0.105-26ubuntu1
+    - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
     - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.4
+    - python-apt-common=2.0.0ubuntu0.20.04.5
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.4
+    - python3-apt=2.0.0ubuntu0.20.04.5
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
-    - python3-distutils=3.8.5-1~20.04.1
+    - python3-distutils=3.8.10-0ubuntu1~20.04
     - python3-gi=3.36.0-1
     - python3-idna=2.8-1
-    - python3-lib2to3=3.8.5-1~20.04.1
+    - python3-lib2to3=3.8.10-0ubuntu1~20.04
     - python3-lxml=4.5.0-1ubuntu0.3
     - python3-mako=1.1.0+ds1-1ubuntu2
     - python3-markdown=3.1.1-3
@@ -937,8 +937,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.2
-    - python3.8=3.8.5-1~20.04.2
+    - python3.8-minimal=3.8.5-1~20.04.3
+    - python3.8=3.8.5-1~20.04.3
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -970,14 +970,14 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-otmhdluqb8ew82qm/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-otmhdluqb8ew82qm"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-l3k0331h8ozs1nd6/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -990,8 +990,8 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
   netplan:
     build-packages:
     - build-essential
@@ -1202,7 +1202,7 @@ parts:
     - liblockfile1=1.16-1.1
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
-    - liblz4-1=1.9.2-2
+    - liblz4-1=1.9.2-2ubuntu0.20.04.1
     - liblzma5=5.2.4-1ubuntu1
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
@@ -1248,11 +1248,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.1
-    - libpam-modules=1.3.1-5ubuntu4.1
-    - libpam-runtime=1.3.1-5ubuntu4.1
+    - libpam-modules-bin=1.3.1-5ubuntu4.2
+    - libpam-modules=1.3.1-5ubuntu4.2
+    - libpam-runtime=1.3.1-5ubuntu4.2
     - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.1
+    - libpam0g=1.3.1-5ubuntu4.2
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -1266,8 +1266,8 @@ parts:
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
-    - libpolkit-agent-1-0=0.105-26ubuntu1
-    - libpolkit-gobject-1-0=0.105-26ubuntu1
+    - libpolkit-agent-1-0=0.105-26ubuntu1.1
+    - libpolkit-gobject-1-0=0.105-26ubuntu1.1
     - libprocps8=2:3.3.16-1ubuntu2.1
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
@@ -1276,8 +1276,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.2
-    - libpython3.8-stdlib=3.8.5-1~20.04.2
+    - libpython3.8-minimal=3.8.5-1~20.04.3
+    - libpython3.8-stdlib=3.8.5-1~20.04.3
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1334,7 +1334,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-73.82
+    - linux-libc-dev=5.4.0-74.83
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -1367,25 +1367,25 @@ parts:
     - pinentry-curses=1.1.0-3build1
     - pkg-config=0.29.1-0ubuntu4
     - pkgbinarymangler=144
-    - policykit-1=0.105-26ubuntu1
+    - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
     - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.4
+    - python-apt-common=2.0.0ubuntu0.20.04.5
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.4
+    - python3-apt=2.0.0ubuntu0.20.04.5
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
-    - python3-distutils=3.8.5-1~20.04.1
+    - python3-distutils=3.8.10-0ubuntu1~20.04
     - python3-gi=3.36.0-1
     - python3-idna=2.8-1
-    - python3-lib2to3=3.8.5-1~20.04.1
+    - python3-lib2to3=3.8.10-0ubuntu1~20.04
     - python3-lxml=4.5.0-1ubuntu0.3
     - python3-mako=1.1.0+ds1-1ubuntu2
     - python3-markdown=3.1.1-3
@@ -1402,8 +1402,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.2
-    - python3.8=3.8.5-1~20.04.2
+    - python3.8-minimal=3.8.5-1~20.04.3
+    - python3.8=3.8.5-1~20.04.3
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1435,11 +1435,11 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     override-build: |
       set -ex
-      git apply "/build/ci-network-manager-otmhdluqb8ew82qm"/snap-patch/netplan.patch
+      git apply "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/netplan.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -1452,8 +1452,8 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
     - --prefix=/usr
@@ -1739,7 +1739,7 @@ parts:
     - liblockfile1=1.16-1.1
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
-    - liblz4-1=1.9.2-2
+    - liblz4-1=1.9.2-2ubuntu0.20.04.1
     - liblzma5=5.2.4-1ubuntu1
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
@@ -1785,11 +1785,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.1
-    - libpam-modules=1.3.1-5ubuntu4.1
-    - libpam-runtime=1.3.1-5ubuntu4.1
+    - libpam-modules-bin=1.3.1-5ubuntu4.2
+    - libpam-modules=1.3.1-5ubuntu4.2
+    - libpam-runtime=1.3.1-5ubuntu4.2
     - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.1
+    - libpam0g=1.3.1-5ubuntu4.2
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -1803,8 +1803,8 @@ parts:
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
-    - libpolkit-agent-1-0=0.105-26ubuntu1
-    - libpolkit-gobject-1-0=0.105-26ubuntu1
+    - libpolkit-agent-1-0=0.105-26ubuntu1.1
+    - libpolkit-gobject-1-0=0.105-26ubuntu1.1
     - libprocps8=2:3.3.16-1ubuntu2.1
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
@@ -1813,8 +1813,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.2
-    - libpython3.8-stdlib=3.8.5-1~20.04.2
+    - libpython3.8-minimal=3.8.5-1~20.04.3
+    - libpython3.8-stdlib=3.8.5-1~20.04.3
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1871,7 +1871,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-73.82
+    - linux-libc-dev=5.4.0-74.83
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -1904,25 +1904,25 @@ parts:
     - pinentry-curses=1.1.0-3build1
     - pkg-config=0.29.1-0ubuntu4
     - pkgbinarymangler=144
-    - policykit-1=0.105-26ubuntu1
+    - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
     - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.4
+    - python-apt-common=2.0.0ubuntu0.20.04.5
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.4
+    - python3-apt=2.0.0ubuntu0.20.04.5
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
-    - python3-distutils=3.8.5-1~20.04.1
+    - python3-distutils=3.8.10-0ubuntu1~20.04
     - python3-gi=3.36.0-1
     - python3-idna=2.8-1
-    - python3-lib2to3=3.8.5-1~20.04.1
+    - python3-lib2to3=3.8.10-0ubuntu1~20.04
     - python3-lxml=4.5.0-1ubuntu0.3
     - python3-mako=1.1.0+ds1-1ubuntu2
     - python3-markdown=3.1.1-3
@@ -1939,8 +1939,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.2
-    - python3.8=3.8.5-1~20.04.2
+    - python3.8-minimal=3.8.5-1~20.04.3
+    - python3.8=3.8.5-1~20.04.3
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1972,17 +1972,17 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-otmhdluqb8ew82qm/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-l3k0331h8ozs1nd6/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-otmhdluqb8ew82qm"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1995,7 +1995,7 @@ parts:
       make check
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-otmhdluqb8ew82qm"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -2113,8 +2113,8 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
   networkmanager-common:
     build-packages: []
     installed-packages:
@@ -2319,7 +2319,7 @@ parts:
     - liblockfile1=1.16-1.1
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
-    - liblz4-1=1.9.2-2
+    - liblz4-1=1.9.2-2ubuntu0.20.04.1
     - liblzma5=5.2.4-1ubuntu1
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
@@ -2365,11 +2365,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.1
-    - libpam-modules=1.3.1-5ubuntu4.1
-    - libpam-runtime=1.3.1-5ubuntu4.1
+    - libpam-modules-bin=1.3.1-5ubuntu4.2
+    - libpam-modules=1.3.1-5ubuntu4.2
+    - libpam-runtime=1.3.1-5ubuntu4.2
     - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.1
+    - libpam0g=1.3.1-5ubuntu4.2
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -2383,8 +2383,8 @@ parts:
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
-    - libpolkit-agent-1-0=0.105-26ubuntu1
-    - libpolkit-gobject-1-0=0.105-26ubuntu1
+    - libpolkit-agent-1-0=0.105-26ubuntu1.1
+    - libpolkit-gobject-1-0=0.105-26ubuntu1.1
     - libprocps8=2:3.3.16-1ubuntu2.1
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
@@ -2393,8 +2393,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.2
-    - libpython3.8-stdlib=3.8.5-1~20.04.2
+    - libpython3.8-minimal=3.8.5-1~20.04.3
+    - libpython3.8-stdlib=3.8.5-1~20.04.3
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2451,7 +2451,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-73.82
+    - linux-libc-dev=5.4.0-74.83
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04
     - logsave=1.45.5-2ubuntu1
@@ -2484,25 +2484,25 @@ parts:
     - pinentry-curses=1.1.0-3build1
     - pkg-config=0.29.1-0ubuntu4
     - pkgbinarymangler=144
-    - policykit-1=0.105-26ubuntu1
+    - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
     - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.4
+    - python-apt-common=2.0.0ubuntu0.20.04.5
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.4
+    - python3-apt=2.0.0ubuntu0.20.04.5
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
-    - python3-distutils=3.8.5-1~20.04.1
+    - python3-distutils=3.8.10-0ubuntu1~20.04
     - python3-gi=3.36.0-1
     - python3-idna=2.8-1
-    - python3-lib2to3=3.8.5-1~20.04.1
+    - python3-lib2to3=3.8.10-0ubuntu1~20.04
     - python3-lxml=4.5.0-1ubuntu0.3
     - python3-mako=1.1.0+ds1-1ubuntu2
     - python3-markdown=3.1.1-3
@@ -2519,8 +2519,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.2
-    - python3.8=3.8.5-1~20.04.2
+    - python3.8-minimal=3.8.5-1~20.04.3
+    - python3.8=3.8.5-1~20.04.3
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -2552,15 +2552,15 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
   stack-snaps-tools:
     build-packages:
     - dpkg-dev
@@ -2569,7 +2569,7 @@ parts:
     installed-snaps:
     - core18=2067
     - core20=1029
-    - snapcraft=6469
+    - snapcraft=6519
     - snapd=11844
     override-build: |
       set -ex
@@ -2594,7 +2594,7 @@ parts:
     source-type: git
     stage: []
     stage-packages:
-    - dnsmasq-base=2.80-1.1ubuntu1.3
+    - dnsmasq-base=2.80-1.1ubuntu1.4
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libbrotli1=1.0.7-6ubuntu0.1
     - libcurl3-gnutls=7.68.0-1ubuntu2.5
@@ -2620,12 +2620,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - network-manager=1.22.10-1ubuntu2.2
-    uname: 'Linux 4.15.0-143-generic #147-Ubuntu SMP Wed Apr 14 16:10:28 UTC 2021
-      armv7l armv7l armv7l GNU/Linux'
+    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 armv7l
+      armv7l armv7l GNU/Linux'
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-otmhdluqb8ew82qm/+build/1415720
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-l3k0331h8ozs1nd6/+build/1430600
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2752,8 +2752,8 @@ build-packages:
 - libpcre32-3=2:8.39-12build1
 - libpcrecpp0v5=2:8.39-12build1
 - libpng-dev=1.6.37-2
-- libpolkit-agent-1-0=0.105-26ubuntu1
-- libpolkit-gobject-1-0=0.105-26ubuntu1
+- libpolkit-agent-1-0=0.105-26ubuntu1.1
+- libpolkit-gobject-1-0=0.105-26ubuntu1.1
 - libproxy1v5=0.4.15-10ubuntu1.2
 - libpsl-dev=0.21.0-1ubuntu1
 - libpython2-stdlib=2.7.17-2ubuntu4
@@ -2799,23 +2799,23 @@ build-packages:
 - pandoc=2.5-3build2
 - perl-openssl-defaults=4
 - pkg-config=0.29.1-0ubuntu4
-- policykit-1=0.105-26ubuntu1
+- policykit-1=0.105-26ubuntu1.1
 - ppp-dev=2.4.7-2+4.1ubuntu5.1
-- python-apt-common=2.0.0ubuntu0.20.04.4
+- python-apt-common=2.0.0ubuntu0.20.04.5
 - python-dbus=1.2.16-1build1
 - python-gi=3.36.0-1
 - python2-minimal=2.7.17-2ubuntu4
 - python2.7-minimal=2.7.18-1~20.04.1
 - python2.7=2.7.18-1~20.04.1
 - python2=2.7.17-2ubuntu4
-- python3-apt=2.0.0ubuntu0.20.04.4
+- python3-apt=2.0.0ubuntu0.20.04.5
 - python3-certifi=2019.11.28-1
 - python3-chardet=3.0.4-4build1
 - python3-dbus=1.2.16-1build1
-- python3-distutils=3.8.5-1~20.04.1
+- python3-distutils=3.8.10-0ubuntu1~20.04
 - python3-gi=3.36.0-1
 - python3-idna=2.8-1
-- python3-lib2to3=3.8.5-1~20.04.1
+- python3-lib2to3=3.8.10-0ubuntu1~20.04
 - python3-lxml=4.5.0-1ubuntu0.3
 - python3-mako=1.1.0+ds1-1ubuntu2
 - python3-markdown=3.1.1-3
@@ -2842,7 +2842,7 @@ build-packages:
 build-snaps:
 - core20=1029
 primed-stage-packages:
-- dnsmasq-base=2.80-1.1ubuntu1.3
+- dnsmasq-base=2.80-1.1ubuntu1.4
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
 - libbrotli1=1.0.7-6ubuntu0.1
