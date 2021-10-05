@@ -1,14 +1,14 @@
-From 8ed0344e362a11d5201e588b65fdcd25c38644f7 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <slyon@ubuntu.com>
+From ba8d280149cccfd24c7cbb78e8f301edaf4a0cfb Mon Sep 17 00:00:00 2001
+From: Lukas Märdian <slyon@ubuntu.com>
 Date: Thu, 6 May 2021 15:05:33 +0200
 Subject: [PATCH] netplan: use vendorized generate binary
 
 ---
  src/settings/plugins/keyfile/nms-keyfile-plugin.c |  4 ++--
- src/settings/plugins/keyfile/nms-keyfile-utils.c  | 13 +++++++++++++
+ src/settings/plugins/keyfile/nms-keyfile-utils.c  | 14 ++++++++++++++
  src/settings/plugins/keyfile/nms-keyfile-utils.h  |  2 ++
  src/settings/plugins/keyfile/nms-keyfile-writer.c |  2 +-
- 4 files changed, 18 insertions(+), 3 deletions(-)
+ 4 files changed, 19 insertions(+), 3 deletions(-)
 
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-plugin.c b/src/settings/plugins/keyfile/nms-keyfile-plugin.c
 index 548eda536..83bcdb857 100644
@@ -33,10 +33,10 @@ index 548eda536..83bcdb857 100644
  
  	_LOGT ("commit: deleted \"%s\", %s %s (%s%s%s%s)",
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-utils.c b/src/settings/plugins/keyfile/nms-keyfile-utils.c
-index f58dd4262..90b16acc8 100644
+index 44edabd37..e2030ec5c 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-utils.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-utils.c
-@@ -407,3 +407,16 @@ nms_keyfile_utils_check_file_permissions (NMSKeyfileFiletype filetype,
+@@ -407,3 +407,17 @@ nms_keyfile_utils_check_file_permissions (NMSKeyfileFiletype filetype,
  	NM_SET_OUT (out_st, st);
  	return TRUE;
  }
@@ -45,7 +45,8 @@ index f58dd4262..90b16acc8 100644
 +_netplan_generate(const char* rootdir)
 +{
 +    /* Use 'netplan_generate()' from libnetplan once that is fixed to not be
-+     * DENIED by apparmor via snapd's 'network-setup-control' interface. */
++     * DENIED by apparmor via snapd's 'network-setup-control' interface.
++     * This needs https://github.com/snapcore/snapd/pull/10212 to be landed. */
 +    const gchar *argv[] = { "/snap/network-manager/current/lib/netplan/generate", NULL , NULL, NULL };
 +    if (rootdir) {
 +        argv[1] = "--root-dir";
@@ -65,7 +66,7 @@ index f9c298999..16b965ffd 100644
 +
  #endif /* __NMS_KEYFILE_UTILS_H__ */
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-writer.c b/src/settings/plugins/keyfile/nms-keyfile-writer.c
-index 1ff263032..f3c506b91 100644
+index 1bc761c4c..022eebce9 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-writer.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-writer.c
 @@ -402,7 +402,7 @@ _internal_write_connection (NMConnection *connection,
@@ -78,5 +79,5 @@ index 1ff263032..f3c506b91 100644
  			             "netplan generate failed");
  			return FALSE;
 -- 
-2.30.2
+2.32.0
 

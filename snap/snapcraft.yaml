@@ -150,7 +150,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/netplan.io
     source-type: git
-    source-branch: applied/ubuntu/focal-updates
+    source-tag: applied/0.102-0ubuntu1_20.04.2
     build-packages:
       - build-essential
       - libyaml-dev
