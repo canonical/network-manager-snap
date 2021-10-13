@@ -1,9 +1,9 @@
-snapcraft-version: '4.8'
-snapcraft-started-at: '2021-06-07T08:53:41.291837Z'
+snapcraft-version: '5.0'
+snapcraft-started-at: '2021-10-13T08:52:51.287735Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-8
+version: 1.22.10-9
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -88,12 +88,12 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.5
+    - apt=2.0.6
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.3
+    - base-files=11ubuntu5.4
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.1
     - binutils-aarch64-linux-gnu=2.34-6ubuntu1.1
@@ -103,7 +103,7 @@ parts:
     - bsdutils=1:2.34-0.1ubuntu9.1
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
-    - ca-certificates=20210119~20.04.1
+    - ca-certificates=20210119~20.04.2
     - coreutils=8.30-3ubuntu2
     - cpp-9=9.3.0-17ubuntu1~20.04
     - cpp=4:9.3.0-1ubuntu2
@@ -116,7 +116,7 @@ parts:
     - debianutils=4.9.1
     - diffstat=1.63-1
     - diffutils=1:3.7-3
-    - distro-info-data=0.43ubuntu1.5
+    - distro-info-data=0.43ubuntu1.8
     - docbook-to-man=1:2.0.0-42
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
@@ -131,7 +131,7 @@ parts:
     - fuse=2.9.9-3
     - g++-9=9.3.0-17ubuntu1~20.04
     - g++=4:9.3.0-1ubuntu2
-    - gcc-10-base=10.2.0-5ubuntu1~20.04
+    - gcc-10-base=10.3.0-1ubuntu1~20.04
     - gcc-9-base=9.3.0-17ubuntu1~20.04
     - gcc-9=9.3.0-17ubuntu1~20.04
     - gcc=4:9.3.0-1ubuntu2
@@ -139,10 +139,10 @@ parts:
     - gettext=0.19.8.1-10build1
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-    - gir1.2-modemmanager-1.0=1.12.8-1
+    - gir1.2-modemmanager-1.0=1.16.6-2~20.04
     - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
-    - git-man=1:2.25.1-1ubuntu3.1
-    - git=1:2.25.1-1ubuntu3.1
+    - git-man=1:2.25.1-1ubuntu3.2
+    - git=1:2.25.1-1ubuntu3.2
     - glib-networking-common=2.64.2-1ubuntu0.1
     - glib-networking-services=2.64.2-1ubuntu0.1
     - glib-networking=2.64.2-1ubuntu0.1
@@ -165,12 +165,12 @@ parts:
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
     - libappstream4=0.12.10-2
-    - libapt-pkg6.0=2.0.5
+    - libapt-pkg6.0=2.0.6
     - libargon2-1=0~20171227-0.2
     - libasan5=9.3.0-17ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libassuan0=2.5.3-7ubuntu2
-    - libatomic1=10.2.0-5ubuntu1~20.04
+    - libatomic1=10.3.0-1ubuntu1~20.04
     - libattr1=1:2.4.48-5
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
@@ -188,7 +188,7 @@ parts:
     - libcap2-bin=1:2.32-1
     - libcap2=1:2.32-1
     - libcbor0.6=0.6.0-0ubuntu1
-    - libcc1-0=10.2.0-5ubuntu1~20.04
+    - libcc1-0=10.3.0-1ubuntu1~20.04
     - libcom-err2=1.45.5-2ubuntu1
     - libcroco3=0.6.13-1
     - libcrypt-dev=1:4.4.10-10ubuntu4
@@ -196,8 +196,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.3
     - libctf-nobfd0=2.34-6ubuntu1.1
     - libctf0=2.34-6ubuntu1.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.1
     - libdbus-1-dev=1.12.16-2ubuntu2.1
@@ -223,27 +223,27 @@ parts:
     - libfile-listing-perl=6.04-1
     - libfuse2=2.9.9-3
     - libgcc-9-dev=9.3.0-17ubuntu1~20.04
-    - libgcc-s1=10.2.0-5ubuntu1~20.04
-    - libgcrypt20=1.8.5-5ubuntu1
+    - libgcc-s1=10.3.0-1ubuntu1~20.04
+    - libgcrypt20=1.8.5-5ubuntu1.1
     - libgdbm-compat4=1.18.1-5
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
-    - libgnutls-dane0=3.6.13-2ubuntu1.3
-    - libgnutls-openssl27=3.6.13-2ubuntu1.3
-    - libgnutls28-dev=3.6.13-2ubuntu1.3
-    - libgnutls30=3.6.13-2ubuntu1.3
-    - libgnutlsxx28=3.6.13-2ubuntu1.3
-    - libgomp1=10.2.0-5ubuntu1~20.04
+    - libgnutls-dane0=3.6.13-2ubuntu1.6
+    - libgnutls-openssl27=3.6.13-2ubuntu1.6
+    - libgnutls28-dev=3.6.13-2ubuntu1.6
+    - libgnutls30=3.6.13-2ubuntu1.6
+    - libgnutlsxx28=3.6.13-2ubuntu1.6
+    - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
@@ -251,7 +251,7 @@ parts:
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimntlm0-heimdal=7.7.0+dfsg-1ubuntu1
-    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.1
+    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.2
     - libhtml-parser-perl=3.72-5
     - libhtml-tagset-perl=3.20-4
     - libhtml-tree-perl=5.07-2
@@ -268,7 +268,7 @@ parts:
     - libip4tc2=1.8.4-3ubuntu2
     - libip6tc2=1.8.4-3ubuntu2
     - libisl22=0.22.1-1
-    - libitm1=10.2.0-5ubuntu1~20.04
+    - libitm1=10.3.0-1ubuntu1~20.04
     - libiw-dev=30~pre9-13ubuntu1
     - libiw30=30~pre9-13ubuntu1
     - libjansson-dev=2.12-1build1
@@ -285,7 +285,7 @@ parts:
     - liblmdb0=0.9.24-1
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
-    - liblsan0=10.2.0-5ubuntu1~20.04
+    - liblsan0=10.3.0-1ubuntu1~20.04
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
     - liblz4-1=1.9.2-2ubuntu0.20.04.1
@@ -293,8 +293,8 @@ parts:
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
     - libmagic1=1:5.38-4
-    - libmm-glib-dev=1.12.8-1
-    - libmm-glib0=1.12.8-1
+    - libmm-glib-dev=1.16.6-2~20.04
+    - libmm-glib0=1.16.6-2~20.04
     - libmnl0=1.0.4-2
     - libmount-dev=2.34-0.1ubuntu9.1
     - libmount1=2.34-0.1ubuntu9.1
@@ -309,9 +309,9 @@ parts:
     - libnet-http-perl=6.19-1
     - libnet-ssleay-perl=1.88-2ubuntu1
     - libnetfilter-conntrack3=1.0.7-2
-    - libnetplan-dev=0.102-0ubuntu1~20.04.2
-    - libnetplan0=0.102-0ubuntu1~20.04.2
-    - libnettle7=3.5.1+really3.5.1-2ubuntu0.1
+    - libnetplan-dev=0.103-0ubuntu5~20.04.1
+    - libnetplan0=0.103-0ubuntu5~20.04.1
+    - libnettle7=3.5.1+really3.5.1-2ubuntu0.2
     - libnewt-dev=0.52.21-4ubuntu2
     - libnewt0.52=0.52.21-4ubuntu2
     - libnfnetlink0=1.0.1-3build1
@@ -334,11 +334,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.2
-    - libpam-modules=1.3.1-5ubuntu4.2
-    - libpam-runtime=1.3.1-5ubuntu4.2
-    - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.2
+    - libpam-modules-bin=1.3.1-5ubuntu4.3
+    - libpam-modules=1.3.1-5ubuntu4.3
+    - libpam-runtime=1.3.1-5ubuntu4.3
+    - libpam-systemd=245.4-4ubuntu3.13
+    - libpam0g=1.3.1-5ubuntu4.3
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -354,7 +354,7 @@ parts:
     - libpng16-16=1.6.37-2
     - libpolkit-agent-1-0=0.105-26ubuntu1.1
     - libpolkit-gobject-1-0=0.105-26ubuntu1.1
-    - libprocps8=2:3.3.16-1ubuntu2.1
+    - libprocps8=2:3.3.16-1ubuntu2.3
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
     - libpsl5=0.21.0-1ubuntu1
@@ -362,8 +362,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.3
-    - libpython3.8-stdlib=3.8.5-1~20.04.3
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.1
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -385,13 +385,13 @@ parts:
     - libsqlite3-0=3.31.1-4ubuntu0.2
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1
-    - libssh-4=0.9.3-2ubuntu2.1
-    - libssl1.1=1.1.1f-1ubuntu2.4
+    - libssh-4=0.9.3-2ubuntu2.2
+    - libssl1.1=1.1.1f-1ubuntu2.8
     - libstdc++-9-dev=9.3.0-17ubuntu1~20.04
-    - libstdc++6=10.2.0-5ubuntu1~20.04
+    - libstdc++6=10.3.0-1ubuntu1~20.04
     - libstemmer0d=0+svn585-2
-    - libsystemd-dev=245.4-4ubuntu3.6
-    - libsystemd0=245.4-4ubuntu3.6
+    - libsystemd-dev=245.4-4ubuntu3.13
+    - libsystemd0=245.4-4ubuntu3.13
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -401,10 +401,10 @@ parts:
     - libtinfo6=6.2-0ubuntu2
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
-    - libtsan0=10.2.0-5ubuntu1~20.04
-    - libubsan1=10.2.0-5ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.6
-    - libudev1=245.4-4ubuntu3.6
+    - libtsan0=10.3.0-1ubuntu1~20.04
+    - libubsan1=10.3.0-1ubuntu1~20.04
+    - libudev-dev=245.4-4ubuntu3.13
+    - libudev1=245.4-4ubuntu3.13
     - libunbound8=1.9.4-2ubuntu1.2
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -414,16 +414,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-74.83
+    - linux-libc-dev=5.4.0-88.99
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04
+    - login=1:4.8.1-1ubuntu5.20.04.1
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - lsb-release=11.1.0ubuntu2
@@ -431,21 +431,21 @@ parts:
     - make=4.2.1-1.2
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
-    - modemmanager-dev=1.12.8-1
+    - modemmanager-dev=1.16.6-2~20.04
     - mount=2.34-0.1ubuntu9.1
     - ncurses-base=6.2-0ubuntu2
     - ncurses-bin=6.2-0ubuntu2
     - netbase=6.1
-    - netplan.io=0.102-0ubuntu1~20.04.2
-    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+    - netplan.io=0.103-0ubuntu5~20.04.1
+    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.2
-    - openssl=1.1.1f-1ubuntu2.4
+    - openssh-client=1:8.2p1-4ubuntu0.3
+    - openssl=1.1.1f-1ubuntu2.8
     - optipng=0.7.7-1
     - packagekit=1.1.13-2ubuntu1.1
     - pandoc-data=2.5-3build2
     - pandoc=2.5-3build2
-    - passwd=1:4.8.1-1ubuntu5.20.04
+    - passwd=1:4.8.1-1ubuntu5.20.04.1
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -457,15 +457,15 @@ parts:
     - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
-    - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.5
+    - procps=2:3.3.16-1ubuntu2.3
+    - python-apt-common=2.0.0ubuntu0.20.04.6
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.5
+    - python3-apt=2.0.0ubuntu0.20.04.6
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
@@ -489,8 +489,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.3
-    - python3.8=3.8.5-1~20.04.3
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - python3.8=3.8.10-0ubuntu1~20.04.1
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -498,20 +498,20 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.48.3+20.04
+    - snapd=2.51.1+20.04ubuntu2
     - socat=1.7.3.3-2
     - software-properties-common=0.98.9.5
-    - squashfs-tools=1:4.4-1
+    - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.2
-    - systemd-sysv=245.4-4ubuntu3.6
-    - systemd-timesyncd=245.4-4ubuntu3.6
-    - systemd=245.4-4ubuntu3.6
+    - systemd-sysv=245.4-4ubuntu3.13
+    - systemd-timesyncd=245.4-4ubuntu3.13
+    - systemd=245.4-4ubuntu3.13
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.1
-    - tzdata=2021a-0ubuntu0.20.04
+    - tzdata=2021a-2ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.6
+    - udev=245.4-4ubuntu3.13
     - util-linux=2.34-0.1ubuntu9.1
     - uuid-dev=2.34-0.1ubuntu9.1
     - xml-core=0.18+nmu1
@@ -520,21 +520,21 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-l3k0331h8ozs1nd6"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-ffemzzzsbyta1cnd"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
 '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
   dnsmasq:
     build-packages:
     - build-essential
@@ -542,12 +542,12 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.5
+    - apt=2.0.6
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.3
+    - base-files=11ubuntu5.4
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.1
     - binutils-aarch64-linux-gnu=2.34-6ubuntu1.1
@@ -557,7 +557,7 @@ parts:
     - bsdutils=1:2.34-0.1ubuntu9.1
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
-    - ca-certificates=20210119~20.04.1
+    - ca-certificates=20210119~20.04.2
     - coreutils=8.30-3ubuntu2
     - cpp-9=9.3.0-17ubuntu1~20.04
     - cpp=4:9.3.0-1ubuntu2
@@ -570,7 +570,7 @@ parts:
     - debianutils=4.9.1
     - diffstat=1.63-1
     - diffutils=1:3.7-3
-    - distro-info-data=0.43ubuntu1.5
+    - distro-info-data=0.43ubuntu1.8
     - docbook-to-man=1:2.0.0-42
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
@@ -585,7 +585,7 @@ parts:
     - fuse=2.9.9-3
     - g++-9=9.3.0-17ubuntu1~20.04
     - g++=4:9.3.0-1ubuntu2
-    - gcc-10-base=10.2.0-5ubuntu1~20.04
+    - gcc-10-base=10.3.0-1ubuntu1~20.04
     - gcc-9-base=9.3.0-17ubuntu1~20.04
     - gcc-9=9.3.0-17ubuntu1~20.04
     - gcc=4:9.3.0-1ubuntu2
@@ -593,10 +593,10 @@ parts:
     - gettext=0.19.8.1-10build1
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-    - gir1.2-modemmanager-1.0=1.12.8-1
+    - gir1.2-modemmanager-1.0=1.16.6-2~20.04
     - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
-    - git-man=1:2.25.1-1ubuntu3.1
-    - git=1:2.25.1-1ubuntu3.1
+    - git-man=1:2.25.1-1ubuntu3.2
+    - git=1:2.25.1-1ubuntu3.2
     - glib-networking-common=2.64.2-1ubuntu0.1
     - glib-networking-services=2.64.2-1ubuntu0.1
     - glib-networking=2.64.2-1ubuntu0.1
@@ -619,12 +619,12 @@ parts:
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
     - libappstream4=0.12.10-2
-    - libapt-pkg6.0=2.0.5
+    - libapt-pkg6.0=2.0.6
     - libargon2-1=0~20171227-0.2
     - libasan5=9.3.0-17ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libassuan0=2.5.3-7ubuntu2
-    - libatomic1=10.2.0-5ubuntu1~20.04
+    - libatomic1=10.3.0-1ubuntu1~20.04
     - libattr1=1:2.4.48-5
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
@@ -642,7 +642,7 @@ parts:
     - libcap2-bin=1:2.32-1
     - libcap2=1:2.32-1
     - libcbor0.6=0.6.0-0ubuntu1
-    - libcc1-0=10.2.0-5ubuntu1~20.04
+    - libcc1-0=10.3.0-1ubuntu1~20.04
     - libcom-err2=1.45.5-2ubuntu1
     - libcroco3=0.6.13-1
     - libcrypt-dev=1:4.4.10-10ubuntu4
@@ -650,8 +650,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.3
     - libctf-nobfd0=2.34-6ubuntu1.1
     - libctf0=2.34-6ubuntu1.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.1
     - libdbus-1-dev=1.12.16-2ubuntu2.1
@@ -677,27 +677,27 @@ parts:
     - libfile-listing-perl=6.04-1
     - libfuse2=2.9.9-3
     - libgcc-9-dev=9.3.0-17ubuntu1~20.04
-    - libgcc-s1=10.2.0-5ubuntu1~20.04
-    - libgcrypt20=1.8.5-5ubuntu1
+    - libgcc-s1=10.3.0-1ubuntu1~20.04
+    - libgcrypt20=1.8.5-5ubuntu1.1
     - libgdbm-compat4=1.18.1-5
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
-    - libgnutls-dane0=3.6.13-2ubuntu1.3
-    - libgnutls-openssl27=3.6.13-2ubuntu1.3
-    - libgnutls28-dev=3.6.13-2ubuntu1.3
-    - libgnutls30=3.6.13-2ubuntu1.3
-    - libgnutlsxx28=3.6.13-2ubuntu1.3
-    - libgomp1=10.2.0-5ubuntu1~20.04
+    - libgnutls-dane0=3.6.13-2ubuntu1.6
+    - libgnutls-openssl27=3.6.13-2ubuntu1.6
+    - libgnutls28-dev=3.6.13-2ubuntu1.6
+    - libgnutls30=3.6.13-2ubuntu1.6
+    - libgnutlsxx28=3.6.13-2ubuntu1.6
+    - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
@@ -705,7 +705,7 @@ parts:
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimntlm0-heimdal=7.7.0+dfsg-1ubuntu1
-    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.1
+    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.2
     - libhtml-parser-perl=3.72-5
     - libhtml-tagset-perl=3.20-4
     - libhtml-tree-perl=5.07-2
@@ -722,7 +722,7 @@ parts:
     - libip4tc2=1.8.4-3ubuntu2
     - libip6tc2=1.8.4-3ubuntu2
     - libisl22=0.22.1-1
-    - libitm1=10.2.0-5ubuntu1~20.04
+    - libitm1=10.3.0-1ubuntu1~20.04
     - libiw-dev=30~pre9-13ubuntu1
     - libiw30=30~pre9-13ubuntu1
     - libjansson-dev=2.12-1build1
@@ -739,7 +739,7 @@ parts:
     - liblmdb0=0.9.24-1
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
-    - liblsan0=10.2.0-5ubuntu1~20.04
+    - liblsan0=10.3.0-1ubuntu1~20.04
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
     - liblz4-1=1.9.2-2ubuntu0.20.04.1
@@ -747,8 +747,8 @@ parts:
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
     - libmagic1=1:5.38-4
-    - libmm-glib-dev=1.12.8-1
-    - libmm-glib0=1.12.8-1
+    - libmm-glib-dev=1.16.6-2~20.04
+    - libmm-glib0=1.16.6-2~20.04
     - libmnl0=1.0.4-2
     - libmount-dev=2.34-0.1ubuntu9.1
     - libmount1=2.34-0.1ubuntu9.1
@@ -763,9 +763,9 @@ parts:
     - libnet-http-perl=6.19-1
     - libnet-ssleay-perl=1.88-2ubuntu1
     - libnetfilter-conntrack3=1.0.7-2
-    - libnetplan-dev=0.102-0ubuntu1~20.04.2
-    - libnetplan0=0.102-0ubuntu1~20.04.2
-    - libnettle7=3.5.1+really3.5.1-2ubuntu0.1
+    - libnetplan-dev=0.103-0ubuntu5~20.04.1
+    - libnetplan0=0.103-0ubuntu5~20.04.1
+    - libnettle7=3.5.1+really3.5.1-2ubuntu0.2
     - libnewt-dev=0.52.21-4ubuntu2
     - libnewt0.52=0.52.21-4ubuntu2
     - libnfnetlink0=1.0.1-3build1
@@ -788,11 +788,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.2
-    - libpam-modules=1.3.1-5ubuntu4.2
-    - libpam-runtime=1.3.1-5ubuntu4.2
-    - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.2
+    - libpam-modules-bin=1.3.1-5ubuntu4.3
+    - libpam-modules=1.3.1-5ubuntu4.3
+    - libpam-runtime=1.3.1-5ubuntu4.3
+    - libpam-systemd=245.4-4ubuntu3.13
+    - libpam0g=1.3.1-5ubuntu4.3
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -808,7 +808,7 @@ parts:
     - libpng16-16=1.6.37-2
     - libpolkit-agent-1-0=0.105-26ubuntu1.1
     - libpolkit-gobject-1-0=0.105-26ubuntu1.1
-    - libprocps8=2:3.3.16-1ubuntu2.1
+    - libprocps8=2:3.3.16-1ubuntu2.3
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
     - libpsl5=0.21.0-1ubuntu1
@@ -816,8 +816,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.3
-    - libpython3.8-stdlib=3.8.5-1~20.04.3
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.1
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -839,13 +839,13 @@ parts:
     - libsqlite3-0=3.31.1-4ubuntu0.2
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1
-    - libssh-4=0.9.3-2ubuntu2.1
-    - libssl1.1=1.1.1f-1ubuntu2.4
+    - libssh-4=0.9.3-2ubuntu2.2
+    - libssl1.1=1.1.1f-1ubuntu2.8
     - libstdc++-9-dev=9.3.0-17ubuntu1~20.04
-    - libstdc++6=10.2.0-5ubuntu1~20.04
+    - libstdc++6=10.3.0-1ubuntu1~20.04
     - libstemmer0d=0+svn585-2
-    - libsystemd-dev=245.4-4ubuntu3.6
-    - libsystemd0=245.4-4ubuntu3.6
+    - libsystemd-dev=245.4-4ubuntu3.13
+    - libsystemd0=245.4-4ubuntu3.13
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -855,10 +855,10 @@ parts:
     - libtinfo6=6.2-0ubuntu2
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
-    - libtsan0=10.2.0-5ubuntu1~20.04
-    - libubsan1=10.2.0-5ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.6
-    - libudev1=245.4-4ubuntu3.6
+    - libtsan0=10.3.0-1ubuntu1~20.04
+    - libubsan1=10.3.0-1ubuntu1~20.04
+    - libudev-dev=245.4-4ubuntu3.13
+    - libudev1=245.4-4ubuntu3.13
     - libunbound8=1.9.4-2ubuntu1.2
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -868,16 +868,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-74.83
+    - linux-libc-dev=5.4.0-88.99
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04
+    - login=1:4.8.1-1ubuntu5.20.04.1
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - lsb-release=11.1.0ubuntu2
@@ -885,21 +885,21 @@ parts:
     - make=4.2.1-1.2
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
-    - modemmanager-dev=1.12.8-1
+    - modemmanager-dev=1.16.6-2~20.04
     - mount=2.34-0.1ubuntu9.1
     - ncurses-base=6.2-0ubuntu2
     - ncurses-bin=6.2-0ubuntu2
     - netbase=6.1
-    - netplan.io=0.102-0ubuntu1~20.04.2
-    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+    - netplan.io=0.103-0ubuntu5~20.04.1
+    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.2
-    - openssl=1.1.1f-1ubuntu2.4
+    - openssh-client=1:8.2p1-4ubuntu0.3
+    - openssl=1.1.1f-1ubuntu2.8
     - optipng=0.7.7-1
     - packagekit=1.1.13-2ubuntu1.1
     - pandoc-data=2.5-3build2
     - pandoc=2.5-3build2
-    - passwd=1:4.8.1-1ubuntu5.20.04
+    - passwd=1:4.8.1-1ubuntu5.20.04.1
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -911,15 +911,15 @@ parts:
     - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
-    - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.5
+    - procps=2:3.3.16-1ubuntu2.3
+    - python-apt-common=2.0.0ubuntu0.20.04.6
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.5
+    - python3-apt=2.0.0ubuntu0.20.04.6
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
@@ -943,8 +943,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.3
-    - python3.8=3.8.5-1~20.04.3
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - python3.8=3.8.10-0ubuntu1~20.04.1
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -952,20 +952,20 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.48.3+20.04
+    - snapd=2.51.1+20.04ubuntu2
     - socat=1.7.3.3-2
     - software-properties-common=0.98.9.5
-    - squashfs-tools=1:4.4-1
+    - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.2
-    - systemd-sysv=245.4-4ubuntu3.6
-    - systemd-timesyncd=245.4-4ubuntu3.6
-    - systemd=245.4-4ubuntu3.6
+    - systemd-sysv=245.4-4ubuntu3.13
+    - systemd-timesyncd=245.4-4ubuntu3.13
+    - systemd=245.4-4ubuntu3.13
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.1
-    - tzdata=2021a-0ubuntu0.20.04
+    - tzdata=2021a-2ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.6
+    - udev=245.4-4ubuntu3.13
     - util-linux=2.34-0.1ubuntu9.1
     - uuid-dev=2.34-0.1ubuntu9.1
     - xml-core=0.18+nmu1
@@ -974,16 +974,16 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-l3k0331h8ozs1nd6/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-ffemzzzsbyta1cnd/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-ffemzzzsbyta1cnd"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -996,8 +996,8 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
   netplan:
     build-packages:
     - build-essential
@@ -1010,12 +1010,12 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.5
+    - apt=2.0.6
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.3
+    - base-files=11ubuntu5.4
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.1
     - binutils-aarch64-linux-gnu=2.34-6ubuntu1.1
@@ -1025,7 +1025,7 @@ parts:
     - bsdutils=1:2.34-0.1ubuntu9.1
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
-    - ca-certificates=20210119~20.04.1
+    - ca-certificates=20210119~20.04.2
     - coreutils=8.30-3ubuntu2
     - cpp-9=9.3.0-17ubuntu1~20.04
     - cpp=4:9.3.0-1ubuntu2
@@ -1038,7 +1038,7 @@ parts:
     - debianutils=4.9.1
     - diffstat=1.63-1
     - diffutils=1:3.7-3
-    - distro-info-data=0.43ubuntu1.5
+    - distro-info-data=0.43ubuntu1.8
     - docbook-to-man=1:2.0.0-42
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
@@ -1053,7 +1053,7 @@ parts:
     - fuse=2.9.9-3
     - g++-9=9.3.0-17ubuntu1~20.04
     - g++=4:9.3.0-1ubuntu2
-    - gcc-10-base=10.2.0-5ubuntu1~20.04
+    - gcc-10-base=10.3.0-1ubuntu1~20.04
     - gcc-9-base=9.3.0-17ubuntu1~20.04
     - gcc-9=9.3.0-17ubuntu1~20.04
     - gcc=4:9.3.0-1ubuntu2
@@ -1061,10 +1061,10 @@ parts:
     - gettext=0.19.8.1-10build1
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-    - gir1.2-modemmanager-1.0=1.12.8-1
+    - gir1.2-modemmanager-1.0=1.16.6-2~20.04
     - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
-    - git-man=1:2.25.1-1ubuntu3.1
-    - git=1:2.25.1-1ubuntu3.1
+    - git-man=1:2.25.1-1ubuntu3.2
+    - git=1:2.25.1-1ubuntu3.2
     - glib-networking-common=2.64.2-1ubuntu0.1
     - glib-networking-services=2.64.2-1ubuntu0.1
     - glib-networking=2.64.2-1ubuntu0.1
@@ -1087,12 +1087,12 @@ parts:
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
     - libappstream4=0.12.10-2
-    - libapt-pkg6.0=2.0.5
+    - libapt-pkg6.0=2.0.6
     - libargon2-1=0~20171227-0.2
     - libasan5=9.3.0-17ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libassuan0=2.5.3-7ubuntu2
-    - libatomic1=10.2.0-5ubuntu1~20.04
+    - libatomic1=10.3.0-1ubuntu1~20.04
     - libattr1=1:2.4.48-5
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
@@ -1110,7 +1110,7 @@ parts:
     - libcap2-bin=1:2.32-1
     - libcap2=1:2.32-1
     - libcbor0.6=0.6.0-0ubuntu1
-    - libcc1-0=10.2.0-5ubuntu1~20.04
+    - libcc1-0=10.3.0-1ubuntu1~20.04
     - libcom-err2=1.45.5-2ubuntu1
     - libcroco3=0.6.13-1
     - libcrypt-dev=1:4.4.10-10ubuntu4
@@ -1118,8 +1118,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.3
     - libctf-nobfd0=2.34-6ubuntu1.1
     - libctf0=2.34-6ubuntu1.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.1
     - libdbus-1-dev=1.12.16-2ubuntu2.1
@@ -1145,27 +1145,27 @@ parts:
     - libfile-listing-perl=6.04-1
     - libfuse2=2.9.9-3
     - libgcc-9-dev=9.3.0-17ubuntu1~20.04
-    - libgcc-s1=10.2.0-5ubuntu1~20.04
-    - libgcrypt20=1.8.5-5ubuntu1
+    - libgcc-s1=10.3.0-1ubuntu1~20.04
+    - libgcrypt20=1.8.5-5ubuntu1.1
     - libgdbm-compat4=1.18.1-5
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
-    - libgnutls-dane0=3.6.13-2ubuntu1.3
-    - libgnutls-openssl27=3.6.13-2ubuntu1.3
-    - libgnutls28-dev=3.6.13-2ubuntu1.3
-    - libgnutls30=3.6.13-2ubuntu1.3
-    - libgnutlsxx28=3.6.13-2ubuntu1.3
-    - libgomp1=10.2.0-5ubuntu1~20.04
+    - libgnutls-dane0=3.6.13-2ubuntu1.6
+    - libgnutls-openssl27=3.6.13-2ubuntu1.6
+    - libgnutls28-dev=3.6.13-2ubuntu1.6
+    - libgnutls30=3.6.13-2ubuntu1.6
+    - libgnutlsxx28=3.6.13-2ubuntu1.6
+    - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1173,7 +1173,7 @@ parts:
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimntlm0-heimdal=7.7.0+dfsg-1ubuntu1
-    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.1
+    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.2
     - libhtml-parser-perl=3.72-5
     - libhtml-tagset-perl=3.20-4
     - libhtml-tree-perl=5.07-2
@@ -1190,7 +1190,7 @@ parts:
     - libip4tc2=1.8.4-3ubuntu2
     - libip6tc2=1.8.4-3ubuntu2
     - libisl22=0.22.1-1
-    - libitm1=10.2.0-5ubuntu1~20.04
+    - libitm1=10.3.0-1ubuntu1~20.04
     - libiw-dev=30~pre9-13ubuntu1
     - libiw30=30~pre9-13ubuntu1
     - libjansson-dev=2.12-1build1
@@ -1207,7 +1207,7 @@ parts:
     - liblmdb0=0.9.24-1
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
-    - liblsan0=10.2.0-5ubuntu1~20.04
+    - liblsan0=10.3.0-1ubuntu1~20.04
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
     - liblz4-1=1.9.2-2ubuntu0.20.04.1
@@ -1215,8 +1215,8 @@ parts:
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
     - libmagic1=1:5.38-4
-    - libmm-glib-dev=1.12.8-1
-    - libmm-glib0=1.12.8-1
+    - libmm-glib-dev=1.16.6-2~20.04
+    - libmm-glib0=1.16.6-2~20.04
     - libmnl0=1.0.4-2
     - libmount-dev=2.34-0.1ubuntu9.1
     - libmount1=2.34-0.1ubuntu9.1
@@ -1231,9 +1231,9 @@ parts:
     - libnet-http-perl=6.19-1
     - libnet-ssleay-perl=1.88-2ubuntu1
     - libnetfilter-conntrack3=1.0.7-2
-    - libnetplan-dev=0.102-0ubuntu1~20.04.2
-    - libnetplan0=0.102-0ubuntu1~20.04.2
-    - libnettle7=3.5.1+really3.5.1-2ubuntu0.1
+    - libnetplan-dev=0.103-0ubuntu5~20.04.1
+    - libnetplan0=0.103-0ubuntu5~20.04.1
+    - libnettle7=3.5.1+really3.5.1-2ubuntu0.2
     - libnewt-dev=0.52.21-4ubuntu2
     - libnewt0.52=0.52.21-4ubuntu2
     - libnfnetlink0=1.0.1-3build1
@@ -1256,11 +1256,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.2
-    - libpam-modules=1.3.1-5ubuntu4.2
-    - libpam-runtime=1.3.1-5ubuntu4.2
-    - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.2
+    - libpam-modules-bin=1.3.1-5ubuntu4.3
+    - libpam-modules=1.3.1-5ubuntu4.3
+    - libpam-runtime=1.3.1-5ubuntu4.3
+    - libpam-systemd=245.4-4ubuntu3.13
+    - libpam0g=1.3.1-5ubuntu4.3
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -1276,7 +1276,7 @@ parts:
     - libpng16-16=1.6.37-2
     - libpolkit-agent-1-0=0.105-26ubuntu1.1
     - libpolkit-gobject-1-0=0.105-26ubuntu1.1
-    - libprocps8=2:3.3.16-1ubuntu2.1
+    - libprocps8=2:3.3.16-1ubuntu2.3
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
     - libpsl5=0.21.0-1ubuntu1
@@ -1284,8 +1284,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.3
-    - libpython3.8-stdlib=3.8.5-1~20.04.3
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.1
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1307,13 +1307,13 @@ parts:
     - libsqlite3-0=3.31.1-4ubuntu0.2
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1
-    - libssh-4=0.9.3-2ubuntu2.1
-    - libssl1.1=1.1.1f-1ubuntu2.4
+    - libssh-4=0.9.3-2ubuntu2.2
+    - libssl1.1=1.1.1f-1ubuntu2.8
     - libstdc++-9-dev=9.3.0-17ubuntu1~20.04
-    - libstdc++6=10.2.0-5ubuntu1~20.04
+    - libstdc++6=10.3.0-1ubuntu1~20.04
     - libstemmer0d=0+svn585-2
-    - libsystemd-dev=245.4-4ubuntu3.6
-    - libsystemd0=245.4-4ubuntu3.6
+    - libsystemd-dev=245.4-4ubuntu3.13
+    - libsystemd0=245.4-4ubuntu3.13
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1323,10 +1323,10 @@ parts:
     - libtinfo6=6.2-0ubuntu2
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
-    - libtsan0=10.2.0-5ubuntu1~20.04
-    - libubsan1=10.2.0-5ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.6
-    - libudev1=245.4-4ubuntu3.6
+    - libtsan0=10.3.0-1ubuntu1~20.04
+    - libubsan1=10.3.0-1ubuntu1~20.04
+    - libudev-dev=245.4-4ubuntu3.13
+    - libudev1=245.4-4ubuntu3.13
     - libunbound8=1.9.4-2ubuntu1.2
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1336,16 +1336,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-74.83
+    - linux-libc-dev=5.4.0-88.99
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04
+    - login=1:4.8.1-1ubuntu5.20.04.1
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - lsb-release=11.1.0ubuntu2
@@ -1353,21 +1353,21 @@ parts:
     - make=4.2.1-1.2
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
-    - modemmanager-dev=1.12.8-1
+    - modemmanager-dev=1.16.6-2~20.04
     - mount=2.34-0.1ubuntu9.1
     - ncurses-base=6.2-0ubuntu2
     - ncurses-bin=6.2-0ubuntu2
     - netbase=6.1
-    - netplan.io=0.102-0ubuntu1~20.04.2
-    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+    - netplan.io=0.103-0ubuntu5~20.04.1
+    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.2
-    - openssl=1.1.1f-1ubuntu2.4
+    - openssh-client=1:8.2p1-4ubuntu0.3
+    - openssl=1.1.1f-1ubuntu2.8
     - optipng=0.7.7-1
     - packagekit=1.1.13-2ubuntu1.1
     - pandoc-data=2.5-3build2
     - pandoc=2.5-3build2
-    - passwd=1:4.8.1-1ubuntu5.20.04
+    - passwd=1:4.8.1-1ubuntu5.20.04.1
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -1379,15 +1379,15 @@ parts:
     - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
-    - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.5
+    - procps=2:3.3.16-1ubuntu2.3
+    - python-apt-common=2.0.0ubuntu0.20.04.6
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.5
+    - python3-apt=2.0.0ubuntu0.20.04.6
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
@@ -1411,8 +1411,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.3
-    - python3.8=3.8.5-1~20.04.3
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - python3.8=3.8.10-0ubuntu1~20.04.1
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1420,20 +1420,20 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.48.3+20.04
+    - snapd=2.51.1+20.04ubuntu2
     - socat=1.7.3.3-2
     - software-properties-common=0.98.9.5
-    - squashfs-tools=1:4.4-1
+    - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.2
-    - systemd-sysv=245.4-4ubuntu3.6
-    - systemd-timesyncd=245.4-4ubuntu3.6
-    - systemd=245.4-4ubuntu3.6
+    - systemd-sysv=245.4-4ubuntu3.13
+    - systemd-timesyncd=245.4-4ubuntu3.13
+    - systemd=245.4-4ubuntu3.13
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.1
-    - tzdata=2021a-0ubuntu0.20.04
+    - tzdata=2021a-2ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.6
+    - udev=245.4-4ubuntu3.13
     - util-linux=2.34-0.1ubuntu9.1
     - uuid-dev=2.34-0.1ubuntu9.1
     - xml-core=0.18+nmu1
@@ -1442,27 +1442,27 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     override-build: |
       set -ex
-      git apply "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/netplan.patch
+      git apply "/build/ci-network-manager-ffemzzzsbyta1cnd"/snap-patch/netplan.patch
       snapcraftctl build
     plugin: make
     prime:
     - lib/netplan/generate
     source: https://git.launchpad.net/ubuntu/+source/netplan.io
-    source-branch: applied/ubuntu/focal-updates
+    source-branch: ''
     source-checksum: ''
     source-commit: ''
-    source-tag: ''
+    source-tag: applied/0.102-0ubuntu1_20.04.2
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
     - --prefix=/usr
@@ -1550,12 +1550,12 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.5
+    - apt=2.0.6
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.3
+    - base-files=11ubuntu5.4
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.1
     - binutils-aarch64-linux-gnu=2.34-6ubuntu1.1
@@ -1565,7 +1565,7 @@ parts:
     - bsdutils=1:2.34-0.1ubuntu9.1
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
-    - ca-certificates=20210119~20.04.1
+    - ca-certificates=20210119~20.04.2
     - coreutils=8.30-3ubuntu2
     - cpp-9=9.3.0-17ubuntu1~20.04
     - cpp=4:9.3.0-1ubuntu2
@@ -1578,7 +1578,7 @@ parts:
     - debianutils=4.9.1
     - diffstat=1.63-1
     - diffutils=1:3.7-3
-    - distro-info-data=0.43ubuntu1.5
+    - distro-info-data=0.43ubuntu1.8
     - docbook-to-man=1:2.0.0-42
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
@@ -1593,7 +1593,7 @@ parts:
     - fuse=2.9.9-3
     - g++-9=9.3.0-17ubuntu1~20.04
     - g++=4:9.3.0-1ubuntu2
-    - gcc-10-base=10.2.0-5ubuntu1~20.04
+    - gcc-10-base=10.3.0-1ubuntu1~20.04
     - gcc-9-base=9.3.0-17ubuntu1~20.04
     - gcc-9=9.3.0-17ubuntu1~20.04
     - gcc=4:9.3.0-1ubuntu2
@@ -1601,10 +1601,10 @@ parts:
     - gettext=0.19.8.1-10build1
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-    - gir1.2-modemmanager-1.0=1.12.8-1
+    - gir1.2-modemmanager-1.0=1.16.6-2~20.04
     - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
-    - git-man=1:2.25.1-1ubuntu3.1
-    - git=1:2.25.1-1ubuntu3.1
+    - git-man=1:2.25.1-1ubuntu3.2
+    - git=1:2.25.1-1ubuntu3.2
     - glib-networking-common=2.64.2-1ubuntu0.1
     - glib-networking-services=2.64.2-1ubuntu0.1
     - glib-networking=2.64.2-1ubuntu0.1
@@ -1627,12 +1627,12 @@ parts:
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
     - libappstream4=0.12.10-2
-    - libapt-pkg6.0=2.0.5
+    - libapt-pkg6.0=2.0.6
     - libargon2-1=0~20171227-0.2
     - libasan5=9.3.0-17ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libassuan0=2.5.3-7ubuntu2
-    - libatomic1=10.2.0-5ubuntu1~20.04
+    - libatomic1=10.3.0-1ubuntu1~20.04
     - libattr1=1:2.4.48-5
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
@@ -1650,7 +1650,7 @@ parts:
     - libcap2-bin=1:2.32-1
     - libcap2=1:2.32-1
     - libcbor0.6=0.6.0-0ubuntu1
-    - libcc1-0=10.2.0-5ubuntu1~20.04
+    - libcc1-0=10.3.0-1ubuntu1~20.04
     - libcom-err2=1.45.5-2ubuntu1
     - libcroco3=0.6.13-1
     - libcrypt-dev=1:4.4.10-10ubuntu4
@@ -1658,8 +1658,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.3
     - libctf-nobfd0=2.34-6ubuntu1.1
     - libctf0=2.34-6ubuntu1.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.1
     - libdbus-1-dev=1.12.16-2ubuntu2.1
@@ -1685,27 +1685,27 @@ parts:
     - libfile-listing-perl=6.04-1
     - libfuse2=2.9.9-3
     - libgcc-9-dev=9.3.0-17ubuntu1~20.04
-    - libgcc-s1=10.2.0-5ubuntu1~20.04
-    - libgcrypt20=1.8.5-5ubuntu1
+    - libgcc-s1=10.3.0-1ubuntu1~20.04
+    - libgcrypt20=1.8.5-5ubuntu1.1
     - libgdbm-compat4=1.18.1-5
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
-    - libgnutls-dane0=3.6.13-2ubuntu1.3
-    - libgnutls-openssl27=3.6.13-2ubuntu1.3
-    - libgnutls28-dev=3.6.13-2ubuntu1.3
-    - libgnutls30=3.6.13-2ubuntu1.3
-    - libgnutlsxx28=3.6.13-2ubuntu1.3
-    - libgomp1=10.2.0-5ubuntu1~20.04
+    - libgnutls-dane0=3.6.13-2ubuntu1.6
+    - libgnutls-openssl27=3.6.13-2ubuntu1.6
+    - libgnutls28-dev=3.6.13-2ubuntu1.6
+    - libgnutls30=3.6.13-2ubuntu1.6
+    - libgnutlsxx28=3.6.13-2ubuntu1.6
+    - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1713,7 +1713,7 @@ parts:
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimntlm0-heimdal=7.7.0+dfsg-1ubuntu1
-    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.1
+    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.2
     - libhtml-parser-perl=3.72-5
     - libhtml-tagset-perl=3.20-4
     - libhtml-tree-perl=5.07-2
@@ -1730,7 +1730,7 @@ parts:
     - libip4tc2=1.8.4-3ubuntu2
     - libip6tc2=1.8.4-3ubuntu2
     - libisl22=0.22.1-1
-    - libitm1=10.2.0-5ubuntu1~20.04
+    - libitm1=10.3.0-1ubuntu1~20.04
     - libiw-dev=30~pre9-13ubuntu1
     - libiw30=30~pre9-13ubuntu1
     - libjansson-dev=2.12-1build1
@@ -1747,7 +1747,7 @@ parts:
     - liblmdb0=0.9.24-1
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
-    - liblsan0=10.2.0-5ubuntu1~20.04
+    - liblsan0=10.3.0-1ubuntu1~20.04
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
     - liblz4-1=1.9.2-2ubuntu0.20.04.1
@@ -1755,8 +1755,8 @@ parts:
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
     - libmagic1=1:5.38-4
-    - libmm-glib-dev=1.12.8-1
-    - libmm-glib0=1.12.8-1
+    - libmm-glib-dev=1.16.6-2~20.04
+    - libmm-glib0=1.16.6-2~20.04
     - libmnl0=1.0.4-2
     - libmount-dev=2.34-0.1ubuntu9.1
     - libmount1=2.34-0.1ubuntu9.1
@@ -1771,9 +1771,9 @@ parts:
     - libnet-http-perl=6.19-1
     - libnet-ssleay-perl=1.88-2ubuntu1
     - libnetfilter-conntrack3=1.0.7-2
-    - libnetplan-dev=0.102-0ubuntu1~20.04.2
-    - libnetplan0=0.102-0ubuntu1~20.04.2
-    - libnettle7=3.5.1+really3.5.1-2ubuntu0.1
+    - libnetplan-dev=0.103-0ubuntu5~20.04.1
+    - libnetplan0=0.103-0ubuntu5~20.04.1
+    - libnettle7=3.5.1+really3.5.1-2ubuntu0.2
     - libnewt-dev=0.52.21-4ubuntu2
     - libnewt0.52=0.52.21-4ubuntu2
     - libnfnetlink0=1.0.1-3build1
@@ -1796,11 +1796,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.2
-    - libpam-modules=1.3.1-5ubuntu4.2
-    - libpam-runtime=1.3.1-5ubuntu4.2
-    - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.2
+    - libpam-modules-bin=1.3.1-5ubuntu4.3
+    - libpam-modules=1.3.1-5ubuntu4.3
+    - libpam-runtime=1.3.1-5ubuntu4.3
+    - libpam-systemd=245.4-4ubuntu3.13
+    - libpam0g=1.3.1-5ubuntu4.3
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -1816,7 +1816,7 @@ parts:
     - libpng16-16=1.6.37-2
     - libpolkit-agent-1-0=0.105-26ubuntu1.1
     - libpolkit-gobject-1-0=0.105-26ubuntu1.1
-    - libprocps8=2:3.3.16-1ubuntu2.1
+    - libprocps8=2:3.3.16-1ubuntu2.3
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
     - libpsl5=0.21.0-1ubuntu1
@@ -1824,8 +1824,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.3
-    - libpython3.8-stdlib=3.8.5-1~20.04.3
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.1
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1847,13 +1847,13 @@ parts:
     - libsqlite3-0=3.31.1-4ubuntu0.2
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1
-    - libssh-4=0.9.3-2ubuntu2.1
-    - libssl1.1=1.1.1f-1ubuntu2.4
+    - libssh-4=0.9.3-2ubuntu2.2
+    - libssl1.1=1.1.1f-1ubuntu2.8
     - libstdc++-9-dev=9.3.0-17ubuntu1~20.04
-    - libstdc++6=10.2.0-5ubuntu1~20.04
+    - libstdc++6=10.3.0-1ubuntu1~20.04
     - libstemmer0d=0+svn585-2
-    - libsystemd-dev=245.4-4ubuntu3.6
-    - libsystemd0=245.4-4ubuntu3.6
+    - libsystemd-dev=245.4-4ubuntu3.13
+    - libsystemd0=245.4-4ubuntu3.13
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1863,10 +1863,10 @@ parts:
     - libtinfo6=6.2-0ubuntu2
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
-    - libtsan0=10.2.0-5ubuntu1~20.04
-    - libubsan1=10.2.0-5ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.6
-    - libudev1=245.4-4ubuntu3.6
+    - libtsan0=10.3.0-1ubuntu1~20.04
+    - libubsan1=10.3.0-1ubuntu1~20.04
+    - libudev-dev=245.4-4ubuntu3.13
+    - libudev1=245.4-4ubuntu3.13
     - libunbound8=1.9.4-2ubuntu1.2
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1876,16 +1876,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-74.83
+    - linux-libc-dev=5.4.0-88.99
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04
+    - login=1:4.8.1-1ubuntu5.20.04.1
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - lsb-release=11.1.0ubuntu2
@@ -1893,21 +1893,21 @@ parts:
     - make=4.2.1-1.2
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
-    - modemmanager-dev=1.12.8-1
+    - modemmanager-dev=1.16.6-2~20.04
     - mount=2.34-0.1ubuntu9.1
     - ncurses-base=6.2-0ubuntu2
     - ncurses-bin=6.2-0ubuntu2
     - netbase=6.1
-    - netplan.io=0.102-0ubuntu1~20.04.2
-    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+    - netplan.io=0.103-0ubuntu5~20.04.1
+    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.2
-    - openssl=1.1.1f-1ubuntu2.4
+    - openssh-client=1:8.2p1-4ubuntu0.3
+    - openssl=1.1.1f-1ubuntu2.8
     - optipng=0.7.7-1
     - packagekit=1.1.13-2ubuntu1.1
     - pandoc-data=2.5-3build2
     - pandoc=2.5-3build2
-    - passwd=1:4.8.1-1ubuntu5.20.04
+    - passwd=1:4.8.1-1ubuntu5.20.04.1
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -1919,15 +1919,15 @@ parts:
     - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
-    - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.5
+    - procps=2:3.3.16-1ubuntu2.3
+    - python-apt-common=2.0.0ubuntu0.20.04.6
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.5
+    - python3-apt=2.0.0ubuntu0.20.04.6
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
@@ -1951,8 +1951,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.3
-    - python3.8=3.8.5-1~20.04.3
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - python3.8=3.8.10-0ubuntu1~20.04.1
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1960,20 +1960,20 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.48.3+20.04
+    - snapd=2.51.1+20.04ubuntu2
     - socat=1.7.3.3-2
     - software-properties-common=0.98.9.5
-    - squashfs-tools=1:4.4-1
+    - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.2
-    - systemd-sysv=245.4-4ubuntu3.6
-    - systemd-timesyncd=245.4-4ubuntu3.6
-    - systemd=245.4-4ubuntu3.6
+    - systemd-sysv=245.4-4ubuntu3.13
+    - systemd-timesyncd=245.4-4ubuntu3.13
+    - systemd=245.4-4ubuntu3.13
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.1
-    - tzdata=2021a-0ubuntu0.20.04
+    - tzdata=2021a-2ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.6
+    - udev=245.4-4ubuntu3.13
     - util-linux=2.34-0.1ubuntu9.1
     - uuid-dev=2.34-0.1ubuntu9.1
     - xml-core=0.18+nmu1
@@ -1982,19 +1982,19 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-l3k0331h8ozs1nd6/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-ffemzzzsbyta1cnd/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-ffemzzzsbyta1cnd"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -2007,7 +2007,7 @@ parts:
       make check
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-l3k0331h8ozs1nd6"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-ffemzzzsbyta1cnd"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -2100,7 +2100,7 @@ parts:
     - iputils-arping=3:20190709-3
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
     - libdbus-glib-1-2=0.110-5fakssync1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2110,7 +2110,7 @@ parts:
     - libjansson4=2.12-1build1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libmm-glib0=1.12.8-1
+    - libmm-glib0=1.16.6-2~20.04
     - libndp0=1.7-0ubuntu1
     - libnewt0.52=0.52.21-4ubuntu2
     - libnghttp2-14=1.40.0-1build1
@@ -2120,25 +2120,25 @@ parts:
     - librtmp1=2.4+20151223.gitfa8646d.1-2build1
     - libsasl2-2=2.1.27+dfsg-2
     - libslang2=2.3.2-4
-    - libssh-4=0.9.3-2ubuntu2.1
+    - libssh-4=0.9.3-2ubuntu2.2
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
   networkmanager-common:
     build-packages: []
     installed-packages:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.5
+    - apt=2.0.6
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.3
+    - base-files=11ubuntu5.4
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.1
     - binutils-aarch64-linux-gnu=2.34-6ubuntu1.1
@@ -2148,7 +2148,7 @@ parts:
     - bsdutils=1:2.34-0.1ubuntu9.1
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
-    - ca-certificates=20210119~20.04.1
+    - ca-certificates=20210119~20.04.2
     - coreutils=8.30-3ubuntu2
     - cpp-9=9.3.0-17ubuntu1~20.04
     - cpp=4:9.3.0-1ubuntu2
@@ -2161,7 +2161,7 @@ parts:
     - debianutils=4.9.1
     - diffstat=1.63-1
     - diffutils=1:3.7-3
-    - distro-info-data=0.43ubuntu1.5
+    - distro-info-data=0.43ubuntu1.8
     - docbook-to-man=1:2.0.0-42
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
@@ -2176,7 +2176,7 @@ parts:
     - fuse=2.9.9-3
     - g++-9=9.3.0-17ubuntu1~20.04
     - g++=4:9.3.0-1ubuntu2
-    - gcc-10-base=10.2.0-5ubuntu1~20.04
+    - gcc-10-base=10.3.0-1ubuntu1~20.04
     - gcc-9-base=9.3.0-17ubuntu1~20.04
     - gcc-9=9.3.0-17ubuntu1~20.04
     - gcc=4:9.3.0-1ubuntu2
@@ -2184,10 +2184,10 @@ parts:
     - gettext=0.19.8.1-10build1
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-    - gir1.2-modemmanager-1.0=1.12.8-1
+    - gir1.2-modemmanager-1.0=1.16.6-2~20.04
     - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
-    - git-man=1:2.25.1-1ubuntu3.1
-    - git=1:2.25.1-1ubuntu3.1
+    - git-man=1:2.25.1-1ubuntu3.2
+    - git=1:2.25.1-1ubuntu3.2
     - glib-networking-common=2.64.2-1ubuntu0.1
     - glib-networking-services=2.64.2-1ubuntu0.1
     - glib-networking=2.64.2-1ubuntu0.1
@@ -2210,12 +2210,12 @@ parts:
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
     - libappstream4=0.12.10-2
-    - libapt-pkg6.0=2.0.5
+    - libapt-pkg6.0=2.0.6
     - libargon2-1=0~20171227-0.2
     - libasan5=9.3.0-17ubuntu1~20.04
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libassuan0=2.5.3-7ubuntu2
-    - libatomic1=10.2.0-5ubuntu1~20.04
+    - libatomic1=10.3.0-1ubuntu1~20.04
     - libattr1=1:2.4.48-5
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
@@ -2233,7 +2233,7 @@ parts:
     - libcap2-bin=1:2.32-1
     - libcap2=1:2.32-1
     - libcbor0.6=0.6.0-0ubuntu1
-    - libcc1-0=10.2.0-5ubuntu1~20.04
+    - libcc1-0=10.3.0-1ubuntu1~20.04
     - libcom-err2=1.45.5-2ubuntu1
     - libcroco3=0.6.13-1
     - libcrypt-dev=1:4.4.10-10ubuntu4
@@ -2241,8 +2241,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.3
     - libctf-nobfd0=2.34-6ubuntu1.1
     - libctf0=2.34-6ubuntu1.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.1
     - libdbus-1-dev=1.12.16-2ubuntu2.1
@@ -2268,27 +2268,27 @@ parts:
     - libfile-listing-perl=6.04-1
     - libfuse2=2.9.9-3
     - libgcc-9-dev=9.3.0-17ubuntu1~20.04
-    - libgcc-s1=10.2.0-5ubuntu1~20.04
-    - libgcrypt20=1.8.5-5ubuntu1
+    - libgcc-s1=10.3.0-1ubuntu1~20.04
+    - libgcrypt20=1.8.5-5ubuntu1.1
     - libgdbm-compat4=1.18.1-5
     - libgdbm6=1.18.1-5
     - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
     - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-    - libglib2.0-0=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-data=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-    - libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+    - libglib2.0-0=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-data=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+    - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
     - libgmp-dev=2:6.2.0+dfsg-4
     - libgmp10=2:6.2.0+dfsg-4
     - libgmpxx4ldbl=2:6.2.0+dfsg-4
-    - libgnutls-dane0=3.6.13-2ubuntu1.3
-    - libgnutls-openssl27=3.6.13-2ubuntu1.3
-    - libgnutls28-dev=3.6.13-2ubuntu1.3
-    - libgnutls30=3.6.13-2ubuntu1.3
-    - libgnutlsxx28=3.6.13-2ubuntu1.3
-    - libgomp1=10.2.0-5ubuntu1~20.04
+    - libgnutls-dane0=3.6.13-2ubuntu1.6
+    - libgnutls-openssl27=3.6.13-2ubuntu1.6
+    - libgnutls28-dev=3.6.13-2ubuntu1.6
+    - libgnutls30=3.6.13-2ubuntu1.6
+    - libgnutlsxx28=3.6.13-2ubuntu1.6
+    - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2296,7 +2296,7 @@ parts:
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimntlm0-heimdal=7.7.0+dfsg-1ubuntu1
-    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.1
+    - libhogweed5=3.5.1+really3.5.1-2ubuntu0.2
     - libhtml-parser-perl=3.72-5
     - libhtml-tagset-perl=3.20-4
     - libhtml-tree-perl=5.07-2
@@ -2313,7 +2313,7 @@ parts:
     - libip4tc2=1.8.4-3ubuntu2
     - libip6tc2=1.8.4-3ubuntu2
     - libisl22=0.22.1-1
-    - libitm1=10.2.0-5ubuntu1~20.04
+    - libitm1=10.3.0-1ubuntu1~20.04
     - libiw-dev=30~pre9-13ubuntu1
     - libiw30=30~pre9-13ubuntu1
     - libjansson-dev=2.12-1build1
@@ -2330,7 +2330,7 @@ parts:
     - liblmdb0=0.9.24-1
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
-    - liblsan0=10.2.0-5ubuntu1~20.04
+    - liblsan0=10.3.0-1ubuntu1~20.04
     - liblwp-mediatypes-perl=6.04-1
     - liblwp-protocol-https-perl=6.07-2ubuntu2
     - liblz4-1=1.9.2-2ubuntu0.20.04.1
@@ -2338,8 +2338,8 @@ parts:
     - liblzo2-2=2.10-2
     - libmagic-mgc=1:5.38-4
     - libmagic1=1:5.38-4
-    - libmm-glib-dev=1.12.8-1
-    - libmm-glib0=1.12.8-1
+    - libmm-glib-dev=1.16.6-2~20.04
+    - libmm-glib0=1.16.6-2~20.04
     - libmnl0=1.0.4-2
     - libmount-dev=2.34-0.1ubuntu9.1
     - libmount1=2.34-0.1ubuntu9.1
@@ -2354,9 +2354,9 @@ parts:
     - libnet-http-perl=6.19-1
     - libnet-ssleay-perl=1.88-2ubuntu1
     - libnetfilter-conntrack3=1.0.7-2
-    - libnetplan-dev=0.102-0ubuntu1~20.04.2
-    - libnetplan0=0.102-0ubuntu1~20.04.2
-    - libnettle7=3.5.1+really3.5.1-2ubuntu0.1
+    - libnetplan-dev=0.103-0ubuntu5~20.04.1
+    - libnetplan0=0.103-0ubuntu5~20.04.1
+    - libnettle7=3.5.1+really3.5.1-2ubuntu0.2
     - libnewt-dev=0.52.21-4ubuntu2
     - libnewt0.52=0.52.21-4ubuntu2
     - libnfnetlink0=1.0.1-3build1
@@ -2379,11 +2379,11 @@ parts:
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-    - libpam-modules-bin=1.3.1-5ubuntu4.2
-    - libpam-modules=1.3.1-5ubuntu4.2
-    - libpam-runtime=1.3.1-5ubuntu4.2
-    - libpam-systemd=245.4-4ubuntu3.6
-    - libpam0g=1.3.1-5ubuntu4.2
+    - libpam-modules-bin=1.3.1-5ubuntu4.3
+    - libpam-modules=1.3.1-5ubuntu4.3
+    - libpam-runtime=1.3.1-5ubuntu4.3
+    - libpam-systemd=245.4-4ubuntu3.13
+    - libpam0g=1.3.1-5ubuntu4.3
     - libpcre16-3=2:8.39-12build1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
@@ -2399,7 +2399,7 @@ parts:
     - libpng16-16=1.6.37-2
     - libpolkit-agent-1-0=0.105-26ubuntu1.1
     - libpolkit-gobject-1-0=0.105-26ubuntu1.1
-    - libprocps8=2:3.3.16-1ubuntu2.1
+    - libprocps8=2:3.3.16-1ubuntu2.3
     - libproxy1v5=0.4.15-10ubuntu1.2
     - libpsl-dev=0.21.0-1ubuntu1
     - libpsl5=0.21.0-1ubuntu1
@@ -2407,8 +2407,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.1
     - libpython2.7-stdlib=2.7.18-1~20.04.1
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.5-1~20.04.3
-    - libpython3.8-stdlib=3.8.5-1~20.04.3
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.1
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2430,13 +2430,13 @@ parts:
     - libsqlite3-0=3.31.1-4ubuntu0.2
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1
-    - libssh-4=0.9.3-2ubuntu2.1
-    - libssl1.1=1.1.1f-1ubuntu2.4
+    - libssh-4=0.9.3-2ubuntu2.2
+    - libssl1.1=1.1.1f-1ubuntu2.8
     - libstdc++-9-dev=9.3.0-17ubuntu1~20.04
-    - libstdc++6=10.2.0-5ubuntu1~20.04
+    - libstdc++6=10.3.0-1ubuntu1~20.04
     - libstemmer0d=0+svn585-2
-    - libsystemd-dev=245.4-4ubuntu3.6
-    - libsystemd0=245.4-4ubuntu3.6
+    - libsystemd-dev=245.4-4ubuntu3.13
+    - libsystemd0=245.4-4ubuntu3.13
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -2446,10 +2446,10 @@ parts:
     - libtinfo6=6.2-0ubuntu2
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
-    - libtsan0=10.2.0-5ubuntu1~20.04
-    - libubsan1=10.2.0-5ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.6
-    - libudev1=245.4-4ubuntu3.6
+    - libtsan0=10.3.0-1ubuntu1~20.04
+    - libubsan1=10.3.0-1ubuntu1~20.04
+    - libudev-dev=245.4-4ubuntu3.13
+    - libudev1=245.4-4ubuntu3.13
     - libunbound8=1.9.4-2ubuntu1.2
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -2459,16 +2459,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-74.83
+    - linux-libc-dev=5.4.0-88.99
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04
+    - login=1:4.8.1-1ubuntu5.20.04.1
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - lsb-release=11.1.0ubuntu2
@@ -2476,21 +2476,21 @@ parts:
     - make=4.2.1-1.2
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
-    - modemmanager-dev=1.12.8-1
+    - modemmanager-dev=1.16.6-2~20.04
     - mount=2.34-0.1ubuntu9.1
     - ncurses-base=6.2-0ubuntu2
     - ncurses-bin=6.2-0ubuntu2
     - netbase=6.1
-    - netplan.io=0.102-0ubuntu1~20.04.2
-    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+    - netplan.io=0.103-0ubuntu5~20.04.1
+    - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.2
-    - openssl=1.1.1f-1ubuntu2.4
+    - openssh-client=1:8.2p1-4ubuntu0.3
+    - openssl=1.1.1f-1ubuntu2.8
     - optipng=0.7.7-1
     - packagekit=1.1.13-2ubuntu1.1
     - pandoc-data=2.5-3build2
     - pandoc=2.5-3build2
-    - passwd=1:4.8.1-1ubuntu5.20.04
+    - passwd=1:4.8.1-1ubuntu5.20.04.1
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -2502,15 +2502,15 @@ parts:
     - policykit-1=0.105-26ubuntu1.1
     - policyrcd-script-zg2=0.1-3
     - ppp-dev=2.4.7-2+4.1ubuntu5.1
-    - procps=2:3.3.16-1ubuntu2.1
-    - python-apt-common=2.0.0ubuntu0.20.04.5
+    - procps=2:3.3.16-1ubuntu2.3
+    - python-apt-common=2.0.0ubuntu0.20.04.6
     - python-dbus=1.2.16-1build1
     - python-gi=3.36.0-1
     - python2-minimal=2.7.17-2ubuntu4
     - python2.7-minimal=2.7.18-1~20.04.1
     - python2.7=2.7.18-1~20.04.1
     - python2=2.7.17-2ubuntu4
-    - python3-apt=2.0.0ubuntu0.20.04.5
+    - python3-apt=2.0.0ubuntu0.20.04.6
     - python3-certifi=2019.11.28-1
     - python3-chardet=3.0.4-4build1
     - python3-dbus=1.2.16-1build1
@@ -2534,8 +2534,8 @@ parts:
     - python3-software-properties=0.98.9.5
     - python3-urllib3=1.25.8-2ubuntu0.1
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.5-1~20.04.3
-    - python3.8=3.8.5-1~20.04.3
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.1
+    - python3.8=3.8.10-0ubuntu1~20.04.1
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -2543,20 +2543,20 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.48.3+20.04
+    - snapd=2.51.1+20.04ubuntu2
     - socat=1.7.3.3-2
     - software-properties-common=0.98.9.5
-    - squashfs-tools=1:4.4-1
+    - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.2
-    - systemd-sysv=245.4-4ubuntu3.6
-    - systemd-timesyncd=245.4-4ubuntu3.6
-    - systemd=245.4-4ubuntu3.6
+    - systemd-sysv=245.4-4ubuntu3.13
+    - systemd-timesyncd=245.4-4ubuntu3.13
+    - systemd=245.4-4ubuntu3.13
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.1
-    - tzdata=2021a-0ubuntu0.20.04
+    - tzdata=2021a-2ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.6
+    - udev=245.4-4ubuntu3.13
     - util-linux=2.34-0.1ubuntu9.1
     - uuid-dev=2.34-0.1ubuntu9.1
     - xml-core=0.18+nmu1
@@ -2565,27 +2565,27 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.2
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
     - dpkg-dev
     - git
     installed-packages: []
     installed-snaps:
-    - core18=2068
-    - core20=1030
-    - snapcraft=6518
-    - snapd=11843
+    - core18=2127
+    - core20=1171
+    - snapcraft=6750
+    - snapd=13269
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2604,7 +2604,7 @@ parts:
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
     source-branch: ''
     source-checksum: ''
-    source-commit: ddafee614e9d215634e02c701d0acfc402ffb2dd
+    source-commit: 2b4ce8ca481796f39c1f7d1ceb6ba79427ad1fbb
     source-tag: ''
     source-type: git
     stage: []
@@ -2612,7 +2612,7 @@ parts:
     - dnsmasq-base=2.80-1.1ubuntu1.4
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.5
+    - libcurl3-gnutls=7.68.0-1ubuntu2.7
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2621,7 +2621,7 @@ parts:
     - libjansson4=2.12-1build1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libmm-glib0=1.12.8-1
+    - libmm-glib0=1.16.6-2~20.04
     - libndp0=1.7-0ubuntu1
     - libnewt0.52=0.52.21-4ubuntu2
     - libnghttp2-14=1.40.0-1build1
@@ -2631,16 +2631,16 @@ parts:
     - librtmp1=2.4+20151223.gitfa8646d.1-2build1
     - libsasl2-2=2.1.27+dfsg-2
     - libslang2=2.3.2-4
-    - libssh-4=0.9.3-2ubuntu2.1
+    - libssh-4=0.9.3-2ubuntu2.2
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - network-manager=1.22.10-1ubuntu2.2
-    uname: 'Linux 4.15.0-144-generic #148-Ubuntu SMP Sat May 8 02:34:06 UTC 2021 aarch64
-      aarch64 aarch64 GNU/Linux'
+    uname: 'Linux 4.15.0-159-generic #167-Ubuntu SMP Mon Sep 20 23:06:52 UTC 2021
+      aarch64 aarch64 aarch64 GNU/Linux'
 architectures:
 - arm64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-l3k0331h8ozs1nd6/+build/1430601
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ffemzzzsbyta1cnd/+build/1554854
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2652,7 +2652,7 @@ build-packages:
 - dconf-gsettings-backend=0.36.0-1
 - dconf-service=0.36.0-1
 - diffstat=1.63-1
-- distro-info-data=0.43ubuntu1.5
+- distro-info-data=0.43ubuntu1.8
 - docbook-to-man=1:2.0.0-42
 - docbook-xml=4.5-9
 - docbook-xsl=1.79.1+dfsg-2
@@ -2662,7 +2662,7 @@ build-packages:
 - gettext=0.19.8.1-10build1
 - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
 - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
-- gir1.2-modemmanager-1.0=1.12.8-1
+- gir1.2-modemmanager-1.0=1.16.6-2~20.04
 - gir1.2-packagekitglib-1.0=1.1.13-2ubuntu1.1
 - glib-networking-common=2.64.2-1ubuntu0.1
 - glib-networking-services=2.64.2-1ubuntu0.1
@@ -2678,7 +2678,7 @@ build-packages:
 - libblkid-dev=2.34-0.1ubuntu9.1
 - libcap2-bin=1:2.32-1
 - libcroco3=0.6.13-1
-- libcurl4-gnutls-dev=7.68.0-1ubuntu2.5
+- libcurl4-gnutls-dev=7.68.0-1ubuntu2.7
 - libdbus-1-3=1.12.16-2ubuntu2.1
 - libdbus-1-dev=1.12.16-2ubuntu2.1
 - libdbus-glib-1-2=0.110-5fakssync1
@@ -2692,18 +2692,18 @@ build-packages:
 - libfile-listing-perl=6.04-1
 - libgirepository-1.0-1=1.64.1-1~ubuntu20.04.1
 - libgirepository1.0-dev=1.64.1-1~ubuntu20.04.1
-- libglib2.0-0=2.64.6-1~ubuntu20.04.3
-- libglib2.0-bin=2.64.6-1~ubuntu20.04.3
-- libglib2.0-data=2.64.6-1~ubuntu20.04.3
-- libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.3
-- libglib2.0-dev=2.64.6-1~ubuntu20.04.3
-- libglib2.0-doc=2.64.6-1~ubuntu20.04.3
+- libglib2.0-0=2.64.6-1~ubuntu20.04.4
+- libglib2.0-bin=2.64.6-1~ubuntu20.04.4
+- libglib2.0-data=2.64.6-1~ubuntu20.04.4
+- libglib2.0-dev-bin=2.64.6-1~ubuntu20.04.4
+- libglib2.0-dev=2.64.6-1~ubuntu20.04.4
+- libglib2.0-doc=2.64.6-1~ubuntu20.04.4
 - libgmp-dev=2:6.2.0+dfsg-4
 - libgmpxx4ldbl=2:6.2.0+dfsg-4
-- libgnutls-dane0=3.6.13-2ubuntu1.3
-- libgnutls-openssl27=3.6.13-2ubuntu1.3
-- libgnutls28-dev=3.6.13-2ubuntu1.3
-- libgnutlsxx28=3.6.13-2ubuntu1.3
+- libgnutls-dane0=3.6.13-2ubuntu1.6
+- libgnutls-openssl27=3.6.13-2ubuntu1.6
+- libgnutls28-dev=3.6.13-2ubuntu1.6
+- libgnutlsxx28=3.6.13-2ubuntu1.6
 - libgstreamer1.0-0=1.16.2-2
 - libhtml-parser-perl=3.72-5
 - libhtml-tagset-perl=3.20-4
@@ -2726,8 +2726,8 @@ build-packages:
 - liblwp-protocol-https-perl=6.07-2ubuntu2
 - libmagic-mgc=1:5.38-4
 - libmagic1=1:5.38-4
-- libmm-glib-dev=1.12.8-1
-- libmm-glib0=1.12.8-1
+- libmm-glib-dev=1.16.6-2~20.04
+- libmm-glib0=1.16.6-2~20.04
 - libmnl0=1.0.4-2
 - libmount-dev=2.34-0.1ubuntu9.1
 - libncurses-dev=6.2-0ubuntu2
@@ -2736,8 +2736,8 @@ build-packages:
 - libnet-http-perl=6.19-1
 - libnet-ssleay-perl=1.88-2ubuntu1
 - libnetfilter-conntrack3=1.0.7-2
-- libnetplan-dev=0.102-0ubuntu1~20.04.2
-- libnetplan0=0.102-0ubuntu1~20.04.2
+- libnetplan-dev=0.103-0ubuntu5~20.04.1
+- libnetplan0=0.103-0ubuntu5~20.04.1
 - libnewt-dev=0.52.21-4ubuntu2
 - libnewt0.52=0.52.21-4ubuntu2
 - libnfnetlink0=1.0.1-3build1
@@ -2757,7 +2757,7 @@ build-packages:
 - libosp5=1.5.2-13ubuntu3
 - libp11-kit-dev=0.23.20-1ubuntu0.1
 - libpackagekit-glib2-18=1.1.13-2ubuntu1.1
-- libpam-systemd=245.4-4ubuntu3.6
+- libpam-systemd=245.4-4ubuntu3.13
 - libpcre16-3=2:8.39-12build1
 - libpcre2-16-0=10.34-7
 - libpcre2-32-0=10.34-7
@@ -2782,7 +2782,7 @@ build-packages:
 - libslang2=2.3.2-4
 - libsoup2.4-1=2.70.0-1
 - libstemmer0d=0+svn585-2
-- libsystemd-dev=245.4-4ubuntu3.6
+- libsystemd-dev=245.4-4ubuntu3.13
 - libtasn1-6-dev=4.16.0-2
 - libteam-dev=1.30-1
 - libteam5=1.30-1
@@ -2790,13 +2790,13 @@ build-packages:
 - libtimedate-perl=2.3200-1
 - libtool=2.4.6-14
 - libtry-tiny-perl=0.30-1
-- libudev-dev=245.4-4ubuntu3.6
+- libudev-dev=245.4-4ubuntu3.13
 - libunbound8=1.9.4-2ubuntu1.2
 - liburi-perl=1.76-2
 - libwww-perl=6.43-1
 - libwww-robotrules-perl=6.02-1
 - libxml-parser-perl=2.46-1
-- libxml2=2.9.10+dfsg-5
+- libxml2=2.9.10+dfsg-5ubuntu0.20.04.1
 - libxslt1.1=1.1.34-4
 - libxtables12=1.8.4-3ubuntu2
 - libyaml-0-2=0.2.2-1
@@ -2804,10 +2804,10 @@ build-packages:
 - libyaml-perl=1.30-1
 - lsb-release=11.1.0ubuntu2
 - m4=1.4.18-4
-- modemmanager-dev=1.12.8-1
+- modemmanager-dev=1.16.6-2~20.04
 - netbase=6.1
-- netplan.io=0.102-0ubuntu1~20.04.2
-- nettle-dev=3.5.1+really3.5.1-2ubuntu0.1
+- netplan.io=0.103-0ubuntu5~20.04.1
+- nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
 - opensp=1.5.2-13ubuntu3
 - packagekit=1.1.13-2ubuntu1.1
 - pandoc-data=2.5-3build2
@@ -2816,14 +2816,14 @@ build-packages:
 - pkg-config=0.29.1-0ubuntu4
 - policykit-1=0.105-26ubuntu1.1
 - ppp-dev=2.4.7-2+4.1ubuntu5.1
-- python-apt-common=2.0.0ubuntu0.20.04.5
+- python-apt-common=2.0.0ubuntu0.20.04.6
 - python-dbus=1.2.16-1build1
 - python-gi=3.36.0-1
 - python2-minimal=2.7.17-2ubuntu4
 - python2.7-minimal=2.7.18-1~20.04.1
 - python2.7=2.7.18-1~20.04.1
 - python2=2.7.17-2ubuntu4
-- python3-apt=2.0.0ubuntu0.20.04.5
+- python3-apt=2.0.0ubuntu0.20.04.6
 - python3-certifi=2019.11.28-1
 - python3-chardet=3.0.4-4build1
 - python3-dbus=1.2.16-1build1
@@ -2855,13 +2855,13 @@ build-packages:
 - xsltproc=1.1.34-4
 - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.2
 build-snaps:
-- core20=1030
+- core20=1171
 primed-stage-packages:
 - dnsmasq-base=2.80-1.1ubuntu1.4
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
 - libbrotli1=1.0.7-6ubuntu0.1
-- libcurl3-gnutls=7.68.0-1ubuntu2.5
+- libcurl3-gnutls=7.68.0-1ubuntu2.7
 - libdbus-glib-1-2=0.110-5fakssync1
 - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
 - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2871,7 +2871,7 @@ primed-stage-packages:
 - libjansson4=2.12-1build1
 - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
 - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-- libmm-glib0=1.12.8-1
+- libmm-glib0=1.16.6-2~20.04
 - libndp0=1.7-0ubuntu1
 - libnewt0.52=0.52.21-4ubuntu2
 - libnghttp2-14=1.40.0-1build1
@@ -2882,7 +2882,7 @@ primed-stage-packages:
 - librtmp1=2.4+20151223.gitfa8646d.1-2build1
 - libsasl2-2=2.1.27+dfsg-2
 - libslang2=2.3.2-4
-- libssh-4=0.9.3-2ubuntu2.1
+- libssh-4=0.9.3-2ubuntu2.2
 - libteamdctl0=1.30-1
 - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
 - network-manager=1.22.10-1ubuntu2.2
