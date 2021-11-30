@@ -152,29 +152,6 @@ parts:
     prime:
       - $binaries
 
-  netplan:
-    after: [ stack-snaps-tools ]
-    plugin: make
-    source: https://git.launchpad.net/ubuntu/+source/netplan.io
-    source-type: git
-    source-tag: applied/0.102-0ubuntu1_20.04.2
-    build-packages:
-      - build-essential
-      - libyaml-dev
-      - libglib2.0-dev
-      - uuid-dev
-      - libsystemd-dev
-      - pandoc
-    override-build: |
-      set -ex
-      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/netplan.patch
-      snapcraftctl build
-    filesets:
-      binaries:
-        - lib/netplan/generate
-    prime:
-      - $binaries
-
   networkmanager:
     after: [ stack-snaps-tools ]
     plugin: autotools
@@ -220,7 +197,6 @@ parts:
       - libnetplan-dev
       - netplan.io
       - libyaml-dev
-      - software-properties-common # Can be removed once "package-repositories:" is working
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
@@ -280,11 +256,15 @@ parts:
       ./autogen.sh
       snapcraftctl build
 
-      # Simulate vendorized netplan generator binary to pass tests
-      mkdir -p /snap/network-manager/current/lib/netplan
-      ln -sf /lib/netplan/generate /snap/network-manager/current/lib/netplan/generate
       # Run all tests NetworkManager ships by default
+      # Hide the $SNAP env variable during testing, to prevent the netplan CLI
+      # from using the snap fallback io.netplan.Netplan.Generate() DBus API as
+      # that does not allow to pass a --root-dir argument, needed for testing
+      _SNAP=$SNAP
+      unset SNAP
       make check
+      SNAP=$_SNAP
+      unset _SNAP
     stage-packages:
       - iputils-arping
       - libasn1-8-heimdal
