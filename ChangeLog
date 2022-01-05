@@ -1,3 +1,52 @@
+2022-01-05 network-manager 1.10.6-11
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.13 to 7.58.0-2ubuntu3.16:
+  
+    curl (7.58.0-2ubuntu3.16) bionic-security; urgency=medium
+  
+      * SECURITY REGRESSION: regression in smtp starttls (LP: #1944120)
+        - debian/patches/CVE-2021-22947.patch: fix bad patch backport.
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 20 Sep 2021 08:02:14 -0400
+  
+    curl (7.58.0-2ubuntu3.15) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: Protocol downgrade required TLS bypassed
+        - debian/patches/CVE-2021-22946-pre1.patch: separate FTPS from FTP over
+          HTTPS proxy in lib/ftp.c, lib/urldata.h.
+        - debian/patches/CVE-2021-22946.patch: do not ignore --ssl-reqd in
+          lib/ftp.c, lib/imap.c, lib/pop3.c, tests/data/Makefile.inc,
+          tests/data/test984, tests/data/test985, tests/data/test986.
+        - CVE-2021-22946
+      * SECURITY UPDATE: STARTTLS protocol injection via MITM
+        - debian/patches/CVE-2021-22947.patch: reject STARTTLS server response
+          pipelining in lib/ftp.c, lib/imap.c, lib/pop3.c, lib/smtp.c,
+          tests/data/Makefile.inc, tests/data/test980, tests/data/test981,
+          tests/data/test982, tests/data/test983.
+        - CVE-2021-22947
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 10 Sep 2021 10:29:24 -0400
+  
+    curl (7.58.0-2ubuntu3.14) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: TELNET stack contents disclosure
+        - debian/patches/CVE-2021-22898.patch: check sscanf() for correct
+          number of matches in lib/telnet.c.
+        - CVE-2021-22898
+      * SECURITY UPDATE: Bad connection reuse due to flawed path name checks
+        - debian/patches/CVE-2021-22924.patch: fix connection reuse checks for
+          issuer cert and case sensitivity in lib/url.c, lib/urldata.h,
+          lib/vtls/gtls.c, lib/vtls/nss.c, lib/vtls/openssl.c, lib/vtls/vtls.c.
+        - CVE-2021-22924
+      * SECURITY UPDATE: TELNET stack contents disclosure again
+        - debian/patches/CVE-2021-22925.patch: fix option parser to not send
+          uninitialized contents in lib/telnet.c.
+        - CVE-2021-22925
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 21 Jul 2021 08:37:41 -0400
+  
 2021-04-05 network-manager 1.10.6-10
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
