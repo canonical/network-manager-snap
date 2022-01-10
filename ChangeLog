@@ -1,3 +1,36 @@
+2022-01-10 network-manager 1.2.2-29
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Prime all docs from primed packages
+    
+    Prime all docs from primed packages, not only the copyright. This
+    seems a saner option as we have the full changelog for the packages
+    and other possibly important files for attribution, even though there
+    is a slight size increase for the snap.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/413856
+
+  [ Changes in primed packages ]
+  
+  libnss3 (built from nss) updated from 2:3.28.4-0ubuntu0.16.04.14 to 2:3.28.4-0ubuntu0.16.04.14+esm2:
+  
+    nss (2:3.28.4-0ubuntu0.16.04.14+esm2) xenial-security; urgency=medium
+  
+      * SECURITY REGRESSION: Broken SSL connections
+        - debian/patches/CVE-2021-43527.patch: Add missing break statement
+  
+     -- Paulo Flabiano Smorigo <pfsmorigo@canonical.com>  Tue, 07 Dec 2021 13:28:29 +0000
+  
+    nss (2:3.28.4-0ubuntu0.16.04.14+esm1) xenial-security; urgency=medium
+  
+      [ Marc Deslauriers ]
+      * SECURITY UPDATE: heap overflow when verifying DSA/RSA-PSS DER-encoded
+        signatures
+        - debian/patches/CVE-2021-43527.patch: check signature lengths in
+          nss/lib/cryptohi/secvfy.c.
+        - CVE-2021-43527
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Tue, 30 Nov 2021 10:11:10 -0300
+  
 2020-11-25 network-manager 1.2.2-28
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
