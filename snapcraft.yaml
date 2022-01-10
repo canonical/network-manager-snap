@@ -61,9 +61,9 @@ parts:
       - inotify-tools
     filesets:
       wanted:
-        - usr/share/doc/inotify-tools/copyright
+        - usr/share/doc/inotify-tools/*
         - usr/bin/inotifywait
-        - usr/share/doc/libinotifytools0/copyright
+        - usr/share/doc/libinotifytools0/*
         - usr/lib/libinotifytools.so.0.4.1
         - usr/lib/libinotifytools.so.0
     prime:
@@ -167,16 +167,16 @@ parts:
       configs:
         - etc/NetworkManager/*
       docs:
-        - usr/share/doc/inotify-tools/copyright
-        - usr/share/doc/iputils-arping/copyright
-        - usr/share/doc/libdbus-glib-1-2/copyright
-        - usr/share/doc/libgudev-1.0-0/copyright
-        - usr/share/doc/libinotifytools0/copyright
-        - usr/share/doc/libmm-glib0/copyright
-        - usr/share/doc/libndp0/copyright
-        - usr/share/doc/libnspr4/copyright
-        - usr/share/doc/libnss3/copyright
-        - usr/share/doc/network-manager/copyright
+        - usr/share/doc/inotify-tools/*
+        - usr/share/doc/iputils-arping/*
+        - usr/share/doc/libdbus-glib-1-2/*
+        - usr/share/doc/libgudev-1.0-0/*
+        - usr/share/doc/libinotifytools0/*
+        - usr/share/doc/libmm-glib0/*
+        - usr/share/doc/libndp0/*
+        - usr/share/doc/libnspr4/*
+        - usr/share/doc/libnss3/*
+        - usr/share/doc/network-manager/*
       rdepends:
         - usr/lib/libnm*
         - usr/lib/*/libdbus-glib*
