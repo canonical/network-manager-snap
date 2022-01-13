@@ -20,7 +20,12 @@ netplan_cfg_p=/etc/netplan/00-default-nm-renderer.yaml
 
 if [ -f "$netplan_cfg_p" ]; then
     rm -f "$netplan_cfg_p"
-    # if we apply only, 00-default-nm-renderer.yaml is re-generated
+    # If we apply only, 00-default-nm-renderer.yaml is re-generated, because
+    # NM is restarted by netplan. If we generate first, that is avoided.
+    # The reason is that on apply, netplan sees that the state in /run/
+    # involves NM, so it will try to notify it by restarting, even if it
+    # is not currently running. If we generate first, nothing in /run/ or
+    # in /etc/netplan/ will make netplan think that NM is being used.
     dbus-send --system --type=method_call --print-reply \
               --dest=io.netplan.Netplan /io/netplan/Netplan \
               io.netplan.Netplan.Generate
