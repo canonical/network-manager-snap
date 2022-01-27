@@ -23,14 +23,6 @@ grade: stable
 # will be adjusted accordingly.
 epoch: 1
 
-# Some packages might land in the ubuntu-image PPA for making their way
-# into a Ubuntu Core base image and only later land in a LTS release.
-# Enable ubuntu-image PPA once the --enable-experimental-package-repositories
-# flag is not needed anymore
-# package-repositories:
-#   - type: apt
-#     ppa: canonical-foundations/ubuntu-image
-
 slots:
   service: network-manager
 
