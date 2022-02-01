@@ -25,8 +25,7 @@ done
 # Remove any existing state archive from other test suites
 rm -f /home/network-manager/nm-state.tar.gz
 
-# TODO install from stable once NM core20 is released there
-snap_install network-manager --channel=20/beta
+snap_install network-manager --channel=20/stable
 
 # snapshot NetworkManager's state
 sleep 2
