@@ -10,8 +10,19 @@ execute: |
     /snap/bin/network-manager.nmcli g
 
     # Ensure all necessary plugs/slots are connected
-    snap interfaces | grep -Pzq ":network-setup-observe +[a-z,-]*network-manager"
-    snap interfaces | grep -Pzq ":ppp +[a-z,-]*network-manager"
-    snap interfaces | grep -Pzq ":firewall-control +[a-z,-]*network-manager"
-    snap interfaces | grep -Pzq ":network-setup-observe +[a-z,-]*network-manager"
-    snap interfaces | grep -Pzq "network-manager:service +network-manager:nmcli"
+    snap connections network-manager | grep -Pzq ":network-setup-observe *:network-setup-observe"
+    snap connections network-manager | grep -Pzq ":ppp *:ppp"
+    snap connections network-manager | grep -Pzq ":firewall-control *:firewall-control"
+    snap connections network-manager | grep -Pzq ":network-setup-observe *:network-setup-observe"
+    snap connections network-manager | grep -Pzq ":nmcli *network-manager:service"
+
+    # Check that netplan configuration file has been created
+    netplan_cfg_path=/etc/netplan/00-default-nm-renderer.yaml
+    test -f "$netplan_cfg_path"
+
+    # Check that netplan configuration file is removed when the snap is removed
+    snap remove network-manager
+    if [ -f "$netplan_cfg_path" ]; then
+        printf "\n"
+        exit 1
+    fi
