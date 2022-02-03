@@ -1,3 +1,59 @@
+2022-02-03 network-manager 1.22.10-10
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Add remove hook
+    
+    Remove the netplan configuration that might have been created by the
+    snap on removal.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/414094
+
+  [ Lukas Märdian <lukas.maerdian@canonical.com> ]
+  * Drop vendorized netplan
+    
+    All required changes landed:
+    - https://github.com/snapcore/snapd/pull/10212
+    - https://github.com/canonical/netplan/pull/208
+    - https://bugs.launchpad.net/snappy/+bug/1926442
+    
+    Refresh 0002-nm-netplan-keyfile.patch
+    
+    netplan 0.103 compat changes are now integrated with the original patch, as
+    that version landed in UC20, changes to NM's unit-tests are not needed anymore.
+    
+    Also, avoid calling into the netplan_generate() libnetplan API, this would just
+    execute the 'netplan generate' CLI, which would then call the
+    io.netplan.Netplan.Generate() DBus API in snap environments.
+    We can avoid this additional redirection and be independent from deprecation
+    or changes that are incompatible with the snap environment in the
+    netplan_generate() API, by calling the 'netplan generate' CLI directly.
+    Ideally, in the future we would avoid this redirection as well and call into
+    the io.netplan.Netplan.Generate() DBus method directly. But we need to pass a
+    --root-dir argument during the execution of NM's unit-tests, that is currently
+    not supported by the DBus method, so let's stick with the CLI for now.
+    
+    This depends on the snapd snap to be >= 2.53.2+git864.g5823952 (currently in snapd/edge).
+    Merge-Proposal: https://code.launchpad.net/~slyon/snappy-hwe-snaps/+git/network-manager/+merge/412634
+
+  [ Changes in primed packages ]
+  
+  libmm-glib0 (built from modemmanager) updated from 1.16.6-2~20.04 to 1.16.6-2~20.04.1:
+  
+    modemmanager (1.16.6-2~20.04.1) focal; urgency=medium
+  
+      * Support manual firmware upgrading for Foxconn and Quectel modems.
+        (LP: #1946096)
+  
+     -- Jerry Lee <jerry.lee@canonical.com>  Thu, 21 Oct 2021 10:29:18 +0800
+  
+  libnm0, network-manager (built from network-manager) updated from 1.22.10-1ubuntu2.2 to 1.22.10-1ubuntu2.3:
+  
+    network-manager (1.22.10-1ubuntu2.3) focal; urgency=medium
+  
+      * wwan: Set MTU based on what ModemManager exposes
+        (LP: #1955797)
+  
+     -- Jerry Lee <jerry.lee@canonical.com>  Mon, 27 Nov 2021 09:37:06 +0800
+  
 2021-10-13 network-manager 1.22.10-9
 
   [ Lukas Märdian <lukas.maerdian@canonical.com> ]
