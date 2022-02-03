@@ -1,5 +1,11 @@
 summary: Verify correct DNS setup
 
+prepare: |
+    cp /etc/netplan/00-snapd-config.yaml /etc/netplan/00-snapd-config.yaml.orig
+
+restore: |
+    mv /etc/netplan/00-snapd-config.yaml.orig /etc/netplan/00-snapd-config.yaml
+
 execute: |
     . $TESTSLIB/utilities.sh
     get_qemu_eth_iface eth_if

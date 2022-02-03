@@ -11,7 +11,10 @@ snap_install() {
 		# Need first install from store to get all necessary assertions into
 		# place. Second local install will then bring in our locally built
 		# snap.
-		snap install $name $2
+		# Don't reinstall if we have it installed already
+		if ! snap list | grep $name ; then
+			snap install $name $2
+		fi
 		snap install --dangerous $PROJECT_PATH/$name*_amd64.snap
 	fi
 }

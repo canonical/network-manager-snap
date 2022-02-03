@@ -22,24 +22,7 @@ for name in "$gadget_name" "$kernel_name" "$core_name"; do
 	fi
 done
 
-# Remove any existing state archive from other test suites
-rm -f /home/network-manager/nm-state.tar.gz
-
-# TODO install from stable once NM core20 is released there
-snap_install network-manager --channel=20/beta
-
-# snapshot NetworkManager's state
-sleep 2
-systemctl stop snap.network-manager.networkmanager
-tar czf "$SPREAD_PATH"/nm-state.tar.gz /var/snap/network-manager /etc/netplan
-# Wait a bit to avoid hitting re-start limit
-sleep 2
-# Make sure the original netplan configuration is applied and active
-# (we do this before re-starting NM to avoid race conditions in some tests)
-netplan generate
-# Remove ipv6 addresses (see LP:#1870561)
-ip -6 address flush dev "$eth_if"
-systemctl start snap.network-manager.networkmanager
+snap_install network-manager --channel=20/stable
 wait_for_network_manager
 
 # For debugging dump all snaps and connected slots/plugs

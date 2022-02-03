@@ -41,12 +41,19 @@ plugs:
     bus: system
     name: fi.w1.wpa_supplicant1
 
+# As we need netplan Generate from the remove hook
+assumes:
+  - snapd2.54
+
 hooks:
   configure:
     plugs:
       # network is needed to avoid some denials when using snapctl
       - network
       - network-setup-observe
+  remove:
+    plugs:
+      - network-setup-control
 
 layout:
   /usr/lib/NetworkManager:
