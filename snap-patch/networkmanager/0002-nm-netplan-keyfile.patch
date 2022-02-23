@@ -1,4 +1,4 @@
-From 416550f044c3184ffcdc49973dae2bf462494dde Mon Sep 17 00:00:00 2001
+From 4c06fede36936e58e75babcb9542a6b27a7cb19f Mon Sep 17 00:00:00 2001
 From: Lukas Märdian <lukas.maerdian@canonical.com>
 Date: Tue, 2 Feb 2021 15:52:05 +0100
 Subject: [PATCH] netplan: make use of libnetplan for YAML backend
@@ -34,12 +34,12 @@ https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
  Makefile.am                                   |   5 +-
  meson.build                                   |   3 +
  src/meson.build                               |   2 +
- .../plugins/keyfile/nms-keyfile-plugin.c      |  19 +++
+ .../plugins/keyfile/nms-keyfile-plugin.c      |  22 ++++
  .../plugins/keyfile/nms-keyfile-utils.c       |  57 +++++++++
  .../plugins/keyfile/nms-keyfile-utils.h       |   4 +
  .../plugins/keyfile/nms-keyfile-writer.c      | 118 ++++++++++++++++++
  .../keyfile/tests/test-keyfile-settings.c     |  45 +++++--
- 8 files changed, 244 insertions(+), 9 deletions(-)
+ 8 files changed, 247 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
 index b37aa4e712311cb23a675af70ec1287fcd3d63f5..2e4e146412de6102068bb953c38cb8091e7f010a 100644
@@ -92,7 +92,7 @@ index 748fa519bc56305bfe485b9ea1207942fe5b5874..398efb3c69c37bd1d6214602d194dfad
  
  if enable_wext
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-plugin.c b/src/settings/plugins/keyfile/nms-keyfile-plugin.c
-index fdb88d2a6d6218460fe191d7bc5be08b492886f5..60b8490fdaa7cbf1ffae3dc89f19289bc842acad 100644
+index fdb88d2a6d6218460fe191d7bc5be08b492886f5..038cf13a1d7ea287d8c491848b9284334d1b9d70 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-plugin.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-plugin.c
 @@ -12,6 +12,7 @@
@@ -137,14 +137,17 @@ index fdb88d2a6d6218460fe191d7bc5be08b492886f5..60b8490fdaa7cbf1ffae3dc89f19289b
  	if (!NM_IN_SET (storage->storage_type, NMS_KEYFILE_STORAGE_TYPE_ETC,
  	                                       NMS_KEYFILE_STORAGE_TYPE_RUN)) {
  		nm_utils_error_set (error,
-@@ -1011,6 +1025,11 @@ delete_connection (NMSettingsPlugin *plugin,
+@@ -1011,6 +1025,14 @@ delete_connection (NMSettingsPlugin *plugin,
  	} else
  		operation_message = "deleted from disk";
  
 +	g_autofree gchar* netplan_id = netplan_get_id_from_nm_filename(previous_filename, ssid);
-+	netplan_delete_connection(netplan_id, NULL);
-+	generate_netplan(NULL);
-+	_fix_netplan_interface_name(NULL);
++	if (netplan_id) {
++		_LOGI ("deleting netplan connection: %s", netplan_id);
++		netplan_delete_connection(netplan_id, NULL);
++		generate_netplan(NULL);
++		_fix_netplan_interface_name(NULL);
++	}
 +
  	_LOGT ("commit: deleted \"%s\", %s %s (%s%s%s%s)",
  	       previous_filename,
