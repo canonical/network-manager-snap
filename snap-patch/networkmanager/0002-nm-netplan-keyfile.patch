@@ -1,4 +1,4 @@
-From 5ffe6c36ed2e9a5effc07d706f0b8dc34c7515ab Mon Sep 17 00:00:00 2001
+From 4c06fede36936e58e75babcb9542a6b27a7cb19f Mon Sep 17 00:00:00 2001
 From: Lukas Märdian <lukas.maerdian@canonical.com>
 Date: Tue, 2 Feb 2021 15:52:05 +0100
 Subject: [PATCH] netplan: make use of libnetplan for YAML backend
@@ -34,12 +34,12 @@ https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
  Makefile.am                                   |   5 +-
  meson.build                                   |   3 +
  src/meson.build                               |   2 +
- .../plugins/keyfile/nms-keyfile-plugin.c      |  19 +++
+ .../plugins/keyfile/nms-keyfile-plugin.c      |  22 ++++
  .../plugins/keyfile/nms-keyfile-utils.c       |  57 +++++++++
  .../plugins/keyfile/nms-keyfile-utils.h       |   4 +
- .../plugins/keyfile/nms-keyfile-writer.c      | 108 ++++++++++++++++++
- .../keyfile/tests/test-keyfile-settings.c     |  45 ++++++--
- 8 files changed, 234 insertions(+), 9 deletions(-)
+ .../plugins/keyfile/nms-keyfile-writer.c      | 118 ++++++++++++++++++
+ .../keyfile/tests/test-keyfile-settings.c     |  45 +++++--
+ 8 files changed, 247 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
 index b37aa4e712311cb23a675af70ec1287fcd3d63f5..2e4e146412de6102068bb953c38cb8091e7f010a 100644
@@ -92,7 +92,7 @@ index 748fa519bc56305bfe485b9ea1207942fe5b5874..398efb3c69c37bd1d6214602d194dfad
  
  if enable_wext
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-plugin.c b/src/settings/plugins/keyfile/nms-keyfile-plugin.c
-index fdb88d2a6d6218460fe191d7bc5be08b492886f5..60b8490fdaa7cbf1ffae3dc89f19289bc842acad 100644
+index fdb88d2a6d6218460fe191d7bc5be08b492886f5..038cf13a1d7ea287d8c491848b9284334d1b9d70 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-plugin.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-plugin.c
 @@ -12,6 +12,7 @@
@@ -137,14 +137,17 @@ index fdb88d2a6d6218460fe191d7bc5be08b492886f5..60b8490fdaa7cbf1ffae3dc89f19289b
  	if (!NM_IN_SET (storage->storage_type, NMS_KEYFILE_STORAGE_TYPE_ETC,
  	                                       NMS_KEYFILE_STORAGE_TYPE_RUN)) {
  		nm_utils_error_set (error,
-@@ -1011,6 +1025,11 @@ delete_connection (NMSettingsPlugin *plugin,
+@@ -1011,6 +1025,14 @@ delete_connection (NMSettingsPlugin *plugin,
  	} else
  		operation_message = "deleted from disk";
  
 +	g_autofree gchar* netplan_id = netplan_get_id_from_nm_filename(previous_filename, ssid);
-+	netplan_delete_connection(netplan_id, NULL);
-+	generate_netplan(NULL);
-+	_fix_netplan_interface_name(NULL);
++	if (netplan_id) {
++		_LOGI ("deleting netplan connection: %s", netplan_id);
++		netplan_delete_connection(netplan_id, NULL);
++		generate_netplan(NULL);
++		_fix_netplan_interface_name(NULL);
++	}
 +
  	_LOGT ("commit: deleted \"%s\", %s %s (%s%s%s%s)",
  	       previous_filename,
@@ -249,7 +252,7 @@ index f943d65ca6834efd2bc243397d122243d906712e..4803135d3f60cdfae4a23640cefcbe6d
 +
  #endif /* __NMS_KEYFILE_UTILS_H__ */
 diff --git a/src/settings/plugins/keyfile/nms-keyfile-writer.c b/src/settings/plugins/keyfile/nms-keyfile-writer.c
-index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c19111583ba3d66 100644
+index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..1b8affdfe91935049edc9ba4323dc627109a59b5 100644
 --- a/src/settings/plugins/keyfile/nms-keyfile-writer.c
 +++ b/src/settings/plugins/keyfile/nms-keyfile-writer.c
 @@ -11,6 +11,10 @@
@@ -271,7 +274,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c191115
                              GError **error)
  {
  	gs_unref_keyfile GKeyFile *kf_file = NULL;
-@@ -364,6 +369,103 @@ _internal_write_connection (NMConnection *connection,
+@@ -364,6 +369,113 @@ _internal_write_connection (NMConnection *connection,
  	    && !nm_streq (path, existing_path))
  		unlink (existing_path);
  
@@ -283,7 +286,17 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c191115
 +		g_autofree gchar* netplan_id = (existing_path && strstr(existing_path, "system-connections/netplan-")) ?
 +		                               netplan_get_id_from_nm_filename(existing_path, ssid) : NULL;
 +		netplan_clear_netdefs();
-+		if (!netplan_parse_keyfile(path, &local_err)) { // push keyfile into libnetplan for parsing
++
++		const gchar* kf_path = path;
++		if (netplan_id && existing_path) {
++			GFile* from = g_file_new_for_path(path);
++			GFile* to = g_file_new_for_path(existing_path);
++			g_file_copy(from, to, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, NULL);
++			kf_path = existing_path;
++		}
++		// push keyfile into libnetplan for parsing (using existing_path, if available,
++		// to be able to extract the original netdef_id and override existing settings)
++		if (!netplan_parse_keyfile(kf_path, &local_err)) {
 +			g_set_error (error, NM_SETTINGS_ERROR, NM_SETTINGS_ERROR_FAILED,
 +			             "netplan: YAML translation failed");
 +			return FALSE;
@@ -375,7 +388,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c191115
  	NM_SET_OUT (out_reread, g_steal_pointer (&reread));
  	NM_SET_OUT (out_reread_same, reread_same);
  	NM_SET_OUT (out_path, g_steal_pointer (&path));
-@@ -407,6 +509,7 @@ nms_keyfile_writer_connection (NMConnection *connection,
+@@ -407,6 +519,7 @@ nms_keyfile_writer_connection (NMConnection *connection,
  	                                   out_path,
  	                                   out_reread,
  	                                   out_reread_same,
@@ -383,7 +396,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c191115
  	                                   error);
  }
  
-@@ -420,6 +523,10 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
+@@ -420,6 +533,10 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
                                      gboolean *out_reread_same,
                                      GError **error)
  {
@@ -394,7 +407,7 @@ index fa95198c0084ac6b907f7ffa7ba826a1cca6a025..627c72d7a0ff76e9b00e0a5d6c191115
  	return _internal_write_connection (connection,
  	                                   FALSE,
  	                                   FALSE,
-@@ -438,5 +545,6 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
+@@ -438,5 +555,6 @@ nms_keyfile_writer_test_connection (NMConnection *connection,
  	                                   out_path,
  	                                   out_reread,
  	                                   out_reread_same,
