@@ -1,7 +1,7 @@
-From 8e829e18fc739f05b1a25cc40ce1722f65831950 Mon Sep 17 00:00:00 2001
+From fdc76450eb0ded4e43fe1692041d4f912baa2345 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
  <alfonso.sanchez-beato@canonical.com>
-Date: Tue, 25 Jun 2019 17:36:41 +0200
+Date: Mon, 7 Mar 2022 08:55:17 +0100
 Subject: [PATCH] snap: do not tinker with uid/gid, change fixed paths
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH] snap: do not tinker with uid/gid, change fixed paths
  2 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/src/config.h b/src/config.h
-index ecefb87..25b92ba 100644
+index 30e23d8..721e3f0 100644
 --- a/src/config.h
 +++ b/src/config.h
-@@ -190,7 +190,7 @@ RESOLVFILE
+@@ -204,7 +204,7 @@ RESOLVFILE
  #   elif defined(__ANDROID__)
  #      define LEASEFILE "/data/misc/dhcp/dnsmasq.leases"
  #   else
@@ -22,7 +22,7 @@ index ecefb87..25b92ba 100644
  #   endif
  #endif
  
-@@ -198,7 +198,7 @@ RESOLVFILE
+@@ -212,7 +212,7 @@ RESOLVFILE
  #   if defined(__FreeBSD__)
  #      define CONFFILE "/usr/local/etc/dnsmasq.conf"
  #   else
@@ -31,7 +31,7 @@ index ecefb87..25b92ba 100644
  #   endif
  #endif
  
-@@ -214,7 +214,7 @@ RESOLVFILE
+@@ -228,7 +228,7 @@ RESOLVFILE
  #   if defined(__ANDROID__)
  #      define RUNFILE "/data/dnsmasq.pid"
  #    else
@@ -41,10 +41,10 @@ index ecefb87..25b92ba 100644
  #endif
  
 diff --git a/src/dnsmasq.c b/src/dnsmasq.c
-index ce44809..17c451b 100644
+index 602daed..cfa09e9 100644
 --- a/src/dnsmasq.c
 +++ b/src/dnsmasq.c
-@@ -548,8 +548,8 @@ int main (int argc, char **argv)
+@@ -678,8 +678,8 @@ int main (int argc, char **argv)
  		 of the directory containing the file. That directory will
  		 need to by owned by the dnsmasq user, and the ownership of the
  		 file has to match, to keep systemd >273 happy. */
@@ -55,7 +55,7 @@ index ce44809..17c451b 100644
  
  	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), 0))
  		err = 1;
-@@ -595,16 +595,16 @@ int main (int argc, char **argv)
+@@ -724,16 +724,16 @@ int main (int argc, char **argv)
    if (!option_bool(OPT_DEBUG) && getuid() == 0)   
      {
        int bad_capabilities = 0;
@@ -80,7 +80,7 @@ index ce44809..17c451b 100644
    
        if (ent_pw && ent_pw->pw_uid != 0)
  	{     
-@@ -654,11 +654,11 @@ int main (int argc, char **argv)
+@@ -774,11 +774,11 @@ int main (int argc, char **argv)
  	    }
  	  
  	  /* finally drop root */
@@ -96,7 +96,7 @@ index ce44809..17c451b 100644
 +	  /*   }      */
  
  #ifdef HAVE_LINUX_NETWORK
- 	  if (is_dad_listeners() || option_bool(OPT_CLEVERBIND))
+ 	  data->effective &= ~(1 << CAP_SETUID);
 -- 
-2.17.1
+2.25.1
 
