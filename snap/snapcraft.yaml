@@ -171,6 +171,7 @@ parts:
       - libnewt-dev
       - libteam-dev
       - libjansson-dev
+      - libnss3-dev
       - dbus
       - python3-dbus
       - gtk-doc-tools
