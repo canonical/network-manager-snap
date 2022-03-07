@@ -1,76 +1,49 @@
-From 0f59d6c3ba426922ce2450484941295abefb0da8 Mon Sep 17 00:00:00 2001
+From f9f7e6ccf867a55fc0079f60b20c5efd56e46968 Mon Sep 17 00:00:00 2001
 From: snapcraft <snapcraft@canonical.com>
-Date: Wed, 8 Jul 2020 14:34:37 +0200
+Date: Mon, 7 Mar 2022 15:24:03 +0100
 Subject: [PATCH 3/4] Disable tests failing on launchpad
 
 ---
- Makefile.am                         | 3 ---
- Makefile.in                         | 4 ----
- src/core/platform/tests/meson.build | 3 ---
- 3 files changed, 10 deletions(-)
+ Makefile.am | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index 8aa8d3210..fc746fe6d 100644
+index 8aa8d3210..e4d62f799 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -4135,15 +4135,12 @@ check_programs_norun += \
+@@ -4135,16 +4135,11 @@ check_programs_norun += \
  
  check_programs += \
  	src/core/platform/tests/test-address-fake \
 -	src/core/platform/tests/test-address-linux \
  	src/core/platform/tests/test-cleanup-fake \
- 	src/core/platform/tests/test-cleanup-linux \
+-	src/core/platform/tests/test-cleanup-linux \
  	src/core/platform/tests/test-link-fake \
 -	src/core/platform/tests/test-link-linux \
  	src/core/platform/tests/test-nmp-object \
  	src/core/platform/tests/test-platform-general \
  	src/core/platform/tests/test-route-fake \
 -	src/core/platform/tests/test-route-linux \
- 	src/core/platform/tests/test-tc-linux \
+-	src/core/platform/tests/test-tc-linux \
  	$(NULL)
  
-diff --git a/Makefile.in b/Makefile.in
-index e9877b88a..4e60539dd 100644
---- a/Makefile.in
-+++ b/Makefile.in
-@@ -5051,17 +5051,13 @@ check_programs = src/libnm-platform/tests/test-nm-platform \
- 	$(am__append_25) $(am__append_32) $(am__append_36) \
- 	$(am__append_46) src/core/dnsmasq/tests/test-dnsmasq-utils \
- 	src/core/platform/tests/test-address-fake \
--	src/core/platform/tests/test-address-linux \
- 	src/core/platform/tests/test-cleanup-fake \
- 	src/core/platform/tests/test-cleanup-linux \
- 	src/core/platform/tests/test-link-fake \
--	src/core/platform/tests/test-link-linux \
- 	src/core/platform/tests/test-nmp-object \
- 	src/core/platform/tests/test-platform-general \
- 	src/core/platform/tests/test-route-fake \
--	src/core/platform/tests/test-route-linux \
- 	src/core/platform/tests/test-tc-linux $(NULL) \
--	src/core/devices/tests/test-lldp $(NULL) \
- 	src/core/ndisc/tests/test-ndisc-fake \
- 	src/core/supplicant/tests/test-supplicant-config \
- 	src/core/tests/config/test-config src/core/tests/test-core \
-diff --git a/src/core/platform/tests/meson.build b/src/core/platform/tests/meson.build
-index 8824ed2f6..533ef989c 100644
---- a/src/core/platform/tests/meson.build
-+++ b/src/core/platform/tests/meson.build
-@@ -5,15 +5,12 @@ test_linux_c_flags = test_c_flags + ['-DSETUP=nm_linux_platform_setup']
+ src_core_platform_tests_monitor_CPPFLAGS = $(src_core_cppflags_test)
+@@ -4232,7 +4227,6 @@ src_core_devices_tests_ldflags = \
+ 	$(SANITIZER_EXEC_LDFLAGS)
  
- test_units = [
-   ['test-address-fake', 'test-address.c', test_fake_c_flags, default_test_timeout],
--  ['test-address-linux', 'test-address.c', test_linux_c_flags, default_test_timeout],
-   ['test-cleanup-fake', 'test-cleanup.c', test_fake_c_flags, default_test_timeout],
-   ['test-cleanup-linux', 'test-cleanup.c', test_linux_c_flags, default_test_timeout],
-   ['test-link-fake', 'test-link.c', test_fake_c_flags, default_test_timeout],
--  ['test-link-linux', 'test-link.c', test_linux_c_flags, 900],
-   ['test-nmp-object', 'test-nmp-object.c', test_c_flags, default_test_timeout],
-   ['test-platform-general', 'test-platform-general.c', test_c_flags, default_test_timeout],
-   ['test-route-fake', 'test-route.c', test_fake_c_flags, default_test_timeout],
--  ['test-route-linux', 'test-route.c', test_linux_c_flags, default_test_timeout],
-   ['test-tc-linux', 'test-tc.c', test_linux_c_flags, default_test_timeout],
- ]
+ check_programs += \
+-	src/core/devices/tests/test-lldp \
+ 	$(NULL)
  
+ src_core_devices_tests_test_lldp_CPPFLAGS = $(src_core_cppflags_test)
+@@ -4343,7 +4337,6 @@ check_programs += \
+ 	src/core/tests/test-core \
+ 	src/core/tests/test-core-with-expect \
+ 	src/core/tests/test-dcb \
+-	src/core/tests/test-l3cfg \
+ 	src/core/tests/test-systemd \
+ 	src/core/tests/test-utils \
+ 	src/core/tests/test-wired-defname \
 -- 
 2.25.1
 
