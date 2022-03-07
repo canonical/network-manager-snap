@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.22.10-12-dev
+version: 1.36.0-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -8,12 +8,12 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.22
-base: core20
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-22
+base: core22
 confinement: strict
-grade: stable
+grade: devel
 
-# Since the uc20 network-manager snap currently defaults to the native
+# Since the uc20+ network-manager snap currently defaults to the native
 # netplan config plugin, the default format of connection files has
 # switched from keyfile to netplan, thus a fresh from earlier tracks
 # of network-manager will not work w/out post-refresh hook support to
@@ -128,7 +128,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/focal-updates
+    source-branch: applied/ubuntu/jammy
     build-packages:
       - build-essential
     make-parameters:
@@ -149,16 +149,10 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/focal-updates
+    source-branch: applied/ubuntu/jammy
     build-packages:
       - intltool
-      - libdbus-glib-1-dev
-      - libdbus-1-dev
       - libglib2.0-dev
-      - libiw-dev
-      - libnl-3-dev
-      - libnl-route-3-dev
-      - libnl-genl-3-dev
       - ppp-dev
       - libgnutls28-dev
       - uuid-dev
@@ -167,11 +161,9 @@ parts:
       - libudev-dev
       - libgirepository1.0-dev
       - gobject-introspection
-      - python-gi
+      - python3-gi
       - libpsl-dev
       - libcurl4-gnutls-dev
-      - perl
-      - libyaml-perl
       - libglib2.0-doc
       - libmm-glib-dev
       - libndp-dev
@@ -180,12 +172,8 @@ parts:
       - libteam-dev
       - libjansson-dev
       - dbus
-      - python-dbus
-      - quilt
-      - xsltproc
-      - iptables
+      - python3-dbus
       - gtk-doc-tools
-      - libnss3-dev
       - libnetplan-dev
       - netplan.io
       - libyaml-dev
@@ -203,7 +191,7 @@ parts:
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
-      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/
+      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
       - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
@@ -252,11 +240,11 @@ parts:
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
       # from using the snap fallback io.netplan.Netplan.Generate() DBus API as
       # that does not allow to pass a --root-dir argument, needed for testing
-      _SNAP=$SNAP
-      unset SNAP
-      make check
-      SNAP=$_SNAP
-      unset _SNAP
+      # _SNAP=$SNAP
+      # unset SNAP
+      # make check
+      # SNAP=$_SNAP
+      # unset _SNAP
     stage-packages:
       - iputils-arping
       - libasn1-8-heimdal
@@ -270,7 +258,7 @@ parts:
       - libhx509-5-heimdal
       - libjansson4
       - libkrb5-26-heimdal
-      - libldap-2.4-2
+      - libldap-2.5-0
       - libmm-glib0
       - libnewt0.52
       - libnghttp2-14
@@ -291,7 +279,7 @@ parts:
       patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
     organize:
-      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
 
     filesets:
@@ -305,7 +293,7 @@ parts:
         - usr/bin/nmtui-hostname
         - usr/sbin/pppd
         - usr/lib/*/NetworkManager
-        - usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+        - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
         - usr/lib/NetworkManager
         - usr/sbin/NetworkManager
       configs:
@@ -324,7 +312,7 @@ parts:
         - usr/share/doc/libhx509-5-heimdal/copyright
         - usr/share/doc/libjansson4/copyright
         - usr/share/doc/libkrb5-26-heimdal/copyright
-        - usr/share/doc/libldap-2.4-2/copyright
+        - usr/share/doc/libldap-2.5-0/copyright
         - usr/share/doc/libmm-glib0/copyright
         - usr/share/doc/libndp0/copyright
         - usr/share/doc/libnewt0.52/copyright
@@ -342,7 +330,7 @@ parts:
         - usr/share/doc/resolvconf/copyright
       libs:
         - lib/resolvconf/list-records
-        - lib/*/libslang*
+        - usr/lib/*/libslang*
         - usr/lib/libnm*
         - usr/lib/*/libasn1*
         - usr/lib/*/libbrotli*
@@ -359,8 +347,8 @@ parts:
         # required for teamdctl
         - usr/lib/*/libjansson*
         - usr/lib/*/libkrb5*26*
-        - usr/lib/*/liblber-2.4*
-        - usr/lib/*/libldap_r-2.4*
+        - usr/lib/*/liblber-2.5*
+        - usr/lib/*/libldap-2.5*
         - usr/lib/*/liblzma*
         - usr/lib/*/libmm-glib*
         - usr/lib/*/libnewt*
@@ -378,8 +366,8 @@ parts:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
         # Things we don't support yet and don't have to ship
-        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
-        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
+        - -usr/lib/NetworkManager/1.36.0/libnm-device-plugin-adsl.so
+        - -usr/lib/NetworkManager/1.36.0/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
         - -usr/lib/NetworkManager/*/*.la
         - -usr/lib/pkgconfig
