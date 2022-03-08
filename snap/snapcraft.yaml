@@ -247,30 +247,19 @@ parts:
       # unset _SNAP
     stage-packages:
       - iputils-arping
-      - libasn1-8-heimdal
       - libbrotli1
-      - libdbus-glib-1-2
       - libcurl3-gnutls
-      - libgssapi3-heimdal
-      - libhcrypto4-heimdal
-      - libheimbase1-heimdal
-      - libheimntlm0-heimdal
-      - libhx509-5-heimdal
       - libjansson4
-      - libkrb5-26-heimdal
       - libldap-2.5-0
       - libmm-glib0
       - libnewt0.52
       - libnghttp2-14
-      - libroken18-heimdal
       - libndp0
       - libpsl5
       - librtmp1
       - libsasl2-2
       - libteamdctl0
       - libslang2
-      - libssh-4
-      - libwind0-heimdal
       - ppp
 
     organize:
@@ -294,17 +283,9 @@ parts:
         - etc/NetworkManager/*
       docs:
         - usr/share/doc/iputils-arping/copyright
-        - usr/share/doc/libasn1-8-heimdal/copyright
         - usr/share/doc/libbrotli1/copyright
         - usr/share/doc/libcurl3-gnutls/copyright
-        - usr/share/doc/libdbus-glib-1-2/copyright
-        - usr/share/doc/libgssapi3-heimdal/copyright
-        - usr/share/doc/libhcrypto4-heimdal/copyright
-        - usr/share/doc/libheimbase1-heimdal/copyright
-        - usr/share/doc/libheimntlm0-heimdal/copyright
-        - usr/share/doc/libhx509-5-heimdal/copyright
         - usr/share/doc/libjansson4/copyright
-        - usr/share/doc/libkrb5-26-heimdal/copyright
         - usr/share/doc/libldap-2.5-0/copyright
         - usr/share/doc/libmm-glib0/copyright
         - usr/share/doc/libndp0/copyright
@@ -312,47 +293,29 @@ parts:
         - usr/share/doc/libnghttp2-14/copyright
         - usr/share/doc/libpcap0.8/copyright
         - usr/share/doc/libpsl5/copyright
-        - usr/share/doc/libroken18-heimdal/copyright
         - usr/share/doc/librtmp1/copyright
         - usr/share/doc/libsasl2-2/copyright
         - usr/share/doc/libslang2/copyright
-        - usr/share/doc/libssh-4/copyright
         - usr/share/doc/libteamdctl0/copyright
-        - usr/share/doc/libwind0-heimdal/copyright
         - usr/share/doc/ppp/copyright
       libs:
         - usr/lib/*/libslang*
         - usr/lib/libnm*
-        - usr/lib/*/libasn1*
         - usr/lib/*/libbrotli*
         - usr/lib/*/libcurl-gnutls*
-        - usr/lib/*/libdbus-glib*
-        - usr/lib/*/libgssapi*
-        - -usr/lib/*/libgssapi_krb5*
-        - usr/lib/*/libhcrypto*
-        - usr/lib/*/libheimbase*
-        - usr/lib/*/libheimntlm*
-        - usr/lib/*/libhx509*
-        - usr/lib/*/libip4tc*
-        - usr/lib/*/libip6tc*
         # required for teamdctl
         - usr/lib/*/libjansson*
-        - usr/lib/*/libkrb5*26*
         - usr/lib/*/liblber-2.5*
         - usr/lib/*/libldap-2.5*
-        - usr/lib/*/liblzma*
         - usr/lib/*/libmm-glib*
         - usr/lib/*/libnewt*
         - usr/lib/*/libndp*
         - usr/lib/*/libnghttp2*
         - usr/lib/*/libpcap*
         - usr/lib/*/libpsl*
-        - usr/lib/*/libroken*
         - usr/lib/*/librtmp*
         - usr/lib/*/libsasl2*
-        - usr/lib/*/libssh*
         - usr/lib/*/libteamdctl*
-        - usr/lib/*/libwind*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
@@ -361,6 +324,7 @@ parts:
         - -usr/lib/NetworkManager/1.36.0/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
         - -usr/lib/NetworkManager/*/*.la
+        - -usr/lib/libnm.la
         - -usr/lib/pkgconfig
     prime:
       - $binaries
