@@ -246,7 +246,6 @@ parts:
       # SNAP=$_SNAP
       # unset _SNAP
     stage-packages:
-      - iputils-arping
       - libbrotli1
       - libcurl3-gnutls
       - libjansson4
@@ -268,7 +267,6 @@ parts:
 
     filesets:
       binaries:
-        - usr/bin/arping
         - usr/bin/nmcli
         - usr/bin/nmtui
         - usr/bin/nmtui-connect
@@ -282,7 +280,6 @@ parts:
       configs:
         - etc/NetworkManager/*
       docs:
-        - usr/share/doc/iputils-arping/copyright
         - usr/share/doc/libbrotli1/copyright
         - usr/share/doc/libcurl3-gnutls/copyright
         - usr/share/doc/libjansson4/copyright
