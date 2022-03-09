@@ -119,9 +119,12 @@ parts:
       mkdir -p "$SNAPCRAFT_PART_INSTALL"/build-tools
       cp build-tools/* "$SNAPCRAFT_PART_INSTALL"/build-tools
     prime:
-      - usr/share/doc/network-manager
-      - usr/share/doc/libnm0
-      - usr/share/doc/dnsmasq-base
+      - usr/share/doc/network-manager/copyright
+      - usr/share/doc/libnm0/copyright
+      - usr/share/doc/dnsmasq-base/copyright
+      - usr/share/doc/network-manager/changelog.*
+      - usr/share/doc/libnm0/changelog.*
+      - usr/share/doc/dnsmasq-base/changelog.*
 
   dnsmasq:
     after: [ stack-snaps-tools ]
@@ -295,6 +298,21 @@ parts:
         - usr/share/doc/libslang2/copyright
         - usr/share/doc/libteamdctl0/copyright
         - usr/share/doc/ppp/copyright
+        - usr/share/doc/libbrotli1/changelog.*
+        - usr/share/doc/libcurl3-gnutls/changelog.*
+        - usr/share/doc/libjansson4/changelog.*
+        - usr/share/doc/libldap-2.5-0/changelog.*
+        - usr/share/doc/libmm-glib0/changelog.*
+        - usr/share/doc/libndp0/changelog.*
+        - usr/share/doc/libnewt0.52/changelog.*
+        - usr/share/doc/libnghttp2-14/changelog.*
+        - usr/share/doc/libpcap0.8/changelog.*
+        - usr/share/doc/libpsl5/changelog.*
+        - usr/share/doc/librtmp1/changelog.*
+        - usr/share/doc/libsasl2-2/changelog.*
+        - usr/share/doc/libslang2/changelog.*
+        - usr/share/doc/libteamdctl0/changelog.*
+        - usr/share/doc/ppp/changelog.*
       libs:
         - usr/lib/*/libslang*
         - usr/lib/libnm*
