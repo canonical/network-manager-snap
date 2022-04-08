@@ -63,7 +63,7 @@ suites:
     tests/main/:
         summary: Full-system tests for NetworkManager without ethernet support
         systems:
-            - ubuntu-core-20
+            - ubuntu-core-22
         prepare: |
             . $TESTSLIB/prepare.sh
         restore-each: |
@@ -71,7 +71,7 @@ suites:
     tests/full/:
         summary: Full-system tests for NetworkManager being the only network management service
         systems:
-            - ubuntu-core-20
+            - ubuntu-core-22
         prepare: |
             . $TESTSLIB/utilities.sh
             stop_after_first_reboot
