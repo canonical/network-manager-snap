@@ -1,4 +1,4 @@
-From 5bf1aba83ec980e23716144554d7547cbaf0a504 Mon Sep 17 00:00:00 2001
+From fef60ac02515be21a14a952d8a3456321225b22d Mon Sep 17 00:00:00 2001
 From: Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com>
 Date: Mon, 21 Mar 2022 16:52:05 +0100
 Subject: [PATCH] Do not enable for APs SAE if key management is psk
@@ -10,11 +10,11 @@ for the AP, "sae" needs to be set explicitly. Maybe this is a driver
 issue and this patch will need to be reverted after consulting with
 upstream.
 ---
- src/core/supplicant/nm-supplicant-config.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ src/core/supplicant/nm-supplicant-config.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
 diff --git a/src/core/supplicant/nm-supplicant-config.c b/src/core/supplicant/nm-supplicant-config.c
-index 96c23579d..d3dd55227 100644
+index 8626042bb..abc458ba7 100644
 --- a/src/core/supplicant/nm-supplicant-config.c
 +++ b/src/core/supplicant/nm-supplicant-config.c
 @@ -35,6 +35,7 @@ typedef struct {
@@ -41,17 +41,25 @@ index 96c23579d..d3dd55227 100644
      if (is_adhoc || is_ap)
          priv->ap_scan = 2;
      else
-@@ -854,10 +857,13 @@ nm_supplicant_config_add_setting_wireless_security(NMSupplicantConfig
-             g_string_append(key_mgmt_conf, " WPA-PSK-SHA256");
-         if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
-             g_string_append(key_mgmt_conf, " FT-PSK");
--        if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)) {
+@@ -869,12 +872,19 @@ nm_supplicant_config_add_setting_wireless_security(NMSupplicantConfig
+          * Those conditions are met when the interface has capabilities
+          * SAE, PMF, BIP.
+          */
+-        if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)
+-            && _get_capability(priv, NM_SUPPL_CAP_TYPE_PMF)
+-            && _get_capability(priv, NM_SUPPL_CAP_TYPE_BIP)) {
 -            g_string_append(key_mgmt_conf, " SAE");
 -            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
 -                g_string_append(key_mgmt_conf, " FT-SAE");
-+        /* If we want WPA3 for the AP, key_mgmt will need to be explicitly "sae" */
++        /* If we want WPA3 for the AP, key_mgmt will need to be explicitly "sae".
++         * See https://mail.gnome.org/archives/networkmanager-list/2022-March/msg00016.html
++         * and https://mail.gnome.org/archives/networkmanager-list/2022-April/msg00000.html
++         * wpa_supplicant doesn't support FT in AP mode yet.
++         */
 +        if (priv->is_ap == FALSE) {
-+            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)) {
++            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)
++                && _get_capability(priv, NM_SUPPL_CAP_TYPE_PMF)
++                && _get_capability(priv, NM_SUPPL_CAP_TYPE_BIP)) {
 +                g_string_append(key_mgmt_conf, " SAE");
 +                if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
 +                    g_string_append(key_mgmt_conf, " FT-SAE");
