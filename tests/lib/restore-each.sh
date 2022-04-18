@@ -20,6 +20,9 @@ done
 
 if snap list | grep "$SNAP_NAME" ; then
 	snap remove --purge network-manager
+        # TODO should not be needed when
+        # https://github.com/snapcore/snapd/pull/11679 is merged
+        rm -rf /root/.snap/data/network-manager
 fi
 snap_install network-manager --channel=20/stable
 wait_for_network_manager
