@@ -1,17 +1,26 @@
-From f9f7e6ccf867a55fc0079f60b20c5efd56e46968 Mon Sep 17 00:00:00 2001
+From 070448536e628032036c2d61eec5502c1e1aa770 Mon Sep 17 00:00:00 2001
 From: snapcraft <snapcraft@canonical.com>
 Date: Mon, 7 Mar 2022 15:24:03 +0100
 Subject: [PATCH 3/4] Disable tests failing on launchpad
 
 ---
- Makefile.am | 7 -------
- 1 file changed, 7 deletions(-)
+ Makefile.am | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index 8aa8d3210..e4d62f799 100644
+index 8aa8d3210..f00eb9616 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -4135,16 +4135,11 @@ check_programs_norun += \
+@@ -3166,8 +3166,6 @@ EXTRA_DIST += \
+ # src/core/settings/plugins/keyfile/tests
+ ###############################################################################
+ 
+-check_programs += src/core/settings/plugins/keyfile/tests/test-keyfile-settings
+-
+ src_core_settings_plugins_keyfile_tests_test_keyfile_settings_CPPFLAGS = $(src_core_cppflags_test)
+ 
+ src_core_settings_plugins_keyfile_tests_test_keyfile_settings_LDFLAGS = \
+@@ -4135,16 +4133,11 @@ check_programs_norun += \
  
  check_programs += \
  	src/core/platform/tests/test-address-fake \
@@ -28,7 +37,7 @@ index 8aa8d3210..e4d62f799 100644
  	$(NULL)
  
  src_core_platform_tests_monitor_CPPFLAGS = $(src_core_cppflags_test)
-@@ -4232,7 +4227,6 @@ src_core_devices_tests_ldflags = \
+@@ -4232,7 +4225,6 @@ src_core_devices_tests_ldflags = \
  	$(SANITIZER_EXEC_LDFLAGS)
  
  check_programs += \
@@ -36,7 +45,7 @@ index 8aa8d3210..e4d62f799 100644
  	$(NULL)
  
  src_core_devices_tests_test_lldp_CPPFLAGS = $(src_core_cppflags_test)
-@@ -4343,7 +4337,6 @@ check_programs += \
+@@ -4343,7 +4335,6 @@ check_programs += \
  	src/core/tests/test-core \
  	src/core/tests/test-core-with-expect \
  	src/core/tests/test-dcb \
@@ -45,5 +54,5 @@ index 8aa8d3210..e4d62f799 100644
  	src/core/tests/test-utils \
  	src/core/tests/test-wired-defname \
 -- 
-2.25.1
+2.34.1
 
