@@ -1,96 +1,58 @@
-From b4557f86c968d78e6000661931ee3c265e38002a Mon Sep 17 00:00:00 2001
+From 070448536e628032036c2d61eec5502c1e1aa770 Mon Sep 17 00:00:00 2001
 From: snapcraft <snapcraft@canonical.com>
-Date: Wed, 8 Jul 2020 14:34:37 +0200
-Subject: [PATCH] Disable tests failing on launchpad
+Date: Mon, 7 Mar 2022 15:24:03 +0100
+Subject: [PATCH 3/4] Disable tests failing on launchpad
 
 ---
- Makefile.am                    | 6 +-----
- Makefile.in                    | 4 ----
- src/devices/tests/meson.build  | 1 -
- src/platform/tests/meson.build | 3 ---
- 4 files changed, 1 insertion(+), 13 deletions(-)
+ Makefile.am | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index b37aa4e71..f737b07db 100644
+index 8aa8d3210..f00eb9616 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -3730,15 +3730,12 @@ check_programs_norun += \
+@@ -3166,8 +3166,6 @@ EXTRA_DIST += \
+ # src/core/settings/plugins/keyfile/tests
+ ###############################################################################
+ 
+-check_programs += src/core/settings/plugins/keyfile/tests/test-keyfile-settings
+-
+ src_core_settings_plugins_keyfile_tests_test_keyfile_settings_CPPFLAGS = $(src_core_cppflags_test)
+ 
+ src_core_settings_plugins_keyfile_tests_test_keyfile_settings_LDFLAGS = \
+@@ -4135,16 +4133,11 @@ check_programs_norun += \
  
  check_programs += \
- 	src/platform/tests/test-address-fake \
--	src/platform/tests/test-address-linux \
- 	src/platform/tests/test-cleanup-fake \
- 	src/platform/tests/test-cleanup-linux \
- 	src/platform/tests/test-link-fake \
--	src/platform/tests/test-link-linux \
- 	src/platform/tests/test-nmp-object \
- 	src/platform/tests/test-platform-general \
- 	src/platform/tests/test-route-fake \
--	src/platform/tests/test-route-linux \
+ 	src/core/platform/tests/test-address-fake \
+-	src/core/platform/tests/test-address-linux \
+ 	src/core/platform/tests/test-cleanup-fake \
+-	src/core/platform/tests/test-cleanup-linux \
+ 	src/core/platform/tests/test-link-fake \
+-	src/core/platform/tests/test-link-linux \
+ 	src/core/platform/tests/test-nmp-object \
+ 	src/core/platform/tests/test-platform-general \
+ 	src/core/platform/tests/test-route-fake \
+-	src/core/platform/tests/test-route-linux \
+-	src/core/platform/tests/test-tc-linux \
  	$(NULL)
  
- src_platform_tests_monitor_CPPFLAGS = $(src_cppflags_test)
-@@ -3818,8 +3815,7 @@ src_devices_tests_ldflags = \
+ src_core_platform_tests_monitor_CPPFLAGS = $(src_core_cppflags_test)
+@@ -4232,7 +4225,6 @@ src_core_devices_tests_ldflags = \
  	$(SANITIZER_EXEC_LDFLAGS)
  
  check_programs += \
--	src/devices/tests/test-lldp \
--	src/devices/tests/test-acd
-+	src/devices/tests/test-lldp
+-	src/core/devices/tests/test-lldp \
+ 	$(NULL)
  
- src_devices_tests_test_lldp_CPPFLAGS = $(src_cppflags_test)
- src_devices_tests_test_lldp_LDFLAGS = $(src_devices_tests_ldflags)
-diff --git a/Makefile.in b/Makefile.in
-index fba5b556a..f6489053d 100644
---- a/Makefile.in
-+++ b/Makefile.in
-@@ -4705,16 +4705,12 @@ check_programs = shared/nm-utils/tests/test-shared-general \
- 	$(am__append_24) $(am__append_31) $(am__append_35) \
- 	$(am__append_44) src/dnsmasq/tests/test-dnsmasq-utils \
- 	src/platform/tests/test-address-fake \
--	src/platform/tests/test-address-linux \
- 	src/platform/tests/test-cleanup-fake \
- 	src/platform/tests/test-cleanup-linux \
- 	src/platform/tests/test-link-fake \
--	src/platform/tests/test-link-linux \
- 	src/platform/tests/test-nmp-object \
- 	src/platform/tests/test-platform-general \
- 	src/platform/tests/test-route-fake \
--	src/platform/tests/test-route-linux $(NULL) \
--	src/devices/tests/test-lldp src/devices/tests/test-acd \
- 	src/ndisc/tests/test-ndisc-fake \
- 	src/supplicant/tests/test-supplicant-config \
- 	src/tests/config/test-config src/tests/test-core \
-diff --git a/src/devices/tests/meson.build b/src/devices/tests/meson.build
-index bb53d1ee4..457d368c2 100644
---- a/src/devices/tests/meson.build
-+++ b/src/devices/tests/meson.build
-@@ -1,5 +1,4 @@
- test_units = [
--  'test-acd',
-   'test-lldp',
- ]
- 
-diff --git a/src/platform/tests/meson.build b/src/platform/tests/meson.build
-index 6f7173b6d..342aa1c81 100644
---- a/src/platform/tests/meson.build
-+++ b/src/platform/tests/meson.build
-@@ -3,15 +3,12 @@ test_linux_c_flags = test_c_flags + ['-DSETUP=nm_linux_platform_setup']
- 
- test_units = [
-   ['test-address-fake', 'test-address.c', test_fake_c_flags, default_test_timeout],
--  ['test-address-linux', 'test-address.c', test_linux_c_flags, default_test_timeout],
-   ['test-cleanup-fake', 'test-cleanup.c', test_fake_c_flags, default_test_timeout],
-   ['test-cleanup-linux', 'test-cleanup.c', test_linux_c_flags, default_test_timeout],
-   ['test-link-fake', 'test-link.c', test_fake_c_flags, default_test_timeout],
--  ['test-link-linux', 'test-link.c', test_linux_c_flags, 900],
-   ['test-nmp-object', 'test-nmp-object.c', test_c_flags, default_test_timeout],
-   ['test-platform-general', 'test-platform-general.c', test_c_flags, default_test_timeout],
-   ['test-route-fake', 'test-route.c', test_fake_c_flags, default_test_timeout],
--  ['test-route-linux', 'test-route.c', test_linux_c_flags, default_test_timeout],
- ]
- 
- foreach test_unit: test_units
+ src_core_devices_tests_test_lldp_CPPFLAGS = $(src_core_cppflags_test)
+@@ -4343,7 +4335,6 @@ check_programs += \
+ 	src/core/tests/test-core \
+ 	src/core/tests/test-core-with-expect \
+ 	src/core/tests/test-dcb \
+-	src/core/tests/test-l3cfg \
+ 	src/core/tests/test-systemd \
+ 	src/core/tests/test-utils \
+ 	src/core/tests/test-wired-defname \
 -- 
-2.25.1
+2.34.1
 

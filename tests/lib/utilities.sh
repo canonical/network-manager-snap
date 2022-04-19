@@ -14,6 +14,10 @@ snap_install() {
 		# Don't reinstall if we have it installed already
 		if ! snap list | grep $name ; then
 			snap install $name $2
+                        # Avoid race conditions that seem to happen when doing two
+                        # consecutive installations - probably because of netplan
+                        # re-starting daemons.
+                        sleep 20
 		fi
 		snap install --dangerous $PROJECT_PATH/$name*_amd64.snap
 	fi

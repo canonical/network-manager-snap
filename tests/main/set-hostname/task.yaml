@@ -12,6 +12,6 @@ execute: |
 
     expected_hostname=foobar
     /snap/bin/network-manager.nmcli general hostname $expected_hostname
-    test "`/snap/bin/network-manager.nmcli general hostname`" = "$expected_hostname"
-    test "`hostnamectl status | grep Static`" = "   Static hostname: $expected_hostname"
-    test "`hostname`" = "$expected_hostname"
+    test "$(/snap/bin/network-manager.nmcli general hostname)" = "$expected_hostname"
+    hostnamectl status | grep "Static hostname" | grep "$expected_hostname"
+    test "$(hostname)" = "$expected_hostname"

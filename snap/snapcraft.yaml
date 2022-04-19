@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.22.10-12-dev
+version: 1.36.4-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -8,12 +8,13 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN serivces.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-1.22
-base: core20
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-22
+base: core22
 confinement: strict
-grade: stable
+# 'devel' needed to make snapcraft happy until core22 is in stable
+grade: devel
 
-# Since the uc20 network-manager snap currently defaults to the native
+# Since the uc20+ network-manager snap currently defaults to the native
 # netplan config plugin, the default format of connection files has
 # switched from keyfile to netplan, thus a fresh from earlier tracks
 # of network-manager will not work w/out post-refresh hook support to
@@ -54,8 +55,6 @@ layout:
     # Using 'conf' to keep compatibility with older NM snaps. Another option
     # would be to copy around the systems connections when refreshing.
     bind: $SNAP_DATA/conf
-  /usr/var/lib/NetworkManager:
-    bind: $SNAP_DATA/usr/var/lib/NetworkManager
   /var/lib/NetworkManager:
     bind: $SNAP_DATA/var/lib/NetworkManager
 
@@ -119,16 +118,19 @@ parts:
       mkdir -p "$SNAPCRAFT_PART_INSTALL"/build-tools
       cp build-tools/* "$SNAPCRAFT_PART_INSTALL"/build-tools
     prime:
-      - usr/share/doc/network-manager
-      - usr/share/doc/libnm0
-      - usr/share/doc/dnsmasq-base
+      - usr/share/doc/network-manager/copyright
+      - usr/share/doc/libnm0/copyright
+      - usr/share/doc/dnsmasq-base/copyright
+      - usr/share/doc/network-manager/changelog.*
+      - usr/share/doc/libnm0/changelog.*
+      - usr/share/doc/dnsmasq-base/changelog.*
 
   dnsmasq:
     after: [ stack-snaps-tools ]
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/focal-updates
+    source-branch: applied/ubuntu/jammy
     build-packages:
       - build-essential
     make-parameters:
@@ -149,16 +151,10 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/focal-updates
+    source-branch: applied/ubuntu/jammy
     build-packages:
       - intltool
-      - libdbus-glib-1-dev
-      - libdbus-1-dev
       - libglib2.0-dev
-      - libiw-dev
-      - libnl-3-dev
-      - libnl-route-3-dev
-      - libnl-genl-3-dev
       - ppp-dev
       - libgnutls28-dev
       - uuid-dev
@@ -167,11 +163,9 @@ parts:
       - libudev-dev
       - libgirepository1.0-dev
       - gobject-introspection
-      - python-gi
+      - python3-gi
       - libpsl-dev
       - libcurl4-gnutls-dev
-      - perl
-      - libyaml-perl
       - libglib2.0-doc
       - libmm-glib-dev
       - libndp-dev
@@ -179,13 +173,10 @@ parts:
       - libnewt-dev
       - libteam-dev
       - libjansson-dev
-      - dbus
-      - python-dbus
-      - quilt
-      - xsltproc
-      - iptables
-      - gtk-doc-tools
       - libnss3-dev
+      - dbus
+      - python3-dbus
+      - gtk-doc-tools
       - libnetplan-dev
       - netplan.io
       - libyaml-dev
@@ -203,8 +194,7 @@ parts:
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
-      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/
-      - --with-resolvconf=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/resolvconf
+      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
       - --with-udev-dir=/lib/udev
@@ -258,46 +248,27 @@ parts:
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
-      - iputils-arping
-      - libasn1-8-heimdal
       - libbrotli1
-      - libdbus-glib-1-2
       - libcurl3-gnutls
-      - libgssapi3-heimdal
-      - libhcrypto4-heimdal
-      - libheimbase1-heimdal
-      - libheimntlm0-heimdal
-      - libhx509-5-heimdal
       - libjansson4
-      - libkrb5-26-heimdal
-      - libldap-2.4-2
+      - libldap-2.5-0
       - libmm-glib0
       - libnewt0.52
       - libnghttp2-14
-      - libroken18-heimdal
       - libndp0
       - libpsl5
       - librtmp1
       - libsasl2-2
       - libteamdctl0
       - libslang2
-      - libssh-4
-      - libwind0-heimdal
       - ppp
-      - resolvconf
-
-    override-stage: |
-      snapcraftctl stage
-      patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/resolvconf.patch
 
     organize:
-      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
 
     filesets:
       binaries:
-        - sbin/resolvconf
-        - usr/bin/arping
         - usr/bin/nmcli
         - usr/bin/nmtui
         - usr/bin/nmtui-connect
@@ -305,83 +276,69 @@ parts:
         - usr/bin/nmtui-hostname
         - usr/sbin/pppd
         - usr/lib/*/NetworkManager
-        - usr/lib/pppd/2.4.5/nm-pppd-plugin.so
+        - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
         - usr/lib/NetworkManager
         - usr/sbin/NetworkManager
       configs:
         - etc/NetworkManager/*
-        - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/iputils-arping/copyright
-        - usr/share/doc/libasn1-8-heimdal/copyright
         - usr/share/doc/libbrotli1/copyright
         - usr/share/doc/libcurl3-gnutls/copyright
-        - usr/share/doc/libdbus-glib-1-2/copyright
-        - usr/share/doc/libgssapi3-heimdal/copyright
-        - usr/share/doc/libhcrypto4-heimdal/copyright
-        - usr/share/doc/libheimbase1-heimdal/copyright
-        - usr/share/doc/libheimntlm0-heimdal/copyright
-        - usr/share/doc/libhx509-5-heimdal/copyright
         - usr/share/doc/libjansson4/copyright
-        - usr/share/doc/libkrb5-26-heimdal/copyright
-        - usr/share/doc/libldap-2.4-2/copyright
+        - usr/share/doc/libldap-2.5-0/copyright
         - usr/share/doc/libmm-glib0/copyright
         - usr/share/doc/libndp0/copyright
         - usr/share/doc/libnewt0.52/copyright
         - usr/share/doc/libnghttp2-14/copyright
         - usr/share/doc/libpcap0.8/copyright
         - usr/share/doc/libpsl5/copyright
-        - usr/share/doc/libroken18-heimdal/copyright
         - usr/share/doc/librtmp1/copyright
         - usr/share/doc/libsasl2-2/copyright
         - usr/share/doc/libslang2/copyright
-        - usr/share/doc/libssh-4/copyright
         - usr/share/doc/libteamdctl0/copyright
-        - usr/share/doc/libwind0-heimdal/copyright
         - usr/share/doc/ppp/copyright
-        - usr/share/doc/resolvconf/copyright
+        - usr/share/doc/libbrotli1/changelog.*
+        - usr/share/doc/libcurl3-gnutls/changelog.*
+        - usr/share/doc/libjansson4/changelog.*
+        - usr/share/doc/libldap-2.5-0/changelog.*
+        - usr/share/doc/libmm-glib0/changelog.*
+        - usr/share/doc/libndp0/changelog.*
+        - usr/share/doc/libnewt0.52/changelog.*
+        - usr/share/doc/libnghttp2-14/changelog.*
+        - usr/share/doc/libpcap0.8/changelog.*
+        - usr/share/doc/libpsl5/changelog.*
+        - usr/share/doc/librtmp1/changelog.*
+        - usr/share/doc/libsasl2-2/changelog.*
+        - usr/share/doc/libslang2/changelog.*
+        - usr/share/doc/libteamdctl0/changelog.*
+        - usr/share/doc/ppp/changelog.*
       libs:
-        - lib/resolvconf/list-records
-        - lib/*/libslang*
+        - usr/lib/*/libslang*
         - usr/lib/libnm*
-        - usr/lib/*/libasn1*
         - usr/lib/*/libbrotli*
         - usr/lib/*/libcurl-gnutls*
-        - usr/lib/*/libdbus-glib*
-        - usr/lib/*/libgssapi*
-        - -usr/lib/*/libgssapi_krb5*
-        - usr/lib/*/libhcrypto*
-        - usr/lib/*/libheimbase*
-        - usr/lib/*/libheimntlm*
-        - usr/lib/*/libhx509*
-        - usr/lib/*/libip4tc*
-        - usr/lib/*/libip6tc*
         # required for teamdctl
         - usr/lib/*/libjansson*
-        - usr/lib/*/libkrb5*26*
-        - usr/lib/*/liblber-2.4*
-        - usr/lib/*/libldap_r-2.4*
-        - usr/lib/*/liblzma*
+        - usr/lib/*/liblber-2.5*
+        - usr/lib/*/libldap-2.5*
         - usr/lib/*/libmm-glib*
         - usr/lib/*/libnewt*
         - usr/lib/*/libndp*
         - usr/lib/*/libnghttp2*
         - usr/lib/*/libpcap*
         - usr/lib/*/libpsl*
-        - usr/lib/*/libroken*
         - usr/lib/*/librtmp*
         - usr/lib/*/libsasl2*
-        - usr/lib/*/libssh*
         - usr/lib/*/libteamdctl*
-        - usr/lib/*/libwind*
       unwanted:
         # We don't use dhclient so we don't need this helper
         - -usr/lib/NetworkManager/nm-dhcp-helper
         # Things we don't support yet and don't have to ship
-        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
-        - -usr/lib/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
+        - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-adsl.so
+        - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-bluetooth.so
         # Some additional build artifacts we do not need
         - -usr/lib/NetworkManager/*/*.la
+        - -usr/lib/libnm.la
         - -usr/lib/pkgconfig
     prime:
       - $binaries
