@@ -241,11 +241,11 @@ parts:
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
       # from using the snap fallback io.netplan.Netplan.Generate() DBus API as
       # that does not allow to pass a --root-dir argument, needed for testing
-      # _SNAP=$SNAP
-      # unset SNAP
-      # make check
-      # SNAP=$_SNAP
-      # unset _SNAP
+      _SNAP=$SNAP
+      unset SNAP
+      make check
+      SNAP=$_SNAP
+      unset _SNAP
     stage-packages:
       - libbrotli1
       - libcurl3-gnutls
