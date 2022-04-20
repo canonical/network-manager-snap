@@ -1,3 +1,1241 @@
+2022-04-20 network-manager 1.36.4-1
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Migration to NM 1.36, with core22 base
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/418927
+
+  [ Changes in primed packages ]
+  
+  libldap-2.5-0 (2.5.11+dfsg-1~exp1ubuntu3): new primed package
+  
+  libbrotli1 (built from brotli) updated from 1.0.7-6ubuntu0.1 to 1.0.9-2build6:
+  
+    brotli (1.0.9-2build6) jammy; urgency=medium
+  
+      * No-change rebuild for ppc64el baseline bump.
+  
+     -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Wed, 23 Mar 2022 10:44:48 +0100
+  
+    brotli (1.0.9-2build5) jammy; urgency=medium
+  
+      * No-change rebuild with Python 3.10 only
+  
+     -- Graham Inggs <ginggs@ubuntu.com>  Thu, 17 Mar 2022 19:20:27 +0000
+  
+    brotli (1.0.9-2build4) jammy; urgency=medium
+  
+      * No-change rebuild to add python3.10.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sat, 16 Oct 2021 06:55:58 +0000
+  
+    brotli (1.0.9-2build3) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:09:44 +0200
+  
+    brotli (1.0.9-2build2) hirsute; urgency=medium
+  
+      * No-change rebuild to drop python3.8 extensions.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 07 Dec 2020 18:39:27 +0100
+  
+    brotli (1.0.9-2build1) hirsute; urgency=medium
+  
+      * No-change rebuild to build with python3.9 as supported.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sat, 24 Oct 2020 10:52:01 +0200
+  
+    brotli (1.0.9-2) unstable; urgency=medium
+  
+      * Team Upload
+      * debian/patches/838.patch:
+        - upstream pull request to fix pkg-config based detection break
+          (Closes: #969561)
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 05 Sep 2020 00:11:03 +0200
+  
+    brotli (1.0.9-1) unstable; urgency=medium
+  
+      * Use debhelper 13
+      * New upstream version 1.0.9
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Tue, 01 Sep 2020 22:25:32 +0200
+  
+    brotli (1.0.7-7) unstable; urgency=medium
+  
+      [ Debian Janitor ]
+      * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+        Repository-Browse.
+      * Update standards version to 4.5.0, no changes needed.
+  
+      [ Christian Klein ]
+      * Mark libbrotli-dev as "Multi-Arch: same" so it is multiarch-installable
+        (Closes: #964256)
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Thu, 16 Jul 2020 01:23:57 +0200
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.7 to 7.81.0-1:
+  
+    curl (7.81.0-1) unstable; urgency=medium
+  
+      * New upstream version 7.81.0
+      * d/p/13_fix-man-formatting.patch: Refresh patch
+  
+     -- Samuel Henrique <samueloph@debian.org>  Wed, 05 Jan 2022 09:31:32 -0300
+  
+    curl (7.80.0-3) unstable; urgency=medium
+  
+      * Revert "Revert "debian/control: Add Build-Depends on libssh-dev for
+        Ubuntu".
+  
+        As per #1002598, the blocker has been solved.
+  
+        Note that this does not changes Debian's curl to libssh, it still
+        uses libssh2.
+  
+        Discussions about changing to libssh are ongoing at #897950
+  
+     -- Samuel Henrique <samueloph@debian.org>  Sun, 26 Dec 2021 13:22:18 -0300
+  
+    curl (7.80.0-2) unstable; urgency=medium
+  
+      * Revert "debian/control: Add Build-Depends on libssh-dev for Ubuntu"
+        (closes: #1002597)
+        The change had side effects on Debian due to the inclusion of the new
+        Build-dep, even though it doesn't changes the resulting binary. It cause
+        issues for architecture bootstraping.
+  
+        We are gonna reintroduce this change once the issues are fixed, to allow
+        Ubuntu to remove its delta.
+  
+        See discussions at #1002598 and #1002597 for details
+  
+     -- Samuel Henrique <samueloph@debian.org>  Sat, 25 Dec 2021 10:47:13 -0300
+  
+    curl (7.80.0-1) unstable; urgency=medium
+  
+      [ Samuel Henrique ]
+      * New upstream version 7.80.0
+      * Bump Standards-Version to 4.6.0
+      * Add new symbol curl_url_strerror to symbols files
+      * Compile with zstd support (closes: #983660)
+      * d/p/12_use-python3-in-tests.patch: Drop patch, merged upstream
+      * d/p/13_fix-man-formatting.patch: Update patch
+      * d/p/14_fix-compatibility-impacket-0-9-23.patch: Drop patch, merged upstream
+  
+      [ Jeremy Bicha ]
+      * debian/control: Add Build-Depends on libssh-dev for Ubuntu
+  
+     -- Samuel Henrique <samueloph@debian.org>  Fri, 24 Dec 2021 11:42:57 -0300
+  
+    curl (7.79.1-2) unstable; urgency=medium
+  
+      * d/rules: Make test failures non-fatal again.
+        Unfortunately there are some test failures happening on a few
+        architectures, so we have to make the build pass even if not all tests
+        are succeeding, at least until we have time to properly investigate
+        the reason for these failures.
+  
+     -- Sergio Durigan Junior <sergiodj@debian.org>  Mon, 08 Nov 2021 23:54:35 -0500
+  
+    curl (7.79.1-1) unstable; urgency=medium
+  
+      [ Samuel Henrique ]
+      * Add myself as an Uploader
+      * Add sergiodj as an uploader
+      * New upstream version 7.79.1 (closes: #989046)
+        - Changes since 7.74.0:
+          ~ vtls: fix connection reuse checks for issuer cert and case sensitivity
+          (closes: #991492, CVE-2021-22924)
+          ~ Fix User-Agent header missing in some cases (closes: #994940)
+          ~ Fix TELNET stack contents disclosure (closes: #989228, CVE-2021-22898)
+      * d/rules: Add --with-{openssl|gnutls|nss} to configure args
+      * Update all patches.
+         Remove patches:
+         - 07_do-not-disable-debug-symbols: Obsolete as per
+           https://github.com/curl/curl/issues/7216.
+         - 14_transfer-strip-credentials-from-the-auto-referer-hea:
+           Originally from upstream, part of the release now.
+         - 15_vtls-add-isproxy-argument-to-Curl_ssl_get-addsession:
+           Originally from upstream, part of the release now.
+         - fix-regression-microseconds-instead-of-seconds:
+           Originally from upstream, part of the release now.
+         Update patches:
+         - 12_use-python3-in-tests: Update and forward upstream.
+         - 90_gnutls: Update
+         - 99_nss: Update
+         - 13_fix-man-formatting: Update
+  
+      [ Debian Janitor ]
+      * Use secure URI in Homepage field.
+      * Set debhelper-compat version in Build-Depends.
+      * Set upstream metadata fields: Bug-Database,
+        Bug-Submit (from ./configure), Repository, Repository-Browse.
+      * Avoid explicitly specifying -Wl,--as-needed linker flag.
+  
+      [ Helmut Grohne ]
+      * Also remove -ffile-prefix-map from curl-config (closes: #990128)
+      * Explicitly disable zstd support (closes: #992505)
+  
+      [ Sergio Durigan Junior ]
+      * d/control: Add Rules-Requires-Root: no.
+      * d/copyright: Add public-domain license text.
+      * Enable GPG-checking of orig tarball.
+        - d/upstream/signing-key.asc: Upstream public key.
+        - d/watch: Add "pgpmode=auto" as an option.
+      * Bump debhelper-compat to 13.
+        - d/control: B-D on debhelper-compat = 13.
+        - d/rules: After the override_dh_auto_install target has been run,
+          we know that we can safely get rid of the contents inside the
+          debian/tmp/ directory.  This is needed because otherwise dh_missing
+          will complain about uninstalled files, which will make the build
+          fail when using debhelper-compat 13.
+      * d/rules: Some minor cleanup and removal of unneeded comments.
+      * d/rules: Honour "nocheck" build option.
+      * Make OpenSSL and GNUTLS builds fail if tests fail
+        - d/rules: Adjust rule to make OpenSSL and GNUTLS builds fail if their
+          tests fail.  Unfortunately, it's still not possible to make the NSS
+          build fail if its tests fail; we're still investigating the failures
+          there with it.
+        - d/p/14_fix-compatibility-impacket-0-9-23.patch: Needed patch
+          to make tests pass with impacket 0.9.23+.
+  
+     -- Samuel Henrique <samueloph@debian.org>  Mon, 08 Nov 2021 21:14:47 +0000
+  
+    curl (7.74.0-1.3) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * Add upstream patch bc7ecc7 so curl -w times shown as seconds with
+        fractions (Closes: #989064)
+  
+     -- Paul Gevers <elbrus@debian.org>  Fri, 25 Jun 2021 20:59:54 +0200
+  
+    curl (7.74.0-1.2) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * transfer: strip credentials from the auto-referer header field
+        (CVE-2021-22876) (Closes: #986269)
+      * vtls: add 'isproxy' argument to Curl_ssl_get/addsessionid()
+        (CVE-2021-22890) (Closes: #986270)
+  
+     -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 03 Apr 2021 14:43:39 +0200
+  
+    curl (7.74.0-1.1) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+  
+      [ Bruno Kleinert ]
+      * Fixed "Please build-depend on libidn2-dev instead of obsolete transition
+        package libidn2-0-dev" (Closes: #974996)
+  
+     -- Samuel Henrique <samueloph@debian.org>  Wed, 10 Feb 2021 00:42:40 +0000
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27+dfsg-2ubuntu0.1 to 2.1.27+dfsg2-3ubuntu1:
+  
+    cyrus-sasl2 (2.1.27+dfsg2-3ubuntu1) jammy; urgency=medium
+  
+      * SECURITY UPDATE: SQL injection in SQL plugin
+        - debian/patches/CVE-2022-24407.patch: escape password for SQL
+          insert/update commands in plugins/sql.c.
+        - CVE-2022-24407
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 22 Feb 2022 14:17:18 -0500
+  
+    cyrus-sasl2 (2.1.27+dfsg2-3) unstable; urgency=medium
+  
+      [ Andreas Hasenack ]
+      * Fix configure.ac for autoconf 2.70 (Closes: #1003355, #1000152)
+  
+     -- Bastian Germann <bage@debian.org>  Tue, 11 Jan 2022 11:25:37 +0100
+  
+    cyrus-sasl2 (2.1.27+dfsg2-2) unstable; urgency=medium
+  
+      [ Helmut Grohne ]
+      * Fix FTCBFS: (Closes: #928512)
+        + cross.patch: Support caching SPNEGO support test.
+        + Provide SPNEGO support test result.
+  
+      [ Vagrant Cascadian ]
+      * Set date in man pages (Closes: #995145)
+  
+     -- Bastian Germann <bage@debian.org>  Wed, 17 Nov 2021 01:23:49 +0100
+  
+    cyrus-sasl2 (2.1.27+dfsg2-1) unstable; urgency=medium
+  
+      * Add bage to uploaders (Closes: #799864)
+      * Use upstream patches where possible
+      * Amend off-by-one in _sasl_add_string function
+      * Replace some patches by upstream equivalents
+      * Apply the patches in order of to their prefixes
+      * Add missing caret (^) in logcheck rule (Closes: #830764)
+      * Remove unnecessary GPL copy
+      * Add missing copyright/licenses
+      * Repack, getting rid of more problematic files
+      * Build html documentation
+      * Make the package rebuildable
+      * Remove outdated README.Debian info
+      * Disable autostart via debhelper
+      * Drop unnecessary patch
+      * Remove alternative, old build dep libmysqlclient-dev
+        Annotate documentation Build-Depends with :native
+  
+      [ Frédéric Brière ]
+      * Make logcheck snippet compatible with systemd journal
+  
+     -- Bastian Germann <bage@debian.org>  Sun, 14 Nov 2021 14:11:18 +0100
+  
+    cyrus-sasl2 (2.1.27+dfsg-2.3) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * d/watch: Check the github releases page
+      * Get rid of a patch's patch
+      * Recover upstream-compatible patch license (Closes: #996866)
+        + Relicense libobj patch
+      * Fix lintian: unused-override
+      * Patch: Prevent double free of RC4 context (Closes: #722611)
+      * Rename double-prefix patches
+  
+      [ Debian Janitor ]
+      * Trim trailing whitespace.
+      * Use secure copyright file specification URI.
+      * debian/copyright: use spaces rather than tabs to start continuation lines.
+      * Re-export upstream signing key without extra signatures.
+      * Set upstream metadata fields: Bug-Database, Bug-Submit (from ./configure), Repository, Repository-Browse.
+      * Fix day-of-week for changelog entry 2.1.7-1.
+      * Avoid explicitly specifying -Wl,--as-needed linker flag.
+  
+     -- Bastian Germann <bage@debian.org>  Fri, 05 Nov 2021 21:58:22 +0100
+  
+    cyrus-sasl2 (2.1.27+dfsg-2.2) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+  
+      [ Vagrant Cascadian ]
+      * Fix Sphinx errors (Closes: #995123)
+  
+     -- Michael Banck <michael.banck@credativ.de>  Wed, 27 Oct 2021 17:57:34 +0200
+  
+    cyrus-sasl2 (2.1.27+dfsg-2.1) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * Fix Sphinx errors (Closes: #955095)
+  
+     -- Jochen Sprickerhof <jspricke@debian.org>  Sun, 07 Feb 2021 10:43:14 +0100
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.80-1.1ubuntu1.4 to 2.86-1.1:
+  
+    dnsmasq (2.86-1.1) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+      * Fix --address=/#/...... which was lost in 2.86. (closes: #995655)
+  
+     -- Michael Biebl <biebl@debian.org>  Wed, 10 Nov 2021 22:05:45 +0100
+  
+    dnsmasq (2.86-1) unstable; urgency=low
+  
+       * Fix debian/changelog format error. (closes: #986626)
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 08 Apr 2021 22:39:00 +0100
+  
+    dnsmasq (2.85-1) unstable; urgency=low
+  
+       * New upstream.
+       * Includes fix to CVE-2021-3448.
+       * Fix manpage typos. (closes: #986150)
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 03 Apr 2021 22:17:23 +0100
+  
+    dnsmasq (2.84-1.2) unstable; urgency=medium
+  
+       * Non-maintainer upload.
+       * Bump old-version in dpkg-maintscript-helper dir_to_symlink calls to also
+         clean up after upgrades to an earlier version in testing.
+  
+     -- Andreas Beckmann <anbe@debian.org>  Thu, 01 Apr 2021 16:01:51 +0200
+  
+    dnsmasq (2.84-1.1) unstable; urgency=medium
+  
+       * Non-maintainer upload.
+       * Fix symlink to directory conversion for /usr/share/doc/dnsmasq.
+         This is achieved by directly calling dpkg-maintscript-helper in the preinst,
+         postinst, and postrm scripts, since the package does not use debhelper.
+         (Closes: #985282)
+  
+     -- Sébastien Villemot <sebastien@debian.org>  Sun, 28 Mar 2021 10:55:07 +0200
+  
+    dnsmasq (2.84-1) unstable; urgency=low
+  
+       * New upstream.
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Sun, 24 Jan 2021 22:02:01 +0000
+  
+    dnsmasq (2.83-1) unstable; urgency=high
+  
+       * New upstream.
+       * Includes fixes to CVE-2020-25681 - CVE-2020-25687 inclusive.
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Fri, 15 Jan 2021 22:22:41 +0000
+  
+    dnsmasq (2.82-1) unstable; urgency=low
+  
+       * New upstream.
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Fri, 26 Jun 2020 22:22:41 +0000
+  
+    dnsmasq (2.81-4) unstable; urgency=low
+  
+       * Remove runit support when building for Ubuntu. (closes: #960401)
+  
+     -- Simon Kelley <simon@thekelleys.org.uk>  Fri, 26 Jun 2020 21:52:44 +0000
+  
+  libjansson4 (built from jansson) updated from 2.12-1build1 to 2.13.1-1.1build3:
+  
+    jansson (2.13.1-1.1build3) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 13:01:30 +0100
+  
+    jansson (2.13.1-1.1build2) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:13:20 +0200
+  
+    jansson (2.13.1-1.1build1) hirsute; urgency=medium
+  
+      * No change rebuild with fixed ownership.
+  
+     -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 16 Feb 2021 15:16:23 +0000
+  
+    jansson (2.13.1-1.1) unstable; urgency=medium
+  
+      * Non-maintainer upload
+  
+      [ Sebastien Bacher ]
+      * debian/patches/git_new_sphinx.patch:
+        - backport an upstream change to fix the build with sphinx3
+          (Closes: #963640)
+  
+     -- Sebastian Ramacher <sramacher@debian.org>  Thu, 04 Feb 2021 22:47:01 +0100
+  
+    jansson (2.13.1-1) unstable; urgency=medium
+  
+      * New upstream release (Closes: #963842)
+      * Bump debhelper compat level to 13
+      * Bump Standards-Version to 4.5.0 (no changes needed)
+      * Update symbols file
+      * Fix symbols-file-missing-build-depends-package-field
+      * Mark libjansson.la as not installed
+      * Use https:// URL in watch file
+  
+     -- Alessandro Ghedini <ghedo@debian.org>  Sun, 28 Jun 2020 13:46:50 +0100
+  
+  libndp0 (built from libndp) updated from 1.7-0ubuntu1 to 1.8-0ubuntu3:
+  
+    libndp (1.8-0ubuntu3) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 13:13:37 +0100
+  
+    libndp (1.8-0ubuntu2) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:16:50 +0200
+  
+    libndp (1.8-0ubuntu1) impish; urgency=medium
+  
+      * New upstream version
+      * Build with autoreconf to generate a configure
+      * Updated the symbols
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 28 May 2021 15:03:08 +0200
+  
+  libpcap0.8 (built from libpcap) updated from 1.9.1-3 to 1.10.1-4build1:
+  
+    libpcap (1.10.1-4build1) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 13:14:25 +0100
+  
+    libpcap (1.10.1-4) unstable; urgency=medium
+  
+      * Fix more issues with target dependencies in debian/patches/shared-lib.diff,
+        exposed by FTBFS on the buildds for powerpc/ppc64.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sun, 05 Sep 2021 10:31:40 +0200
+  
+    libpcap (1.10.1-3) unstable; urgency=medium
+  
+      * Upgrade to debhelper compat level 13:
+        + Remove debian/compat.
+        + Add build-dep on debhelper-compat, remove build-deps on
+          dh-autoreconf, autotools-dev.
+        + Remove `--with autoreconf' from dh invocation.
+        + Remove `--fail-missing' argument to `dh_install'.
+      * Fix target dependencies in debian/patches/shared-lib.diff.
+      * Drop libpcap0.8-dbg; change dh_strip stanza accordingly.
+      * Lintian cleanups:
+        + Use secure URLs wherever possible.
+        + Remove extraneous signatures from upstream signing key.
+        + Set `Rules-Requires-Root' (to "no").
+        + Override `debug-symbol-migration-possibly-complete' (will be removed
+          after the bookworm release).
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sat, 28 Aug 2021 11:03:53 +0200
+  
+    libpcap (1.10.1-2) unstable; urgency=medium
+  
+      * Upload to unstable.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Mon, 16 Aug 2021 10:17:31 +0200
+  
+    libpcap (1.10.1-1) experimental; urgency=medium
+  
+      * New upstream release.
+      * Drop debian/patches/usb-bus-path.diff; upstream has dropped support
+        for old-style text-mode USB captures.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Thu, 24 Jun 2021 20:11:49 +0200
+  
+    libpcap (1.10.0-2) unstable; urgency=medium
+  
+      * Update Hurd support to use the new internal API, fixing FTBFS.
+      * Add missing dependency on libdbus-1-dev to libpcap0.8-dev, patch by
+        Luca Boccassi (closes: #979229).
+      * Bump Standards-Version to 4.5.1.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Mon, 04 Jan 2021 20:39:53 +0100
+  
+    libpcap (1.10.0-1) unstable; urgency=medium
+  
+      * New upstream release (closes: #970437).
+      * Export new symbol `pcap_init'.
+      * Drop unused lintian override.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sun, 03 Jan 2021 19:57:52 +0100
+  
+    libpcap (1.9.1-4) unstable; urgency=medium
+  
+      * debian/control: Add build-dep on libdbus-1-dev (closes: #958639).
+      * Bump Standards-Version to 4.5.0.
+  
+     -- Romain Francoise <rfrancoise@debian.org>  Sat, 25 Apr 2020 18:45:40 +0200
+  
+  libpsl5 (built from libpsl) updated from 0.21.0-1ubuntu1 to 0.21.0-1.2build2:
+  
+    libpsl (0.21.0-1.2build2) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 13:14:50 +0100
+  
+    libpsl (0.21.0-1.2build1) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:17:43 +0200
+  
+    libpsl (0.21.0-1.2) unstable; urgency=medium
+  
+      * Non-maintainer upload.
+  
+      [ Simon Josefsson ]
+      * B-D on libidn2-dev instead of obsolete libidn2-0-dev. (Closes: #974994)
+  
+      [ Sebastian Ramacher ]
+      * debian/patches: Update Platform.sh example in test data (Closes: #966941)
+  
+     -- Sebastian Ramacher <sramacher@debian.org>  Thu, 04 Feb 2021 22:56:22 +0100
+  
+    libpsl (0.21.0-1.1) unstable; urgency=low
+  
+      * Non-maintainer upload.
+      * Build the binaries also during indep build, required for
+        installation of psl-make-dafsa.1. (Closes: #953287)
+      * Remove essential diffutils from the test dependencies.
+        (Closes: #955439)
+  
+     -- Adrian Bunk <bunk@debian.org>  Sat, 16 May 2020 17:24:03 +0300
+  
+  libteamdctl0 (built from libteam) updated from 1.30-1 to 1.31-1build2:
+  
+    libteam (1.31-1build2) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 17:13:48 +0100
+  
+    libteam (1.31-1build1) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:18:31 +0200
+  
+    libteam (1.31-1) unstable; urgency=medium
+  
+      * New upstream release
+      * Standards-Version: 4.5.0
+      * DH to version 12
+  
+     -- Dmitry Smirnov <onlyjob@debian.org>  Wed, 07 Oct 2020 02:58:37 +1100
+  
+  libmm-glib0 (built from modemmanager) updated from 1.16.6-2~20.04.1 to 1.18.6-1:
+  
+    modemmanager (1.18.6-1) unstable; urgency=medium
+  
+      [ Bjørn Bürger ]
+      * Add README.Debian.
+         * Added upgrade notice regarding changed fcc-unlock.d defaults:
+           https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004447
+  
+      [ Guido Günther ]
+      * Mention FCC unlock in NEWS.Debian
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.6
+      * d/libmm-glib0: update symbols file for new version.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Wed, 16 Feb 2022 17:00:52 +0100
+  
+    modemmanager (1.18.4-1) unstable; urgency=medium
+  
+      [ Cyril Brulebois ]
+      * Fix missing dependency on policykit-1 (Closes: #991223).
+        Without it, a lot of operations would result in the following error at
+        the D-Bus level:
+            The name org.freedesktop.PolicyKit1 was not provided by any .service files
+        In bullseye, ModemManager.service wouldn't even start, because of the
+        missing polkit.service dependency at the systemd level.
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.4
+      * d/copyright: fix wrong path for libqcdm
+        `libqcdm` was previously `libwmc`, but the corresponding copyright entry
+        wasn't updated when the folder was renamed.
+      * d/control: update packages descriptions.
+        As it was pointed out, ModemManager now supports 5G modems, make sure
+        the packages descriptions reflect that.
+      * debian: address lintian issues.
+        This commit addresses multiple issues reported by lintian:
+        - doc installed into `/usr/share/gtk-doc` instead of `/usr/share/doc`,
+          which is normal behavior for glib-based software
+        - missing `Build-Depends-Package` in `libmm-glib0` symbols file
+        - ModemManager plugins not including dependency information
+        - system-wide `fcc-unlock.d` folder installed even though we don't ship
+          any distro-specific configuration which would be included there
+      * d/modemmanager.prerm: don't call systemctl directly.
+        Debian provides a helper tool for avoiding direct calls to systemctl in
+        maintainer scripts, so let's use it.
+      * d/control: sort build dependencies.
+        Also avoid installing unnecessary dependencies when using the `nodoc`
+        build profile.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Tue, 14 Dec 2021 10:09:29 +0100
+  
+    modemmanager (1.18.2-1) unstable; urgency=medium
+  
+      [ Henry-Nicolas Tourneur ]
+      * d/rules: set with-polkit to permissive (Closes: #800598)
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.2 (Closes: #1000450)
+      * d/control: change maintainer to DebianOnMobile team (Closes: #949129)
+      * d/control: bump debhelper-compat version and Standards-Version.
+      * d/copyright: add Upstream-Contact and update maintainer email
+      * d/gbp.conf: fix debian branch name
+      * debian: add salsa CI pipeline
+      * d/source: add upstream metadata
+      * d/control: update build dependencies.
+      * d/watch: bump watch file version, no change required
+      * d/libmm-glib0: update symbols file for new version
+      * d/rules: add hardening build options
+  
+     -- Arnaud Ferraris <arnaud.ferraris@collabora.com>  Mon, 06 Dec 2021 17:46:45 +0100
+  
+    modemmanager (1.16.6-2) experimental; urgency=medium
+  
+      * debian/control: include python build-depends for tests
+  
+     -- Sebastien Bacher <seb128@debian.org>  Fri, 25 Jun 2021 15:32:16 +0200
+  
+  libnm0, network-manager (built from network-manager) updated from 1.22.10-1ubuntu2.3 to 1.36.4-2ubuntu1:
+  
+    network-manager (1.36.4-2ubuntu1) jammy; urgency=medium
+  
+      * Cherry pick WPA3 fixes from Debian, thanks Michael Biebl! (lp: #1967782)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Tue, 05 Apr 2022 15:28:36 +0200
+  
+    network-manager (1.36.4-2) unstable; urgency=medium
+  
+      * supplicant: enable WPA3 transition mode only when interface supports PMF.
+        See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1003907
+  
+     -- Michael Biebl <biebl@debian.org>  Mon, 04 Apr 2022 11:39:20 +0200
+  
+    network-manager (1.36.4-1ubuntu1) jammy; urgency=medium
+  
+      * Resynchronize on Debian, remaining changes:
+        - debian/control:
+          + Depend on isc-dhcp-client
+          + Recommend network-manager-pptp
+          + Suggest avahi-autoipd for IPv4LL support
+        - debian/rules:
+          + Run build tests
+          + Set --enable-lto.
+          + Don't build the network-manager* packages on i386
+            (unneeded and depends on wpasupplicant)
+        - debian/rules, debian/network-manager.postinst:
+          + Don't restart NetworkManager on upgrade but recommend restarting
+            the computer
+        - debian/rules, debian/network-manager.postinst:
+          + Don't install sysvinit scripts or migrate from sysvinit
+        - d/network-manager.install, d/rules, d/10-dns-resolved.conf:
+          + Use systemd-resolved instead of dnsmasq
+        - d/network-manager.install, d/10-globally-managed-devices.conf:
+          + Explicitly unmanage everything that isn't WiFi or WWAN (mobile data)
+        - debian/network-manager.postinst:
+          + Don't add the netdev group.
+          + drop in an empty override file for NetworkManager to manage all
+            devices for upgrade from any version, as long as there is no
+            netplan configuration yet.
+        - d/network-manager.install, d/default-wifi-powersave-on.conf:
+          + Install a config file to enable WiFi powersave
+        - Add autopkgtests
+        - debian/source_network-manager.py, debian/network-manager.install,
+          debian/network-manager.links: Add apport hook
+        - Add network-manager-config-connectivity-ubuntu package
+        - d/NetworkManager.conf: disable MAC randomization feature. There is no
+          easy way for desktop users to disable this feature yet. And there are
+          reports that it doesn't work well with some systems.
+          See gnome-control-center issue 743
+        - Update Vcs links to point to Ubuntu branch
+        - Add patches. See patch descriptions for more details:
+          + Provide-access-to-some-of-NM-s-interfaces-to-whoopsie.patch
+          + Update-dnsmasq-parameters.patch
+          + Disable-general-with-expect.patch
+          + libnm-Check-self-still-NMManager-or-not.patch
+          + dns-manager-don-t-merge-split-DNS-search-domains.patch (but disabled)
+          + Read-system-connections-from-run.patch
+      * Try reverting ubuntu_revert_systemd.patch again
+  
+     -- Jeremy Bicha <jbicha@ubuntu.com>  Thu, 24 Mar 2022 14:06:31 -0400
+  
+    network-manager (1.36.4-1) unstable; urgency=medium
+  
+      * New upstream version 1.36.4
+  
+     -- Michael Biebl <biebl@debian.org>  Wed, 23 Mar 2022 20:39:16 +0100
+  
+    network-manager (1.36.2-1ubuntu1) jammy; urgency=medium
+  
+      * Resynchronize on Debian, remaining changes:
+        - debian/control:
+          + Depend on isc-dhcp-client
+          + Recommend network-manager-pptp
+          + Suggest avahi-autoipd for IPv4LL support
+        - debian/rules:
+          + Run build tests
+          + Set --enable-lto.
+          + Don't build the network-manager* packages on i386
+            (unneeded and depends on wpasupplicant)
+        - debian/rules, debian/network-manager.postinst:
+          + Don't restart NetworkManager on upgrade but recommend restarting
+            the computer
+        - debian/rules, debian/network-manager.postinst:
+          + Don't install sysvinit scripts or migrate from sysvinit
+        - d/network-manager.install, d/rules, d/10-dns-resolved.conf:
+          + Use systemd-resolved instead of dnsmasq
+        - d/network-manager.install, d/10-globally-managed-devices.conf:
+          + Explicitly unmanage everything that isn't WiFi or WWAN (mobile data)
+        - debian/network-manager.postinst:
+          + Don't add the netdev group.
+          + drop in an empty override file for NetworkManager to manage all
+            devices for upgrade from any version, as long as there is no
+            netplan configuration yet.
+        - d/network-manager.install, d/default-wifi-powersave-on.conf:
+          + Install a config file to enable WiFi powersave
+        - Add autopkgtests
+        - debian/source_network-manager.py, debian/network-manager.install,
+          debian/network-manager.links: Add apport hook
+        - Add network-manager-config-connectivity-ubuntu package
+        - d/NetworkManager.conf: disable MAC randomization feature. There is no
+          easy way for desktop users to disable this feature yet. And there are
+          reports that it doesn't work well with some systems.
+          See gnome-control-center issue 743
+        - Update Vcs links to point to Ubuntu branch
+        - Add patches. See patch descriptions for more details:
+          + Provide-access-to-some-of-NM-s-interfaces-to-whoopsie.patch
+          + Update-dnsmasq-parameters.patch
+          + Disable-general-with-expect.patch
+          + libnm-Check-self-still-NMManager-or-not.patch
+          + dns-manager-don-t-merge-split-DNS-search-domains.patch (but disabled)
+          + Read-system-connections-from-run.patch
+  
+     -- Jeremy Bicha <jeremy.bicha@canonical.com>  Tue, 08 Mar 2022 14:37:15 -0500
+  
+    network-manager (1.36.2-1) unstable; urgency=medium
+  
+      * New upstream version 1.36.2
+      * Rebase patches
+      * Downgrade log message to info if we fail to open /run/network/ifstate
+  
+     -- Michael Biebl <biebl@debian.org>  Tue, 08 Mar 2022 09:50:49 +0100
+  
+    network-manager (1.36.0-2) unstable; urgency=medium
+  
+      * core: initialize l3cd dns-priority for ppp and wwan (Closes: #1006396)
+  
+     -- Michael Biebl <biebl@debian.org>  Sat, 26 Feb 2022 10:57:32 +0100
+  
+    network-manager (1.36.0-1ubuntu1) jammy; urgency=medium
+  
+      * Resynchronize on Debian, remaining changes:
+        - debian/control:
+          + Depend on isc-dhcp-client
+          + Recommend network-manager-pptp
+          + Suggest avahi-autoipd for IPv4LL support
+        - debian/rules:
+          + Run build tests
+          + Set --enable-lto.
+          + Don't build the network-manager* packages on i386
+            (unneeded and depends on wpasupplicant)
+        - debian/rules, debian/network-manager.postinst:
+          + Don't restart NetworkManager on upgrade but recommend restarting
+            the computer
+        - debian/rules, debian/network-manager.postinst:
+          + Don't install sysvinit scripts or migrate from sysvinit
+        - d/network-manager.install, d/rules, d/10-dns-resolved.conf:
+          + Use systemd-resolved instead of dnsmasq
+        - d/network-manager.install, d/10-globally-managed-devices.conf:
+          + Explicitly unmanage everything that isn't WiFi or WWAN (mobile data)
+        - debian/network-manager.postinst:
+          + Don't add the netdev group.
+          + drop in an empty override file for NetworkManager to manage all
+            devices for upgrade from any version, as long as there is no
+            netplan configuration yet.
+        - d/network-manager.install, d/default-wifi-powersave-on.conf:
+          + Install a config file to enable WiFi powersave
+        - Add autopkgtests
+        - debian/source_network-manager.py, debian/network-manager.install,
+          debian/network-manager.links: Add apport hook
+        - Add network-manager-config-connectivity-ubuntu package
+        - d/NetworkManager.conf: disable MAC randomization feature. There is no
+          easy way for desktop users to disable this feature yet. And there are
+          reports that it doesn't work well with some systems.
+          See gnome-control-center issue 743
+        - Update Vcs links to point to Ubuntu branch
+        - Add patches. See patch descriptions for more details:
+          + Provide-access-to-some-of-NM-s-interfaces-to-whoopsie.patch
+          + Update-dnsmasq-parameters.patch
+          + Disable-general-with-expect.patch
+          + libnm-Check-self-still-NMManager-or-not.patch
+          + dns-manager-don-t-merge-split-DNS-search-domains.patch (but disabled)
+          + Read-system-connections-from-run.patch
+  
+     -- Jeremy Bicha <jeremy.bicha@canonical.com>  Thu, 24 Feb 2022 15:06:34 -0500
+  
+    network-manager (1.36.0-1) unstable; urgency=medium
+  
+      * New upstream version 1.36.0
+      * Bump symbol versions for pre-release versions
+      * Drop old network-manager.NEWS file
+  
+     -- Michael Biebl <biebl@debian.org>  Thu, 24 Feb 2022 19:59:26 +0100
+  
+  libnewt0.52 (built from newt) updated from 0.52.21-4ubuntu2 to 0.52.21-5ubuntu2:
+  
+    newt (0.52.21-5ubuntu2) jammy; urgency=medium
+  
+      * No-change rebuild with Python 3.10 only
+  
+     -- Graham Inggs <ginggs@ubuntu.com>  Thu, 17 Mar 2022 19:30:58 +0000
+  
+    newt (0.52.21-5ubuntu1) jammy; urgency=low
+  
+      * Merge from Debian unstable (LP: #1958502). Remaining changes:
+        - Install/remove alternatives for the ubuntu palette.
+        - Don't install python-newt example files.
+        - Add correct build-dependencies on python3-all-dbg and
+          libpython3-all-dbg, needed due to debian/patches/snack.patch.
+        - Revert Debian's dropping of /etc/newt/palette.original, used as an
+          alternative in Ubuntu.
+        - Remove libnewt0.52.preinst altogether, which contains destructive
+          operations with none of the appropriate version guards.
+        - Drop call to update-alternatives --auto in our postinst, which would
+          clobber the user's settings.
+  
+     -- Alexandre Ghiti <alexandre.ghiti@canonical.com>  Wed, 19 Jan 2022 14:31:39 +0100
+  
+    newt (0.52.21-5) unstable; urgency=medium
+  
+      * Standards-Version: 4.6.0
+      * Use debhelper-compat 13
+      * Use dh-sequence-python3 instead of --with python3, dh-python
+      * Point Vcs-Git to debian/latest branch for DEP-14
+      * Add d/gbp.conf to point to DEP-14 branches
+      * Drop custom 'xz' compression d/source/options
+      * Change stage1 build profile to nopython. Closes: #949721
+      * B-D on python3-all-dbg
+      * python.patch: Drop refs to obsolete pyversions
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Tue, 07 Sep 2021 10:59:05 +0100
+  
+    newt (0.52.21-4ubuntu8) jammy; urgency=medium
+  
+      * No-change rebuild to add python3.10.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sat, 16 Oct 2021 06:57:10 +0000
+  
+    newt (0.52.21-4ubuntu7) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:21:30 +0200
+  
+    newt (0.52.21-4ubuntu6) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Fri, 26 Feb 2021 08:11:32 +0100
+  
+    newt (0.52.21-4ubuntu5) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 22 Feb 2021 10:35:39 +0100
+  
+    newt (0.52.21-4ubuntu4) hirsute; urgency=medium
+  
+      * No-change rebuild to drop python3.8 extensions.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 07 Dec 2020 18:41:02 +0100
+  
+    newt (0.52.21-4ubuntu3) hirsute; urgency=medium
+  
+      * No-change rebuild to build with python3.9 as supported.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Sat, 24 Oct 2020 10:53:13 +0200
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.40.0-1build1 to 1.43.0-1build3:
+  
+    nghttp2 (1.43.0-1build3) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Thu, 24 Mar 2022 17:21:15 +0100
+  
+    nghttp2 (1.43.0-1build2) jammy; urgency=medium
+  
+      * No-change rebuild against openssl3
+  
+     -- Simon Chopin <simon.chopin@canonical.com>  Wed, 01 Dec 2021 16:07:54 +0000
+  
+    nghttp2 (1.43.0-1build1) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:21:34 +0200
+  
+    nghttp2 (1.43.0-1) unstable; urgency=medium
+  
+      * New upstream release 1.43.0
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 13 Feb 2021 18:47:24 +0100
+  
+    nghttp2 (1.42.0-1) unstable; urgency=medium
+  
+      * New upstream release 1.42.0
+      * Refresh patches
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sat, 28 Nov 2020 16:41:28 +0100
+  
+    nghttp2 (1.41.0-3) unstable; urgency=medium
+  
+      [ Jérémy Lal ]
+      * not-installed with wildcard arch
+  
+      [ Tomasz Buchert ]
+      * workaround for #963648
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Sun, 16 Aug 2020 13:01:37 +0200
+  
+    nghttp2 (1.41.0-2) unstable; urgency=medium
+  
+      * Fix FTBFS of arch-indep packages (Closes: #962137)
+      * Fix FTBFS on non-x86 archs (Closes: #962136)
+      * Use debhelper 13
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Thu, 04 Jun 2020 08:13:51 +0200
+  
+    nghttp2 (1.41.0-1) unstable; urgency=medium
+  
+      [ Tomasz Buchert ]
+      * New upstream release 1.41.0
+  
+      [ Janusz Dziemidowicz ]
+      * Perform graceful upgrade of nghttpx
+      * fix systemd restart on debhelper >= 12
+  
+      [ Debian Janitor ]
+      * debian/copyright: use spaces rather than tabs to start continuation
+        lines.
+      * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+        Repository-Browse.
+      * Update standards version to 4.5.0, no changes needed.
+  
+     -- Tomasz Buchert <tomasz@debian.org>  Wed, 03 Jun 2020 17:03:54 +0200
+  
+  ppp (built from ppp) updated from 2.4.7-2+4.1ubuntu5.1 to 2.4.9-1+1ubuntu3:
+  
+    ppp (2.4.9-1+1ubuntu3) jammy; urgency=medium
+  
+      * d/p/eap-mschap-v2-namelen.patch: fix the length of the username when
+        responding to an EAP MSCHAPv2 challenge (LP: #1958196).
+      * d/p/expose-mppe-keys-via-api.patch: allow plugins to access MPPE keys to
+        enable external SSTP support.
+      * Thanks to Eivind Næss.
+  
+     -- Robie Basak <robie.basak@ubuntu.com>  Thu, 24 Feb 2022 17:14:02 +0000
+  
+    ppp (2.4.9-1+1ubuntu2) jammy; urgency=medium
+  
+      * No-change rebuild against openssl3
+  
+     -- Simon Chopin <simon.chopin@canonical.com>  Wed, 01 Dec 2021 16:11:26 +0000
+  
+    ppp (2.4.9-1+1ubuntu1) impish; urgency=low
+  
+      [ Simon Chopin ]
+      * Merge from Debian unstable (LP: #1912168). Remaining changes:
+        - debian/extra/ip-up.d/0000usepeerdns: Added NetworkManager check, which
+          lets the script exit when NetworkManager is in use
+      * Dropped changes as obsolete
+        - debian/patches/CVE-2020-8597.patch: fix bounds check in EAP code in
+          pppd/eap.c.
+  
+      [ Iain Lane ]
+      * Also drop this change:
+        - Stop producing udebs on i386 where we no longer have d-i or a kernel.
+           + Since hirsute these aren't built anyway, so we no longer need to
+             exclude them on specific arches.
+  
+     -- Simon Chopin <simon.chopin@canonical.com>  Mon, 16 Aug 2021 19:00:43 +0200
+  
+    ppp (2.4.9-1+1) unstable; urgency=medium
+  
+      [ Samuel Thibault ]
+      * Use merge request URLs.
+      * Add comments from upstream for Nacked patches.
+  
+      [ Chris Boot ]
+      * New upstream release.
+        - Adds defaultroute6 option. (Closes: #477245)
+        - Adds defaultroute-metric option. (Closes: #578726)
+        - Accepts Windows Server 2019 malformed messages. (Closes: #968040)
+        - Fixes pppoe-discovery -U. (Closes: #961462)
+      * Remove patches merged upstream (lots!) and refresh the rest.
+      * d/ppp.symbols: update for the new version.
+      * d/rules: adjust for renamed pppoe plugin.
+      * d/ppp.lintian-overrides: update paths to plugins.
+      * d/ppp.postinst: remove left-in debugging aid (set -x). (Closes: #978732)
+      * Update d/watch to point at ftp.samba.org and add the signing key.
+      * Freshen up the ip{,v6}-{up,down} scripts. (Closes: #710946)
+  
+      [ Michael Biebl ]
+      * Stop using deprecated systemd-resolve tool. (Closes: #979255)
+  
+      [ наб ]
+      * Add /etc/ppp/ip-pre-up and corresponding /etc/ppp/ip-pre-up.d.
+       (Closes: #978396)
+  
+     -- Chris Boot <bootc@debian.org>  Thu, 07 Jan 2021 00:10:29 +0000
+  
+    ppp (2.4.8-1+2) unstable; urgency=medium
+  
+      * Clean up correctly after pppd-dns init script and systemd unit removal.
+        (Closes: #978427)
+      * Don't touch resolv.conf when systemd-resolved is running.
+        (Closes: #968589)
+  
+      [ Samuel Thibault ]
+      * Mark forwarded patches.
+  
+     -- Chris Boot <bootc@debian.org>  Wed, 30 Dec 2020 13:49:46 +0000
+  
+    ppp (2.4.8-1+1) unstable; urgency=medium
+  
+      [ Debian Janitor ]
+      * Use secure URI in Homepage field.
+      * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+        Repository-Browse.
+      * Update renamed lintian tag names in lintian overrides.
+  
+      [ Chris Boot ]
+      * d/control:
+        - Switch to debhelper compat level 13.
+        - Update Standards-Version to 4.5.1 (no changes requird).
+      * Clean up or ignore a handful of lintian complaints:
+        - Ignore possible-bashism-in-maintainer-script in ppp-udeb ($HOSTNAME is
+          set in the script).
+        - Do not use full path to pppoe-discovery.
+        - Remove 'echo' bashism (backslash substitution).
+        - Remove superfluous #DEBHELPER# tag.
+        - Install lintian overrides for ppp-udeb.
+      * d/rules: move generated changelog-from-README under debian/.
+      * Add debian/.gitignore file covering most files generated during build.
+      * Upload to unstable.
+  
+     -- Chris Boot <bootc@debian.org>  Fri, 25 Dec 2020 19:26:26 +0000
+  
+    ppp (2.4.8-1+1~exp1) experimental; urgency=medium
+  
+      * New upstream release.
+      * d/patches:
+        - Remove patches applied upstream.
+        - Refresh other patches to remove fuzz.
+        - Some patches required significant reworking:
+          - cifdefroute.dif (for replacedefaultroute)
+          - makefiles_cleanup
+      * d/ppp.symbols:
+        - adjust symbols for new release.
+        - add Build-Depends-Package metadata field.
+      * Switch to debhelper compat level 12.
+        - Remove d/compat.
+        - Replace Build-Depends on debhelper with debhelper-compat (= 12).
+      * Remove d/upstream/signing-key.asc. Upstream no loner supplied signed
+        tarballs.
+      * Fix various lintian complaints:
+        - d/rules: don't trigger ldconfig unnecessarily.
+        - d/rules: remove obsolete get-orig-source target.
+        - d/ppp.lintian-overrides: update version in plugins path.
+        - d/ppp.lintian-overrides: add new override for minconn.so.
+      * Remove pppd-dns init script and systemd unit, which have been broken since
+        ppp 2.4.5-1.
+      * Update pppoe-discovery(8) man page.
+      * Enable systemd notify integration.
+      * d/rules: don't set LDOPTS now that the makefiles use LDFLAGS correctly.
+      * Add patch to handle IPv6 RADIUS attributes. (Closes: #874620)
+      * d/ppp-udeb.postinst:
+        - Source /etc/network/interfaces.d snippets in /etc/network/interfaces file
+          generated by debian-installer udeb. (Closes: #889314)
+        - Prevent NetworkManager from managing the interface being used for PPPoE.
+          (Closes: #889323)
+        - Thanks to Алексей Шилин for the patches.
+      * Update Standards-Version to 4.5.0 (no changes requird).
+      * Add debian/salsa-ci.yml for GitLab CI, but disable reprotest which
+        currently fails when files need chowning (salsa-ci-team/pipeline#26).
+      * Import patches since upstream 2.4.8 release:
+        - radius: Prevent buffer overflow in rc_mksid (replaces
+          rc_mksid-no-buffer-overflow fixing #782450)
+        - pppd: Fix bounds check in EAP code (Closes: #950618; CVE-2020-8597)
+        - pppd: Ignore received EAP messages when not doing EAP
+        - Refresh eaptls-mppe.patch to remove fuzz.
+      * Add d/patches/multiarch-libc.patch: Use a compile test to detect crypt.h.
+        (Closes: #911359)
+  
+     -- Chris Boot <bootc@debian.org>  Sat, 15 Feb 2020 16:42:26 +0000
+  
+    ppp (2.4.7-2+4.1ubuntu8) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 25 Feb 2021 06:59:12 +0100
+  
+    ppp (2.4.7-2+4.1ubuntu7) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 22 Feb 2021 10:36:02 +0100
+  
+  librtmp1 (built from rtmpdump) updated from 2.4+20151223.gitfa8646d.1-2build1 to 2.4+20151223.gitfa8646d.1-2build4:
+  
+    rtmpdump (2.4+20151223.gitfa8646d.1-2build4) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Fri, 25 Mar 2022 10:57:36 +0100
+  
+    rtmpdump (2.4+20151223.gitfa8646d.1-2build3) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:24:03 +0200
+  
+    rtmpdump (2.4+20151223.gitfa8646d.1-2build2) groovy; urgency=medium
+  
+      * No change rebuild against new libnettle8 and libhogweed6 ABI.
+  
+     -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 29 Jun 2020 22:37:18 +0100
+  
+  libslang2 (built from slang2) updated from 2.3.2-4 to 2.3.2-5build4:
+  
+    slang2 (2.3.2-5build4) jammy; urgency=high
+  
+      * No change rebuild for ppc64el baseline bump.
+  
+     -- Julian Andres Klode <juliank@ubuntu.com>  Fri, 25 Mar 2022 10:51:06 +0100
+  
+    slang2 (2.3.2-5build3) impish; urgency=medium
+  
+      * No-change rebuild to build packages with zstd compression.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:24:29 +0200
+  
+    slang2 (2.3.2-5build2) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Thu, 25 Feb 2021 06:59:08 +0100
+  
+    slang2 (2.3.2-5build1) hirsute; urgency=medium
+  
+      * No-change rebuild to drop the udeb package.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Mon, 22 Feb 2021 10:36:15 +0100
+  
+    slang2 (2.3.2-5) unstable; urgency=medium
+  
+      * Use debhelper-compat (=12)
+      * Standards-Version: 4.5.0
+      * Move lib from /lib/$(MA) to /usr/lib/$(MA). Closes: #923825
+      * Drop hard-coded 'xz' compression
+  
+     -- Alastair McKinstry <mckinstry@debian.org>  Tue, 26 May 2020 09:33:46 +0100
+  
+  iputils-arping: not primed anymore
+  
+  libasn1-8-heimdal: not primed anymore
+  
+  libdbus-glib-1-2: not primed anymore
+  
+  libgssapi3-heimdal: not primed anymore
+  
+  libhcrypto4-heimdal: not primed anymore
+  
+  libheimbase1-heimdal: not primed anymore
+  
+  libheimntlm0-heimdal: not primed anymore
+  
+  libhx509-5-heimdal: not primed anymore
+  
+  libkrb5-26-heimdal: not primed anymore
+  
+  libldap-2.4-2: not primed anymore
+  
+  libroken18-heimdal: not primed anymore
+  
+  libssh-4: not primed anymore
+  
+  libwind0-heimdal: not primed anymore
+  
+  resolvconf: not primed anymore
+  
 2022-03-04 network-manager 1.22.10-11
 
   [ Lukas Märdian <lukas.maerdian@canonical.com> ]
