@@ -11,8 +11,7 @@ description: |
     https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-22
 base: core22
 confinement: strict
-# 'devel' needed to make snapcraft happy until core22 is in stable
-grade: devel
+grade: stable
 
 # Since the uc20+ network-manager snap currently defaults to the native
 # netplan config plugin, the default format of connection files has
