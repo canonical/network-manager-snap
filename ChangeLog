@@ -1,3 +1,41 @@
+2022-05-02 network-manager 1.36.4-2
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Change grade to stable as core22 is now released
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/421055
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1 to 7.81.0-1ubuntu1.1:
+  
+    curl (7.81.0-1ubuntu1.1) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: OAUTH2 bypass
+        - debian/patches/CVE-2022-22576.patch: check sasl additional
+          parameters for conn resuse in lib/strcase.c, lib/strcase.h,
+          lib/url.c, lib/urldata.h, lib/vtls/vtls.c.
+        - CVE-2022-22576
+      * SECURITY UPDATE: Credential leak on redirect
+        - debian/patches/CVE-2022-27774-1.patch: store conn_remote_port
+          in the info struct to make it available after the connection ended
+          in lib/connect.c, lib/urldata.h.
+        - debian/patches/CVE-2022-27774-2.patch: redirects to other protocols
+          or ports clear auth in lib/transfer.c.
+        - debian/patches/CVE-2022-27774-3.patch: adds tests to verify
+          these fix in tests/data/Makefile.inc, tests/data/test973,
+          tests/data/test974, tests/data/test975, tests/data/test976.
+        - CVE-2022-27774
+      * SECURITY UPDATE: Bad local IPV6 connection reuse
+        - debian/patches/CVE-2022-27775.patch: include the zone id in the
+          'bundle' haskey in lib/conncache.c.
+        - CVE-2022-27775
+      * SECURITY UPDATE: Auth/cookie leak on redirect
+        - debian/patches/CVE-2022-27776.patch: avoid auth/cookie on redirects
+          same host diff port in lib/http.c, lib/urldata.h.
+        - CVE-2022-27776
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Wed, 20 Apr 2022 11:50:18 -0300
+  
 2022-04-20 network-manager 1.36.4-1
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
