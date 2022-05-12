@@ -1,3 +1,24 @@
+2022-05-12 network-manager 1.22.10-13
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.10 to 7.68.0-1ubuntu2.11:
+  
+    curl (7.68.0-1ubuntu2.11) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: CERTINFO never-ending busy-loop
+        - debian/patches/CVE-2022-27781.patch: return error if seemingly stuck
+          in a cert loop in lib/vtls/nss.c.
+        - CVE-2022-27781
+      * SECURITY UPDATE: TLS and SSH connection too eager reuse
+        - debian/patches/CVE-2022-27782.patch: check more TLS details for
+          connection reuse in lib/setopt.c, lib/url.c, lib/urldata.h,
+          lib/vtls/gtls.c, lib/vtls/openssl.c, lib/vtls/nss.c, lib/vtls/vtls.c,
+          lib/vssh/ssh.h.
+        - CVE-2022-27782
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 09 May 2022 13:42:15 -0400
+  
 2022-05-11 network-manager 1.22.10-12
 
   [ Changes in primed packages ]
