@@ -1,3 +1,66 @@
+2022-05-12 network-manager 1.10.6-12
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Remove failing test on Jenkins instance
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/422081
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.16 to 7.58.0-2ubuntu3.18:
+  
+    curl (7.58.0-2ubuntu3.18) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: CERTINFO never-ending busy-loop
+        - debian/patches/CVE-2022-27781.patch: return error if seemingly stuck
+          in a cert loop in lib/vtls/nss.c.
+        - CVE-2022-27781
+      * SECURITY UPDATE: TLS and SSH connection too eager reuse
+        - debian/patches/CVE-2022-27782.patch: check more TLS details for
+          connection reuse in lib/setopt.c, lib/url.c, lib/urldata.h,
+          lib/vtls/gtls.c, lib/vtls/openssl.c, lib/vtls/nss.c, lib/vtls/vtls.c.
+        - CVE-2022-27782
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 09 May 2022 14:12:53 -0400
+  
+    curl (7.58.0-2ubuntu3.17) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: OAUTH2 bypass
+        - debian/patches/CVE-2022-22576.patch: check sasl additional
+          parameters for conn resuse in lib/strcase.c, lib/strcase.h,
+          lib/url.c, lib/urldata.h, lib/vtls/vtls.c.
+        - CVE-2022-22576
+      * SECURITY UPDATE: Credential leak on redirect
+        - debian/patches/CVE-2022-27774-1.patch: store conn_remote_port
+          in the info struct to make it available after the connection ended
+          in lib/connect.c, lib/urldata.h.
+        - debian/patches/CVE-2022-27774-2.patch: redirects to other protocols
+          or ports clear auth in lib/transfer.c.
+        - debian/patches/CVE-2022-27774-3*.patch: adds tests to verify
+          these fix in tests/data/Makefile.inc, tests/data/test973,
+          tests/data/test974, tests/data/test975, tests/data/test976.
+        - CVE-2022-27774
+      * SECURITY UPDATE: Bad local IPV6 connection reuse
+        - debian/patches/CVE-2022-27775.patch: include the zone id in the
+          'bundle' haskey in lib/conncache.c.
+        - CVE-2022-27775
+      * SECURITY UPDATE: Auth/cookie leak on redirect
+        - debian/patches/CVE-2022-27776.patch: avoid auth/cookie on redirects
+          same host diff port in lib/http.c, lib/urldata.h.
+        - CVE-2022-27776
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Mon, 25 Apr 2022 14:19:19 -0300
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27~101-g0780600+dfsg-3ubuntu2.3 to 2.1.27~101-g0780600+dfsg-3ubuntu2.4:
+  
+    cyrus-sasl2 (2.1.27~101-g0780600+dfsg-3ubuntu2.4) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: SQL injection in SQL plugin
+        - debian/patches/CVE-2022-24407.patch: escape password for SQL
+          insert/update commands in plugins/sql.c.
+        - CVE-2022-24407
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 15 Feb 2022 15:04:08 -0500
+  
 2022-01-05 network-manager 1.10.6-11
 
   [ Changes in primed packages ]
