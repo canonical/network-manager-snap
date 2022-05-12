@@ -1,9 +1,9 @@
 snapcraft-version: '6.1'
-snapcraft-started-at: '2022-05-11T07:15:54.591663Z'
+snapcraft-started-at: '2022-05-12T16:12:38.115393Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-12
+version: 1.22.10-13
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -191,8 +191,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.3
     - libctf0=2.34-6ubuntu1.3
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.11
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.2
     - libdbus-1-dev=1.12.16-2ubuntu2.2
@@ -318,8 +318,8 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.6
-    - libnss3=2:3.49.1-1ubuntu1.6
+    - libnss3-dev=2:3.49.1-1ubuntu1.7
+    - libnss3=2:3.49.1-1ubuntu1.7
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -421,7 +421,7 @@ parts:
     - netplan.io=0.104-0ubuntu2~20.04.1
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.4
+    - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.1
@@ -491,14 +491,14 @@ parts:
     - snapd=15540
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-4hl92496509alc0v"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-gz71y3ad0y25hdo3"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
 '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:12:14 UTC 2022 armv7l
+    uname: 'Linux 5.4.0-110-generic #124-Ubuntu SMP Thu Apr 14 13:14:54 UTC 2022 armv7l
       armv7l armv7l GNU/Linux'
   dnsmasq:
     build-packages:
@@ -605,8 +605,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.3
     - libctf0=2.34-6ubuntu1.3
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.11
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.2
     - libdbus-1-dev=1.12.16-2ubuntu2.2
@@ -732,8 +732,8 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.6
-    - libnss3=2:3.49.1-1ubuntu1.6
+    - libnss3-dev=2:3.49.1-1ubuntu1.7
+    - libnss3=2:3.49.1-1ubuntu1.7
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -835,7 +835,7 @@ parts:
     - netplan.io=0.104-0ubuntu2~20.04.1
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.4
+    - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.1
@@ -907,8 +907,8 @@ parts:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-4hl92496509alc0v/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-4hl92496509alc0v"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-gz71y3ad0y25hdo3/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -921,7 +921,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:12:14 UTC 2022 armv7l
+    uname: 'Linux 5.4.0-110-generic #124-Ubuntu SMP Thu Apr 14 13:14:54 UTC 2022 armv7l
       armv7l armv7l GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1107,8 +1107,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.3
     - libctf0=2.34-6ubuntu1.3
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.11
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.2
     - libdbus-1-dev=1.12.16-2ubuntu2.2
@@ -1234,8 +1234,8 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.6
-    - libnss3=2:3.49.1-1ubuntu1.6
+    - libnss3-dev=2:3.49.1-1ubuntu1.7
+    - libnss3=2:3.49.1-1ubuntu1.7
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -1337,7 +1337,7 @@ parts:
     - netplan.io=0.104-0ubuntu2~20.04.1
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.4
+    - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.1
@@ -1410,10 +1410,10 @@ parts:
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-4hl92496509alc0v/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-gz71y3ad0y25hdo3/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-4hl92496509alc0v"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1430,7 +1430,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-4hl92496509alc0v"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1523,7 +1523,7 @@ parts:
     - iputils-arping=3:20190709-3
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
     - libdbus-glib-1-2=0.110-5fakssync1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1548,7 +1548,7 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:12:14 UTC 2022 armv7l
+    uname: 'Linux 5.4.0-110-generic #124-Ubuntu SMP Thu Apr 14 13:14:54 UTC 2022 armv7l
       armv7l armv7l GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1654,8 +1654,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.3
     - libctf0=2.34-6ubuntu1.3
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.11
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.2
     - libdbus-1-dev=1.12.16-2ubuntu2.2
@@ -1781,8 +1781,8 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.6
-    - libnss3=2:3.49.1-1ubuntu1.6
+    - libnss3-dev=2:3.49.1-1ubuntu1.7
+    - libnss3=2:3.49.1-1ubuntu1.7
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -1884,7 +1884,7 @@ parts:
     - netplan.io=0.104-0ubuntu2~20.04.1
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
-    - openssh-client=1:8.2p1-4ubuntu0.4
+    - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.1
@@ -1957,7 +1957,7 @@ parts:
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:12:14 UTC 2022 armv7l
+    uname: 'Linux 5.4.0-110-generic #124-Ubuntu SMP Thu Apr 14 13:14:54 UTC 2022 armv7l
       armv7l armv7l GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1994,7 +1994,7 @@ parts:
     - dnsmasq-base=2.80-1.1ubuntu1.5
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.10
+    - libcurl3-gnutls=7.68.0-1ubuntu2.11
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1
@@ -2017,12 +2017,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - network-manager=1.22.10-1ubuntu2.3
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:12:14 UTC 2022 armv7l
+    uname: 'Linux 5.4.0-110-generic #124-Ubuntu SMP Thu Apr 14 13:14:54 UTC 2022 armv7l
       armv7l armv7l GNU/Linux'
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-4hl92496509alc0v/+build/1759621
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-gz71y3ad0y25hdo3/+build/1761183
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2048,7 +2048,7 @@ build-packages:
 - libblkid-dev=2.34-0.1ubuntu9.3
 - libcap2-bin=1:2.32-1
 - libcroco3=0.6.13-1
-- libcurl4-gnutls-dev=7.68.0-1ubuntu2.10
+- libcurl4-gnutls-dev=7.68.0-1ubuntu2.11
 - libdbus-1-dev=1.12.16-2ubuntu2.2
 - libdbus-glib-1-2=0.110-5fakssync1
 - libdbus-glib-1-dev-bin=0.110-5fakssync1
@@ -2118,8 +2118,8 @@ build-packages:
 - libnl-route-3-dev=3.4.0-1
 - libnspr4-dev=2:4.25-1
 - libnspr4=2:4.25-1
-- libnss3-dev=2:3.49.1-1ubuntu1.6
-- libnss3=2:3.49.1-1ubuntu1.6
+- libnss3-dev=2:3.49.1-1ubuntu1.7
+- libnss3=2:3.49.1-1ubuntu1.7
 - libosp5=1.5.2-13ubuntu3
 - libp11-kit-dev=0.23.20-1ubuntu0.1
 - libpcre16-3=2:8.39-12build1
@@ -2203,7 +2203,7 @@ primed-stage-packages:
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
 - libbrotli1=1.0.7-6ubuntu0.1
-- libcurl3-gnutls=7.68.0-1ubuntu2.10
+- libcurl3-gnutls=7.68.0-1ubuntu2.11
 - libdbus-glib-1-2=0.110-5fakssync1
 - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1
 - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1
