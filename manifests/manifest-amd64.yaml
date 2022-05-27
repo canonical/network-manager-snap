@@ -1,9 +1,9 @@
 snapcraft-version: '6.1'
-snapcraft-started-at: '2022-05-12T16:01:29.144601Z'
+snapcraft-started-at: '2022-05-27T11:14:06.033205Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-13
+version: 1.22.10-14
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -93,7 +93,7 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.6
+    - apt=2.0.8
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
@@ -123,8 +123,8 @@ parts:
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
     - docbook=4.5-6
-    - dpkg-dev=1.19.7ubuntu3
-    - dpkg=1.19.7ubuntu3
+    - dpkg-dev=1.19.7ubuntu3.2
+    - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1
     - fakeroot=1.24-1
     - fdisk=2.34-0.1ubuntu9.3
@@ -160,7 +160,7 @@ parts:
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
-    - libapt-pkg6.0=2.0.6
+    - libapt-pkg6.0=2.0.8
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
@@ -201,7 +201,7 @@ parts:
     - libdbus-glib-1-dev=0.110-5fakssync1
     - libdebconfclient0=0.251ubuntu1
     - libdevmapper1.02.1=2:1.02.167-1ubuntu1
-    - libdpkg-perl=1.19.7ubuntu3
+    - libdpkg-perl=1.19.7ubuntu3.2
     - libedit2=3.1-20191231-1
     - libelf1=0.176-1.1build1
     - libencode-locale-perl=1.05-1
@@ -273,8 +273,8 @@ parts:
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libkrb5-3=1.17-6ubuntu4.1
     - libkrb5support0=1.17-6ubuntu4.1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libldap-common=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
+    - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
     - liblsan0=10.3.0-1ubuntu1~20.04
@@ -330,16 +330,16 @@ parts:
     - libpam-runtime=1.3.1-5ubuntu4.3
     - libpam-systemd=245.4-4ubuntu3.17
     - libpam0g=1.3.1-5ubuntu4.3
-    - libpcre16-3=2:8.39-12build1
+    - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
     - libpcre2-8-0=10.34-7
     - libpcre2-dev=10.34-7
     - libpcre2-posix2=10.34-7
-    - libpcre3-dev=2:8.39-12build1
-    - libpcre32-3=2:8.39-12build1
-    - libpcre3=2:8.39-12build1
-    - libpcrecpp0v5=2:8.39-12build1
+    - libpcre3-dev=2:8.39-12ubuntu0.1
+    - libpcre32-3=2:8.39-12ubuntu0.1
+    - libpcre3=2:8.39-12ubuntu0.1
+    - libpcrecpp0v5=2:8.39-12ubuntu0.1
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
@@ -401,16 +401,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.2
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.3
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-110.124
+    - linux-libc-dev=5.4.0-113.127
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04.1
+    - login=1:4.8.1-1ubuntu5.20.04.2
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - m4=1.4.18-4
@@ -428,7 +428,7 @@ parts:
     - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
-    - passwd=1:4.8.1-1ubuntu5.20.04.1
+    - passwd=1:4.8.1-1ubuntu5.20.04.2
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -490,19 +490,19 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.3
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.3
     installed-snaps:
-    - core20=1434
+    - core20=1494
     - snapcraft=7201
-    - snapd=15534
+    - snapd=15904
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-gz71y3ad0y25hdo3"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-ax1l7ay4cf8pt5xr"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
-'
+      '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:10:54 UTC 2022 x86_64
+    uname: 'Linux 5.4.0-113-generic #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022 x86_64
       x86_64 x86_64 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -511,7 +511,7 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.6
+    - apt=2.0.8
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
@@ -541,8 +541,8 @@ parts:
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
     - docbook=4.5-6
-    - dpkg-dev=1.19.7ubuntu3
-    - dpkg=1.19.7ubuntu3
+    - dpkg-dev=1.19.7ubuntu3.2
+    - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1
     - fakeroot=1.24-1
     - fdisk=2.34-0.1ubuntu9.3
@@ -578,7 +578,7 @@ parts:
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
-    - libapt-pkg6.0=2.0.6
+    - libapt-pkg6.0=2.0.8
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
@@ -619,7 +619,7 @@ parts:
     - libdbus-glib-1-dev=0.110-5fakssync1
     - libdebconfclient0=0.251ubuntu1
     - libdevmapper1.02.1=2:1.02.167-1ubuntu1
-    - libdpkg-perl=1.19.7ubuntu3
+    - libdpkg-perl=1.19.7ubuntu3.2
     - libedit2=3.1-20191231-1
     - libelf1=0.176-1.1build1
     - libencode-locale-perl=1.05-1
@@ -691,8 +691,8 @@ parts:
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libkrb5-3=1.17-6ubuntu4.1
     - libkrb5support0=1.17-6ubuntu4.1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libldap-common=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
+    - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
     - liblsan0=10.3.0-1ubuntu1~20.04
@@ -748,16 +748,16 @@ parts:
     - libpam-runtime=1.3.1-5ubuntu4.3
     - libpam-systemd=245.4-4ubuntu3.17
     - libpam0g=1.3.1-5ubuntu4.3
-    - libpcre16-3=2:8.39-12build1
+    - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
     - libpcre2-8-0=10.34-7
     - libpcre2-dev=10.34-7
     - libpcre2-posix2=10.34-7
-    - libpcre3-dev=2:8.39-12build1
-    - libpcre32-3=2:8.39-12build1
-    - libpcre3=2:8.39-12build1
-    - libpcrecpp0v5=2:8.39-12build1
+    - libpcre3-dev=2:8.39-12ubuntu0.1
+    - libpcre32-3=2:8.39-12ubuntu0.1
+    - libpcre3=2:8.39-12ubuntu0.1
+    - libpcrecpp0v5=2:8.39-12ubuntu0.1
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
@@ -819,16 +819,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.2
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.3
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-110.124
+    - linux-libc-dev=5.4.0-113.127
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04.1
+    - login=1:4.8.1-1ubuntu5.20.04.2
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - m4=1.4.18-4
@@ -846,7 +846,7 @@ parts:
     - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
-    - passwd=1:4.8.1-1ubuntu5.20.04.1
+    - passwd=1:4.8.1-1ubuntu5.20.04.2
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -908,15 +908,15 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.3
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.3
     installed-snaps:
-    - core20=1434
+    - core20=1494
     - snapcraft=7201
-    - snapd=15534
+    - snapd=15904
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-gz71y3ad0y25hdo3/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-ax1l7ay4cf8pt5xr/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-ax1l7ay4cf8pt5xr"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -929,7 +929,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:10:54 UTC 2022 x86_64
+    uname: 'Linux 5.4.0-113-generic #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1017,7 +1017,7 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.6
+    - apt=2.0.8
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
@@ -1047,8 +1047,8 @@ parts:
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
     - docbook=4.5-6
-    - dpkg-dev=1.19.7ubuntu3
-    - dpkg=1.19.7ubuntu3
+    - dpkg-dev=1.19.7ubuntu3.2
+    - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1
     - fakeroot=1.24-1
     - fdisk=2.34-0.1ubuntu9.3
@@ -1084,7 +1084,7 @@ parts:
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
-    - libapt-pkg6.0=2.0.6
+    - libapt-pkg6.0=2.0.8
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1125,7 +1125,7 @@ parts:
     - libdbus-glib-1-dev=0.110-5fakssync1
     - libdebconfclient0=0.251ubuntu1
     - libdevmapper1.02.1=2:1.02.167-1ubuntu1
-    - libdpkg-perl=1.19.7ubuntu3
+    - libdpkg-perl=1.19.7ubuntu3.2
     - libedit2=3.1-20191231-1
     - libelf1=0.176-1.1build1
     - libencode-locale-perl=1.05-1
@@ -1197,8 +1197,8 @@ parts:
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libkrb5-3=1.17-6ubuntu4.1
     - libkrb5support0=1.17-6ubuntu4.1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libldap-common=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
+    - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
     - liblsan0=10.3.0-1ubuntu1~20.04
@@ -1254,16 +1254,16 @@ parts:
     - libpam-runtime=1.3.1-5ubuntu4.3
     - libpam-systemd=245.4-4ubuntu3.17
     - libpam0g=1.3.1-5ubuntu4.3
-    - libpcre16-3=2:8.39-12build1
+    - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
     - libpcre2-8-0=10.34-7
     - libpcre2-dev=10.34-7
     - libpcre2-posix2=10.34-7
-    - libpcre3-dev=2:8.39-12build1
-    - libpcre32-3=2:8.39-12build1
-    - libpcre3=2:8.39-12build1
-    - libpcrecpp0v5=2:8.39-12build1
+    - libpcre3-dev=2:8.39-12ubuntu0.1
+    - libpcre32-3=2:8.39-12ubuntu0.1
+    - libpcre3=2:8.39-12ubuntu0.1
+    - libpcrecpp0v5=2:8.39-12ubuntu0.1
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
@@ -1325,16 +1325,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.2
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.3
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-110.124
+    - linux-libc-dev=5.4.0-113.127
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04.1
+    - login=1:4.8.1-1ubuntu5.20.04.2
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - m4=1.4.18-4
@@ -1352,7 +1352,7 @@ parts:
     - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
-    - passwd=1:4.8.1-1ubuntu5.20.04.1
+    - passwd=1:4.8.1-1ubuntu5.20.04.2
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -1414,18 +1414,18 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.3
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.3
     installed-snaps:
-    - core20=1434
+    - core20=1494
     - snapcraft=7201
-    - snapd=15534
+    - snapd=15904
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-gz71y3ad0y25hdo3/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-ax1l7ay4cf8pt5xr/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-ax1l7ay4cf8pt5xr"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1442,7 +1442,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-gz71y3ad0y25hdo3"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-ax1l7ay4cf8pt5xr"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1544,7 +1544,7 @@ parts:
     - libhx509-5-heimdal=7.7.0+dfsg-1ubuntu1
     - libjansson4=2.12-1build1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libmm-glib0=1.16.6-2~20.04.1
     - libndp0=1.7-0ubuntu1
     - libnewt0.52=0.52.21-4ubuntu2
@@ -1560,7 +1560,7 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:10:54 UTC 2022 x86_64
+    uname: 'Linux 5.4.0-113-generic #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1568,7 +1568,7 @@ parts:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1build1
     - apparmor=2.13.3-7ubuntu5.1
-    - apt=2.0.6
+    - apt=2.0.8
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
@@ -1598,8 +1598,8 @@ parts:
     - docbook-xml=4.5-9
     - docbook-xsl=1.79.1+dfsg-2
     - docbook=4.5-6
-    - dpkg-dev=1.19.7ubuntu3
-    - dpkg=1.19.7ubuntu3
+    - dpkg-dev=1.19.7ubuntu3.2
+    - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1
     - fakeroot=1.24-1
     - fdisk=2.34-0.1ubuntu9.3
@@ -1635,7 +1635,7 @@ parts:
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
     - libapparmor1=2.13.3-7ubuntu5.1
-    - libapt-pkg6.0=2.0.6
+    - libapt-pkg6.0=2.0.8
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1
@@ -1676,7 +1676,7 @@ parts:
     - libdbus-glib-1-dev=0.110-5fakssync1
     - libdebconfclient0=0.251ubuntu1
     - libdevmapper1.02.1=2:1.02.167-1ubuntu1
-    - libdpkg-perl=1.19.7ubuntu3
+    - libdpkg-perl=1.19.7ubuntu3.2
     - libedit2=3.1-20191231-1
     - libelf1=0.176-1.1build1
     - libencode-locale-perl=1.05-1
@@ -1748,8 +1748,8 @@ parts:
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
     - libkrb5-3=1.17-6ubuntu4.1
     - libkrb5support0=1.17-6ubuntu4.1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
-    - libldap-common=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
+    - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
     - liblockfile1=1.16-1.1
     - liblsan0=10.3.0-1ubuntu1~20.04
@@ -1805,16 +1805,16 @@ parts:
     - libpam-runtime=1.3.1-5ubuntu4.3
     - libpam-systemd=245.4-4ubuntu3.17
     - libpam0g=1.3.1-5ubuntu4.3
-    - libpcre16-3=2:8.39-12build1
+    - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7
     - libpcre2-32-0=10.34-7
     - libpcre2-8-0=10.34-7
     - libpcre2-dev=10.34-7
     - libpcre2-posix2=10.34-7
-    - libpcre3-dev=2:8.39-12build1
-    - libpcre32-3=2:8.39-12build1
-    - libpcre3=2:8.39-12build1
-    - libpcrecpp0v5=2:8.39-12build1
+    - libpcre3-dev=2:8.39-12ubuntu0.1
+    - libpcre32-3=2:8.39-12ubuntu0.1
+    - libpcre3=2:8.39-12ubuntu0.1
+    - libpcrecpp0v5=2:8.39-12ubuntu0.1
     - libperl5.30=5.30.0-9ubuntu0.2
     - libpng-dev=1.6.37-2
     - libpng16-16=1.6.37-2
@@ -1876,16 +1876,16 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.2
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.3
     - libxslt1.1=1.1.34-4
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-110.124
+    - linux-libc-dev=5.4.0-113.127
     - lockfile-progs=0.1.18
-    - login=1:4.8.1-1ubuntu5.20.04.1
+    - login=1:4.8.1-1ubuntu5.20.04.2
     - logsave=1.45.5-2ubuntu1
     - lsb-base=11.1.0ubuntu2
     - m4=1.4.18-4
@@ -1903,7 +1903,7 @@ parts:
     - openssh-client=1:8.2p1-4ubuntu0.5
     - openssl=1.1.1f-1ubuntu2.13
     - optipng=0.7.7-1
-    - passwd=1:4.8.1-1ubuntu5.20.04.1
+    - passwd=1:4.8.1-1ubuntu5.20.04.2
     - patch=2.7.6-6
     - perl-base=5.30.0-9ubuntu0.2
     - perl-modules-5.30=5.30.0-9ubuntu0.2
@@ -1965,15 +1965,15 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.3
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.3
     installed-snaps:
-    - core20=1434
+    - core20=1494
     - snapcraft=7201
-    - snapd=15534
+    - snapd=15904
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:10:54 UTC 2022 x86_64
+    uname: 'Linux 5.4.0-113-generic #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022 x86_64
       x86_64 x86_64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1981,9 +1981,9 @@ parts:
     - git
     installed-packages: []
     installed-snaps:
-    - core20=1434
+    - core20=1494
     - snapcraft=7201
-    - snapd=15534
+    - snapd=15904
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2018,7 +2018,7 @@ parts:
     - libhx509-5-heimdal=7.7.0+dfsg-1ubuntu1
     - libjansson4=2.12-1build1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
-    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
+    - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libmm-glib0=1.16.6-2~20.04.1
     - libndp0=1.7-0ubuntu1
     - libnewt0.52=0.52.21-4ubuntu2
@@ -2033,12 +2033,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1
     - network-manager=1.22.10-1ubuntu2.3
-    uname: 'Linux 5.4.0-109-generic #123-Ubuntu SMP Fri Apr 8 09:10:54 UTC 2022 x86_64
+    uname: 'Linux 5.4.0-113-generic #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022 x86_64
       x86_64 x86_64 GNU/Linux'
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-gz71y3ad0y25hdo3/+build/1761182
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ax1l7ay4cf8pt5xr/+build/1775544
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2138,14 +2138,14 @@ build-packages:
 - libnss3=2:3.49.1-1ubuntu1.7
 - libosp5=1.5.2-13ubuntu3
 - libp11-kit-dev=0.23.20-1ubuntu0.1
-- libpcre16-3=2:8.39-12build1
+- libpcre16-3=2:8.39-12ubuntu0.1
 - libpcre2-16-0=10.34-7
 - libpcre2-32-0=10.34-7
 - libpcre2-dev=10.34-7
 - libpcre2-posix2=10.34-7
-- libpcre3-dev=2:8.39-12build1
-- libpcre32-3=2:8.39-12build1
-- libpcrecpp0v5=2:8.39-12build1
+- libpcre3-dev=2:8.39-12ubuntu0.1
+- libpcre32-3=2:8.39-12ubuntu0.1
+- libpcrecpp0v5=2:8.39-12ubuntu0.1
 - libpng-dev=1.6.37-2
 - libpsl-dev=0.21.0-1ubuntu1
 - libpython2-stdlib=2.7.17-2ubuntu4
@@ -2171,7 +2171,7 @@ build-packages:
 - libwww-perl=6.43-1
 - libwww-robotrules-perl=6.02-1
 - libxml-parser-perl=2.46-1
-- libxml2=2.9.10+dfsg-5ubuntu0.20.04.2
+- libxml2=2.9.10+dfsg-5ubuntu0.20.04.3
 - libxslt1.1=1.1.34-4
 - libxtables12=1.8.4-3ubuntu2
 - libyaml-0-2=0.2.2-1
@@ -2213,7 +2213,7 @@ build-packages:
 - xsltproc=1.1.34-4
 - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.3
 build-snaps:
-- core20=1434
+- core20=1494
 primed-stage-packages:
 - dnsmasq-base=2.80-1.1ubuntu1.5
 - iputils-arping=3:20190709-3
@@ -2228,7 +2228,7 @@ primed-stage-packages:
 - libhx509-5-heimdal=7.7.0+dfsg-1ubuntu1
 - libjansson4=2.12-1build1
 - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1
-- libldap-2.4-2=2.4.49+dfsg-2ubuntu1.8
+- libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
 - libmm-glib0=1.16.6-2~20.04.1
 - libndp0=1.7-0ubuntu1
 - libnewt0.52=0.52.21-4ubuntu2
