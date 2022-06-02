@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.36.4-3-dev
+version: 1.36.6-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -147,7 +147,7 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/jammy
+    source-branch: applied/ubuntu/jammy-updates
     build-packages:
       - intltool
       - libglib2.0-dev
