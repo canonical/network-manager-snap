@@ -129,7 +129,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/jammy
+    source-branch: applied/ubuntu/jammy-updates
     build-packages:
       - build-essential
     make-parameters:
