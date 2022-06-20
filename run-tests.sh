@@ -95,4 +95,4 @@ echo "INFO: Executing tests runner"
 # TODO get channel back to stable when core22 is released
 # shellcheck disable=SC2086
 cd $TESTS_EXTRAS_PATH &&
-    ./tests-runner.sh "$@" --channel=edge --snap="$snap" "$backends" $EXTRA_ARGS
+    ./tests-runner.sh "$@" --snap="$snap" "$backends" $EXTRA_ARGS
