@@ -8,4 +8,5 @@ execute: |
     wait_for_network_manager
     get_qemu_eth_iface eth_if
     /snap/bin/network-manager.nmcli d | grep "$eth_if.*connected"
+    networkctl status $eth_if --no-pager -l
     networkctl status $eth_if | grep unmanaged
