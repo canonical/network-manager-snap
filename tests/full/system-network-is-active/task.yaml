@@ -5,7 +5,7 @@ execute: |
     # TODO is this a netplan regression? Tests fail if this test executes
     # after others. We need to re-start networkd so it notices that it
     # should not manage the eth. The NM snap installation should have made
-    # this unnecessary.
+    # this unnecessary. See https://bugs.launchpad.net/netplan/+bug/1979277
     systemctl restart systemd-networkd
     get_qemu_eth_iface eth_if
     # Verify NetworManager handles ethernet and marks it as connected
