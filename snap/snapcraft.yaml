@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.36.4-3-dev
+version: 1.36.6-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -89,7 +89,7 @@ parts:
   changelog:
     plugin: nil
     override-build: |
-      cp "$SNAPCRAFT_PROJECT_DIR"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+      cp "$CRAFT_PROJECT_DIR"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
     organize:
       ChangeLog: snap/ChangeLog
 
@@ -108,14 +108,14 @@ parts:
       - network-manager
     override-build: |
       set -ex
-      find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
-                -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/network-manager*' \
-                -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/libnm0*' \
-           -and -not -path "$SNAPCRAFT_PART_INSTALL"/'usr/share/doc/dnsmasq-base*' \
+      find "$CRAFT_PART_INSTALL"/ -type f,l \
+                -not -path "$CRAFT_PART_INSTALL"/'usr/share/doc/network-manager*' \
+                -not -path "$CRAFT_PART_INSTALL"/'usr/share/doc/libnm0*' \
+           -and -not -path "$CRAFT_PART_INSTALL"/'usr/share/doc/dnsmasq-base*' \
            -delete
-      find "$SNAPCRAFT_PART_INSTALL"/ -type d -empty -delete
-      mkdir -p "$SNAPCRAFT_PART_INSTALL"/build-tools
-      cp build-tools/* "$SNAPCRAFT_PART_INSTALL"/build-tools
+      find "$CRAFT_PART_INSTALL"/ -type d -empty -delete
+      mkdir -p "$CRAFT_PART_INSTALL"/build-tools
+      cp build-tools/* "$CRAFT_PART_INSTALL"/build-tools
     prime:
       - usr/share/doc/network-manager/copyright
       - usr/share/doc/libnm0/copyright
@@ -129,28 +129,25 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/jammy
+    source-branch: applied/ubuntu/jammy-updates
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
     override-build: |
       set -ex
-      "$SNAPCRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
-      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
-      snapcraftctl build
-    filesets:
-      binaries:
-        - sbin/dnsmasq
+      "$CRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
+      git apply "$CRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
+      craftctl default
     prime:
-      - $binaries
+      - sbin/dnsmasq
 
   networkmanager:
     after: [ stack-snaps-tools ]
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/jammy
+    source-branch: applied/ubuntu/jammy-updates
     build-packages:
       - intltool
       - libglib2.0-dev
@@ -188,12 +185,12 @@ parts:
       # dhcp handled by systemd client
       - --with-dhcpcd=no
       - --with-dhclient=no
-      - --with-dnsmasq=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/dnsmasq
+      - --with-dnsmasq=/snap/$CRAFT_PROJECT_NAME/current/sbin/dnsmasq
       - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
-      - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
-      - --with-pppd=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/sbin/pppd
-      - --with-pppd-plugin-dir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
+      - --libexecdir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
+      - --with-pppd=/snap/$CRAFT_PROJECT_NAME/current/usr/sbin/pppd
+      - --with-pppd-plugin-dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
       - --with-systemdsystemunitdir=/lib/systemd/system
       - --with-udev-dir=/lib/udev
@@ -228,14 +225,14 @@ parts:
     # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
       set -ex
-      "$SNAPCRAFT_STAGE"/build-tools/check-versions network-manager yes
+      "$CRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
+      git am "$CRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
-      snapcraftctl build
+      craftctl default
 
       # Run all tests NetworkManager ships by default
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
@@ -263,85 +260,79 @@ parts:
       - ppp
 
     organize:
-      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
-      snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
+      snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
 
-    filesets:
-      binaries:
-        - usr/bin/nmcli
-        - usr/bin/nmtui
-        - usr/bin/nmtui-connect
-        - usr/bin/nmtui-edit
-        - usr/bin/nmtui-hostname
-        - usr/sbin/pppd
-        - usr/lib/*/NetworkManager
-        - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
-        - usr/lib/NetworkManager
-        - usr/sbin/NetworkManager
-      configs:
-        - etc/NetworkManager/*
-      docs:
-        - usr/share/doc/libbrotli1/copyright
-        - usr/share/doc/libcurl3-gnutls/copyright
-        - usr/share/doc/libjansson4/copyright
-        - usr/share/doc/libldap-2.5-0/copyright
-        - usr/share/doc/libmm-glib0/copyright
-        - usr/share/doc/libndp0/copyright
-        - usr/share/doc/libnewt0.52/copyright
-        - usr/share/doc/libnghttp2-14/copyright
-        - usr/share/doc/libpcap0.8/copyright
-        - usr/share/doc/libpsl5/copyright
-        - usr/share/doc/librtmp1/copyright
-        - usr/share/doc/libsasl2-2/copyright
-        - usr/share/doc/libslang2/copyright
-        - usr/share/doc/libteamdctl0/copyright
-        - usr/share/doc/ppp/copyright
-        - usr/share/doc/libbrotli1/changelog.*
-        - usr/share/doc/libcurl3-gnutls/changelog.*
-        - usr/share/doc/libjansson4/changelog.*
-        - usr/share/doc/libldap-2.5-0/changelog.*
-        - usr/share/doc/libmm-glib0/changelog.*
-        - usr/share/doc/libndp0/changelog.*
-        - usr/share/doc/libnewt0.52/changelog.*
-        - usr/share/doc/libnghttp2-14/changelog.*
-        - usr/share/doc/libpcap0.8/changelog.*
-        - usr/share/doc/libpsl5/changelog.*
-        - usr/share/doc/librtmp1/changelog.*
-        - usr/share/doc/libsasl2-2/changelog.*
-        - usr/share/doc/libslang2/changelog.*
-        - usr/share/doc/libteamdctl0/changelog.*
-        - usr/share/doc/ppp/changelog.*
-      libs:
-        - usr/lib/*/libslang*
-        - usr/lib/libnm*
-        - usr/lib/*/libbrotli*
-        - usr/lib/*/libcurl-gnutls*
-        # required for teamdctl
-        - usr/lib/*/libjansson*
-        - usr/lib/*/liblber-2.5*
-        - usr/lib/*/libldap-2.5*
-        - usr/lib/*/libmm-glib*
-        - usr/lib/*/libnewt*
-        - usr/lib/*/libndp*
-        - usr/lib/*/libnghttp2*
-        - usr/lib/*/libpcap*
-        - usr/lib/*/libpsl*
-        - usr/lib/*/librtmp*
-        - usr/lib/*/libsasl2*
-        - usr/lib/*/libteamdctl*
-      unwanted:
-        # We don't use dhclient so we don't need this helper
-        - -usr/lib/NetworkManager/nm-dhcp-helper
-        # Things we don't support yet and don't have to ship
-        - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-adsl.so
-        - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-bluetooth.so
-        # Some additional build artifacts we do not need
-        - -usr/lib/NetworkManager/*/*.la
-        - -usr/lib/libnm.la
-        - -usr/lib/pkgconfig
     prime:
-      - $binaries
-      - $configs
-      - $docs
-      - $libs
-      - $unwanted
+      # binaries
+      - usr/bin/nmcli
+      - usr/bin/nmtui
+      - usr/bin/nmtui-connect
+      - usr/bin/nmtui-edit
+      - usr/bin/nmtui-hostname
+      - usr/sbin/pppd
+      - usr/lib/*/NetworkManager
+      - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      - usr/lib/NetworkManager
+      - usr/sbin/NetworkManager
+      # configuration
+      - etc/NetworkManager/*
+      # docs
+      - usr/share/doc/libbrotli1/copyright
+      - usr/share/doc/libcurl3-gnutls/copyright
+      - usr/share/doc/libjansson4/copyright
+      - usr/share/doc/libldap-2.5-0/copyright
+      - usr/share/doc/libmm-glib0/copyright
+      - usr/share/doc/libndp0/copyright
+      - usr/share/doc/libnewt0.52/copyright
+      - usr/share/doc/libnghttp2-14/copyright
+      - usr/share/doc/libpcap0.8/copyright
+      - usr/share/doc/libpsl5/copyright
+      - usr/share/doc/librtmp1/copyright
+      - usr/share/doc/libsasl2-2/copyright
+      - usr/share/doc/libslang2/copyright
+      - usr/share/doc/libteamdctl0/copyright
+      - usr/share/doc/ppp/copyright
+      - usr/share/doc/libbrotli1/changelog.*
+      - usr/share/doc/libcurl3-gnutls/changelog.*
+      - usr/share/doc/libjansson4/changelog.*
+      - usr/share/doc/libldap-2.5-0/changelog.*
+      - usr/share/doc/libmm-glib0/changelog.*
+      - usr/share/doc/libndp0/changelog.*
+      - usr/share/doc/libnewt0.52/changelog.*
+      - usr/share/doc/libnghttp2-14/changelog.*
+      - usr/share/doc/libpcap0.8/changelog.*
+      - usr/share/doc/libpsl5/changelog.*
+      - usr/share/doc/librtmp1/changelog.*
+      - usr/share/doc/libsasl2-2/changelog.*
+      - usr/share/doc/libslang2/changelog.*
+      - usr/share/doc/libteamdctl0/changelog.*
+      - usr/share/doc/ppp/changelog.*
+      # libraries
+      - usr/lib/*/libslang*
+      - usr/lib/libnm*
+      - usr/lib/*/libbrotli*
+      - usr/lib/*/libcurl-gnutls*
+      ## required for teamdctl
+      - usr/lib/*/libjansson*
+      - usr/lib/*/liblber-2.5*
+      - usr/lib/*/libldap-2.5*
+      - usr/lib/*/libmm-glib*
+      - usr/lib/*/libnewt*
+      - usr/lib/*/libndp*
+      - usr/lib/*/libnghttp2*
+      - usr/lib/*/libpcap*
+      - usr/lib/*/libpsl*
+      - usr/lib/*/librtmp*
+      - usr/lib/*/libsasl2*
+      - usr/lib/*/libteamdctl*
+      # unwanted
+      ## We don't use dhclient so we don't need this helper
+      - -usr/lib/NetworkManager/nm-dhcp-helper
+      ## Things we don't support yet and don't have to ship
+      - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-adsl.so
+      - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-bluetooth.so
+      ## Some additional build artifacts we do not need
+      - -usr/lib/NetworkManager/*/*.la
+      - -usr/lib/libnm.la
+      - -usr/lib/pkgconfig

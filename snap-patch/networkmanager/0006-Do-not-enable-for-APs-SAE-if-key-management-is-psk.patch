@@ -1,7 +1,7 @@
-From fef60ac02515be21a14a952d8a3456321225b22d Mon Sep 17 00:00:00 2001
+From aeaee27d00378416529115c07c0b3fb99b370e66 Mon Sep 17 00:00:00 2001
 From: Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com>
 Date: Mon, 21 Mar 2022 16:52:05 +0100
-Subject: [PATCH] Do not enable for APs SAE if key management is psk
+Subject: [PATCH 5/5] Do not enable for APs SAE if key management is psk
 
 Enabling SAE when creating an access points make is work only when SAE
 is supported by the connecting device, which is still not that
@@ -10,63 +10,32 @@ for the AP, "sae" needs to be set explicitly. Maybe this is a driver
 issue and this patch will need to be reverted after consulting with
 upstream.
 ---
- src/core/supplicant/nm-supplicant-config.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ src/core/supplicant/nm-supplicant-config.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/core/supplicant/nm-supplicant-config.c b/src/core/supplicant/nm-supplicant-config.c
-index 8626042bb..abc458ba7 100644
+index a4e5cc4d4..acbe8d82d 100644
 --- a/src/core/supplicant/nm-supplicant-config.c
 +++ b/src/core/supplicant/nm-supplicant-config.c
-@@ -35,6 +35,7 @@ typedef struct {
-     bool           fast_required : 1;
-     bool           dispose_has_run : 1;
-     bool           ap_isolation : 1;
-+    bool           is_ap : 1;
- } NMSupplicantConfigPrivate;
- 
- struct _NMSupplicantConfig {
-@@ -92,6 +93,7 @@ nm_supplicant_config_init(NMSupplicantConfig *self)
- 
-     priv->ap_scan         = 1;
-     priv->dispose_has_run = FALSE;
-+    priv->is_ap           = FALSE;
- }
- 
- static gboolean
-@@ -488,6 +490,7 @@ nm_supplicant_config_add_setting_wireless(NMSupplicantConfig *self,
-     is_adhoc = nm_streq0(mode, "adhoc");
-     is_ap    = nm_streq0(mode, "ap");
-     is_mesh  = nm_streq0(mode, "mesh");
-+    priv->is_ap = is_ap;
-     if (is_adhoc || is_ap)
-         priv->ap_scan = 2;
-     else
-@@ -869,12 +872,19 @@ nm_supplicant_config_add_setting_wireless_security(NMSupplicantConfig
-          * Those conditions are met when the interface has capabilities
-          * SAE, PMF, BIP.
+@@ -888,12 +888,16 @@ nm_supplicant_config_add_setting_wireless_security(NMSupplicantConfig
+          * some devices that are not fully compatible with WPA3-Personal
+          * transition mode.
           */
--        if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)
--            && _get_capability(priv, NM_SUPPL_CAP_TYPE_PMF)
--            && _get_capability(priv, NM_SUPPL_CAP_TYPE_BIP)) {
--            g_string_append(key_mgmt_conf, " SAE");
--            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
--                g_string_append(key_mgmt_conf, " FT-SAE");
-+        /* If we want WPA3 for the AP, key_mgmt will need to be explicitly "sae".
-+         * See https://mail.gnome.org/archives/networkmanager-list/2022-March/msg00016.html
-+         * and https://mail.gnome.org/archives/networkmanager-list/2022-April/msg00000.html
-+         * wpa_supplicant doesn't support FT in AP mode yet.
++        /* SNAP Never set SAE for key-mgmt=wpa-psk for APs, it is not
++         * working, at least for UC22 wpa_supplicant version.
 +         */
-+        if (priv->is_ap == FALSE) {
-+            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)
-+                && _get_capability(priv, NM_SUPPL_CAP_TYPE_PMF)
-+                && _get_capability(priv, NM_SUPPL_CAP_TYPE_BIP)) {
-+                g_string_append(key_mgmt_conf, " SAE");
-+                if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
-+                    g_string_append(key_mgmt_conf, " FT-SAE");
-+            }
+         if (_get_capability(priv, NM_SUPPL_CAP_TYPE_SAE)
+             && _get_capability(priv, NM_SUPPL_CAP_TYPE_PMF)
+             && _get_capability(priv, NM_SUPPL_CAP_TYPE_BIP)
+-            && (!is_ap || pmf != NM_SETTING_WIRELESS_SECURITY_PMF_DISABLE)) {
++            && !is_ap
++            && pmf != NM_SETTING_WIRELESS_SECURITY_PMF_DISABLE) {
+             g_string_append(key_mgmt_conf, " SAE");
+-            if (!is_ap && _get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
++            if (_get_capability(priv, NM_SUPPL_CAP_TYPE_FT))
+                 g_string_append(key_mgmt_conf, " FT-SAE");
          }
  
-     } else if (nm_streq(key_mgmt, "sae")) {
 -- 
 2.34.1
 
