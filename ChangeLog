@@ -1,3 +1,111 @@
+2022-07-11 network-manager 1.36.6-1
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Port recipe to snapcraft 7
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/424723
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.1 to 7.81.0-1ubuntu1.3:
+  
+    curl (7.81.0-1ubuntu1.3) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: Set-cookie denial of service
+        - debian/patches/CVE-2022-32205.patch: apply limits to cookies
+          specifications in lib/cookie.c, lib/cookie.h, lib/http.c, lib/urldata.h.
+        - CVE-2022-32205
+      * SECURITY UPDATE: HTTP compression denial of service
+        - debian/patches/CVE-2022-32206.patch: return error on too many
+          compression steps in lib/content_encoding.c.
+        - CVE-2022-32206
+      * SECURITY UPDATE: Unpreserved file permissions
+        - debian/patches/CVE-2022-32207.patch: add Curl_fopen()
+          for better overwriting of files in lib/Makefile.inc,
+          lib/cookie.c, lib/fopen.c, lib/fopen.h.
+        - CVE-2022-32207
+      * SECURITY UPDATE: FTP-KRB bad msg verification
+        - debian/patches/CVE-2022-32208.patch: return error properly
+          on decode errors in lib/krb5.c.
+        - CVE-2022-32208
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Mon, 20 Jun 2022 15:08:01 -0300
+  
+    curl (7.81.0-1ubuntu1.2) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: percent-encoded path separator in URL host
+        - debian/patches/CVE-2022-27780.patch: reject percent-decoding host
+          name into separator bytes in lib/urlapi.c.
+        - CVE-2022-27780
+      * SECURITY UPDATE: CERTINFO never-ending busy-loop
+        - debian/patches/CVE-2022-27781.patch: return error if seemingly stuck
+          in a cert loop in lib/vtls/nss.c.
+        - CVE-2022-27781
+      * SECURITY UPDATE: TLS and SSH connection too eager reuse
+        - debian/patches/CVE-2022-27782.patch: check more TLS details for
+          connection reuse in lib/setopt.c, lib/url.c, lib/urldata.h,
+          lib/vtls/gtls.c, lib/vtls/openssl.c, lib/vtls/nss.c, lib/vtls/vtls.c,
+          lib/vssh/ssh.h.
+        - CVE-2022-27782
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 09 May 2022 08:34:24 -0400
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.86-1.1 to 2.86-1.1ubuntu0.1:
+  
+    dnsmasq (2.86-1.1ubuntu0.1) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: Heap use after free
+        - debian/patches/CVE-2022-0934.patch: Fix write-after-free error in
+          DHCPv6 code in src/rfc3315.c.
+        - CVE-2022-0934
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Mon, 02 May 2022 12:09:51 -0300
+  
+  libnm0, network-manager (built from network-manager) updated from 1.36.4-2ubuntu1 to 1.36.6-0ubuntu2:
+  
+    network-manager (1.36.6-0ubuntu2) jammy; urgency=medium
+  
+      * debian/patches/fix_addresses_order.patch:
+        - platform: workaround for preserving IPv6 address order
+          (lp: #1977619)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 09 Jun 2022 11:27:56 +0200
+  
+    network-manager (1.36.6-0ubuntu1) jammy; urgency=medium
+  
+      * New stable version (lp: #1974428)
+      * debian/gbp.conf: 
+        - updated the packaging vcs serie
+      * d/p/supplicant-add-BIP-interface-capability.patch,
+        d/p/supplicant-enable-WPA3-transition-mode-only-when-interfac.patch:
+        - remove, included in the new version
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 20 May 2022 13:08:51 +0200
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.11+dfsg-1~exp1ubuntu3 to 2.5.12+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.12+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #1977627).
+        - Fixed slapd syncrepl handling of new sessions (ITS#9584)
+        - Fixed slapd-sql to properly escape filter value (ITS#9815)
+          (CVE-2022-29155)
+          [ Already included in 2.5.11+dfsg-1~exp1ubuntu3.1 ]
+        - More details about this release can be found at:
+          https://git.openldap.org/openldap/openldap/-/blob/2bda1fa98fbcedc6cd5995ea905427b8bef89f9d/CHANGES
+      * d/p/CVE-2022-29155.patch: Dropped patch; included in this new upstream
+        version.
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Mon, 13 Jun 2022 13:19:52 -0400
+  
+    openldap (2.5.11+dfsg-1~exp1ubuntu3.1) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: SQL injection in experimental back-sql backend
+        - debian/patches/CVE-2022-29155.patch: escape filter values in
+          servers/slapd/back-sql/search.c.
+        - CVE-2022-29155
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 12 May 2022 09:07:41 -0400
+  
 2022-05-02 network-manager 1.36.4-2
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
