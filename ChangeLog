@@ -1,3 +1,46 @@
+2022-10-27 network-manager 1.36.6-2
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.3 to 7.81.0-1ubuntu1.6:
+  
+    curl (7.81.0-1ubuntu1.6) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: POST following PUT confusion
+        - debian/patches/CVE-2022-32221.patch: when POST is set, reset the
+          'upload' field in lib/setopt.c.
+        - CVE-2022-32221
+      * SECURITY UPDATE: HTTP proxy double-free
+        - debian/patches/CVE-2022-42915.patch: restore the protocol pointer on
+          error in lib/http_proxy.c, lib/url.c.
+        - CVE-2022-42915
+      * SECURITY UPDATE: HSTS bypass via IDN
+        - debian/patches/CVE-2022-42916.patch: use IDN decoded names for HSTS
+          checks in lib/url.c.
+        - CVE-2022-42916
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 18 Oct 2022 12:35:33 -0400
+  
+    curl (7.81.0-1ubuntu1.4) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: when curl sends back cookies with control bytes a
+        HTTP(S) server may return a 400 response
+        - debian/patches/CVE-2022-35252.patch: adds invalid_octets function
+          to lib/cookie.c to reject cookies with control bytes
+        - CVE-2022-35252
+  
+     -- Mark Esler <mark.esler@canonical.com>  Wed, 31 Aug 2022 14:18:07 -0500
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.12+dfsg-0ubuntu0.22.04.1 to 2.5.13+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.13+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #1983618).
+        - Several fixes, including memory leaks that affected libldap.
+        - Added slapo-emptyds contrib module (ITS#8882).
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Fri, 05 Aug 2022 10:51:52 -0400
+  
 2022-07-11 network-manager 1.36.6-1
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
