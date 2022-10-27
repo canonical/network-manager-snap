@@ -1,3 +1,142 @@
+2022-10-27 network-manager 1.22.10-15
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.11 to 7.68.0-1ubuntu2.14:
+  
+    curl (7.68.0-1ubuntu2.14) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: POST following PUT confusion
+        - debian/patches/CVE-2022-32221.patch: when POST is set, reset the
+          'upload' field in lib/setopt.c.
+        - CVE-2022-32221
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 18 Oct 2022 12:44:11 -0400
+  
+    curl (7.68.0-1ubuntu2.13) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: when curl sends back cookies with control bytes a
+        HTTP(S) server may return a 400 response
+        - debian/patches/CVE-2022-35252.patch: adds invalid_octets function
+          to lib/cookie.c to reject cookies with control bytes
+        - CVE-2022-35252
+  
+     -- Mark Esler <mark.esler@canonical.com>  Wed, 31 Aug 2022 14:18:34 -0500
+  
+    curl (7.68.0-1ubuntu2.12) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP compression denial of service
+        - debian/patches/CVE-2022-32206.patch: return error on too many
+          compression steps in lib/content_encoding.c.
+        - CVE-2022-32206
+      * SECURITY UPDATE: FTP-KRB bad msg verification
+        - debian/patches/CVE-2022-32208.patch: return error properly
+          on decode errors in lib/krb5.c.
+        - CVE-2022-32208
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Wed, 22 Jun 2022 11:49:28 -0300
+  
+  libasn1-8-heimdal, libgssapi3-heimdal, libhcrypto4-heimdal, libheimbase1-heimdal, libheimntlm0-heimdal, libhx509-5-heimdal, libkrb5-26-heimdal, libroken18-heimdal, libwind0-heimdal (built from heimdal) updated from 7.7.0+dfsg-1ubuntu1 to 7.7.0+dfsg-1ubuntu1.1:
+  
+    heimdal (7.7.0+dfsg-1ubuntu1.1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: NULL pointer dereference when handling missing sname in
+        TGS-REQ
+        - debian/patches/CVE-2021-3671.patch: validate sname in TGS-REQ (kdc).
+        - CVE-2021-3671
+      * SECURITY UPDATE: NULL pointer dereference in SPNEGO          
+        - debian/patches/CVE-2022-3116.patch: fix NULL pointer dereference
+          (spnego).
+        - CVE-2022-3116
+  
+     -- Camila Camargo de Matos <camila.camargodematos@canonical.com>  Tue, 11 Oct 2022 14:48:22 -0300
+  
+  libmm-glib0 (built from modemmanager) updated from 1.16.6-2~20.04.1 to 1.18.6-1~ubuntu20.04.1:
+  
+    modemmanager (1.18.6-1~ubuntu20.04.1) focal; urgency=medium
+  
+      * Backport to focal. (LP: #1965901)
+      * Lower debhelper to 12 which is the version available on the serie
+  
+     -- Sebastien Bacher <seb128@debian.org>  Fri, 08 Apr 2022 11:37:10 +0200
+  
+    modemmanager (1.18.6-1) unstable; urgency=medium
+  
+      [ Bjørn Bürger ]
+      * Add README.Debian.
+         * Added upgrade notice regarding changed fcc-unlock.d defaults:
+           https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1004447
+  
+      [ Guido Günther ]
+      * Mention FCC unlock in NEWS.Debian
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.6
+      * d/libmm-glib0: update symbols file for new version.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Wed, 16 Feb 2022 17:00:52 +0100
+  
+    modemmanager (1.18.4-1) unstable; urgency=medium
+  
+      [ Cyril Brulebois ]
+      * Fix missing dependency on policykit-1 (Closes: #991223).
+        Without it, a lot of operations would result in the following error at
+        the D-Bus level:
+            The name org.freedesktop.PolicyKit1 was not provided by any .service files
+        In bullseye, ModemManager.service wouldn't even start, because of the
+        missing polkit.service dependency at the systemd level.
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.4
+      * d/copyright: fix wrong path for libqcdm
+        `libqcdm` was previously `libwmc`, but the corresponding copyright entry
+        wasn't updated when the folder was renamed.
+      * d/control: update packages descriptions.
+        As it was pointed out, ModemManager now supports 5G modems, make sure
+        the packages descriptions reflect that.
+      * debian: address lintian issues.
+        This commit addresses multiple issues reported by lintian:
+        - doc installed into `/usr/share/gtk-doc` instead of `/usr/share/doc`,
+          which is normal behavior for glib-based software
+        - missing `Build-Depends-Package` in `libmm-glib0` symbols file
+        - ModemManager plugins not including dependency information
+        - system-wide `fcc-unlock.d` folder installed even though we don't ship
+          any distro-specific configuration which would be included there
+      * d/modemmanager.prerm: don't call systemctl directly.
+        Debian provides a helper tool for avoiding direct calls to systemctl in
+        maintainer scripts, so let's use it.
+      * d/control: sort build dependencies.
+        Also avoid installing unnecessary dependencies when using the `nodoc`
+        build profile.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Tue, 14 Dec 2021 10:09:29 +0100
+  
+    modemmanager (1.18.2-1) unstable; urgency=medium
+  
+      [ Henry-Nicolas Tourneur ]
+      * d/rules: set with-polkit to permissive (Closes: #800598)
+  
+      [ Arnaud Ferraris ]
+      * New upstream version 1.18.2 (Closes: #1000450)
+      * d/control: change maintainer to DebianOnMobile team (Closes: #949129)
+      * d/control: bump debhelper-compat version and Standards-Version.
+      * d/copyright: add Upstream-Contact and update maintainer email
+      * d/gbp.conf: fix debian branch name
+      * debian: add salsa CI pipeline
+      * d/source: add upstream metadata
+      * d/control: update build dependencies.
+      * d/watch: bump watch file version, no change required
+      * d/libmm-glib0: update symbols file for new version
+      * d/rules: add hardening build options
+  
+     -- Arnaud Ferraris <arnaud.ferraris@collabora.com>  Mon, 06 Dec 2021 17:46:45 +0100
+  
+    modemmanager (1.16.6-2) experimental; urgency=medium
+  
+      * debian/control: include python build-depends for tests
+  
+     -- Sebastien Bacher <seb128@debian.org>  Fri, 25 Jun 2021 15:32:16 +0200
+  
 2022-05-27 network-manager 1.22.10-14
 
   [ Changes in primed packages ]
