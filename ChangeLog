@@ -1,3 +1,69 @@
+2022-10-27 network-manager 1.10.6-14
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.18 to 7.58.0-2ubuntu3.21:
+  
+    curl (7.58.0-2ubuntu3.21) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: POST following PUT confusion
+        - debian/patches/CVE-2022-32221.patch: when POST is set, reset the
+          'upload' field in lib/setopt.c.
+        - CVE-2022-32221
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 18 Oct 2022 12:45:13 -0400
+  
+    curl (7.58.0-2ubuntu3.20) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: when curl sends back cookies with control bytes a
+        HTTP(S) server may return a 400 response
+        - debian/patches/CVE-2022-35252.patch: adds invalid_octets function
+          to lib/cookie.c to reject cookies with control bytes
+        - CVE-2022-35252
+  
+     -- Mark Esler <mark.esler@canonical.com>  Wed, 31 Aug 2022 14:18:59 -0500
+  
+    curl (7.58.0-2ubuntu3.19) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP compression denial of service
+        - debian/patches/CVE-2022-32206.patch: return error on too many
+          compression steps in lib/content_encoding.c.
+        - CVE-2022-32206
+      * SECURITY UPDATE: FTP-KRB bad msg verification
+        - debian/patches/CVE-2022-32208.patch: return error properly
+          on decode errors in lib/krb5.c.
+        - CVE-2022-32208
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Wed, 22 Jun 2022 13:00:50 -0300
+  
+  libasn1-8-heimdal, libgssapi3-heimdal, libhcrypto4-heimdal, libheimbase1-heimdal, libheimntlm0-heimdal, libhx509-5-heimdal, libkrb5-26-heimdal, libroken18-heimdal, libwind0-heimdal (built from heimdal) updated from 7.5.0+dfsg-1 to 7.5.0+dfsg-1ubuntu0.1:
+  
+    heimdal (7.5.0+dfsg-1ubuntu0.1) bionic-security; urgency=medium
+  
+      * Fix FTBFS problem due to expired certificates that cause failing tests
+        - debian/patches/update-certs.patch: regenerate certs so that they expire
+          before 2038.
+        - debian/source/include-binaries: add altered binaries.
+      * SECURITY UPDATE: incomplete checksum validation in S4U2Self handler
+        - debian/patches/CVE-2018-16860.patch: reject PA-S4U2Self with unkeyed
+          checksum (Heimdal KDC).
+        - CVE-2018-16860
+      * SECURITY UPDATE: no verification of anonymous PKINIT PA-PKINIT-KX key
+        exchange
+        - debian/patches/CVE-2019-12098.patch: always confirm PA-PKINIT-KX for
+          anon PKINIT (krb5).
+        - CVE-2019-12098
+      * SECURITY UPDATE: NULL pointer dereference when handling missing sname in
+        TGS-REQ
+        - debian/patches/CVE-2021-3671.patch: validate sname in TGS-REQ (kdc).
+        - CVE-2021-3671
+      * SECURITY UPDATE: NULL pointer dereference in SPNEGO
+        - debian/patches/CVE-2022-3116.patch: fix NULL pointer dereference
+          (spnego).
+        - CVE-2022-3116
+  
+     -- Camila Camargo de Matos <camila.camargodematos@canonical.com>  Tue, 11 Oct 2022 14:46:15 -0300
+  
 2022-05-27 network-manager 1.10.6-13
 
   [ Changes in primed packages ]
