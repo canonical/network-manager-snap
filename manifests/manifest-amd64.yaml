@@ -1,9 +1,9 @@
-snapcraft-version: 7.2.3
-snapcraft-started-at: '2022-10-27T09:22:14.379436Z'
+snapcraft-version: 7.2.7
+snapcraft-started-at: '2022-11-09T13:53:28.843986Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-15
+version: 1.22.10-16
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -32,6 +32,12 @@ hooks:
     plugs:
     - network
     - network-setup-observe
+  install:
+    plugs:
+    - modem-manager
+  post-refresh:
+    plugs:
+    - modem-manager
   remove:
     plugs:
     - network-setup-control
@@ -113,8 +119,8 @@ parts:
     - cpp-9=9.4.0-1ubuntu1~20.04.1
     - cpp=4:9.3.0-1ubuntu2
     - dash=0.5.10.2-6
-    - dbus-user-session=1.12.16-2ubuntu2.2
-    - dbus=1.12.16-2ubuntu2.2
+    - dbus-user-session=1.12.16-2ubuntu2.3
+    - dbus=1.12.16-2ubuntu2.3
     - debconf=1.5.73
     - debianutils=4.9.1
     - diffstat=1.63-1
@@ -194,8 +200,8 @@ parts:
     - libcurl3-gnutls=7.68.0-1ubuntu2.14
     - libcurl4-gnutls-dev=7.68.0-1ubuntu2.14
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
-    - libdbus-1-3=1.12.16-2ubuntu2.2
-    - libdbus-1-dev=1.12.16-2ubuntu2.2
+    - libdbus-1-3=1.12.16-2ubuntu2.3
+    - libdbus-1-dev=1.12.16-2ubuntu2.3
     - libdbus-glib-1-2=0.110-5fakssync1
     - libdbus-glib-1-dev-bin=0.110-5fakssync1
     - libdbus-glib-1-dev=0.110-5fakssync1
@@ -370,7 +376,7 @@ parts:
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
     - libsmartcols1=2.34-0.1ubuntu9.3
-    - libsqlite3-0=3.31.1-4ubuntu0.4
+    - libsqlite3-0=3.31.1-4ubuntu0.5
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
@@ -479,7 +485,7 @@ parts:
     - systemd=245.4-4ubuntu3.18
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.2
-    - tzdata=2022e-0ubuntu0.20.04.0
+    - tzdata=2022f-0ubuntu0.20.04.0
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.18
     - util-linux=2.34-0.1ubuntu9.3
@@ -490,12 +496,12 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1623
-    - snapcraft=8482
+    - core20=1695
+    - snapcraft=8528
     - snapd=17336
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-z6mnrhn3ktm1lt2a"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-upa9wa86wl2rfp5u"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
@@ -531,8 +537,8 @@ parts:
     - cpp-9=9.4.0-1ubuntu1~20.04.1
     - cpp=4:9.3.0-1ubuntu2
     - dash=0.5.10.2-6
-    - dbus-user-session=1.12.16-2ubuntu2.2
-    - dbus=1.12.16-2ubuntu2.2
+    - dbus-user-session=1.12.16-2ubuntu2.3
+    - dbus=1.12.16-2ubuntu2.3
     - debconf=1.5.73
     - debianutils=4.9.1
     - diffstat=1.63-1
@@ -612,8 +618,8 @@ parts:
     - libcurl3-gnutls=7.68.0-1ubuntu2.14
     - libcurl4-gnutls-dev=7.68.0-1ubuntu2.14
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
-    - libdbus-1-3=1.12.16-2ubuntu2.2
-    - libdbus-1-dev=1.12.16-2ubuntu2.2
+    - libdbus-1-3=1.12.16-2ubuntu2.3
+    - libdbus-1-dev=1.12.16-2ubuntu2.3
     - libdbus-glib-1-2=0.110-5fakssync1
     - libdbus-glib-1-dev-bin=0.110-5fakssync1
     - libdbus-glib-1-dev=0.110-5fakssync1
@@ -788,7 +794,7 @@ parts:
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
     - libsmartcols1=2.34-0.1ubuntu9.3
-    - libsqlite3-0=3.31.1-4ubuntu0.4
+    - libsqlite3-0=3.31.1-4ubuntu0.5
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
@@ -897,7 +903,7 @@ parts:
     - systemd=245.4-4ubuntu3.18
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.2
-    - tzdata=2022e-0ubuntu0.20.04.0
+    - tzdata=2022f-0ubuntu0.20.04.0
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.18
     - util-linux=2.34-0.1ubuntu9.3
@@ -908,15 +914,15 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1623
-    - snapcraft=8482
+    - core20=1695
+    - snapcraft=8528
     - snapd=17336
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-z6mnrhn3ktm1lt2a/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-z6mnrhn3ktm1lt2a"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-upa9wa86wl2rfp5u/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-upa9wa86wl2rfp5u"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -1037,8 +1043,8 @@ parts:
     - cpp-9=9.4.0-1ubuntu1~20.04.1
     - cpp=4:9.3.0-1ubuntu2
     - dash=0.5.10.2-6
-    - dbus-user-session=1.12.16-2ubuntu2.2
-    - dbus=1.12.16-2ubuntu2.2
+    - dbus-user-session=1.12.16-2ubuntu2.3
+    - dbus=1.12.16-2ubuntu2.3
     - debconf=1.5.73
     - debianutils=4.9.1
     - diffstat=1.63-1
@@ -1118,8 +1124,8 @@ parts:
     - libcurl3-gnutls=7.68.0-1ubuntu2.14
     - libcurl4-gnutls-dev=7.68.0-1ubuntu2.14
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
-    - libdbus-1-3=1.12.16-2ubuntu2.2
-    - libdbus-1-dev=1.12.16-2ubuntu2.2
+    - libdbus-1-3=1.12.16-2ubuntu2.3
+    - libdbus-1-dev=1.12.16-2ubuntu2.3
     - libdbus-glib-1-2=0.110-5fakssync1
     - libdbus-glib-1-dev-bin=0.110-5fakssync1
     - libdbus-glib-1-dev=0.110-5fakssync1
@@ -1294,7 +1300,7 @@ parts:
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
     - libsmartcols1=2.34-0.1ubuntu9.3
-    - libsqlite3-0=3.31.1-4ubuntu0.4
+    - libsqlite3-0=3.31.1-4ubuntu0.5
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
@@ -1403,7 +1409,7 @@ parts:
     - systemd=245.4-4ubuntu3.18
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.2
-    - tzdata=2022e-0ubuntu0.20.04.0
+    - tzdata=2022f-0ubuntu0.20.04.0
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.18
     - util-linux=2.34-0.1ubuntu9.3
@@ -1414,18 +1420,18 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1623
-    - snapcraft=8482
+    - core20=1695
+    - snapcraft=8528
     - snapd=17336
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-z6mnrhn3ktm1lt2a/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-upa9wa86wl2rfp5u/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-z6mnrhn3ktm1lt2a"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-upa9wa86wl2rfp5u"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1442,7 +1448,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-z6mnrhn3ktm1lt2a"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-upa9wa86wl2rfp5u"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1588,8 +1594,8 @@ parts:
     - cpp-9=9.4.0-1ubuntu1~20.04.1
     - cpp=4:9.3.0-1ubuntu2
     - dash=0.5.10.2-6
-    - dbus-user-session=1.12.16-2ubuntu2.2
-    - dbus=1.12.16-2ubuntu2.2
+    - dbus-user-session=1.12.16-2ubuntu2.3
+    - dbus=1.12.16-2ubuntu2.3
     - debconf=1.5.73
     - debianutils=4.9.1
     - diffstat=1.63-1
@@ -1669,8 +1675,8 @@ parts:
     - libcurl3-gnutls=7.68.0-1ubuntu2.14
     - libcurl4-gnutls-dev=7.68.0-1ubuntu2.14
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
-    - libdbus-1-3=1.12.16-2ubuntu2.2
-    - libdbus-1-dev=1.12.16-2ubuntu2.2
+    - libdbus-1-3=1.12.16-2ubuntu2.3
+    - libdbus-1-dev=1.12.16-2ubuntu2.3
     - libdbus-glib-1-2=0.110-5fakssync1
     - libdbus-glib-1-dev-bin=0.110-5fakssync1
     - libdbus-glib-1-dev=0.110-5fakssync1
@@ -1845,7 +1851,7 @@ parts:
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
     - libsmartcols1=2.34-0.1ubuntu9.3
-    - libsqlite3-0=3.31.1-4ubuntu0.4
+    - libsqlite3-0=3.31.1-4ubuntu0.5
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
@@ -1954,7 +1960,7 @@ parts:
     - systemd=245.4-4ubuntu3.18
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.2
-    - tzdata=2022e-0ubuntu0.20.04.0
+    - tzdata=2022f-0ubuntu0.20.04.0
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.18
     - util-linux=2.34-0.1ubuntu9.3
@@ -1965,8 +1971,8 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1623
-    - snapcraft=8482
+    - core20=1695
+    - snapcraft=8528
     - snapd=17336
     plugin: dump
     prime: []
@@ -1981,8 +1987,8 @@ parts:
     - git
     installed-packages: []
     installed-snaps:
-    - core20=1623
-    - snapcraft=8482
+    - core20=1695
+    - snapcraft=8528
     - snapd=17336
     override-build: |
       set -ex
@@ -2038,7 +2044,7 @@ parts:
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-z6mnrhn3ktm1lt2a/+build/1923388
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-upa9wa86wl2rfp5u/+build/1936488
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2065,7 +2071,7 @@ build-packages:
 - libcap2-bin=1:2.32-1
 - libcroco3=0.6.13-1
 - libcurl4-gnutls-dev=7.68.0-1ubuntu2.14
-- libdbus-1-dev=1.12.16-2ubuntu2.2
+- libdbus-1-dev=1.12.16-2ubuntu2.3
 - libdbus-glib-1-2=0.110-5fakssync1
 - libdbus-glib-1-dev-bin=0.110-5fakssync1
 - libdbus-glib-1-dev=0.110-5fakssync1
@@ -2213,7 +2219,7 @@ build-packages:
 - xsltproc=1.1.34-4ubuntu0.20.04.1
 - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
 build-snaps:
-- core20=1623
+- core20=1695
 primed-stage-packages:
 - dnsmasq-base=2.80-1.1ubuntu1.5
 - iputils-arping=3:20190709-3
