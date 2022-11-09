@@ -1,3 +1,21 @@
+2022-11-09 network-manager 1.22.10-16
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Check for ModemManager same or newer than 1.18
+    
+    We are shipping focal's MM client library in the network-manager
+    snap. The library will fail if talking to an older verions of MM
+    daemon than the one for the library, which is an issue as focal has
+    updated MM from 1.16 to 1.18, so NM would fail to use modems if there
+    are old versions of the MM snap in the system. To prevent this
+    problem, check for the MM version in post-refresh and install hooks
+    and fail if the MM daemon is not modern enough.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/432686
+
+  [ Changes in primed packages ]
+  
+  No changes for primed packages
+  
 2022-10-27 network-manager 1.22.10-15
 
   [ Changes in primed packages ]
