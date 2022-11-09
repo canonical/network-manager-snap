@@ -46,6 +46,12 @@ hooks:
   remove:
     plugs:
       - network-setup-control
+  install:
+    plugs:
+      - modem-manager
+  post-refresh:
+    plugs:
+      - modem-manager
 
 layout:
   /usr/lib/NetworkManager:
