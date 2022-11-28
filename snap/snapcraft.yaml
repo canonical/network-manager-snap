@@ -225,6 +225,12 @@ parts:
     # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
       set -ex
+
+      # Download VPN packages here, we cannot just stage as they pull
+      # the NM package which will conflict with our build.
+      apt download network-manager-openvpn
+      dpkg -x network-manager-openvpn_*.deb "$CRAFT_PART_INSTALL"/
+
       "$CRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
@@ -247,6 +253,7 @@ parts:
       - libbrotli1
       - libcurl3-gnutls
       - libjansson4
+      - libpkcs11-helper1
       - libldap-2.5-0
       - libmm-glib0
       - libnewt0.52
@@ -257,6 +264,7 @@ parts:
       - libsasl2-2
       - libteamdctl0
       - libslang2
+      - openvpn
       - ppp
 
     organize:
@@ -275,12 +283,14 @@ parts:
       - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       - usr/lib/NetworkManager
       - usr/sbin/NetworkManager
+      - usr/sbin/openvpn
       # configuration
       - etc/NetworkManager/*
       # docs
       - usr/share/doc/libbrotli1/copyright
       - usr/share/doc/libcurl3-gnutls/copyright
       - usr/share/doc/libjansson4/copyright
+      - usr/share/doc/libpkcs11-helper1/copyright
       - usr/share/doc/libldap-2.5-0/copyright
       - usr/share/doc/libmm-glib0/copyright
       - usr/share/doc/libndp0/copyright
@@ -292,10 +302,12 @@ parts:
       - usr/share/doc/libsasl2-2/copyright
       - usr/share/doc/libslang2/copyright
       - usr/share/doc/libteamdctl0/copyright
+      - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
       - usr/share/doc/libbrotli1/changelog.*
       - usr/share/doc/libcurl3-gnutls/changelog.*
       - usr/share/doc/libjansson4/changelog.*
+      - usr/share/doc/libpkcs11-helper1/changelog.*
       - usr/share/doc/libldap-2.5-0/changelog.*
       - usr/share/doc/libmm-glib0/changelog.*
       - usr/share/doc/libndp0/changelog.*
@@ -307,7 +319,9 @@ parts:
       - usr/share/doc/libsasl2-2/changelog.*
       - usr/share/doc/libslang2/changelog.*
       - usr/share/doc/libteamdctl0/changelog.*
+      - usr/share/doc/openvpn/changelog.*
       - usr/share/doc/ppp/changelog.*
+      - usr/share/doc/network-manager-openvpn/changelog.*
       # libraries
       - usr/lib/*/libslang*
       - usr/lib/libnm*
@@ -315,6 +329,8 @@ parts:
       - usr/lib/*/libcurl-gnutls*
       ## required for teamdctl
       - usr/lib/*/libjansson*
+      # For openvpn
+      - usr/lib/*/libpkcs11-helper*
       - usr/lib/*/liblber-2.5*
       - usr/lib/*/libldap-2.5*
       - usr/lib/*/libmm-glib*
@@ -326,6 +342,8 @@ parts:
       - usr/lib/*/librtmp*
       - usr/lib/*/libsasl2*
       - usr/lib/*/libteamdctl*
+      - usr/lib/openvpn/*
+      - usr/lib/*/openvpn/plugins/*
       # unwanted
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
