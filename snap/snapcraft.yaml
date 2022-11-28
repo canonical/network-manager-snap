@@ -81,7 +81,7 @@ apps:
     slots: [service]
     plugs: [modem-manager, ppp, network-setup-observe, wpa, firewall-control,
             hardware-observe, network-setup-control, login-session-observe,
-            network-observe]
+            network-observe, network-control]
 
 parts:
   networkmanager-common:
