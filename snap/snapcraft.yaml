@@ -32,6 +32,10 @@ plugs:
     interface: dbus
     bus: system
     name: fi.w1.wpa_supplicant1
+  vpn-creds:
+    interface: content
+    content: vpn_creds
+    target: $SNAP_COMMON/vpn_creds
 
 # As we need netplan Generate from the remove hook
 assumes:
