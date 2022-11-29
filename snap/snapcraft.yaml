@@ -280,6 +280,7 @@ parts:
     organize:
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
+      usr/lib/$CRAFT_ARCH_TRIPLET/NetworkManager: usr/lib/NetworkManager
 
     prime:
       # binaries
