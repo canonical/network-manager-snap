@@ -92,7 +92,7 @@ while read -r be; do
 done < <(yq eval '.backends.qemu.systems[]' spread.yaml | sed -e '/^ /d' -e 's/://')
 
 echo "INFO: Executing tests runner"
-# TODO get channel back to stable when core22 is released
+# TODO get channel back to stable when snapd with VPN changes in n-m interface is released
 # shellcheck disable=SC2086
 cd $TESTS_EXTRAS_PATH &&
-    ./tests-runner.sh "$@" --snap="$snap" "$backends" $EXTRA_ARGS
+    ./tests-runner.sh "$@" --channel=edge --snap="$snap" "$backends" $EXTRA_ARGS
