@@ -22,7 +22,7 @@ for name in "$gadget_name" "$kernel_name" "$core_name"; do
 	fi
 done
 
-snap_install network-manager --channel=20/stable
+snap_install network-manager --channel=22/stable
 wait_for_network_manager
 
 # For debugging dump all snaps and connected slots/plugs
