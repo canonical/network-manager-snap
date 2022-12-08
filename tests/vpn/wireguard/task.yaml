@@ -1,0 +1,55 @@
+summary: Test NM's OpenVPN plugin
+
+execute: |
+  . $TESTSLIB/utilities.sh
+
+  # TODO eventually this will not be needed when the store auto-connects it
+  snap connect network-manager:network-control
+
+  def_iface=$(ip r list to default | cut -d' ' -f5)
+  def_ip=$(ip -4 a show dev "$def_iface" primary | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+  wg0_conf_p=/var/snap/network-manager/common/wg0.conf
+  wg1_conf_p=/var/snap/network-manager/common/wg1.conf
+
+  cat > "$wg0_conf_p" << EOF
+  [Interface]
+  Address = 10.192.122.1/32
+  ListenPort = 31111
+  PrivateKey = oA7jzO7z+1BzYXpEMTe4oBJiCnyz9PYUy6lyAY0FZWE=
+
+  [Peer]
+  PublicKey = yDpDsyFAs1ETItJK+ALuOSRGGYnOGesjIWX6JHfbNCI=
+  AllowedIPs = 10.192.122.0/24
+  Endpoint = $def_ip:34000
+  EOF
+
+  cat > "$wg1_conf_p" << EOF
+  [Interface]
+  Address = 10.192.122.2/32
+  ListenPort = 34000
+  PrivateKey = 4NHYNtgGR4gBw6Zl6NpM1AT+ERO0cs27E3AIbcVo5H4=
+
+  [Peer]
+  PublicKey = coqbt1rvGosl/VnVaR/WYGRp5eUI8xThsAFn85xVwTY=
+  AllowedIPs = 10.192.122.0/24
+  Endpoint = $def_ip:31111
+  EOF
+
+  # Create NM's connections
+  network-manager.nmcli c import type wireguard file "$wg0_conf_p"
+  network-manager.nmcli c import type wireguard file "$wg1_conf_p"
+  network-manager.nmcli c up wg0
+  network-manager.nmcli c up wg1
+
+  # There should be a device active
+  network-manager.nmcli c show --active | grep wg0
+  network-manager.nmcli c show --active | grep wg1
+
+  # Ping accross the tunnel
+  sudo sysctl net.ipv4.conf.wg0.accept_local=1
+  sudo sysctl net.ipv4.conf.wg1.accept_local=1
+  ping -I wg0 -c 1 10.192.122.2
+  ping -I wg1 -c 1 10.192.122.1
+
+  network-manager.nmcli c del wg0
+  network-manager.nmcli c del wg1
