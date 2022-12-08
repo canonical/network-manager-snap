@@ -88,5 +88,6 @@ internal to the development team of the network-manager snap.
  * [Configure shared connections](configure-a-shared-connection.md)
  * [Edit Network Connections](edit-connections.md)
  * [Routing Tables](routing-tables.md)
+ * [Configure a VPN](configure-vpns.md)
  * [Logging Messages](logging-messages.md)
  * [Enable Debug Support](reference/snap-configuration/debug.md)
