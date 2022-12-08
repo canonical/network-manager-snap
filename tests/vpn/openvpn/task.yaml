@@ -1,0 +1,29 @@
+summary: Test NM's OpenVPN plugin
+
+environment:
+  ovpn_cfg_p: /var/snap/network-manager/common/default.ovpn
+
+prepare: |
+  snap install easy-openvpn-server
+
+restore: |
+  snap remove --purge easy-openvpn-server
+  rm -f "$ovpn_cfg_p"
+
+execute: |
+  . $TESTSLIB/utilities.sh
+
+  # TODO eventually this will not be needed when the store auto-connects it
+  snap connect network-manager:network-control
+
+  ovpn_cfg_p=/var/snap/network-manager/common/default.ovpn
+  snap set easy-openvpn-server push-default-gateway=False
+  easy-openvpn-server show-client default > "$ovpn_cfg_p"
+
+  # Create NM's connection
+  network-manager.nmcli c import type openvpn file "$ovpn_cfg_p"
+  network-manager.nmcli c up default
+  # There should be a tun device active
+  network-manager.nmcli c show --active | grep tun
+  network-manager.nmcli c down default
+  network-manager.nmcli c del default

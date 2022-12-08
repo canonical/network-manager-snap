@@ -72,7 +72,10 @@ for hook in "$SNAP"/startup-hooks/* ; do
     [ -x "$hook" ] && /bin/sh -x "$hook"
 done
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNAP/usr/lib/NetworkManager
+# Unset user/group for openvpn so the plugin does not try to set them
+export NM_OPENVPN_USER="" NM_OPENVPN_GROUP=""
+
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"$SNAP"/usr/lib/NetworkManager
 
 exec "$SNAP"/usr/sbin/NetworkManager \
     --config-dir="$SNAP_DATA"/conf.d/ \

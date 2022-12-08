@@ -23,6 +23,6 @@ execute: |
     # Check that netplan configuration file is removed when the snap is removed
     snap remove network-manager
     if [ -f "$netplan_cfg_path" ]; then
-        printf "\n"
+        printf "%s still exists\n"
         exit 1
     fi

@@ -85,3 +85,20 @@ suites:
             stop_after_first_reboot
             switch_netplan_to_networkd
             REBOOT
+    tests/vpn/:
+        summary: Tests for NetworkManager VPN client plugins
+        systems:
+            - ubuntu-core-22
+        prepare: |
+            . $TESTSLIB/utilities.sh
+            stop_after_first_reboot
+            switch_netplan_to_network_manager
+            . $TESTSLIB/prepare.sh
+            REBOOT
+        restore-each: |
+            . $TESTSLIB/restore-each.sh
+        restore: |
+            . $TESTSLIB/utilities.sh
+            stop_after_first_reboot
+            switch_netplan_to_networkd
+            REBOOT

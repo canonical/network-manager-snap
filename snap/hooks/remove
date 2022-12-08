@@ -27,6 +27,8 @@ rm -f /etc/netplan/00-default-nm-renderer.yaml /etc/netplan/90-NM-*.yaml
 dbus-send --system --type=method_call --print-reply \
           --dest=io.netplan.Netplan /io/netplan/Netplan \
           io.netplan.Netplan.Generate
+# It looks like it might need a bit of time to create all files...
+sleep 2
 dbus-send --system --type=method_call --print-reply \
           --dest=io.netplan.Netplan /io/netplan/Netplan \
           io.netplan.Netplan.Apply
