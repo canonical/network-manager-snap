@@ -64,12 +64,16 @@ Now you have NetworkManager successfully installed.
 
 The network-manager snap has currently three tracks:
 
- * **20**: Contains upstream 1.22.10 and has a core20 base. The track name refers
-   to the base snap and it is the convention being used at the moment.
- * **1.10**: Contains upstream 1.10.6 and has a core18 base. Nowadays, this is the one
-   installed by default if the channel is not specified when running `snap install`.
-   The track name refers to the upstream version. More modern releases have changed
-   the convention so the track now refers to the base snap.
+ * **22**: Contains upstream 1.36.6 and has a core22 base. The track
+   name refers to the base snap.
+ * **20**: Contains upstream 1.22.10 and has a core20 base. The track
+   name refers to the base snap. Nowadays, this is the one installed
+   by default if the channel is not specified when running `snap
+   install`.
+ * **1.10**: Contains upstream 1.10.6 and has a core18 base. The
+   track name refers to the upstream version. More modern releases
+   have changed the convention so the track now refers to the base
+   snap.
  * **latest**: Contains upstream 1.2.2 and has a core16 base. Despite the unfortunate
    name (there are historical reasons for that) it is the oldest version.
 
