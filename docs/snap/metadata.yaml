@@ -25,6 +25,8 @@ navigation:
         location: edit-connections.md
       - title: Routing Tables
         location: routing-tables.md
+      - title: Configure a VPN
+        location: configure-vpns.md
       - title: Logging Messages
         location: logging-messages.md
   - title: Reference

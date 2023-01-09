@@ -32,10 +32,7 @@ Currently we provide support for the following high level features:
  * Ethernet connectivity
  * WiFi access point creation
  * Shared connections
-
- Currently we do not support the following features:
-
-  * VPN
+ * VPN (OpenVPN and wireguard)
 
 ## Upstream documentation
 

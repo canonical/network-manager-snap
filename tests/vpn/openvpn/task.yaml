@@ -16,14 +16,20 @@ execute: |
   # TODO eventually this will not be needed when the store auto-connects it
   snap connect network-manager:network-control
 
-  ovpn_cfg_p=/var/snap/network-manager/common/default.ovpn
   snap set easy-openvpn-server push-default-gateway=False
   easy-openvpn-server show-client default > "$ovpn_cfg_p"
 
   # Create NM's connection
   network-manager.nmcli c import type openvpn file "$ovpn_cfg_p"
   network-manager.nmcli c up default
-  # There should be a tun device active
-  network-manager.nmcli c show --active | grep tun
+  # tun2 device active (0 and 1 belong to easy-openvpn-server)
+  network-manager.nmcli c show --active | grep tun2
+
+  # Ping other end of the tunnel
+  peer_ip=$(ip -4 a show dev tun1 primary | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+  sudo sysctl net.ipv4.conf.tun1.accept_local=1
+  sudo sysctl net.ipv4.conf.tun2.accept_local=1
+  ping -I tun2 -c 1 "$peer_ip"
+
   network-manager.nmcli c down default
   network-manager.nmcli c del default

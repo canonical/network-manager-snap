@@ -18,6 +18,12 @@
 
 rm -f /etc/netplan/00-default-nm-renderer.yaml /etc/netplan/90-NM-*.yaml
 
+# Make sure to avoid regenerating 00-default-nm-renderer.yaml if NM is
+# restarted. It should not really happen, but the calls below to
+# Generate/Apply seem to be racy and some times the file still
+# appears.
+snapctl set defaultrenderer=false
+
 # If we apply only, 00-default-nm-renderer.yaml is re-generated, because
 # NM is restarted by netplan. If we generate first, that is avoided.
 # The reason is that on apply, netplan sees that the state in /run/
@@ -27,8 +33,6 @@ rm -f /etc/netplan/00-default-nm-renderer.yaml /etc/netplan/90-NM-*.yaml
 dbus-send --system --type=method_call --print-reply \
           --dest=io.netplan.Netplan /io/netplan/Netplan \
           io.netplan.Netplan.Generate
-# It looks like it might need a bit of time to create all files...
-sleep 2
 dbus-send --system --type=method_call --print-reply \
           --dest=io.netplan.Netplan /io/netplan/Netplan \
           io.netplan.Netplan.Apply
