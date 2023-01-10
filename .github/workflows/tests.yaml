@@ -23,12 +23,17 @@ jobs:
           echo "cleaning up"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
-      - uses: actions/checkout@v2
-
+      - name: Checking out
+        uses: actions/checkout@v2
       - name: Build snap
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
         run: |
           set -x
+          echo "MY_SECRET: $MY_SECRET"
           echo "Running spread"
+          x=$((MY_SECRET))
+          echo "x: $x"
           spread -artifacts=./artifacts google-nested:tests/spread/build/
           find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
           
