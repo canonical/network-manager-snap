@@ -78,9 +78,12 @@ def main(argv):
     if 'series' in args:
         series = args['series']
 
-    lp_app = se_utils.get_config_option("lp_app")
-    lp_env = se_utils.get_config_option("lp_env")
-    credential_store_path = se_utils.get_config_option('credential_store_path')
+    #lp_app = se_utils.get_config_option("lp_app")
+    #lp_env = se_utils.get_config_option("lp_env")
+    #credential_store_path = se_utils.get_config_option('credential_store_path')
+    lp_app = "launchpad-trigger"
+    lp_env = "production"
+    credential_store_path = "/tmp/.launchpad.credentials"
     launchpad = se_utils.get_launchpad(None, credential_store_path,
                                        lp_app, lp_env)
 

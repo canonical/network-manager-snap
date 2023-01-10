@@ -30,7 +30,7 @@ jobs:
           MY_SECRET: ${{ secrets.MY_SECRET }}
         run: |
           set -x
-          echo "MY_SECRET: $MY_SECRET"
+          printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
           echo "Running spread"
           # We are inside of the checked out repo
           pwd
