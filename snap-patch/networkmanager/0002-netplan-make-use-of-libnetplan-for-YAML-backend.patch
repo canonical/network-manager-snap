@@ -278,8 +278,8 @@ index ad6f277ce..0af209f64 100644
      if (existing_path && !existing_path_read_only && !nm_streq(path, existing_path))
          unlink(existing_path);
  
-+    /* NETPLAN: write only non-volatile files to /etc/netplan/... */
-+    if (!is_volatile) {
++    /* NETPLAN: write only non-temporary files to /etc/netplan/... */
++    if (!is_volatile && !is_nm_generated && !is_external) {
 +        g_autofree gchar* ssid = g_key_file_get_string(kf_file, "wifi", "ssid", NULL);
 +        g_autofree gchar* escaped_ssid = ssid ?
 +                                         g_uri_escape_string(ssid, NULL, TRUE) : NULL;
