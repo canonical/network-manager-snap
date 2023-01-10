@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - snap-22-test
+      - snap-22
 
 jobs:
   build:
