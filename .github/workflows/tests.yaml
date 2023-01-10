@@ -24,7 +24,7 @@ jobs:
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
       - name: Checking out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build snap
         env:
           MY_SECRET: ${{ secrets.MY_SECRET }}
@@ -32,6 +32,7 @@ jobs:
           set -x
           echo "MY_SECRET: $MY_SECRET"
           echo "Running spread"
+          # We are inside of the checked out repo
           pwd
           id
           ./tests/lib/github/snap-release.sh

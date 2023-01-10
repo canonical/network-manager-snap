@@ -16,7 +16,9 @@
 
 set -exu -o pipefail
 
-. tests/lib/github/common.sh
+CICD_SCRIPTS=tests/lib/github
+
+. "$CICD_SCRIPTS"/common.sh
 build_d=$(mktemp -d)
 build_and_download_snaps network-manager \
                          https://github.com/alfonsosanchezbeato/testing-actions.git \

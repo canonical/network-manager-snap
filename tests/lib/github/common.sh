@@ -15,82 +15,82 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Set common variables used by the jenkins jobs
-set_jenkins_env ()
-{
-    SSH_PATH="${JENKINS_HOME}/.ssh/"
-    SSH_KEY_PATH="${SSH_PATH}/bazaar.launchpad.net/system-enablement-ci-bot"
+# set_jenkins_env ()
+# {
+#     SSH_PATH="${JENKINS_HOME}/.ssh/"
+#     SSH_KEY_PATH="${SSH_PATH}/bazaar.launchpad.net/system-enablement-ci-bot"
 
-    SSH="ssh -i $SSH_KEY_PATH/id_rsa $REMOTE_USER@$REMOTE_WORKER"
-    SCP="scp -i $SSH_KEY_PATH/id_rsa"
+#     SSH="ssh -i $SSH_KEY_PATH/id_rsa $REMOTE_USER@$REMOTE_WORKER"
+#     SCP="scp -i $SSH_KEY_PATH/id_rsa"
 
-    REPO=https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/$CI_REPO
-    BRANCH=$CI_BRANCH
+#     REPO=https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/$CI_REPO
+#     BRANCH=$CI_BRANCH
 
-    # If no CI repo/branch is set fallback to the source repo/branch set
-    # which will be the case for those repositories which don't contain
-    # a snap.
-    if [ -z "$CI_REPO" ]; then
-        REPO=$SOURCE_GIT_REPO
-        BRANCH=$SOURCE_GIT_REPO_BRANCH
-    fi
+#     # If no CI repo/branch is set fallback to the source repo/branch set
+#     # which will be the case for those repositories which don't contain
+#     # a snap.
+#     if [ -z "$CI_REPO" ]; then
+#         REPO=$SOURCE_GIT_REPO
+#         BRANCH=$SOURCE_GIT_REPO_BRANCH
+#     fi
 
-    REMOTE_WORKSPACE=/home/$REMOTE_USER/$BUILD_TAG
-    REMOTE_RESULTS_BASE_DIR=/home/$REMOTE_USER/results
-}
+#     REMOTE_WORKSPACE=/home/$REMOTE_USER/$BUILD_TAG
+#     REMOTE_RESULTS_BASE_DIR=/home/$REMOTE_USER/results
+# }
 
 # Sets variables
 # TEST_TYPE={script, spread}
 # HW_TESTS_RESULT={0, !=0} -> {has hw tests, does not have hw tests}
 # FIXME Maybe depending on context the call to clone could be avoided
-set_test_type ()
-{
-    tmp_srcdir=$(mktemp -d)
+# set_test_type ()
+# {
+#     tmp_srcdir=$(mktemp -d)
 
-    # We use FAIL to make sure we do not exit until we free tmp_srcdir
-    FAIL=no
-    git clone --depth 1 -b "$BRANCH" "$REPO" "$tmp_srcdir"/src || FAIL=yes
-    cd "$tmp_srcdir"/src || FAIL=yes
+#     # We use FAIL to make sure we do not exit until we free tmp_srcdir
+#     FAIL=no
+#     git clone --depth 1 -b "$BRANCH" "$REPO" "$tmp_srcdir"/src || FAIL=yes
+#     cd "$tmp_srcdir"/src || FAIL=yes
 
-    TEST_TYPE=none
-    if [ -e "$tmp_srcdir/src/spread.yaml" ]; then
-        TEST_TYPE=spread
-    fi
-    # run-tests.sh gets priority over spread.yaml
-    if [ -e "$tmp_srcdir/src/run-tests.sh" ]; then
-        TEST_TYPE=script
-    fi
+#     TEST_TYPE=none
+#     if [ -e "$tmp_srcdir/src/spread.yaml" ]; then
+#         TEST_TYPE=spread
+#     fi
+#     # run-tests.sh gets priority over spread.yaml
+#     if [ -e "$tmp_srcdir/src/run-tests.sh" ]; then
+#         TEST_TYPE=script
+#     fi
 
-    # TODO: Use https://github.com/0k/shyaml in the future for this
-    if grep -q "type: adhoc" spread.yaml; then
-        HW_TESTS_RESULT=0
-    else
-        HW_TESTS_RESULT=1
-    fi
+#     # TODO: Use https://github.com/0k/shyaml in the future for this
+#     if grep -q "type: adhoc" spread.yaml; then
+#         HW_TESTS_RESULT=0
+#     else
+#         HW_TESTS_RESULT=1
+#     fi
 
-    # Components have the ability to disable CI tests if they can't provide any.
-    # This is only accepted in a few cases and should be generally avoided.
-    CI_TESTS_DISABLED=no
-    if [ -e "$tmp_srcdir"/src/.ci_tests_disabled ]; then
-        CI_TESTS_DISABLED=yes
-    fi
+#     # Components have the ability to disable CI tests if they can't provide any.
+#     # This is only accepted in a few cases and should be generally avoided.
+#     CI_TESTS_DISABLED=no
+#     if [ -e "$tmp_srcdir"/src/.ci_tests_disabled ]; then
+#         CI_TESTS_DISABLED=yes
+#     fi
 
-    rm -rf "$tmp_srcdir"
+#     rm -rf "$tmp_srcdir"
 
-    if [ "$FAIL" = yes ]; then
-        echo "ERROR: critical in set_test_type()"
-        exit 1
-    fi
+#     if [ "$FAIL" = yes ]; then
+#         echo "ERROR: critical in set_test_type()"
+#         exit 1
+#     fi
 
-    if [ "$CI_TESTS_DISABLED" = yes ]; then
-        echo "WARNING: Component has no CI tests so not running anything here"
-        exit 0
-    fi
+#     if [ "$CI_TESTS_DISABLED" = yes ]; then
+#         echo "WARNING: Component has no CI tests so not running anything here"
+#         exit 0
+#     fi
 
-    if [ "$TEST_TYPE" = none ]; then
-        echo "ERROR: missing spread or script tests: you must provide one of them"
-        exit 1
-    fi
-}
+#     if [ "$TEST_TYPE" = none ]; then
+#         echo "ERROR: missing spread or script tests: you must provide one of them"
+#         exit 1
+#     fi
+# }
 
 # Creates and downloads the snaps for the supported architectures
 # $1: snap name
@@ -116,7 +116,7 @@ build_and_download_snaps()
 
     # Build snap without publishing it to get the new manifest.
     # TODO we should leverage it to run tests as well
-    "$BUILD_SCRIPTS"/tools/trigger-lp-build.py \
+    "$CICD_SCRIPTS"/trigger-lp-build.py \
                     -s "$snap_n" -n \
                     --architectures="$archs" \
                     --git-repo="$repo_url" \
