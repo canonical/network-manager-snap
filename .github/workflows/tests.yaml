@@ -32,10 +32,11 @@ jobs:
           set -x
           echo "MY_SECRET: $MY_SECRET"
           echo "Running spread"
-          x=$((MY_SECRET))
-          echo "x: $x"
-          spread -artifacts=./artifacts google-nested:tests/spread/build/
-          find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
+          pwd
+          id
+          ./tests/lib/github/snap-release.sh
+          #spread -artifacts=./artifacts google-nested:tests/spread/build/
+          #find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
           
       - uses: actions/upload-artifact@v2
         with:
