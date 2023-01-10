@@ -18,12 +18,15 @@ jobs:
       - name: Cleanup job workspace
         id: cleanup-job-workspace
         run: |
+          echo "cleaning up"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
       - uses: actions/checkout@v2
 
       - name: Build snap
         run: |
+          set -x
+          echo "Running spread"
           spread -artifacts=./artifacts google-nested:tests/spread/build/
           find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
           
