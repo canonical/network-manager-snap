@@ -1,0 +1,40 @@
+name: Spread tests
+on:
+  # schedule:
+  #   # Weekly sunday testing for bitrot
+  #   - cron: '0 12 * * 0'
+  push:
+    branches:
+      - snap-22-test
+  pull_request:
+    branches:
+      - snap-22-test
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Cleanup job workspace
+        id: cleanup-job-workspace
+        run: |
+          rm -rf "${{ github.workspace }}"
+          mkdir "${{ github.workspace }}"
+      - uses: actions/checkout@v2
+
+      - name: Build snap
+        run: |
+          spread -artifacts=./artifacts google-nested:tests/spread/build/
+          find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: network-manager-snap
+          path: "${{ github.workspace }}/network-manager.artifact"
+
+      - name: Discard spread workers
+        if: always()
+        run: |
+          shopt -s nullglob
+          for r in .spread-reuse.*.yaml; do
+              spread -discard -reuse-pid="$(echo "$r" | grep -o -E '[0-9]+')"
+          done
