@@ -25,11 +25,21 @@ execute: |
   # tun2 device active (0 and 1 belong to easy-openvpn-server)
   network-manager.nmcli c show --active | grep tun2
 
-  # Ping other end of the tunnel
-  peer_ip=$(ip -4 a show dev tun1 primary | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-  sudo sysctl net.ipv4.conf.tun1.accept_local=1
+  # Ping other end of the tunnel. Note that
+  # we could have connected to either tun0 or tun1.
   sudo sysctl net.ipv4.conf.tun2.accept_local=1
-  ping -I tun2 -c 1 "$peer_ip"
+  pingOk=no
+  for i in {0..1}; do
+      sudo sysctl net.ipv4.conf.tun"$i".accept_local=1
+      peer_ip=$(ip -4 a show dev tun"$i" primary | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+      if ping -I tun2 -c 1 "$peer_ip"; then
+          pingOk=yes
+      fi
+  done
+  if [ "$pingOk" != yes ]; then
+      printf "Cannot ping other end of the tunnel\n"
+      exit 1
+  fi
 
   network-manager.nmcli c down default
   network-manager.nmcli c del default
