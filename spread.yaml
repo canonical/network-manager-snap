@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015, 2016 Canonical Ltd
+# Copyright (C) 2015 Canonical Ltd
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 3 as
@@ -13,24 +13,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 project: network-manager
 
 environment:
-    PROJECT_PATH: /home/network-manager
-    TESTSLIB: $PROJECT_PATH/tests/lib
-    SNAP_NAME: network-manager
-    # Allow the host to pass the channel to use for the test run
-    SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
+  PROJECT_PATH: /home/network-manager
+  TESTSLIB: $PROJECT_PATH/tests/lib
+  SNAP_NAME: network-manager
+  # Allow the host to pass the channel to use for the test run
+  SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
 
 backends:
-    qemu:
-        memory: 4G
-        systems:
-            - ubuntu-core-22:
-                bios: /usr/share/OVMF/OVMF_CODE.fd
-                username: test
-                password: test
+  google-nested:
+    type: google
+    key: '$(HOST: echo "$SPREAD_GOOGLE_KEY")'
+    location: snapd-spread/us-east1-b
+    plan: n2-standard-2
+    halt-timeout: 2h
+    systems:
+      - ubuntu-22.04-64:
+          image: ubuntu-2204-64-virt-enabled
+          storage: 20G
+  qemu:
+    memory: 4G
+    systems:
+      - ubuntu-core-22:
+          bios: /usr/share/OVMF/OVMF_CODE.fd
+          username: test
+          password: test
 
 # Put this somewhere where we have read-write access
 path: /home/network-manager
@@ -60,45 +69,45 @@ debug-each: |
 kill-timeout: 30m
 
 suites:
-    tests/main/:
-        summary: Full-system tests for NetworkManager without ethernet support
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/prepare.sh
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-    tests/full/:
-        summary: Full-system tests for NetworkManager being the only network management service
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_network_manager
-            . $TESTSLIB/prepare.sh
-            REBOOT
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-        restore: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_networkd
-            REBOOT
-    tests/vpn/:
-        summary: Tests for NetworkManager VPN client plugins
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_network_manager
-            . $TESTSLIB/prepare.sh
-            REBOOT
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-        restore: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_networkd
-            REBOOT
+  tests/main/:
+    summary: Full-system tests for NetworkManager without ethernet support
+    systems:
+      - ubuntu-core-22
+    prepare: |
+      . $TESTSLIB/prepare.sh
+    restore-each: |
+      . $TESTSLIB/restore-each.sh
+  tests/full/:
+    summary: Full-system tests for NetworkManager being the only network management service
+    systems:
+      - ubuntu-core-22
+    prepare: |
+      . $TESTSLIB/utilities.sh
+      stop_after_first_reboot
+      switch_netplan_to_network_manager
+      . $TESTSLIB/prepare.sh
+      REBOOT
+    restore-each: |
+      . $TESTSLIB/restore-each.sh
+    restore: |
+      . $TESTSLIB/utilities.sh
+      stop_after_first_reboot
+      switch_netplan_to_networkd
+      REBOOT
+  tests/vpn/:
+    summary: Tests for NetworkManager VPN client plugins
+    systems:
+      - ubuntu-core-22
+    prepare: |
+      . $TESTSLIB/utilities.sh
+      stop_after_first_reboot
+      switch_netplan_to_network_manager
+      . $TESTSLIB/prepare.sh
+      REBOOT
+    restore-each: |
+      . $TESTSLIB/restore-each.sh
+    restore: |
+      . $TESTSLIB/utilities.sh
+      stop_after_first_reboot
+      switch_netplan_to_networkd
+      REBOOT
