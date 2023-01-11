@@ -32,16 +32,20 @@ jobs:
           set -exu
           printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
           echo "Running spread"
+          env
           # We are inside of the checked out repo
           pwd
           id
-          ./tests/lib/github/snap-release.sh
-          #spread -artifacts=./artifacts google-nested:tests/spread/build/
-          #find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
-      - uses: actions/upload-artifact@v2
+          ./tests/lib/github/snap-build.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
           name: network-manager-snap
-          path: "${{ github.workspace }}/network-manager.artifact"
+          path: "${{ github.workspace }}/network-manager_*.snap"
+      - name: Run spread tests
+        run: |
+          spread -artifacts=./artifacts google-nested:tests/spread/build/
+          find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
 
       - name: Discard spread workers
         if: always()

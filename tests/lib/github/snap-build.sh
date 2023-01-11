@@ -18,8 +18,11 @@ set -exu -o pipefail
 
 CICD_SCRIPTS=tests/lib/github
 
+env
+
 . "$CICD_SCRIPTS"/common.sh
 build_d=$(mktemp -d)
 build_and_download_snaps network-manager \
                          https://github.com/alfonsosanchezbeato/testing-actions.git \
                          snap-22 jammy "$build_d"
+ls -l "$build_d"
