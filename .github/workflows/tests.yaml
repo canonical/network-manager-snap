@@ -1,8 +1,6 @@
 name: Spread tests
+
 on:
-  # schedule:
-  #   # Weekly sunday testing for bitrot
-  #   - cron: '0 12 * * 0'
   push:
     branches:
       - snap-22-test
@@ -46,7 +44,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: network-manager-snap
-          path: $BUILD_DIR/network-manager_*.snap"
+          # TODO How to set from env var of with some other way?
+          path: /tmp/build/network-manager_*.snap"
       - name: Run spread tests
         run: |
           spread -artifacts=./artifacts google-nested:tests/spread/build/

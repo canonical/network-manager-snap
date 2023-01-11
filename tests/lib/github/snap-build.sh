@@ -18,6 +18,7 @@ set -exu -o pipefail
 
 # Used external variables
 REPOSITORY=$GITHUB_REPOSITORY
+BRANCH=$GITHUB_HEAD_REF
 
 CICD_SCRIPTS=tests/lib/github
 
@@ -32,25 +33,22 @@ main()
     local build_d=$1
 
     # Find out snap name
-    local snapcraft_yaml_p=
-    if [ -f "snapcraft.yaml" ]; then
-        snapcraft_yaml_p="snapcraft.yaml"
-    elif [ -f "snap/snapcraft.yaml" ]; then
-        snapcraft_yaml_p="snap/snapcraft.yaml"
-    fi
+    local snapcraft_yaml_p
+    snapcraft_yaml_p=$(get_snapcraft_yaml_path)
     if [ -z "$snapcraft_yaml_p" ]; then
         printf "ERROR: No snapcraft.yaml found. Not trying to build anything\n"
         exit 1
     fi
 
     # TODO replace with jq
-    local snap_name
+    local snap_name series
     snap_name=$(grep -v ^\# "$snapcraft_yaml_p" |
                     head -n 5 | grep "^name:" | awk '{print $2}')
+    series=$(get_series "$snapcraft_yaml_p")
 
     build_and_download_snaps "$snap_name" \
                              https://github.com/"$REPOSITORY".git \
-                             snap-22 jammy "$build_d"
+                             "$BRANCH" "$series" "$build_d"
     echo "asdfdsa" > "$build_d"/network_manager_xxx.snap
     ls -l "$build_d"
 }
