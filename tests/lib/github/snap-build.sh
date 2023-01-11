@@ -31,6 +31,7 @@ CICD_SCRIPTS=tests/lib/github
 main()
 {
     local build_d=$1
+    build_d=build
 
     # Find out snap name
     local snapcraft_yaml_p
