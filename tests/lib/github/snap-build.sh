@@ -31,8 +31,6 @@ CICD_SCRIPTS=tests/lib/github
 main()
 {
     local build_d=$1
-    # build_d=build
-    # mkdir -p "$build_d"
 
     # Find out snap name
     local snapcraft_yaml_p
@@ -51,8 +49,6 @@ main()
     build_and_download_snaps "$snap_name" \
                              https://github.com/"$REPOSITORY".git \
                              "$BRANCH" "$series" "$build_d"
-    echo "asdfdsa" > "$build_d"/network-manager_xxx.snap
-    ls -l "$build_d"
 }
 
 if [ $# -ne 1 ]; then

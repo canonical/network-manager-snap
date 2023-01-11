@@ -113,8 +113,6 @@ build_and_download_snaps()
         # TODO riscv64?
         archs=amd64,armhf,arm64
     fi
-    # XXXX
-    return
 
     # Build snap without publishing it to get the new manifest.
     # TODO we should leverage it to run tests as well
@@ -200,6 +198,7 @@ push_and_release_snap()
     shift 2
     local channels=$*
     channels=${channels// /,}
+    local snap_file
 
     cd "$snaps_d"
     for snap_file in "$snap_n"_*.snap; do
@@ -221,6 +220,7 @@ get_snapcraft_yaml_path()
 # $1: path to snapcraft.yaml
 get_series()
 {
+    local base
     base=$(grep -oP '^base:[[:space:]]+core\K\w+' "$1") || true
     if [ "$base" -eq 22 ]; then
         printf jammy

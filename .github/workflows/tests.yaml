@@ -9,9 +9,6 @@ on:
       - snap-22-test
       - snap-22
 
-env:
-  BUILD_DIR: /tmp/build
-
 jobs:
   build:
     # Need to share self hosted runners with repo
@@ -21,11 +18,9 @@ jobs:
       - name: Cleanup job workspace
         id: cleanup-job-workspace
         run: |
-          echo "cleaning up"
+          printf "cleaning up\n"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
-          #rm -rf "$BUILD_DIR"
-          #mkdir "$BUILD_DIR"
       - name: Checking out
         uses: actions/checkout@v3
       - name: Build snap
@@ -43,15 +38,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: network-manager-snaps
-          # TODO How to set from env var of with some other way?
-          #path: /tmp/build/network-manager_xxx.snap"
-          #path: manifests/*.yaml
+          # TODO Set from metadata file (action.yaml)?
           path: ${{ runner.temp }}/network-manager_*.snap
       - name: Run spread tests
         run: |
-          spread -artifacts=./artifacts google-nested:tests/spread/build/
-          find ./artifacts -type f -name "*.artifact" -exec cp {} "${{ github.workspace }}" \;
-
+          spread google-nested:tests/spread/build/
       - name: Discard spread workers
         if: always()
         run: |
