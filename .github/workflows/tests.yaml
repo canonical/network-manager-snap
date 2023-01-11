@@ -27,9 +27,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Build snap
         env:
-          MY_SECRET: ${{ secrets.MY_SECRET }}
+          LP_CREDS: ${{ secrets.LP_CREDS }}
         run: |
-          set -x
+          set -exu
           printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
           echo "Running spread"
           # We are inside of the checked out repo
