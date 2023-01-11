@@ -42,7 +42,7 @@ jobs:
           path: ${{ runner.temp }}/network-manager_*.snap
       - name: Run spread tests
         run: |
-          spread google-nested:tests/spread/build/
+          spread google-nested:tests/
       - name: Discard spread workers
         if: always()
         run: |
