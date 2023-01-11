@@ -24,8 +24,8 @@ jobs:
           echo "cleaning up"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
-          rm -rf "$BUILD_DIR"
-          mkdir "$BUILD_DIR"
+          #rm -rf "$BUILD_DIR"
+          #mkdir "$BUILD_DIR"
       - name: Checking out
         uses: actions/checkout@v3
       - name: Build snap
@@ -38,14 +38,15 @@ jobs:
           # We are inside of the checked out repo
           pwd
           id
-          ./tests/lib/github/snap-build.sh "$BUILD_DIR"
+          ./tests/lib/github/snap-build.sh "${{ runner.temp }}"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: network-manager-snap
+          name: network-manager-snaps
           # TODO How to set from env var of with some other way?
           #path: /tmp/build/network-manager_xxx.snap"
-          path: manifests/*.yaml
+          #path: manifests/*.yaml
+          path: ${{ runner.temp }}/network-manager_xxx.snap"
       - name: Run spread tests
         run: |
           spread -artifacts=./artifacts google-nested:tests/spread/build/
