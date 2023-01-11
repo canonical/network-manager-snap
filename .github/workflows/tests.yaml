@@ -35,7 +35,6 @@ jobs:
           set -exu
           printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
           echo "Running spread"
-          env
           # We are inside of the checked out repo
           pwd
           id
@@ -45,7 +44,8 @@ jobs:
         with:
           name: network-manager-snap
           # TODO How to set from env var of with some other way?
-          path: /tmp/build/network-manager_xxx.snap"
+          #path: /tmp/build/network-manager_xxx.snap"
+          path: spread.yaml
       - name: Run spread tests
         run: |
           spread -artifacts=./artifacts google-nested:tests/spread/build/
