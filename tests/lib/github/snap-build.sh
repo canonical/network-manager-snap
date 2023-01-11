@@ -49,7 +49,7 @@ main()
     build_and_download_snaps "$snap_name" \
                              https://github.com/"$REPOSITORY".git \
                              "$BRANCH" "$series" "$build_d"
-    echo "asdfdsa" > "$build_d"/network_manager_xxx.snap
+    echo "asdfdsa" > "$build_d"/network-manager_xxx.snap
     ls -l "$build_d"
 }
 
