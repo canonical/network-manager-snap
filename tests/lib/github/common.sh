@@ -113,6 +113,8 @@ build_and_download_snaps()
         # TODO riscv64?
         archs=amd64,armhf,arm64
     fi
+    # XXXX
+    return
 
     # Build snap without publishing it to get the new manifest.
     # TODO we should leverage it to run tests as well

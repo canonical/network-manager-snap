@@ -11,6 +11,9 @@ on:
       - snap-22-test
       - snap-22
 
+env:
+  BUILD_DIR: /tmp/build
+
 jobs:
   build:
     # Need to share self hosted runners with repo
@@ -23,6 +26,8 @@ jobs:
           echo "cleaning up"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
+          rm -rf "$BUILD_DIR"
+          mkdir "$BUILD_DIR"
       - name: Checking out
         uses: actions/checkout@v3
       - name: Build snap
@@ -36,12 +41,12 @@ jobs:
           # We are inside of the checked out repo
           pwd
           id
-          ./tests/lib/github/snap-build.sh
+          ./tests/lib/github/snap-build.sh "$BUILD_DIR"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: network-manager-snap
-          path: "${{ github.workspace }}/network-manager_*.snap"
+          path: $BUILD_DIR/network-manager_*.snap"
       - name: Run spread tests
         run: |
           spread -artifacts=./artifacts google-nested:tests/spread/build/
