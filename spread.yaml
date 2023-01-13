@@ -17,21 +17,40 @@ project: network-manager
 
 environment:
   PROJECT_PATH: /home/network-manager
-  TESTSLIB: $PROJECT_PATH/tests/lib
   SNAP_NAME: network-manager
   # Allow the host to pass the channel to use for the test run
-  SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
+  SNAP_CHANNEL: '$(HOST: echo "${SNAP_CHANNEL:-}")'
+  LOCAL_BIN: /usr/local/bin
+  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/tests/lib/tools
+  TESTSLIB: $PROJECT_PATH/tests/lib
+  TESTSLIBOLD: $PROJECT_PATH/tests/lib-old
+  TESTSTOOLS: $PROJECT_PATH/tests/lib/tools
+  TESTSTMP: /var/tmp/snapd-tools
+  REUSE_SNAPD: 0
+  SRU_VALIDATION: 0
+  # use the ppa_validation_name to install snapd from a public ppa
+  PPA_VALIDATION_NAME: '$(HOST: echo "${SPREAD_PPA_VALIDATION_NAME:-}")'
+  # use the ppa_source_line and ppa_gpg_key to install snapd from a private ppa
+  PPA_SOURCE_LINE: '$(HOST: echo "${SPREAD_PPA_SOURCE_LINE:-}")'
+  PPA_GPG_KEY: '$(HOST: echo "${SPREAD_PPA_GPG_KEY:-}")'
+  # List the snaps which are cached
+  PRE_CACHE_SNAPS: jq
+  CORE_CHANNEL: '$(HOST: echo "${SPREAD_CORE_CHANNEL:-stable}")'
+  BASE_CHANNEL: '$(HOST: echo "${SPREAD_BASE_CHANNEL:-stable}")'
+  KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-stable}")'
+  GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-stable}")'
+  SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-stable}")'
 
 backends:
-  google-nested:
-    type: google
+  google:
     key: '$(HOST: echo "$SPREAD_GOOGLE_KEY")'
     location: snapd-spread/us-east1-b
     plan: n2-standard-2
     halt-timeout: 2h
     systems:
-      - ubuntu-22.04-64:
-          image: ubuntu-2204-64-virt-enabled
+      - ubuntu-core-22-64:
+          image: ubuntu-22.04-64
+          workers: 8
           storage: 20G
   qemu:
     memory: 4G
@@ -48,7 +67,43 @@ exclude:
   - .git
 
 prepare: |
-  . $TESTSLIB/prepare-all.sh
+  # NOTE: This part of the code needs to be in spread.yaml as it runs before
+  # the rest of the source code (including the tests/lib directory) is
+  # around. The purpose of this code is to fix some connectivity issues setup 
+  # spread functions to be more usable outside of the explicit task.yaml 
+  # sections.
+
+  # apt update is hanging on security.ubuntu.com with IPv6, prefer IPv4 over IPv6
+  cat <<EOF > gai.conf
+  precedence  ::1/128       50
+  precedence  ::/0          40
+  precedence  2002::/16     30
+  precedence ::/96          20
+  precedence ::ffff:0:0/96 100
+  EOF
+  if ! mv gai.conf /etc/gai.conf; then
+      echo "/etc/gai.conf is not writable, ubuntu-core system? apt update won't be affected in that case"
+      rm -f gai.conf
+  fi
+
+  # Take the MATCH and REBOOT functions from spread and allow our shell
+  # scripts to use them as shell commands. The replacements are real
+  # executables in tests/lib/bin (which is on PATH) but they source
+  # spread-funcs.sh written here, base on the definitions provided by SPREAD.
+  # This ensures that 1) spread functions define the code 2) both MATCH and
+  # REBOOT are executables and not functions, and can be called from any
+  # context.
+  type MATCH | tail -n +2 > "$TESTSLIB"/spread-funcs.sh
+  unset MATCH
+  type NOMATCH | tail -n +2 >> "$TESTSLIB"/spread-funcs.sh
+  unset NOMATCH
+  type REBOOT | tail -n +2 >> "$TESTSLIB"/spread-funcs.sh
+  unset REBOOT
+
+  # Copy external tools from the subtree to the "$TESTSLIB"/tools directory
+  # The idea is to have a single directory with all the testing tools
+  cp -f "$TESTSLIB"/external/snapd-testing-tools/tools/* "$TESTSTOOLS"
+  cp -f "$TESTSLIB"/external/snapd-testing-tools/remote/* "$TESTSTOOLS"
 
 prepare-each: |
   # Cleanup logs so we can just dump what has happened in the debug-each
@@ -62,35 +117,40 @@ debug-each: |
   journalctl
   dmesg | grep DENIED || true
 
-# Default is 15 min but we use a higher one here as we build the entire
-# network-manager snap inside the global prepare step so we need quite
-# some time. Once we can reuse artifacts from other builds we can change
-# this back to the default.
+# (default is 15 min)
 kill-timeout: 30m
 
 suites:
   tests/main/:
     summary: Full-system tests for NetworkManager without ethernet support
-    systems:
-      - ubuntu-core-22
+    systems: [ubuntu-core-*]
     prepare: |
-      . $TESTSLIB/prepare.sh
+      "$TESTSLIB"/prepare-restore.sh --prepare-suite
+      . "$TESTSLIBOLD"/prepare.sh
     restore-each: |
-      . $TESTSLIB/restore-each.sh
+      . "$TESTSLIBOLD"/restore-each.sh
+    restore: |
+      . "$TESTSLIBOLD"/utilities.sh
+    # prepare-each: |
+    #   "$TESTSLIB"/prepare-restore.sh --prepare-suite-each
+    # restore-each: |
+    #   "$TESTSLIB"/prepare-restore.sh --restore-suite-each
+    # restore: |
+    #   "$TESTSLIB"/prepare-restore.sh --restore-suite
   tests/full/:
     summary: Full-system tests for NetworkManager being the only network management service
     systems:
       - ubuntu-core-22
     prepare: |
-      . $TESTSLIB/utilities.sh
+      . "$TESTSLIBOLD"/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_network_manager
-      . $TESTSLIB/prepare.sh
+      . "$TESTSLIBOLD"/prepare.sh
       REBOOT
     restore-each: |
-      . $TESTSLIB/restore-each.sh
+      . "$TESTSLIBOLD"/restore-each.sh
     restore: |
-      . $TESTSLIB/utilities.sh
+      . "$TESTSLIBOLD"/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_networkd
       REBOOT
@@ -99,15 +159,15 @@ suites:
     systems:
       - ubuntu-core-22
     prepare: |
-      . $TESTSLIB/utilities.sh
+      . $TESTSLIBOLD/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_network_manager
-      . $TESTSLIB/prepare.sh
+      . $TESTSLIBOLD/prepare.sh
       REBOOT
     restore-each: |
-      . $TESTSLIB/restore-each.sh
+      . $TESTSLIBOLD/restore-each.sh
     restore: |
-      . $TESTSLIB/utilities.sh
+      . $TESTSLIBOLD/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_networkd
       REBOOT

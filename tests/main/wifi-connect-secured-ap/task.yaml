@@ -5,7 +5,7 @@ environment:
     WIFI_PASSPHRASE: Test1234
 
 execute: |
-    . $TESTSLIB/utilities.sh
+    . "$TESTSLIBOLD"/utilities.sh
 
     create_ap "$WIFI_SSID" "$WIFI_PASSPHRASE"
 

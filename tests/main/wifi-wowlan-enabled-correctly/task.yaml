@@ -1,7 +1,7 @@
 summary: Verify WiFi WoWLAN can be enabled in NetworkManager globally via a snap config option
 
 execute: |
-    . $TESTSLIB/utilities.sh
+    . "$TESTSLIBOLD"/utilities.sh
 
     # Enable WoWLAN globally for all new WiFi connections
     snap set network-manager wifi.wake-on-wlan=any

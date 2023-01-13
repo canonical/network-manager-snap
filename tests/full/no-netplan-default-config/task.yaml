@@ -7,7 +7,7 @@ restore: |
     mv /etc/netplan/00-snapd-config.yaml.orig /etc/netplan/00-snapd-config.yaml
 
 execute: |
-    . $TESTSLIB/utilities.sh
+    . "$TESTSLIBOLD"/utilities.sh
     case "$SPREAD_REBOOT" in
         0)
             # Remove all configuration files from netplan to get a system

@@ -1,7 +1,7 @@
 summary: When defaultrender is set NM manages ethernet
 
 execute: |
-    . $TESTSLIB/utilities.sh
+    . "$TESTSLIBOLD"/utilities.sh
     get_qemu_eth_iface eth_if
     snap set network-manager defaultrenderer=true
     # Needed because netplan bug not backported to xenial

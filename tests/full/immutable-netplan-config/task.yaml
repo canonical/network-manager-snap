@@ -1,7 +1,7 @@
 summary: Verify that netplan configuration files are immutable
 
 execute: |
-    . $TESTSLIB/utilities.sh
+    . "$TESTSLIBOLD"/utilities.sh
     get_qemu_eth_iface eth_if
 
     # Ensure we're using a configuration generated from netplan
