@@ -29,7 +29,7 @@ execute: |
 
     # The radvd daemon will send out router advertisements on veth1
     # so that we can receive them on veth0 end
-    cat <<-EOF > /home/test/radvd.conf
+    cat <<-EOF > "$HOME"/radvd.conf
     interface veth1 {
         AdvSendAdvert on;
         prefix 2001:db8:1:2::/64 {};
@@ -50,7 +50,7 @@ execute: |
 
     # This will get our router advertisement daemon started and we
     # now configure NetworkManager
-    sudo se-test-tools.radvd -C /home/test/radvd.conf -n -d 5 -m stderr -p /home/test/radvd.pid &
+    sudo se-test-tools.radvd -C "$HOME"/radvd.conf -n -d 5 -m stderr -p "$HOME"/radvd.pid &
 
     # Give things a bit more time to settle
     sleep 10
@@ -67,4 +67,4 @@ execute: |
     /snap/bin/network-manager.nmcli d show veth0 | grep 'IP6.ADDRESS.*2001:db8:1:2.*/64'
 
     # Stop the radvd daemon
-    kill -TERM `cat /home/test/radvd.pid`
+    kill -TERM "$(cat "$HOME"/radvd.pid)"

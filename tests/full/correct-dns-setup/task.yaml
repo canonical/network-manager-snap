@@ -1,10 +1,10 @@
 summary: Verify correct DNS setup
 
 prepare: |
-    cp /etc/netplan/00-snapd-config.yaml /etc/netplan/00-snapd-config.yaml.orig
+    cp /etc/netplan/"$DEFAULT_NETPLAN_FILE" /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig
 
 restore: |
-    mv /etc/netplan/00-snapd-config.yaml.orig /etc/netplan/00-snapd-config.yaml
+    mv /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig /etc/netplan/"$DEFAULT_NETPLAN_FILE"
 
 execute: |
     . "$TESTSLIBOLD"/utilities.sh
@@ -27,7 +27,7 @@ execute: |
 
             # Now lets switch to a system where we have a configuration
             # for ethernet we can change
-            rm /etc/netplan/00-snapd-config.yaml
+            rm /etc/netplan/"$DEFAULT_NETPLAN_FILE"
             REBOOT
             ;;
         1)

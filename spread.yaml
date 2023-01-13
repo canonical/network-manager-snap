@@ -35,11 +35,12 @@ environment:
   PPA_GPG_KEY: '$(HOST: echo "${SPREAD_PPA_GPG_KEY:-}")'
   # List the snaps which are cached
   PRE_CACHE_SNAPS: jq
-  CORE_CHANNEL: '$(HOST: echo "${SPREAD_CORE_CHANNEL:-stable}")'
-  BASE_CHANNEL: '$(HOST: echo "${SPREAD_BASE_CHANNEL:-stable}")'
-  KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-stable}")'
-  GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-stable}")'
-  SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-stable}")'
+  CORE_CHANNEL: '$(HOST: echo "${SPREAD_CORE_CHANNEL:-edge}")'
+  BASE_CHANNEL: '$(HOST: echo "${SPREAD_BASE_CHANNEL:-edge}")'
+  KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-edge}")'
+  GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-edge}")'
+  SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-edge}")'
+  DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
   google:
@@ -52,6 +53,8 @@ backends:
           image: ubuntu-22.04-64
           workers: 8
           storage: 20G
+    prepare: |
+      "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
     systems:
@@ -67,12 +70,7 @@ exclude:
   - .git
 
 prepare: |
-  # NOTE: This part of the code needs to be in spread.yaml as it runs before
-  # the rest of the source code (including the tests/lib directory) is
-  # around. The purpose of this code is to fix some connectivity issues setup 
-  # spread functions to be more usable outside of the explicit task.yaml 
-  # sections.
-
+  # Fix some connectivity isues:
   # apt update is hanging on security.ubuntu.com with IPv6, prefer IPv4 over IPv6
   cat <<EOF > gai.conf
   precedence  ::1/128       50
@@ -125,23 +123,15 @@ suites:
     summary: Full-system tests for NetworkManager without ethernet support
     systems: [ubuntu-core-*]
     prepare: |
-      "$TESTSLIB"/prepare-restore.sh --prepare-suite
+      . "$TESTSLIBOLD"/prepare-all.sh
       . "$TESTSLIBOLD"/prepare.sh
     restore-each: |
       . "$TESTSLIBOLD"/restore-each.sh
-    restore: |
-      . "$TESTSLIBOLD"/utilities.sh
-    # prepare-each: |
-    #   "$TESTSLIB"/prepare-restore.sh --prepare-suite-each
-    # restore-each: |
-    #   "$TESTSLIB"/prepare-restore.sh --restore-suite-each
-    # restore: |
-    #   "$TESTSLIB"/prepare-restore.sh --restore-suite
   tests/full/:
     summary: Full-system tests for NetworkManager being the only network management service
-    systems:
-      - ubuntu-core-22
+    systems: [ubuntu-core-*]
     prepare: |
+      . "$TESTSLIBOLD"/prepare-all.sh
       . "$TESTSLIBOLD"/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_network_manager
@@ -156,8 +146,7 @@ suites:
       REBOOT
   tests/vpn/:
     summary: Tests for NetworkManager VPN client plugins
-    systems:
-      - ubuntu-core-22
+    systems: [ubuntu-core-*]
     prepare: |
       . $TESTSLIBOLD/utilities.sh
       stop_after_first_reboot
