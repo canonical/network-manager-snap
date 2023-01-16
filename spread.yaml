@@ -21,10 +21,10 @@ environment:
   # Allow the host to pass the channel to use for the test run
   SNAP_CHANNEL: '$(HOST: echo "${SNAP_CHANNEL:-}")'
   LOCAL_BIN: /usr/local/bin
-  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/tests/lib/tools
-  TESTSLIB: $PROJECT_PATH/tests/lib
-  TESTSLIBOLD: $PROJECT_PATH/tests/lib-old
-  TESTSTOOLS: $PROJECT_PATH/tests/lib/tools
+  TESTSLIB: $PROJECT_PATH/cicd/snapd-lib
+  SYSTEMSNAPSTESTLIB: $PROJECT_PATH/tests/lib
+  TESTSTOOLS: $PROJECT_PATH/cicd/snapd-lib/tools
+  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/cicd/snapd-lib/tools
   TESTSTMP: /var/tmp/snapd-tools
   REUSE_SNAPD: 0
   SRU_VALIDATION: 0
@@ -86,7 +86,7 @@ prepare: |
 
   # Take the MATCH and REBOOT functions from spread and allow our shell
   # scripts to use them as shell commands. The replacements are real
-  # executables in tests/lib/bin (which is on PATH) but they source
+  # executables in cicd/snapd-lib/bin (which is on PATH) but they source
   # spread-funcs.sh written here, base on the definitions provided by SPREAD.
   # This ensures that 1) spread functions define the code 2) both MATCH and
   # REBOOT are executables and not functions, and can be called from any
@@ -123,24 +123,24 @@ suites:
     summary: Full-system tests for NetworkManager without ethernet support
     systems: [ubuntu-core-*]
     prepare: |
-      . "$TESTSLIBOLD"/prepare-all.sh
-      . "$TESTSLIBOLD"/prepare.sh
+      . "$SYSTEMSNAPSTESTLIB"/prepare-all.sh
+      . "$SYSTEMSNAPSTESTLIB"/prepare.sh
     restore-each: |
-      . "$TESTSLIBOLD"/restore-each.sh
+      . "$SYSTEMSNAPSTESTLIB"/restore-each.sh
   tests/full/:
     summary: Full-system tests for NetworkManager being the only network management service
     systems: [ubuntu-core-*]
     prepare: |
-      . "$TESTSLIBOLD"/prepare-all.sh
-      . "$TESTSLIBOLD"/utilities.sh
+      . "$SYSTEMSNAPSTESTLIB"/prepare-all.sh
+      . "$SYSTEMSNAPSTESTLIB"/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_network_manager
-      . "$TESTSLIBOLD"/prepare.sh
+      . "$SYSTEMSNAPSTESTLIB"/prepare.sh
       REBOOT
     restore-each: |
-      . "$TESTSLIBOLD"/restore-each.sh
+      . "$SYSTEMSNAPSTESTLIB"/restore-each.sh
     restore: |
-      . "$TESTSLIBOLD"/utilities.sh
+      . "$SYSTEMSNAPSTESTLIB"/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_networkd
       REBOOT
@@ -148,15 +148,15 @@ suites:
     summary: Tests for NetworkManager VPN client plugins
     systems: [ubuntu-core-*]
     prepare: |
-      . $TESTSLIBOLD/utilities.sh
+      . $SYSTEMSNAPSTESTLIB/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_network_manager
-      . $TESTSLIBOLD/prepare.sh
+      . $SYSTEMSNAPSTESTLIB/prepare.sh
       REBOOT
     restore-each: |
-      . $TESTSLIBOLD/restore-each.sh
+      . $SYSTEMSNAPSTESTLIB/restore-each.sh
     restore: |
-      . $TESTSLIBOLD/utilities.sh
+      . $SYSTEMSNAPSTESTLIB/utilities.sh
       stop_after_first_reboot
       switch_netplan_to_networkd
       REBOOT

@@ -4,7 +4,7 @@ environment:
     WIFI_POWERSAVE_CONF_PATH: /var/snap/network-manager/current/conf.d/wifi-powersave.conf
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     # The mac80211_hwsim driver does not support the powersave mode
     # so we can't check this reliable.

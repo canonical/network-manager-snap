@@ -1,9 +1,9 @@
 #!/bin/bash -ex
 
 # shellcheck source=tests/lib/snap-names.sh
-. "$TESTSLIBOLD"/snap-names.sh
+. "$SYSTEMSNAPSTESTLIB"/snap-names.sh
 # shellcheck source=tests/lib/utilities.sh
-. "$TESTSLIBOLD"/utilities.sh
+. "$SYSTEMSNAPSTESTLIB"/utilities.sh
 get_qemu_eth_iface eth_if
 
 # Remove all snaps not being the core, gadget, kernel or snap we're testing

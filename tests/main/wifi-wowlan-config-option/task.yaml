@@ -4,7 +4,7 @@ environment:
     WIFI_WOWL_CONF_PATH: /var/snap/network-manager/current/conf.d/wifi-wowlan.conf
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     # The mac80211_hwsim driver does not support WoWLAN so we can't
     # check this reliable on the hardware level and will only check

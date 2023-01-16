@@ -7,7 +7,7 @@ restore: |
     mv /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig /etc/netplan/"$DEFAULT_NETPLAN_FILE"
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
     get_qemu_eth_iface eth_if
     nmcli=/snap/bin/network-manager.nmcli
     # TODO remove when we can run tests on UC20

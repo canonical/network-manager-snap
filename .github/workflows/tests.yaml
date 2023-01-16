@@ -33,7 +33,7 @@ jobs:
           # We are inside of the checked out repo
           pwd
           id
-          ./tests/lib/github/snap-build.sh "${{ runner.temp }}"
+          ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

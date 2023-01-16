@@ -1,7 +1,7 @@
 summary: Ethernet network should be managed by NetworkManager
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
     # TODO is this a netplan regression? Tests fail if this test executes
     # after others. We need to re-start networkd so it notices that it
     # should not manage the eth. The NM snap installation should have made

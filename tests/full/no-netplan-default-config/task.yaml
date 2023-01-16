@@ -7,7 +7,7 @@ restore: |
     mv /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig /etc/netplan/"$DEFAULT_NETPLAN_FILE"
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
     # Remove netplan configuartion file to get a system
     # without generated configuration files from netplan
     rm /etc/netplan/"$DEFAULT_NETPLAN_FILE"

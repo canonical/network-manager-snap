@@ -8,7 +8,7 @@ restore: |
     fi
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     # TODO remove when we can run tests on UC20
     # (netplan .nmconnection issues, snapd mountspace issues)

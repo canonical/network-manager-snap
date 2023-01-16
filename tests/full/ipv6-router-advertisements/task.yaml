@@ -8,7 +8,7 @@ restore: |
     fi
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     # Ensure that we have IPv6 support enabled in the kernel
     test -e /proc/net/if_inet6

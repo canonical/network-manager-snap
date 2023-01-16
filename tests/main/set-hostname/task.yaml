@@ -1,7 +1,7 @@
 summary: Verify we can modify the hostname of the system
 
 execute: |
-    . "$TESTSLIBOLD"/utilities.sh
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     wait_for_network_manager
 
