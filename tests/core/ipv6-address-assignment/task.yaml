@@ -21,9 +21,9 @@ execute: |
     wait_for_network_manager
 
     connection=veth-ipv6
-    /snap/bin/network-manager.nmcli c add con-name $connection ifname veth0 type ethernet \
+    network-manager.nmcli c add con-name $connection ifname veth0 type ethernet \
         ip6 abbe::cafe
-    /snap/bin/network-manager.nmcli c up $connection
+    network-manager.nmcli c up $connection
 
     # Verify that NetworkManager assigned the correct IPv6 address
     # to the interface

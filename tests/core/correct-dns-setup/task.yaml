@@ -7,47 +7,35 @@ restore: |
     mv /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig /etc/netplan/"$DEFAULT_NETPLAN_FILE"
 
 execute: |
-    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
-    get_qemu_eth_iface eth_if
-    case $SPREAD_REBOOT in
-        0)
-            # For correct timing if the device has just booted
-            wait_for_network_manager
+  . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+  get_qemu_eth_iface eth_if
+  # For correct timing if the device has just booted
+  wait_for_network_manager
 
-            # Precondition is a existing network connection
-            /snap/bin/network-manager.nmcli d | grep "$eth_if.*connected"
+  # Precondition is a existing network connection
+  network-manager.nmcli d | grep "$eth_if.*connected"
 
-            # Make sure some nameserver has been specified in resolv.conf
-            cat /etc/resolv.conf | grep 'nameserver'
+  # Make sure some nameserver has been specified in resolv.conf
+  cat /etc/resolv.conf | grep 'nameserver'
 
-            # Ensure we can resolve a hostname correctly; must give a
-            # valid IP address
-            address=$(python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))' 2> /dev/null || echo "invalid")
-            [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+  # Ensure we can resolve a hostname correctly; must give a
+  # valid IP address
+  address=$(python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))' 2> \
+      /dev/null || echo "invalid")
+  [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
 
-            # Now lets switch to a system where we have a configuration
-            # for ethernet we can change
-            rm /etc/netplan/"$DEFAULT_NETPLAN_FILE"
-            REBOOT
-            ;;
-        1)
-            /snap/bin/network-manager.nmcli d | grep "$eth_if.*connected"
-            /snap/bin/network-manager.nmcli d | grep -v netplan
+  connection=$(network-manager.nmcli -m multiline -f UUID c show --active |
+      awk '{print$2;exit}')
+  network-manager.nmcli c modify $connection ipv4.dns 8.8.8.8
+  # We need to bring up the connection again here to get the DNS
+  # server really applied to the system.
+  network-manager.nmcli c up $connection
 
-            connection=$(/snap/bin/network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
-            /snap/bin/network-manager.nmcli c modify $connection ipv4.dns 8.8.8.8
-            # We need to bring up the connection again here to get the DNS
-            # server really applied to the system.
-            /snap/bin/network-manager.nmcli c up $connection
+  # Give system a moment to settle
+  sleep 1
 
-            # Give system a moment to settle
-            sleep 1
+  network-manager.nmcli c show $connection | grep DNS | grep 8.8.8.8
 
-            network-manager.nmcli c show $connection | grep DNS | grep 8.8.8.8
-
-            address=`python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))'  2> /dev/null || echo "invalid"`
-            [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
-            ;;
-        *)
-            ;;
-    esac
+  address=$(python3 -c 'import socket; print(socket.gethostbyname("ubuntu.com"))' 2> \
+      /dev/null || echo "invalid")
+  [ "$address" != "invalid" ] && [[ $address =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]

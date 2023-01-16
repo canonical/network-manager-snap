@@ -38,7 +38,7 @@ execute: |
 
     # To ensure that nobody touches veth1 we tell NetworkManager
     # explicitly to do that.
-    /snap/bin/network-manager.nmcli d set veth1 managed no
+    network-manager.nmcli d set veth1 managed no
 
     # Assign our link-local addresses
     if ! ip addr show dev veth0 | grep 'inet6.*scope link.*' ; then
@@ -63,8 +63,8 @@ execute: |
     ip addr show dev veth1 | grep -v 'inet6.*scope global'
 
     # NetworkManager should report the same addresses for IPv6
-    /snap/bin/network-manager.nmcli d show veth0 | grep 'GENERAL.STATE.*connected'
-    /snap/bin/network-manager.nmcli d show veth0 | grep 'IP6.ADDRESS.*2001:db8:1:2.*/64'
+    network-manager.nmcli d show veth0 | grep 'GENERAL.STATE.*connected'
+    network-manager.nmcli d show veth0 | grep 'IP6.ADDRESS.*2001:db8:1:2.*/64'
 
     # Stop the radvd daemon
     kill -TERM "$(cat "$HOME"/radvd.pid)"

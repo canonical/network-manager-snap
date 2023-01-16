@@ -11,13 +11,13 @@ execute: |
     create_ap Ubuntu
 
     # Connect to the AP and ensure the connection was established
-    /snap/bin/network-manager.nmcli d wifi | grep Ubuntu
-    /snap/bin/network-manager.nmcli d wifi connect Ubuntu
-    /snap/bin/network-manager.nmcli d | grep 'wlan1.*connected'
+    network-manager.nmcli d wifi | grep Ubuntu
+    network-manager.nmcli d wifi connect Ubuntu
+    network-manager.nmcli d | grep 'wlan1.*connected'
 
     # Now that we're connected a new connection exists which we can look at
     # to verify that the WoWLAN key is correctly set.
-    /snap/bin/network-manager.nmcli c show Ubuntu | grep '802-11-wireless.wake-on-wlan:.*0x1 (default)'
+    network-manager.nmcli c show Ubuntu | grep '802-11-wireless.wake-on-wlan:.*0x1 (default)'
 
     if [ "$SPREAD_SYSTEM" = "hw-ubuntu-core-16" ]; then
         if ! iw phy phy0 info | grep -q "WoWLAN support:" ; then

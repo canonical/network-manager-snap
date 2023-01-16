@@ -11,4 +11,4 @@ execute: |
     /snap/bin/documentation-builder --output-path $outdir
 
     # Ensure we have some files in the output directory
-    test `find $outdir -type f | wc -l` -gt 0
+    test $(find $outdir -type f | wc -l) -gt 0

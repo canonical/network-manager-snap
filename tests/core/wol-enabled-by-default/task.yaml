@@ -9,7 +9,7 @@ restore: |
 execute: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
     get_qemu_eth_iface eth_if
-    nmcli=/snap/bin/network-manager.nmcli
+    nmcli=network-manager.nmcli
     # TODO remove when we can run tests on UC20
     # (netplan .nmconnection issues, snapd mountspace issues)
     exit 0

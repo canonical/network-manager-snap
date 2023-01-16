@@ -18,8 +18,8 @@ for snap in /snap/*; do
     esac
 done
 
-if snap list | grep "$SNAP_NAME" ; then
-    snap remove --purge network-manager
+if snap list "$SNAP_NAME" &> /dev/null; then
+    snap remove --purge "$SNAP_NAME"
 fi
 
 # Generate the default netplan configuration if no NM

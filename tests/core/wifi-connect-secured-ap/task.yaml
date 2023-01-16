@@ -10,5 +10,5 @@ execute: |
     create_ap "$WIFI_SSID" "$WIFI_PASSPHRASE"
 
     # Connect to the AP and ensure the connection was established
-    /snap/bin/network-manager.nmcli d wifi connect $WIFI_SSID password $WIFI_PASSPHRASE
-    /snap/bin/network-manager.nmcli d | grep 'wlan1.*connected'
+    network-manager.nmcli d wifi connect $WIFI_SSID password $WIFI_PASSPHRASE
+    network-manager.nmcli d | grep 'wlan1.*connected'

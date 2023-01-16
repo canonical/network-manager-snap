@@ -7,11 +7,11 @@ execute: |
 
     # Print out current hostname for nm and hostnamed to have a reference
     # for debugging later.
-    /snap/bin/network-manager.nmcli general hostname
+    network-manager.nmcli general hostname
     hostnamectl
 
     expected_hostname=foobar
-    /snap/bin/network-manager.nmcli general hostname $expected_hostname
-    test "$(/snap/bin/network-manager.nmcli general hostname)" = "$expected_hostname"
+    network-manager.nmcli general hostname $expected_hostname
+    test "$(network-manager.nmcli general hostname)" = "$expected_hostname"
     hostnamectl status | grep "Static hostname" | grep "$expected_hostname"
     test "$(hostname)" = "$expected_hostname"
