@@ -144,7 +144,6 @@ create_ap() {
 
     systemctl restart snap.network-manager.networkmanager.service
     repeat_until_done "busctl status org.freedesktop.NetworkManager &> /dev/null" 0.5
-
     repeat_until_done "network-manager.nmcli d wifi | MATCH $1" 5
 }
 
@@ -176,9 +175,23 @@ repeat_until_done() {
 # Returns name of ethernet interface for qemu vm
 # $1: name of variable where to store the interface name
 get_qemu_eth_iface() {
-    local net_dev
-    net_dev=$(find /sys/class/net/ -print0 -type l | xargs -0 readlink |
-                  grep -v virtual | head -n 1)
-    net_dev=${net_dev##*/}
-    eval "$1"="$net_dev"
+    local _net_dev
+    _net_dev=$(find /sys/class/net/ -print0 -type l | xargs -0 readlink |
+                   grep -v virtual | head -n 1)
+    _net_dev=${_net_dev##*/}
+    eval "$1"="$_net_dev"
+}
+
+# Find out name of essential snaps in the system
+# $1: name of variable where to store the gadget snap name
+# $2: name of variable where to store the kernel snap name
+get_snap_names() {
+    local _gadget_name _kernel_name
+    _gadget_name=$(snap list | sed -n 's/^\(pc\|pi[23]\|dragonboard\) .*/\1/p')
+    _kernel_name=$_gadget_name-kernel
+    if [ "$_kernel_name" = "pi3-kernel" ] ; then
+	_kernel_name=pi2-kernel
+    fi
+    eval "$1"="$_gadget_name"
+    eval "$2"="$_kernel_name"
 }
