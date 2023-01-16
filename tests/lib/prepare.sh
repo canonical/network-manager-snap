@@ -83,376 +83,11 @@ disable_refreshes() {
     snap remove --purge jq-core22
 }
 
-setup_systemd_snapd_overrides() {
-    mkdir -p /etc/systemd/system/snapd.service.d
-    cat <<EOF > /etc/systemd/system/snapd.service.d/local.conf
-[Service]
-Environment=SNAPD_DEBUG_HTTP=7 SNAPD_DEBUG=1 SNAPPY_TESTING=1 SNAPD_REBOOT_DELAY=10m SNAPD_CONFIGURE_HOOK_TIMEOUT=30s SNAPPY_USE_STAGING_STORE=$SNAPPY_USE_STAGING_STORE
-ExecStartPre=/bin/touch /dev/iio:device0
-EOF
-
-    # We change the service configuration so reload and restart
-    # the units to get them applied
-    systemctl daemon-reload
-    # stop the socket (it pulls down the service)
-    systemctl stop snapd.socket
-    # start the service (it pulls up the socket)
-    systemctl start snapd.service
-}
-
-update_core_snap_for_classic_reexec() {
-    # it is possible to disable this to test that snapd (the deb) works
-    # fine with whatever is in the core snap
-    if [ "$MODIFY_CORE_SNAP_FOR_REEXEC" != "1" ]; then
-        echo "Not modifying the core snap as requested via MODIFY_CORE_SNAP_FOR_REEXEC"
-        return
-    fi
-
-    # We want to use the in-tree snap/snapd/snap-exec/snapctl, because
-    # we re-exec by default.
-    # To accomplish that, we'll just unpack the core we just grabbed,
-    # shove the new snap-exec and snapctl in there, and repack it.
-    SNAP_MOUNT_DIR="$(os.paths snap-mount-dir)"
-    LIBEXEC_DIR="$(os.paths libexec-dir)"
-
-    # First of all, unmount the core
-    core="$(readlink -f "$SNAP_MOUNT_DIR/core/current" || readlink -f "$SNAP_MOUNT_DIR/ubuntu-core/current")"
-    snap="$(mount | grep " $core" | awk '{print $1}')"
-    umount --verbose "$core"
-
-    # Now unpack the core, inject the new snap-exec/snapctl into it
-    unsquashfs -no-progress "$snap"
-    # clean the old snapd binaries, just in case
-    rm squashfs-root/usr/lib/snapd/* squashfs-root/usr/bin/snap
-    # and copy in the current libexec
-    cp -a "$LIBEXEC_DIR"/snapd/* squashfs-root/usr/lib/snapd/
-    # also the binaries themselves
-    cp -a /usr/bin/snap squashfs-root/usr/bin/
-    # make sure bin/snapctl is a symlink to lib/
-    if [ ! -L squashfs-root/usr/bin/snapctl ]; then
-        rm -f squashfs-root/usr/bin/snapctl
-        ln -s ../lib/snapd/snapctl squashfs-root/usr/bin/snapctl
-    fi
-
-    case "$SPREAD_SYSTEM" in
-        ubuntu-*|debian-*)
-            # and snap-confine's apparmor
-            if [ -e /etc/apparmor.d/usr.lib.snapd.snap-confine.real ]; then
-                cp -a /etc/apparmor.d/usr.lib.snapd.snap-confine.real squashfs-root/etc/apparmor.d/usr.lib.snapd.snap-confine.real
-            else
-                cp -a /etc/apparmor.d/usr.lib.snapd.snap-confine      squashfs-root/etc/apparmor.d/usr.lib.snapd.snap-confine.real
-            fi
-            ;;
-    esac
-
-    case "$SPREAD_SYSTEM" in
-        ubuntu-*)
-            # also load snap-confine's apparmor profile
-            apparmor_parser -r squashfs-root/etc/apparmor.d/usr.lib.snapd.snap-confine.real
-            ;;
-    esac
-
-    case "$SPREAD_SYSTEM" in
-        fedora-*|centos-*|amazon-*)
-            if selinuxenabled ; then
-                # On these systems just unpacking core snap to $HOME will
-                # automatically apply user_home_t label on all the contents of the
-                # snap; since we cannot drop xattrs when calling mksquashfs, make
-                # sure that we relabel the contents in way that a squashfs image
-                # without any labels would look like: system_u:object_r:unlabeled_t
-                chcon -R -u system_u -r object_r -t unlabeled_t squashfs-root
-            fi
-            ;;
-    esac
-
-    # Debian packages don't carry permissions correctly and we use post-inst
-    # hooks to fix that on classic systems. Here, as a special case, fix the
-    # void directory.
-    chmod 111 squashfs-root/var/lib/snapd/void
-
-    # repack, cheating to speed things up (4sec vs 1.5min)
-    mv "$snap" "${snap}.orig"
-    mksnap_fast "squashfs-root" "$snap"
-    chmod --reference="${snap}.orig" "$snap"
-    rm -rf squashfs-root
-
-    # Now mount the new core snap, first discarding the old mount namespace
-    snapd.tool exec snap-discard-ns core
-    mount "$snap" "$core"
-
-    check_file() {
-        if ! cmp "$1" "$2" ; then
-            echo "$1 in tree and $2 in core snap are unexpectedly not the same"
-            exit 1
-        fi
-    }
-
-    # Make sure we're running with the correct copied bits
-    for p in "$LIBEXEC_DIR/snapd/snap-exec" "$LIBEXEC_DIR/snapd/snap-confine" "$LIBEXEC_DIR/snapd/snap-discard-ns" "$LIBEXEC_DIR/snapd/snapd" "$LIBEXEC_DIR/snapd/snap-update-ns"; do
-        check_file "$p" "$core/usr/lib/snapd/$(basename "$p")"
-    done
-    for p in /usr/bin/snapctl /usr/bin/snap; do
-        check_file "$p" "$core$p"
-    done
-}
-
-prepare_memory_limit_override() {
-    # set up memory limits for snapd bu default unless explicit requested not to
-    # or the system is known to be problematic
-    local set_limit=1
-
-    case "$SPREAD_SYSTEM" in
-        ubuntu-core-16-*|ubuntu-core-18-*|ubuntu-16.04-*|ubuntu-18.04-*)
-            # the tests on UC16, UC18 and correspondingly 16.04 and 18.04 have
-            # demonstrated that the memory limit state claimed by systemd may be
-            # out of sync with actual memory controller setting for the
-            # snapd.service cgroup
-            set_limit=0
-            ;;
-        amazon-linux-*)
-            # similar issues have been observed on Amazon Linux 2
-            set_limit=0
-            ;;
-        *)
-            if [ -n "${SNAPD_NO_MEMORY_LIMIT:-}" ]; then
-                set_limit=0
-            fi
-            ;;
-    esac
-
-    if [ "$set_limit" = "0" ]; then
-        # make sure the file does not exist then
-        rm -f /etc/systemd/system/snapd.service.d/memory-max.conf
-    else
-        mkdir -p /etc/systemd/system/snapd.service.d
-        # Use MemoryMax to set the memory limit for snapd.service, that is the
-        # main snapd process and its subprocesses executing within the same
-        # cgroup. If snapd hits the memory limit, it will get killed by
-        # oom-killer which will be caught in restore_project_each in
-        # prepare-restore.sh.
-        #
-        # This ought to set MemoryMax, but on systems with older systemd we need to
-        # use MemoryLimit, which is deprecated and replaced by MemoryMax now, but
-        # systemd is backwards compatible so the limit is still set.
-        cat <<EOF > /etc/systemd/system/snapd.service.d/memory-max.conf
-[Service]
-# mvo: disabled because of many failures in restore, e.g. in PR#11014
-#MemoryLimit=100M
-EOF
-    fi
-    # the service setting may have changed in the service so we need
-    # to ensure snapd is reloaded
-    systemctl daemon-reload
-    systemctl restart snapd
-}
-
-prepare_each_classic() {
-    mkdir -p /etc/systemd/system/snapd.service.d
-    if [ -z "${SNAP_REEXEC:-}" ]; then
-        rm -f /etc/systemd/system/snapd.service.d/reexec.conf
-    else
-        cat <<EOF > /etc/systemd/system/snapd.service.d/reexec.conf
-[Service]
-Environment=SNAP_REEXEC=$SNAP_REEXEC
-EOF
-    fi
-    # the re-exec setting may have changed in the service so we need
-    # to ensure snapd is reloaded
-    systemctl daemon-reload
-    systemctl restart snapd
-
-    if [ ! -f /etc/systemd/system/snapd.service.d/local.conf ]; then
-        echo "/etc/systemd/system/snapd.service.d/local.conf vanished!"
-        exit 1
-    fi
-}
-
-prepare_classic() {
-    # Skip building snapd when REUSE_SNAPD is set to 1
-    if [ "$REUSE_SNAPD" != 1 ]; then
-        distro_install_build_snapd
-    fi
-
-    if snap --version |MATCH unknown; then
-        echo "Package build incorrect, 'snap --version' mentions 'unknown'"
-        snap --version
-        distro_query_package_info snapd
-        exit 1
-    fi
-    if snapd.tool exec snap-confine --version | MATCH unknown; then
-        echo "Package build incorrect, 'snap-confine --version' mentions 'unknown'"
-        snapd.tool exec snap-confine --version
-        case "$SPREAD_SYSTEM" in
-            ubuntu-*|debian-*)
-                apt-cache policy snapd
-                ;;
-            fedora-*)
-                dnf info snapd
-                ;;
-        esac
-        exit 1
-    fi
-
-    # Some systems (google:ubuntu-16.04-64) ship with a broken sshguard
-    # unit. Stop the broken unit to not confuse the "degraded-boot" test.
-    #
-    # Some other (debian-sid) fail in fwupd-refresh.service
-    #
-    # FIXME: fix the ubuntu-16.04-64 image
-    # FIXME2: fix the debian-sid-64 image
-    for svc in fwupd-refresh.service sshguard.service; do
-        if systemctl list-unit-files | grep "$svc"; then
-            if systemctl is-failed "$svc"; then
-                systemctl stop "$svc"
-	        systemctl reset-failed "$svc"
-            fi
-        fi
-    done
-
-    setup_systemd_snapd_overrides
-
-    if [ "$REMOTE_STORE" = staging ]; then
-        # shellcheck source=tests/lib/store.sh
-        . "$TESTSLIB/store.sh"
-        # reset seeding data that is likely tainted with production keys
-        systemctl stop snapd.service snapd.socket
-        rm -rf /var/lib/snapd/assertions/*
-        rm -f /var/lib/snapd/state.json
-        setup_staging_store
-    fi
-
-    # Snapshot the state including core.
-    if ! is_snapd_state_saved; then
-        # need to be seeded to proceed with snap install
-        # also make sure the captured state is seeded
-        snap wait system seed.loaded
-
-        # Cache snaps
-        # shellcheck disable=SC2086
-        cache_snaps core core18 ${PRE_CACHE_SNAPS}
-        if os.query is-pc-amd64; then
-            cache_snaps core20
-        fi
-
-        # now use parameterized core channel (defaults to edge) instead
-        # of a fixed one and close to stable in order to detect defects
-        # earlier
-        if snap list core ; then
-            snap refresh --"$CORE_CHANNEL" core
-        else
-            snap install --"$CORE_CHANNEL" core
-        fi
-
-        snap list | grep core
-
-        systemctl stop snapd.{service,socket}
-        update_core_snap_for_classic_reexec
-        systemctl start snapd.{service,socket}
-
-        disable_refreshes
-
-        # Check bootloader environment output in architectures different to s390x which uses zIPL
-        if ! [ "$(uname  -m)" = "s390x" ]; then
-            echo "Ensure that the bootloader environment output does not contain any of the snap_* variables on classic"
-            # shellcheck disable=SC2119
-            output=$("$TESTSTOOLS"/boot-state bootenv show)
-            if echo "$output" | MATCH snap_ ; then
-                echo "Expected bootloader environment without snap_*, got:"
-                echo "$output"
-                exit 1
-            fi
-        fi
-
-        # systemctl stop snapd.{service,socket}
-        # save_snapd_state
-        # systemctl start snapd.socket
-    fi
-
-    disable_kernel_rate_limiting
-}
-
-repack_snapd_snap_with_deb_content() {
+repack_snapd_snap_with_run_mode_firstboot_tweaks() {
     local TARGET="$1"
 
     local UNPACK_DIR="/tmp/snapd-unpack"
     unsquashfs -no-progress -d "$UNPACK_DIR" snapd_*.snap
-    # clean snap apparmor.d to ensure we put the right snap-confine apparmor
-    # file in place. Its called usr.lib.snapd.snap-confine on 14.04 but
-    # usr.lib.snapd.snap-confine.real everywhere else
-    rm -f "$UNPACK_DIR"/etc/apparmor.d/*
-
-    dpkg-deb -x "$SPREAD_PATH"/../snapd_*.deb "$UNPACK_DIR"
-    cp /usr/lib/snapd/info "$UNPACK_DIR"/usr/lib/snapd
-    snap pack "$UNPACK_DIR" "$TARGET"
-    rm -rf "$UNPACK_DIR"
-}
-
-repack_core_snap_with_tweaks() {
-    local CORESNAP="$1"
-    local TARGET="$2"
-
-    local UNPACK_DIR="/tmp/core-unpack"
-    unsquashfs -no-progress -d "$UNPACK_DIR" "$CORESNAP"
-
-    mkdir -p "$UNPACK_DIR"/etc/systemd/journald.conf.d
-    cat <<EOF > "$UNPACK_DIR"/etc/systemd/journald.conf.d/to-console.conf
-[Journal]
-ForwardToConsole=yes
-TTYPath=/dev/ttyS0
-MaxLevelConsole=debug
-EOF
-    mkdir -p "$UNPACK_DIR"/etc/systemd/system/snapd.service.d
-cat <<EOF > "$UNPACK_DIR"/etc/systemd/system/snapd.service.d/logging.conf
-[Service]
-Environment=SNAPD_DEBUG_HTTP=7 SNAPD_DEBUG=1 SNAPPY_TESTING=1 SNAPD_CONFIGURE_HOOK_TIMEOUT=30s
-StandardOutput=journal+console
-StandardError=journal+console
-EOF
-
-    snap pack --filename="$TARGET" "$UNPACK_DIR"
-
-    rm -rf "$UNPACK_DIR"
-}
-
-repack_kernel_snap() {
-    local TARGET=$1
-    local VERSION
-    local UNPACK_DIR
-    local CHANNEL
-
-    VERSION=$(nested_get_version)
-    if [ "$VERSION" = 16 ]; then
-        CHANNEL=latest
-    else
-        CHANNEL=$VERSION
-    fi
-
-    echo "Repacking kernel snap"
-    UNPACK_DIR=/tmp/kernel-unpack
-    snap download --basename=pc-kernel --channel="$CHANNEL/edge" pc-kernel
-    unsquashfs -no-progress -d "$UNPACK_DIR" pc-kernel.snap
-    snap pack --filename="$TARGET" "$UNPACK_DIR"
-
-    rm -rf pc-kernel.snap "$UNPACK_DIR"
-}
-
-repack_snapd_snap_with_deb_content_and_run_mode_firstboot_tweaks() {
-    local TARGET="$1"
-
-    local UNPACK_DIR="/tmp/snapd-unpack"
-    unsquashfs -no-progress -d "$UNPACK_DIR" snapd_*.snap
-
-    # data/preseed.json is not included in the deb, use the latest
-    # version from source tree to replace the one in the re-packed snapd snap.
-    #cp "$PROJECT_PATH/data/preseed.json" "$UNPACK_DIR"/usr/lib/snapd
-
-    # clean snap apparmor.d to ensure we put the right snap-confine apparmor
-    # file in place. Its called usr.lib.snapd.snap-confine on 14.04 but
-    # usr.lib.snapd.snap-confine.real everywhere else
-    #rm -f "$UNPACK_DIR"/etc/apparmor.d/*
-
-    # dpkg-deb -x "$SPREAD_PATH"/../snapd_*.deb "$UNPACK_DIR"
-    # cp /usr/lib/snapd/info "$UNPACK_DIR"/usr/lib/snapd
 
     # now install a unit that sets up enough so that we can connect
     cat > "$UNPACK_DIR"/lib/systemd/system/snapd.spread-tests-run-mode-tweaks.service <<'EOF'
@@ -525,222 +160,6 @@ EOF
     snap pack "$UNPACK_DIR" "$TARGET"
     rm -rf "$UNPACK_DIR"
 }
-
-# Builds kernel snap with bad kernel.efi, in different ways
-# $1: snap we will modify
-# $2: target folder for the new snap
-# $3: argument, type of corruption we want for kernel.efi
-uc20_build_corrupt_kernel_snap() {
-    local ORIG_SNAP="$1"
-    local TARGET_DIR="$2"
-    local optArg=${3:-}
-
-    # kernel snap is huge, unpacking to current dir
-    local REPACKED_DIR=repacked-kernel
-    local KERNEL_EFI_PATH=$REPACKED_DIR/kernel.efi
-    unsquashfs -d "$REPACKED_DIR" "$ORIG_SNAP"
-
-    case "$optArg" in
-        --empty)
-            printf "" > "$KERNEL_EFI_PATH"
-            ;;
-        --zeros)
-            dd if=/dev/zero of="$KERNEL_EFI_PATH" count=1
-            ;;
-        --bad-*)
-            section=${optArg#--bad-}
-            # Get the file offset for the section, put zeros at the beginning of it
-            sectOffset=$(objdump -w -h "$KERNEL_EFI_PATH" | grep "$section" |
-                             awk '{print $6}')
-            dd if=/dev/zero of="$KERNEL_EFI_PATH" \
-               bs=1 seek=$((0x$sectOffset)) count=512 conv=notrunc
-            ;;
-    esac
-
-    # Make snap smaller, we don't need the fw with qemu
-    rm -rf "$REPACKED_DIR"/firmware/*
-    snap pack "$REPACKED_DIR" "$TARGET_DIR"
-    rm -rf "$REPACKED_DIR"
-}
-
-uc20_build_initramfs_kernel_snap() {
-    # carries ubuntu-core-initframfs
-    add-apt-repository ppa:snappy-dev/image -y
-    # On focal, lvm2 does not reinstall properly after being removed.
-    # So we need to clean up in case the VM has been re-used.
-    if os.query is-focal; then
-        systemctl unmask lvm2-lvmpolld.socket
-    fi
-    # TODO: install the linux-firmware as the current version of
-    # ubuntu-core-initramfs does not depend on it, but nonetheless requires it
-    # to build the initrd
-    apt install ubuntu-core-initramfs linux-firmware -y
-
-    local ORIG_SNAP="$1"
-    local TARGET="$2"
-
-    # TODO proper option support here would be nice but bash is hard and this is
-    # easier, and likely we won't need to both inject a panic and set the epoch
-    # bump simultaneously
-    local injectKernelPanic=false
-    local initramfsEpochBumpTime
-    initramfsEpochBumpTime=$(date '+%s')
-    optArg=${3:-}
-    case "$optArg" in
-        --inject-kernel-panic-in-initramfs)
-            injectKernelPanic=true
-            ;;
-        --epoch-bump-time=*)
-            # this strips the option and just gives us the value
-            initramfsEpochBumpTime="${optArg#--epoch-bump-time=}"
-            ;;
-    esac
-    
-    # kernel snap is huge, unpacking to current dir
-    unsquashfs -d repacked-kernel "$ORIG_SNAP"
-
-    # repack initrd magic, beware
-    # assumptions: initrd is compressed with LZ4, cpio block size 512, microcode
-    # at the beginning of initrd image
-    (
-        cd repacked-kernel
-        unpackeddir="$PWD"
-        #shellcheck disable=SC2010
-        kver=$(ls "config"-* | grep -Po 'config-\K.*')
-
-        # XXX: ideally we should unpack the initrd, replace snap-boostrap and
-        # repack it using ubuntu-core-initramfs --skeleton=<unpacked> this does not
-        # work and the rebuilt kernel.efi panics unable to start init, but we
-        # still need the unpacked initrd to get the right kernel modules
-        objcopy -j .initrd -O binary kernel.efi initrd
-        # this works on 20.04 but not on 18.04
-        unmkinitramfs initrd unpacked-initrd
-
-        # use only the initrd we got from the kernel snap to inject our changes
-        # we don't use the distro package because the distro package may be 
-        # different systemd version, etc. in the initrd from the one in the 
-        # kernel and we don't want to test that, just test our snap-bootstrap
-        cp -ar unpacked-initrd skeleton
-        # all the skeleton edits go to a local copy of distro directory
-        skeletondir=$PWD/skeleton
-        cp -a /usr/lib/snapd/snap-bootstrap "$skeletondir/main/usr/lib/snapd/snap-bootstrap.real"
-        cat <<'EOF' | sed -E "s/^ {8}//" >"$skeletondir/main/usr/lib/snapd/snap-bootstrap"
-        #!/bin/sh
-        set -eux
-        if [ "$1" != initramfs-mounts ]; then
-            exec /usr/lib/snapd/snap-bootstrap.real "$@"
-        fi
-        beforeDate="$(date --utc '+%s')"
-        /usr/lib/snapd/snap-bootstrap.real "$@"
-        if [ -d /run/mnt/data/system-data ]; then
-            touch /run/mnt/data/system-data/the-tool-ran
-        fi
-        # also copy the time for the clock-epoch to system-data, this is
-        # used by a specific test but doesn't hurt anything to do this for
-        # all tests
-        mode="$(grep -Eo 'snapd_recovery_mode=([a-z]+)' /proc/cmdline)"
-        mode=${mode##snapd_recovery_mode=}
-        mkdir -p /run/mnt/ubuntu-seed/test
-        stat -c '%Y' /usr/lib/clock-epoch >> /run/mnt/ubuntu-seed/test/${mode}-clock-epoch
-        echo "$beforeDate" > /run/mnt/ubuntu-seed/test/${mode}-before-snap-bootstrap-date
-        date --utc '+%s' > /run/mnt/ubuntu-seed/test/${mode}-after-snap-bootstrap-date
-EOF
-
-        chmod +x "$skeletondir/main/usr/lib/snapd/snap-bootstrap"
-
-        if [ "$injectKernelPanic" = "true" ]; then
-            # add a kernel panic to the end of the-tool execution
-            echo "echo 'forcibly panicing'; echo c > /proc/sysrq-trigger" >> "$skeletondir/main/usr/lib/snapd/snap-bootstrap"
-        fi
-
-        # bump the epoch time file timestamp, converting unix timestamp to 
-        # touch's date format
-        touch -t "$(date --utc "--date=@$initramfsEpochBumpTime" '+%Y%m%d%H%M')" "$skeletondir/main/usr/lib/clock-epoch"
-
-        # copy any extra files to the same location inside the initrd
-        if [ -d ../extra-initrd/ ]; then
-            cp -a ../extra-initrd/* "$skeletondir"/main
-        fi
-
-        # XXX: need to be careful to build an initrd using the right kernel
-        # modules from the unpacked initrd, rather than the host which may be
-        # running a different kernel
-        (
-            # accommodate assumptions about tree layout, use the unpacked initrd
-            # to pick up the right modules
-            cd unpacked-initrd/main
-            # XXX: pass feature 'main' and u-c-i picks up any directory named
-            # after feature inside skeletondir and uses that a template
-            ubuntu-core-initramfs create-initrd \
-                                  --kernelver "$kver" \
-                                  --skeleton "$skeletondir" \
-                                  --kerneldir "${unpackeddir}/modules/$kver" \
-                                  --firmwaredir "${unpackeddir}/firmware" \
-                                  --feature 'main' \
-                                  --output ../../repacked-initrd
-        )
-
-        # copy out the kernel image for create-efi command
-        objcopy -j .linux -O binary kernel.efi "vmlinuz-$kver"
-
-        # assumes all files are named <name>-$kver
-        ubuntu-core-initramfs create-efi \
-                              --kernelver "$kver" \
-                              --initrd repacked-initrd \
-                              --kernel vmlinuz \
-                              --output repacked-kernel.efi
-
-        mv "repacked-kernel.efi-$kver" kernel.efi
-
-        # XXX: needed?
-        chmod +x kernel.efi
-
-        rm -rf unpacked-initrd skeleton initrd repacked-initrd-* vmlinuz-*
-    )
-
-    (
-        # XXX: drop ~450MB+ of firmware which should not be needed in under qemu
-        # or the cloud system
-        cd repacked-kernel
-        rm -rf firmware/*
-
-        # the code below drops the modules that are not loaded on the
-        # current host, this should work for most cases, since the image will be
-        # running on the same host
-        # TODO:UC20: enable when ready
-        exit 0
-
-        # drop unnecessary modules
-        awk '{print $1}' <  /proc/modules  | sort > /tmp/mods
-        #shellcheck disable=SC2044
-        for m in $(find modules/ -name '*.ko'); do
-            noko=$(basename "$m"); noko="${noko%.ko}"
-            if echo "$noko" | grep -f /tmp/mods -q ; then
-                echo "keeping $m - $noko"
-            else
-                rm -f "$m"
-            fi
-        done
-
-        #shellcheck disable=SC2010
-        kver=$(ls "config"-* | grep -Po 'config-\K.*')
-
-        # depmod assumes that /lib/modules/$kver is under basepath
-        mkdir -p fake/lib
-        ln -s "$PWD/modules" fake/lib/modules
-        depmod -b "$PWD/fake" -A -v "$kver"
-        rm -rf fake
-    )
-
-    # copy any extra files that tests may need for the kernel
-    if [ -d ./extra-kernel-snap/ ]; then
-        cp -a ./extra-kernel-snap/* ./repacked-kernel
-    fi
-    
-    snap pack repacked-kernel "$TARGET"
-    rm -rf repacked-kernel
-}
-
 
 setup_core_for_testing_by_modify_writable() {
     UNPACK_DIR="$1"
@@ -860,16 +279,6 @@ setup_reflash_magic() {
     # install the stuff we need
     distro_install_package kpartx busybox-static
 
-    # Ensure we don't have snapd already installed, sometimes
-    # on 20.04 purge seems to fail, catch that for further
-    # debugging
-    # if [ -e /var/lib/snapd/state.json ]; then
-    #     echo "reflash image not pristine, snaps already installed"
-    #     python3 -m json.tool < /var/lib/snapd/state.json
-    #     exit 1
-    # fi
-
-    #distro_install_local_package "$GOHOME"/snapd_*.deb
     distro_clean_package_cache
 
     # need to be seeded to proceed with snap install
@@ -927,10 +336,10 @@ setup_reflash_magic() {
     if os.query is-core18; then
         cp "$TESTSLIB/assertions/ubuntu-core-18-amd64.model" "$IMAGE_HOME/pc.model"
     elif os.query is-core20; then
-        repack_snapd_snap_with_deb_content_and_run_mode_firstboot_tweaks "$IMAGE_HOME"
+        repack_snapd_snap_with_run_mode_firstboot_tweaks "$IMAGE_HOME"
         cp "$TESTSLIB/assertions/ubuntu-core-20-amd64.model" "$IMAGE_HOME/pc.model"
     elif os.query is-core22; then
-        repack_snapd_snap_with_deb_content_and_run_mode_firstboot_tweaks "$IMAGE_HOME"
+        repack_snapd_snap_with_run_mode_firstboot_tweaks "$IMAGE_HOME"
         cp "$TESTSLIB/assertions/ubuntu-core-22-amd64.model" "$IMAGE_HOME/pc.model"
     else
         printf "ERROR: unsupported UC release\n"
@@ -960,9 +369,8 @@ setup_reflash_magic() {
         snap download --basename=pc-kernel --channel="${BRANCH}/${KERNEL_CHANNEL}" pc-kernel
         # make sure we have the snap
         test -e pc-kernel.snap
-        # build the initramfs with our snapd assets into the kernel snap
-        uc20_build_initramfs_kernel_snap "$PWD/pc-kernel.snap" "$IMAGE_HOME"
-        EXTRA_FUNDAMENTAL="--snap $IMAGE_HOME/pc-kernel_*.snap"
+        mv "$PWD/pc-kernel.snap" "$IMAGE_HOME"
+        EXTRA_FUNDAMENTAL="--snap $IMAGE_HOME/pc-kernel.snap"
 
         # also add debug command line parameters to the kernel command line via
         # the gadget in case things go side ways and we need to debug
@@ -973,16 +381,16 @@ setup_reflash_magic() {
         # TODO: it would be desirable when we need to do in-depth debugging of
         # UC20 runs in google to have snapd.debug=1 always on the kernel command
         # line, but we can't do this universally because the logic for the env
-        # variable SNAPD_DEBUG=0|false does not overwrite the turning on of 
+        # variable SNAPD_DEBUG=0|false does not overwrite the turning on of
         # debug messages in some places when the kernel command line is set, so
-        # we get failing tests since there is extra stuff on stderr than 
+        # we get failing tests since there is extra stuff on stderr than
         # expected in the test when SNAPD_DEBUG is turned off
         # so for now, don't include snapd.debug=1, but eventually it would be
         # nice to have this on
 
         if [ "$SPREAD_BACKEND" = "google" ]; then
             # the default console settings for snapd aren't super useful in GCE,
-            # instead it's more useful to have all console go to ttyS0 which we 
+            # instead it's more useful to have all console go to ttyS0 which we
             # can read more easily than tty1 for example
             for cmd in "console=ttyS0" "dangerous" "systemd.journald.forward_to_console=1" "rd.systemd.journald.forward_to_console=1" "panic=-1"; do
                 echo "$cmd" >> pc-gadget/cmdline.full
@@ -1038,10 +446,10 @@ setup_reflash_magic() {
         # won't be automatically refreshed
         # note that this means that when $IMAGE_CHANNEL != $BASE_CHANNEL, we
         # will have unasserted snaps for all snaps on UC20 in GCE spread:
-        # * snapd (to test the branch)
-        # * pc-kernel (to test snap-bootstrap from the branch)
+        # * snapd (to include tweaks to be able to access the image)
+        # * pc-kernel (to avoid automatic refreshes)
         # * pc (to aid in debugging by modifying the kernel command line)
-        # * core20 (to avoid the automatic refresh issue)
+        # * coreXX (to avoid automatic refreshes)
         if [ "$IMAGE_CHANNEL" != "$BASE_CHANNEL" ]; then
             unsquashfs -d "${BASE}-snap" "${BASE}.snap"
             snap pack --filename="${BASE}-repacked.snap" "${BASE}-snap"
@@ -1144,7 +552,7 @@ setup_reflash_magic() {
           --exclude /gopath/bin/govendor \
           --exclude /gopath/pkg/ \
           -f /mnt/run-mode-overlay-data.tar.gz \
-          /home/network-manager /root/test-etc /var/lib/extrausers
+          "$PROJECT_PATH" /root/test-etc /var/lib/extrausers
     fi
 
     # now modify the image writable partition - only possible on uc16 / uc18
@@ -1213,15 +621,13 @@ prepare_ubuntu_core() {
     # we are still a "classic" image, prepare the surgery
     if [ -e /var/lib/dpkg/status ]; then
         setup_reflash_magic
-        # XXX
-        #exit 1
         REBOOT
     fi
 
     disable_journald_rate_limiting
     disable_journald_start_limiting
 
-    # verify after the first reboot that we are now in core18 world
+    # verify after the first reboot that we are now in UC world
     if [ "$SPREAD_REBOOT" = 1 ]; then
         echo "Ensure we are now in an all-snap world"
         if [ -e /var/lib/dpkg/status ]; then
@@ -1252,7 +658,7 @@ prepare_ubuntu_core() {
     echo "Ensure the snapd snap is available"
     if os.query is-core18 || os.query is-core20 || os.query is-core22; then
         if ! snap list snapd; then
-            echo "snapd snap on core18 is missing"
+            echo "snapd snap on UC18+ is missing"
             snap list
             exit 1
         fi
@@ -1280,7 +686,7 @@ prepare_ubuntu_core() {
     # Cache snaps
     if os.query is-core18 || os.query is-core20 || os.query is-core22; then
         if snap list core >& /dev/null; then
-            echo "core snap on core18 should not be installed yet"
+            echo "core snap on UC18+ should not be installed yet"
             snap list
             exit 1
         fi
@@ -1297,19 +703,6 @@ prepare_ubuntu_core() {
     fi
 
     disable_refreshes
-    #setup_systemd_snapd_overrides
-
-    # Snapshot the fresh state (including boot/bootenv)
-    # if ! is_snapd_state_saved; then
-
-    #     # important to remove disabled snaps before calling save_snapd_state
-    #     # or restore will break
-    #     remove_disabled_snaps
-    #     systemctl stop snapd.service snapd.socket
-    #     save_snapd_state
-    #     systemctl start snapd.socket
-    # fi
-
     disable_kernel_rate_limiting
 }
 
