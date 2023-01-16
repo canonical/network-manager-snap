@@ -22,6 +22,7 @@ if snap list | grep "$SNAP_NAME" ; then
     snap remove --purge network-manager
 fi
 
+# Generate the default netplan configuration if no NM
 rm -f /etc/netplan/*
 cat > /etc/netplan/"$DEFAULT_NETPLAN_FILE" <<EOF
 network:
@@ -35,6 +36,3 @@ EOF
 # not exist anymore.
 netplan generate
 netplan apply
-
-snap_install network-manager --channel=22/stable
-wait_for_network_manager

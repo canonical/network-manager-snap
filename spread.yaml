@@ -28,11 +28,6 @@ environment:
   TESTSTMP: /var/tmp/snapd-tools
   REUSE_SNAPD: 0
   SRU_VALIDATION: 0
-  # use the ppa_validation_name to install snapd from a public ppa
-  PPA_VALIDATION_NAME: '$(HOST: echo "${SPREAD_PPA_VALIDATION_NAME:-}")'
-  # use the ppa_source_line and ppa_gpg_key to install snapd from a private ppa
-  PPA_SOURCE_LINE: '$(HOST: echo "${SPREAD_PPA_SOURCE_LINE:-}")'
-  PPA_GPG_KEY: '$(HOST: echo "${SPREAD_PPA_GPG_KEY:-}")'
   # List the snaps which are cached
   PRE_CACHE_SNAPS: jq
   CORE_CHANNEL: '$(HOST: echo "${SPREAD_CORE_CHANNEL:-edge}")'
@@ -54,12 +49,14 @@ backends:
           workers: 8
           storage: 20G
     prepare: |
+      # Builds UC image on top of classic 22.04
       "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
     systems:
       - ubuntu-core-22:
-          bios: /usr/share/OVMF/OVMF_CODE.fd
+          # TODO how is this done in snapd spread?
+          #bios: /usr/share/OVMF/OVMF_CODE.fd
           username: test
           password: test
 
@@ -104,12 +101,10 @@ prepare: |
   cp -f "$TESTSLIB"/external/snapd-testing-tools/remote/* "$TESTSTOOLS"
 
 prepare-each: |
-  # Cleanup logs so we can just dump what has happened in the debug-each
-  # step below after a test case ran.
-  journalctl --rotate
-  sleep .1
-  journalctl --vacuum-time=1ms
-  dmesg -c > /dev/null
+  . "$SYSTEMSNAPSTESTLIB"/prepare-each.sh
+
+restore-each: |
+  . "$SYSTEMSNAPSTESTLIB"/restore-each.sh
 
 debug-each: |
   journalctl
@@ -119,44 +114,12 @@ debug-each: |
 kill-timeout: 30m
 
 suites:
-  tests/main/:
-    summary: Full-system tests for NetworkManager without ethernet support
+  tests/core/:
+    summary: Tests for NetworkManager snap running on UC
     systems: [ubuntu-core-*]
     prepare: |
-      . "$SYSTEMSNAPSTESTLIB"/prepare-all.sh
-      . "$SYSTEMSNAPSTESTLIB"/prepare.sh
-    restore-each: |
-      . "$SYSTEMSNAPSTESTLIB"/restore-each.sh
-  tests/full/:
-    summary: Full-system tests for NetworkManager being the only network management service
-    systems: [ubuntu-core-*]
-    prepare: |
-      . "$SYSTEMSNAPSTESTLIB"/prepare-all.sh
-      . "$SYSTEMSNAPSTESTLIB"/utilities.sh
-      stop_after_first_reboot
-      switch_netplan_to_network_manager
-      . "$SYSTEMSNAPSTESTLIB"/prepare.sh
-      REBOOT
-    restore-each: |
-      . "$SYSTEMSNAPSTESTLIB"/restore-each.sh
-    restore: |
-      . "$SYSTEMSNAPSTESTLIB"/utilities.sh
-      stop_after_first_reboot
-      switch_netplan_to_networkd
-      REBOOT
+      # We need simulated wifi interfaces for some tests
+      . "$SYSTEMSNAPSTESTLIB"/enable-wifi-sim.sh
   tests/vpn/:
     summary: Tests for NetworkManager VPN client plugins
     systems: [ubuntu-core-*]
-    prepare: |
-      . $SYSTEMSNAPSTESTLIB/utilities.sh
-      stop_after_first_reboot
-      switch_netplan_to_network_manager
-      . $SYSTEMSNAPSTESTLIB/prepare.sh
-      REBOOT
-    restore-each: |
-      . $SYSTEMSNAPSTESTLIB/restore-each.sh
-    restore: |
-      . $SYSTEMSNAPSTESTLIB/utilities.sh
-      stop_after_first_reboot
-      switch_netplan_to_networkd
-      REBOOT

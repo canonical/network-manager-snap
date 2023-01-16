@@ -1,7 +1,12 @@
 #!/bin/bash -ex
 # shellcheck source=tests/lib/utilities.sh
 . "$SYSTEMSNAPSTESTLIB"/utilities.sh
-get_qemu_eth_iface eth_if
+
+# Cleanup logs so we can just dump what has happened in the debug-each
+# step below after a test case ran.
+journalctl --rotate
+journalctl --vacuum-time=1ms
+dmesg -c > /dev/null
 
 echo "Wait for firstboot change to be ready"
 while ! snap changes | grep -q "Done"; do
