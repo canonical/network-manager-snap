@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-# shellcheck source=tests/lib/utilities.sh
+# shellcheck source=cicd/lib/utilities.sh
 . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
 # The first argument is the name of the snap under test

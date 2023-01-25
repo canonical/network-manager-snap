@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-# shellcheck source=tests/lib/utilities.sh
+# shellcheck source=cicd/lib/utilities.sh
 . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
 get_qemu_eth_iface eth_if

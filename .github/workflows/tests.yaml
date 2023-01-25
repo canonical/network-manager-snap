@@ -42,7 +42,11 @@ jobs:
           path: ${{ runner.temp }}/network-manager_*.snap
       - name: Run spread tests
         run: |
-          spread google-nested:tests/
+          # TODO tests for other archs?
+          mv "${{ runner.temp }}"/network-manager_*_amd64.snap .
+          curl -s https://storage.googleapis.com/snapd-spread-tests/spread/spread-amd64.tar.gz |
+              tar -xz
+          ./spread google-nested:tests/
       - name: Discard spread workers
         if: always()
         run: |
