@@ -20,9 +20,8 @@ set -exu
 REPOSITORY=$GITHUB_REPOSITORY
 BRANCH=$GITHUB_HEAD_REF
 
-CICD_SCRIPTS=tests/lib/github
+CICD_SCRIPTS=cicd/workflows
 
-#env
 # shellcheck source=common.sh
 . "$CICD_SCRIPTS"/common.sh
 
