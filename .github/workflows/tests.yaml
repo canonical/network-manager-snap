@@ -41,7 +41,7 @@ jobs:
           printf "Running spread tests\n"
           # TODO tests for other archs?
           mv "${{ runner.temp }}"/network-manager_*_amd64.snap .
-          spread google:
+          HTTPS_PROXY=http://squid.internal:3128 spread google:
       - name: Discard spread workers
         if: always()
         run: |
