@@ -23,24 +23,24 @@ jobs:
           mkdir "${{ github.workspace }}"
       - name: Checking out
         uses: actions/checkout@v3
-      - name: Build snap
-        env:
-          LP_CREDS: ${{ secrets.LP_CREDS }}
-        run: |
-          set -exu
-          printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
-          echo "Running spread"
-          # We are inside of the checked out repo
-          pwd
-          id
-          env
-          #./cicd/workflows/snap-build.sh "${{ runner.temp }}"
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: network-manager-snaps
-          # TODO Set from metadata file (action.yaml)?
-          path: ${{ runner.temp }}/network-manager_*.snap
+      # - name: Build snap
+      #   env:
+      #     LP_CREDS: ${{ secrets.LP_CREDS }}
+      #   run: |
+      #     set -exu
+      #     printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
+      #     echo "Running spread"
+      #     # We are inside of the checked out repo
+      #     pwd
+      #     id
+      #     env
+      #     ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: network-manager-snaps
+      #     # TODO Set from metadata file (action.yaml)?
+      #     path: ${{ runner.temp }}/network-manager_*.snap
       - name: Run spread tests
         run: |
           # TODO tests for other archs?
