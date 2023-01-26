@@ -34,7 +34,7 @@ jobs:
           pwd
           id
           env
-          ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
+          #./cicd/workflows/snap-build.sh "${{ runner.temp }}"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -45,13 +45,13 @@ jobs:
         run: |
           # TODO tests for other archs?
           mv "${{ runner.temp }}"/network-manager_*_amd64.snap .
-          curl -s https://storage.googleapis.com/snapd-spread-tests/spread/spread-amd64.tar.gz |
-              tar -xz
-          ./spread google:
+          # curl -s https://storage.googleapis.com/snapd-spread-tests/spread/spread-amd64.tar.gz |
+          #     tar -xz
+          spread google:
       - name: Discard spread workers
         if: always()
         run: |
           shopt -s nullglob
           for r in .spread-reuse.*.yaml; do
-              ./spread -discard -reuse-pid="$(echo "$r" | grep -o -E '[0-9]+')"
+              spread -discard -reuse-pid="$(echo "$r" | grep -o -E '[0-9]+')"
           done
