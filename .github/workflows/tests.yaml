@@ -12,8 +12,7 @@ on:
 jobs:
   build:
     # Need to share self hosted runners with repo
-    #runs-on: self-hosted
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     steps:
       - name: Cleanup job workspace
         id: cleanup-job-workspace
