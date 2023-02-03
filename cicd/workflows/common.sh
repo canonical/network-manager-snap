@@ -137,7 +137,7 @@ modify_files_in_snap()
     local fs_d dest_d user_group i
 
     fs_d=squashfs
-    sudo unsquashfs -d "$fs_d" "$snap_p"
+    unsquashfs -d "$fs_d" "$snap_p"
 
     i=1
     while [ $i -le $# ]; do
@@ -149,19 +149,16 @@ modify_files_in_snap()
         if [ -n "$orig_p" ]; then
             dest_d="$fs_d"/${dest_p%/*}
             dest_f=${dest_p##*/}
-            sudo mkdir -p "$dest_d"
-            sudo cp "$orig_p" "$dest_d/$dest_f"
+            mkdir -p "$dest_d"
+            cp "$orig_p" "$dest_d/$dest_f"
         else
-            sudo rm -f "$fs_d/$dest_p"
+            rm -f "$fs_d/$dest_p"
         fi
     done
 
-    user_group=$(stat -c '%U:%G' "$snap_p")
     rm "$snap_p"
-    sudo mksquashfs "$fs_d" "$snap_p" \
-         -noappend -comp xz -no-xattrs -no-fragments -all-root
-    sudo chown "$user_group" "$snap_p"
-    sudo rm -rf "$fs_d"
+    snap pack --filename="$snap_p" "$fs_d"
+    rm -rf "$fs_d"
 }
 
 # Login to the snap store

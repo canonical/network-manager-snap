@@ -130,9 +130,11 @@ get_old_manifest()
         # We set proxy for snapd as in the future 'snap download' will
         # use snapd instead of downloading on its own. See
         # https://forum.snapcraft.io/t/downloading-snaps-via-snapd/11449
-        sudo snap set system proxy.http="$PROXY_URL"
-        sudo snap set system proxy.https="$PROXY_URL"
-        if ! http_proxy=$PROXY_URL https_proxy=$PROXY_URL UBUNTU_STORE_ARCH="$arch" \
+        #sudo snap set system proxy.http="$PROXY_URL"
+        #sudo snap set system proxy.https="$PROXY_URL"
+        # if ! http_proxy=$PROXY_URL https_proxy=$PROXY_URL UBUNTU_STORE_ARCH="$arch" \
+        #      snap download --channel="$channel" "$snap_n"; then
+        if ! UBUNTU_STORE_ARCH="$arch" \
              snap download --channel="$channel" "$snap_n"; then
             # First time we release for this track?
             # Try with "previous" track to get good history
@@ -178,27 +180,6 @@ open_next_version_development()
     git add "$_snapcraft_yaml_path"
     git commit -m "Open development for ${_next_version}-dev"
     git push origin "$_release_branch"
-}
-
-# Tag source branches that come from the same repo as the recipe
-# $1 repo path (part after "lp:")
-# $2 path to snapcraft.yaml
-# $3 tag to apply
-tag_repo_branches()
-{
-    local repo=$1
-    local snapcraft_p=$2
-    local tag=$3
-
-    printf "%s\n" "$(yq e '.parts.[] | path | .[-1]' "$snapcraft_p")" |
-        while read -r part; do
-            if yq e ".parts.$part.source" "$snapcraft_p" | grep -q "$repo"; then
-                branch=$(yq e ".parts.$part.source-branch" "$snapcraft_p")
-                tag_full="$tag"_"$part"
-                git tag -a -m "$tag_full" "$tag_full" origin/"$branch"
-                git push origin "$tag_full"
-            fi
-        done
 }
 
 # Return changes in the debian packages of which at least a file has been
@@ -372,32 +353,10 @@ main()
     spread google:
 
     # Commit changes to release branch (version in yaml and changelog)
-    git push origin "$RELEASE_BRANCH"
+    open_next_version_development "$NEXT_VERSION" "$RELEASE_BRANCH" \
+                                  "$snapcraft_yaml_path"
     git tag -a -m "$VERSION" "$VERSION" HEAD
     git push origin "$VERSION"
-    if [ -n "$lp_snap_path" ]; then
-        tag_repo_branches "$lp_snap_path" "$snapcraft_yaml_path" "$VERSION"
-    fi
-    if [ "$RELEASE_BRANCH" != stable ]; then
-        if [ "$UPDATE_STABLE" -eq 1 ]; then
-            if ! git branch -r | grep origin/stable ; then
-                git checkout -b stable origin/master
-            else
-                git checkout -b stable origin/stable
-            fi
-
-            # We're using `-X theirs` here as master always takes priority over
-            # what is in the stable. If something was only submitted into stable
-            # the commiter needs to take care that the same change is submitted
-            # to master too or it is overriden the next time a release happens
-            # from master.
-            git merge --no-ff -X theirs "$RELEASE_BRANCH"
-            git push origin stable
-            git checkout "$RELEASE_BRANCH"
-        fi
-        open_next_version_development "$NEXT_VERSION" "$RELEASE_BRANCH" \
-                                      "$snapcraft_yaml_path"
-    fi
 
     # Release to the beta and edge channels
     snap_store_login
