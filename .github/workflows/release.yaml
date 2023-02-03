@@ -1,0 +1,27 @@
+name: Release snap
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to release from'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: self-hosted
+    steps:
+      - name: Cleanup job workspace
+        run: |
+          printf "Cleaning up workspace\n"
+          rm -rf "${{ github.workspace }}"
+          mkdir "${{ github.workspace }}"
+      - name: Checking out
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
+      - name: Release
+        run: |
+          printf "Releasing from %s\n" "${{ inputs.branch }}"
+          ./cicd/workflows/snap-build.sh "${{ inputs.branch }}" "${{ runner.temp }}"
