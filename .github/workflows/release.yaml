@@ -21,7 +21,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ inputs.branch }}
+      - name: Checking out CICD scripts
+        uses: actions/checkout@v3
+        with:
+          ref: test-actions
+          path: cicd
       - name: Release
         run: |
           printf "Releasing from %s\n" "${{ inputs.branch }}"
-          ./cicd/workflows/snap-build.sh "${{ inputs.branch }}" "${{ runner.temp }}"
+          ./cicd/cicd/workflows/snap-release.sh "${{ inputs.branch }}" "${{ runner.temp }}"

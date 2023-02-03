@@ -17,6 +17,8 @@ jobs:
       - name: Cleanup job workspace
         id: cleanup-job-workspace
         run: |
+          # XXX
+          exit 1
           printf "Cleaning up workspace\n"
           rm -rf "${{ github.workspace }}"
           mkdir "${{ github.workspace }}"
