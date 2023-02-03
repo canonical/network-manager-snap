@@ -17,6 +17,10 @@
 set -ex -o pipefail
 shopt -s inherit_errexit
 
+BOT_USERNAME=system-enablement-ci-bot
+LAUNCHPAD_TEAM=snappy-hwe-team
+CI_ID=$GITHUB_RUN_ID
+
 script_name=${0##*/}
 CICD_SCRIPTS=${0%%"$script_name"}
 
@@ -328,7 +332,7 @@ main()
     set_version "$VERSION" "$snapcraft_yaml_path"
 
     # We build from a temporary repo that we will delete on exit
-    CI_ID="$BUILD_TAG"
+    LAUNCHPAD_PROJECT=$SNAP_NAME
     CI_REPO="ci-build-$CI_ID"
     CI_REPO_URL=git+ssh://"$BOT_USERNAME"@git.launchpad.net/~"$LAUNCHPAD_TEAM"
     CI_REPO_URL=${CI_REPO_URL}/"$LAUNCHPAD_PROJECT"/+git/"$CI_REPO"
