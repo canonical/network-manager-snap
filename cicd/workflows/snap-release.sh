@@ -17,9 +17,9 @@
 set -ex -o pipefail
 shopt -s inherit_errexit
 
-BOT_USERNAME=system-enablement-ci-bot
-LAUNCHPAD_TEAM=snappy-hwe-team
 CI_ID=$GITHUB_RUN_ID
+BUILD_BRANCH=build-$CI_ID
+GIT_REPO=https://github.com/$GITHUB_REPOSITORY
 
 script_name=${0##*/}
 CICD_SCRIPTS=${0%%"$script_name"}
@@ -31,8 +31,7 @@ CICD_SCRIPTS=${0%%"$script_name"}
 finish()
 {
     snap_store_logout || true
-    "$CICD_SCRIPTS"/delete-ci-repo.py \
-                    --git-repo="${CI_REPO_URL/git+ssh/https}" || true
+    git push origin :"$BUILD_BRANCH" || true
 }
 trap finish EXIT
 
@@ -328,36 +327,26 @@ main()
 
     # latest tag is latest version
     previous_version="$(git describe --abbrev=0 --tags)" || true
+
+    # Checkout a build branch
+    git checkout -b "$BUILD_BRANCH"
+
     # Set release version now so it gets reflected in the built snap
     set_version "$VERSION" "$snapcraft_yaml_path"
 
-    # XXX
-    git status
-    git remote -v
-    git checkout -b build-$CI_ID
-    git push origin build-$CI_ID
-    exit 1
-
-    # We build from a temporary repo that we will delete on exit
-    LAUNCHPAD_PROJECT=$SNAP_NAME
-    CI_REPO="ci-build-$CI_ID"
-    CI_REPO_URL=git+ssh://"$BOT_USERNAME"@git.launchpad.net/~"$LAUNCHPAD_TEAM"
-    CI_REPO_URL=${CI_REPO_URL}/"$LAUNCHPAD_PROJECT"/+git/"$CI_REPO"
-    git remote add jenkins-ci "$CI_REPO_URL"
-    git push jenkins-ci "$RELEASE_BRANCH"
+    # We build from a temporary branch that we will delete on exit
+    git push origin "$BUILD_BRANCH"
     build_d="$workspace"/build
-    build_and_download_snaps "$SNAP_NAME" "${CI_REPO_URL/git+ssh/https}" \
-                             "$RELEASE_BRANCH" "$series" "$build_d"
+    build_and_download_snaps "$SNAP_NAME" "$GIT_REPO" \
+                             "$BUILD_BRANCH" "$series" "$build_d"
 
     ## Inject changelog and update manifests
     mkdir -p manifests
     new_man_d="$workspace"/new_man
     get_pkg_changes "$SNAP_NAME" "$channel" "$build_d" "$new_man_d" pkg_changes
 
-    # Remove the previous commit because we want to commit the changelog before the
-    # commit bumping the version.
-    git reset HEAD~1
-    git checkout -f "$snapcraft_yaml_path"
+    # Now checkout to the release branch
+    git checkout "$RELEASE_BRANCH"
     # pkg_changes is set by get_pkg_changes, disable warning
     # shellcheck disable=SC2154
     update_changelog "$SNAP_NAME" "$VERSION" "$previous_version" \
