@@ -335,6 +335,7 @@ main()
     git status
     git remote -v
     git checkout -b build-$CI_ID
+    git push origin build-$CI_ID
     exit 1
 
     # We build from a temporary repo that we will delete on exit
