@@ -31,10 +31,14 @@ jobs:
           set -ex
           printf "Releasing from %s\n" "${{ inputs.branch }}"
           # TODO better probably to have a local install
-          echo $PATH
-          mkdir -p /home/runner/.local/bin
+          id
+          pwd
+          env
+          mkdir -p ~/bin
           wget https://github.com/mikefarah/yq/releases/download/v4.30.8/yq_linux_amd64 \
-              -O /home/runner/.local/bin/yq
-          ls -l /home/runner/.local/bin/
-          chmod +x /home/runner/.local/bin/yq
+              -O ~/bin/yq
+          chmod +x ~/bin/yq
+          export PATH=$PATH:~/bin/
+          echo $PATH
+          yq
           ./cicd/cicd/workflows/snap-release.sh "${{ inputs.branch }}" "${{ runner.temp }}"
