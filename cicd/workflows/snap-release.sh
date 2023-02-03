@@ -331,6 +331,12 @@ main()
     # Set release version now so it gets reflected in the built snap
     set_version "$VERSION" "$snapcraft_yaml_path"
 
+    # XXX
+    git status
+    git remote -v
+    git checkout -b build-$CI_ID
+    exit 1
+
     # We build from a temporary repo that we will delete on exit
     LAUNCHPAD_PROJECT=$SNAP_NAME
     CI_REPO="ci-build-$CI_ID"
