@@ -18,8 +18,7 @@ set -ex -o pipefail
 shopt -s inherit_errexit
 
 script_name=${0##*/}
-PATH_TO_SCRIPTS=${0%%"$script_name"}
-CICD_SCRIPTS=$PATH_TO_SCRIPTS/cicd/workflows
+CICD_SCRIPTS=${0%%"$script_name"}
 
 # shellcheck source=common.sh
 . "$CICD_SCRIPTS"/common.sh
