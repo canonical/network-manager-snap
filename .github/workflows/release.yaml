@@ -33,7 +33,7 @@ jobs:
           # TODO better probably to have a local install
           mkdir -p ~/bin
           wget https://github.com/mikefarah/yq/releases/download/v4.30.8/yq_linux_amd64.tar.gz \
-              -O - | tar xz ~/bin/yq
+              -O - | tar xz
           mv yq_linux_amd64.tar.gz ~/bin/
           export PATH=$PATH:~/bin/
           ./cicd/cicd/workflows/snap-release.sh "${{ inputs.branch }}" "${{ runner.temp }}"
