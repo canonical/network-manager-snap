@@ -1,0 +1,31 @@
+summary: Test network-manager snap debug configuration
+
+execute: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+
+    test "$(snap get network-manager debug.enable)" = "false"
+    if journalctl --no-pager -u snap.network-manager.networkmanager.service |
+            MATCH "<debug>"; then
+        echo "Debug traces found with disabled debug option"
+        exit 1
+    fi
+
+    snap set network-manager debug.enable=true
+    test "$(snap get network-manager debug.enable)" = "true"
+    # NM will create the file after being re-started by the hook, wait a bit
+    wait_for_network_manager
+    sleep 5
+    test -f /var/snap/network-manager/current/.debug_enabled
+    network-manager.nmcli g log | MATCH "^DEBUG"
+
+    # Check that we are using udev (it is a debug only trace)
+    sleep 10
+    journalctl --no-pager -u snap.network-manager.networkmanager.service | MATCH 'use udev'
+
+    snap set network-manager debug.enable=false
+    test "$(snap get network-manager debug.enable)" = "false"
+    # NM will create the file after being re-started by the hook, wait a bit
+    wait_for_network_manager
+    sleep 5
+    test ! -f /var/snap/network-manager/current/.debug_enabled
+    network-manager.nmcli g log | MATCH "^INFO"

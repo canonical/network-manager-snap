@@ -1,7 +1,7 @@
 summary: Test NM's OpenVPN plugin
 
 execute: |
-  . $TESTSLIB/utilities.sh
+  . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
   # TODO eventually this will not be needed when the store auto-connects it
   snap connect network-manager:network-control

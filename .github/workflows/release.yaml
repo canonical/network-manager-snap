@@ -1,0 +1,47 @@
+name: Release snap
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to release from'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: self-hosted
+    steps:
+      - name: Cleanup job workspace
+        run: |
+          printf "Cleaning up workspace\n"
+          rm -rf "${{ github.workspace }}"
+          mkdir "${{ github.workspace }}"
+      - name: Checking out
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
+      - name: Checking out CICD scripts
+        uses: actions/checkout@v3
+        with:
+          ref: test-actions
+          path: cicd
+      - name: Release
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        run: |
+          set -ex
+          printf "Releasing from %s\n" "${{ inputs.branch }}"
+          # TODO better probably to have a local install
+          mkdir -p ~/bin
+          wget -q https://github.com/mikefarah/yq/releases/download/v4.30.8/yq_linux_amd64.tar.gz \
+              -O - | tar xz
+          mv yq_linux_amd64 ~/bin/yq
+          export PATH=$PATH:~/bin/
+          ./cicd/workflows/snap-release.sh "${{ inputs.branch }}" "${{ runner.temp }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: network-manager-snaps
+          # TODO Set from metadata file (action.yaml)?
+          path: ${{ runner.temp }}/network-manager_*.snap
