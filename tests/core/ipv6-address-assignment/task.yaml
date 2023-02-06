@@ -1,0 +1,30 @@
+summary: Verify NetworkManager can assign a static IPv6 address to an interface
+
+restore: |
+    # Ensure that the created virtual network interfaces are removed
+    # in any case when we're done
+    if [ -e /sys/class/net/veth0 ] ; then
+        ip link delete veth0
+    fi
+
+execute: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+    # TODO remove when we can run tests on UC20
+    # (netplan .nmconnection issues, snapd mountspace issues)
+    exit 0
+
+    # Ensure that we have IPv6 support enabled in the kernel
+    test -e /proc/net/if_inet6
+
+    ip link add dev veth0 type veth peer name veth1
+
+    wait_for_network_manager
+
+    connection=veth-ipv6
+    network-manager.nmcli c add con-name $connection ifname veth0 type ethernet \
+        ip6 abbe::cafe
+    network-manager.nmcli c up $connection
+
+    # Verify that NetworkManager assigned the correct IPv6 address
+    # to the interface
+    ip address show veth0 | grep 'abbe::cafe/128'

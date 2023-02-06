@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015, 2016 Canonical Ltd
+# Copyright (C) 2015 Canonical Ltd
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 3 as
@@ -13,24 +13,52 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 project: network-manager
 
 environment:
-    PROJECT_PATH: /home/network-manager
-    TESTSLIB: $PROJECT_PATH/tests/lib
-    SNAP_NAME: network-manager
-    # Allow the host to pass the channel to use for the test run
-    SNAP_CHANNEL: $(HOST:echo $SNAP_CHANNEL)
+  PROJECT_PATH: /home/network-manager
+  SNAP_NAME: network-manager
+  # Allow the host to pass the channel to use for the test run
+  SNAP_CHANNEL: '$(HOST: echo "${SNAP_CHANNEL:-}")'
+  LOCAL_BIN: /usr/local/bin
+  TESTSLIB: $PROJECT_PATH/cicd/snapd-lib
+  SYSTEMSNAPSTESTLIB: $PROJECT_PATH/cicd/lib
+  TESTSTOOLS: $PROJECT_PATH/cicd/snapd-lib/tools
+  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/cicd/snapd-lib/tools
+  TESTSTMP: /var/tmp/snapd-tools
+  REUSE_SNAPD: 0
+  SRU_VALIDATION: 0
+  # List the snaps which are cached
+  PRE_CACHE_SNAPS: jq
+  CORE_CHANNEL: '$(HOST: echo "${SPREAD_CORE_CHANNEL:-edge}")'
+  BASE_CHANNEL: '$(HOST: echo "${SPREAD_BASE_CHANNEL:-edge}")'
+  KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-edge}")'
+  GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-edge}")'
+  SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-edge}")'
+  DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
-    qemu:
-        memory: 4G
-        systems:
-            - ubuntu-core-22:
-                bios: /usr/share/OVMF/OVMF_CODE.fd
-                username: test
-                password: test
+  google:
+    key: '$(HOST: echo "$SPREAD_GOOGLE_KEY")'
+    location: snapd-spread/us-east1-b
+    plan: n2-standard-2
+    halt-timeout: 2h
+    systems:
+      - ubuntu-core-22-64:
+          image: ubuntu-22.04-64
+          workers: 8
+          storage: 20G
+    prepare: |
+      # Builds UC image on top of classic 22.04
+      "$TESTSLIB"/prepare-restore.sh --prepare-suite
+  qemu:
+    memory: 4G
+    systems:
+      - ubuntu-core-22:
+          # TODO how is this done in snapd spread?
+          #bios: /usr/share/OVMF/OVMF_CODE.fd
+          username: test
+          password: test
 
 # Put this somewhere where we have read-write access
 path: /home/network-manager
@@ -39,66 +67,43 @@ exclude:
   - .git
 
 prepare: |
-  . $TESTSLIB/prepare-all.sh
+  # Take the MATCH and REBOOT functions from spread and allow our shell
+  # scripts to use them as shell commands. The replacements are real
+  # executables in cicd/snapd-lib/bin (which is on PATH) but they source
+  # spread-funcs.sh written here, base on the definitions provided by SPREAD.
+  # This ensures that 1) spread functions define the code 2) both MATCH and
+  # REBOOT are executables and not functions, and can be called from any
+  # context.
+  # This is not done in prepare.sh as these variables are not exported,
+  # and we do not want to source prepare.sh or export these.
+  type MATCH | tail -n +2 > "$TESTSLIB"/spread-funcs.sh
+  unset MATCH
+  type NOMATCH | tail -n +2 >> "$TESTSLIB"/spread-funcs.sh
+  unset NOMATCH
+  type REBOOT | tail -n +2 >> "$TESTSLIB"/spread-funcs.sh
+  unset REBOOT
+  "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  # Cleanup logs so we can just dump what has happened in the debug-each
-  # step below after a test case ran.
-  journalctl --rotate
-  sleep .1
-  journalctl --vacuum-time=1ms
-  dmesg -c > /dev/null
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME"
+
+restore-each: |
+  "$SYSTEMSNAPSTESTLIB"/restore-each.sh
 
 debug-each: |
   journalctl
   dmesg | grep DENIED || true
 
-# Default is 15 min but we use a higher one here as we build the entire
-# network-manager snap inside the global prepare step so we need quite
-# some time. Once we can reuse artifacts from other builds we can change
-# this back to the default.
+# (default is 15 min)
 kill-timeout: 30m
 
 suites:
-    tests/main/:
-        summary: Full-system tests for NetworkManager without ethernet support
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/prepare.sh
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-    tests/full/:
-        summary: Full-system tests for NetworkManager being the only network management service
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_network_manager
-            . $TESTSLIB/prepare.sh
-            REBOOT
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-        restore: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_networkd
-            REBOOT
-    tests/vpn/:
-        summary: Tests for NetworkManager VPN client plugins
-        systems:
-            - ubuntu-core-22
-        prepare: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_network_manager
-            . $TESTSLIB/prepare.sh
-            REBOOT
-        restore-each: |
-            . $TESTSLIB/restore-each.sh
-        restore: |
-            . $TESTSLIB/utilities.sh
-            stop_after_first_reboot
-            switch_netplan_to_networkd
-            REBOOT
+  tests/core/:
+    summary: Tests for NetworkManager snap running on UC
+    systems: [ubuntu-core-*]
+    prepare: |
+      # We need simulated wifi interfaces for some tests
+      "$SYSTEMSNAPSTESTLIB"/enable-wifi-sim.sh
+  tests/vpn/:
+    summary: Tests for NetworkManager VPN client plugins
+    systems: [ubuntu-core-*]
