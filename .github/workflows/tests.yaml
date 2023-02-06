@@ -32,7 +32,7 @@ jobs:
           printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
           # We are inside of the checked out repo
           env
-          HTTPS_PROXY= ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
+          ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

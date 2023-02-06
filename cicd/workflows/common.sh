@@ -172,7 +172,7 @@ snap_store_login()
 
 _run_snapcraft()
 {
-    http_proxy="$PROXY_URL" https_proxy="$PROXY_URL" snapcraft "$@"
+    snapcraft "$@"
 }
 
 # Logout of the snap store

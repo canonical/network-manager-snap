@@ -27,6 +27,8 @@ jobs:
           ref: test-actions
           path: cicd
       - name: Release
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
           set -ex
           printf "Releasing from %s\n" "${{ inputs.branch }}"
@@ -37,3 +39,9 @@ jobs:
           mv yq_linux_amd64 ~/bin/yq
           export PATH=$PATH:~/bin/
           ./cicd/cicd/workflows/snap-release.sh "${{ inputs.branch }}" "${{ runner.temp }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: network-manager-snaps
+          # TODO Set from metadata file (action.yaml)?
+          path: ${{ runner.temp }}/network-manager_*.snap

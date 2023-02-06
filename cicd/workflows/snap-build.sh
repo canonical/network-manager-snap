@@ -20,8 +20,9 @@ set -exu
 REPOSITORY=$GITHUB_REPOSITORY
 BRANCH=$GITHUB_HEAD_REF
 
-script_name=${0##*/}
-CICD_SCRIPTS=${0%%"$script_name"}
+# Find the scripts folder
+script_name=${BASH_SOURCE[0]##*/}
+CICD_SCRIPTS=${BASH_SOURCE[0]%%"$script_name"}./
 
 # shellcheck source=common.sh
 . "$CICD_SCRIPTS"/common.sh

@@ -21,8 +21,9 @@ CI_ID=$GITHUB_RUN_ID
 BUILD_BRANCH=build-$CI_ID
 GIT_REPO=https://github.com/$GITHUB_REPOSITORY
 
-script_name=${0##*/}
-CICD_SCRIPTS=${0%%"$script_name"}
+# Find the scripts folder
+script_name=${BASH_SOURCE[0]##*/}
+CICD_SCRIPTS=${BASH_SOURCE[0]%%"$script_name"}./
 
 # shellcheck source=common.sh
 . "$CICD_SCRIPTS"/common.sh
@@ -146,8 +147,8 @@ get_old_manifest()
                 else track=latest
                 fi
             fi
-            http_proxy=$PROXY_URL https_proxy=$PROXY_URL UBUNTU_STORE_ARCH="$arch" \
-                      snap download --channel="$track/${channel#*/}" "$snap_n"
+            UBUNTU_STORE_ARCH="$arch" \
+                             snap download --channel="$track/${channel#*/}" "$snap_n"
         fi
         unsquashfs "$snap_n"_*.snap snap/manifest.yaml
     )
@@ -222,11 +223,10 @@ get_pkg_changes_for_snap()
                     "$unsquash_d"/snap/manifest.yaml "$unsquash_d"/manifest.yaml
 
     # Get changes from deb packages - add a 2 space indentation
-    pkg_changes=$(http_proxy=$PROXY_URL https_proxy=$PROXY_URL \
-                            "$CICD_SCRIPTS"/changelog-from-manifest.py \
-                            "$manifest_p" \
-                            "$unsquash_d"/manifest.yaml \
-                            "$unsquash_d"/usr/share/doc/ | sed 's/^/  /')
+    pkg_changes=$("$CICD_SCRIPTS"/changelog-from-manifest.py \
+                                 "$manifest_p" \
+                                 "$unsquash_d"/manifest.yaml \
+                                 "$unsquash_d"/usr/share/doc/ | sed 's/^/  /')
     # Update now the manifest in the repo
     cp "$unsquash_d"/manifest.yaml "$manifest_p"
 
@@ -317,7 +317,7 @@ main()
 
     # We build from a temporary branch that we will delete on exit
     git push origin "$BUILD_BRANCH"
-    build_d="$workspace"/build
+    build_d="$workspace"
     build_and_download_snaps "$SNAP_NAME" "$GIT_REPO" \
                              "$BUILD_BRANCH" "$series" "$build_d"
 
@@ -350,6 +350,8 @@ main()
 
     # Run CI tests, using the just built snap
     cp "$build_d"/network-manager_*_amd64.snap .
+    # XXX just for testing the job, remove later
+    git checkout -b snap-22
     spread google:
 
     # Commit changes to release branch (version in yaml and changelog)
