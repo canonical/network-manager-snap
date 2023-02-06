@@ -1,0 +1,20 @@
+summary: When defaultrender is set NM manages ethernet
+
+execute: |
+    # TODO strategy for defaultrenderer setting needs to be rethought because
+    # now netplan is fusing network files configuration. So it is no more
+    # a matter of creating / destroying a netplan file.
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+    get_qemu_eth_iface eth_if
+    snap set network-manager defaultrenderer=true
+    # Needed because netplan bug not backported to xenial
+    # Make it succeed - there are races with other systemctl restart calls
+    systemctl restart systemd-networkd || true
+    sleep 5
+    networkctl | grep "$eth_if.*unmanaged"
+    wait_for_network_manager
+    network-manager.nmcli d | grep "$eth_if.*connected"
+    snap set network-manager defaultrenderer=false
+    # Needed because netplan bug not backported to xenial
+    # Make it succeed - there are races with other systmectl restart calls
+    systemctl restart systemd-networkd || true
