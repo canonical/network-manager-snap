@@ -349,7 +349,7 @@ main()
     # Run CI tests, using the just built snap
     cp "$build_d"/network-manager_*_amd64.snap .
     # XXX just for testing the job, remove later
-    git checkout -b test-actions
+    git checkout test-actions
     spread google:
 
     # Commit changes to release branch (version in yaml and changelog)
