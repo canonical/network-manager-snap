@@ -131,10 +131,8 @@ get_old_manifest()
         # We set proxy for snapd as in the future 'snap download' will
         # use snapd instead of downloading on its own. See
         # https://forum.snapcraft.io/t/downloading-snaps-via-snapd/11449
-        #sudo snap set system proxy.http="$PROXY_URL"
-        #sudo snap set system proxy.https="$PROXY_URL"
-        # if ! http_proxy=$PROXY_URL https_proxy=$PROXY_URL UBUNTU_STORE_ARCH="$arch" \
-        #      snap download --channel="$channel" "$snap_n"; then
+        #sudo snap set system proxy.http="$HTTP_PROXY"
+        #sudo snap set system proxy.https="$HTTPS_PROXY"
         if ! UBUNTU_STORE_ARCH="$arch" \
              snap download --channel="$channel" "$snap_n"; then
             # First time we release for this track?
@@ -351,7 +349,7 @@ main()
     # Run CI tests, using the just built snap
     cp "$build_d"/network-manager_*_amd64.snap .
     # XXX just for testing the job, remove later
-    git checkout -b snap-22
+    git checkout -b test-actions
     spread google:
 
     # Commit changes to release branch (version in yaml and changelog)
