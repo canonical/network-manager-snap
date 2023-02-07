@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  release:
+  build_release:
     runs-on: self-hosted
     steps:
       - name: Cleanup job workspace
@@ -28,8 +28,6 @@ jobs:
           ref: main
           path: cicd
       - name: Release
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
           printf "Releasing from %s\n" "${{ inputs.branch }}"
           # TODO better probably to have a local install
@@ -45,3 +43,20 @@ jobs:
           name: network-manager-snaps
           # TODO Set from metadata file (action.yaml)?
           path: ${{ runner.temp }}/network-manager_*.snap
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - build_release
+    steps:
+      - name: Download the snap artifact
+        id: download
+        uses: actions/download-artifact@v3
+        with:
+          name: network-manager-snaps
+          path: snaps/
+      - name: Publish the snaps to beta channel
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        run: |
+          ./cicd/workflows/snap-publish.sh "${{ steps.download.outputs.download-path }}" network-manager beta
