@@ -29,9 +29,9 @@ jobs:
           path: cicd
       - name: Build snap
         env:
-          LP_CREDS: ${{ secrets.LP_CREDS }}
+          LP_SYSTEM_SNAPS_CREDS: ${{ secrets.LP_SYSTEM_SNAPS_CREDS }}
         run: |
-          printf "%s\n" "$LP_CREDS" > /tmp/.launchpad.credentials
+          printf "%s\n" "$LP_SYSTEM_SNAPS_CREDS" > /tmp/.launchpad.credentials
           # We are inside of the checked out repo
           ./cicd/workflows/snap-build.sh "${{ runner.temp }}"
       - name: Upload artifacts
