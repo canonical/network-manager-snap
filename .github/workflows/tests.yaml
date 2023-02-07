@@ -1,11 +1,10 @@
 name: Spread tests
 
 on:
-  push:
-    branches:
-      - snap-22
   pull_request:
     branches:
+      - snap-1.10
+      - snap-20
       - snap-22
 
 jobs:
