@@ -66,4 +66,6 @@ jobs:
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         run: |
-          ./cicd/workflows/snap-publish.sh "${{ steps.download.outputs.download-path }}" network-manager beta
+          ref=${{ inputs.branch }}
+          track=${ref##*-}
+          ./cicd/workflows/snap-publish.sh "${{ steps.download.outputs.download-path }}" network-manager "$track"/beta
