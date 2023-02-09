@@ -9,14 +9,10 @@ on:
 
 jobs:
   build:
-    # Need to share self hosted runners with repo
+    # self-hosted runner so we can access gce from external repos
     runs-on: self-hosted
     steps:
-      - name: Export credentials
-        shell: bash
-        env:
-          LP_SYSTEM_SNAPS_CREDS: ${{ secrets.LP_SYSTEM_SNAPS_CREDS }}
-        run: |
-          printf "%s\n" "$LP_SYSTEM_SNAPS_CREDS" > /tmp/.launchpad.credentials
       - name: Build and test
+        env:
+          LP_CREDENTIALS: ${{ secrets.LP_CREDENTIALS }}
         uses: snapcore/system-snaps-cicd-tools/action-test@main
