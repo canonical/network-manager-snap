@@ -11,6 +11,7 @@ on:
 jobs:
   build_release:
     runs-on: self-hosted
+    environment: beta
     steps:
       - name: Build release
         env:
