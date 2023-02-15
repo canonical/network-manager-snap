@@ -12,8 +12,8 @@ jobs:
   build_release:
     runs-on: self-hosted
     steps:
-      - name: Export credentials
+      - name: Build release
         env:
           LP_CREDENTIALS: ${{ secrets.LP_CREDENTIALS }}
-      - name: Build release
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         uses: snapcore/system-snaps-cicd-tools/action-release@main
