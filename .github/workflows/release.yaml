@@ -1,12 +1,6 @@
 name: Release snap
 
-on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to release from'
-        required: true
-        type: string
+on: workflow_dispatch
 
 jobs:
   build_release:
