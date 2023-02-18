@@ -1,16 +1,16 @@
-snapcraft-version: 7.2.3
-snapcraft-started-at: '2022-10-27T07:34:14.534081Z'
+snapcraft-version: 7.2.9
+snapcraft-started-at: '2023-02-18T09:28:31.078954Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '22.04'
 name: network-manager
-version: 1.36.6-2
+version: 1.36.6-3
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
   devices and connections, attempting to keep active network connectivity
   when available. It manages ethernet, WiFi, mobile broadband (WWAN) and
   PPPoE devices, provides VPN integration with a variety of different
-  VPN serivces.
+  VPN services.
   Please find the source code for this track at:
     https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-22
 base: core22
@@ -52,6 +52,7 @@ apps:
     - network-setup-control
     - login-session-observe
     - network-observe
+    - network-control
 parts:
   networkmanager-common:
     plugin: dump
@@ -62,7 +63,7 @@ parts:
     build-packages: []
   changelog:
     plugin: nil
-    override-build: 'cp "/build/ci-network-manager-06ivjm32u71q2ta2"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-9kos2dhr459mpaqv"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
 
       '
     organize:
@@ -80,7 +81,7 @@ parts:
     - git
     stage-packages:
     - dnsmasq-base=2.86-1.1ubuntu0.1
-    - libcurl3-gnutls=7.81.0-1ubuntu1.6
+    - libcurl3-gnutls=7.81.0-1ubuntu1.7
     - libjansson4=2.13.1-1.1build3
     - libldap-2.5-0=2.5.13+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.18.6-1
@@ -90,7 +91,7 @@ parts:
     - libnm0=1.36.6-0ubuntu2
     - libpsl5=0.21.0-1.2build2
     - librtmp1=2.4+20151223.gitfa8646d.1-2build4
-    - libsasl2-2=2.1.27+dfsg2-3ubuntu1
+    - libsasl2-2=2.1.27+dfsg2-3ubuntu1.1
     - libslang2=2.3.2-5build4
     - libteamdctl0=1.31-1build2
     - network-manager=1.36.6-0ubuntu2
@@ -127,8 +128,8 @@ parts:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-06ivjm32u71q2ta2/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-06ivjm32u71q2ta2"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-9kos2dhr459mpaqv/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-9kos2dhr459mpaqv"/snap-patch/dnsmasq.patch
       craftctl default
     prime:
     - sbin/dnsmasq
@@ -212,10 +213,16 @@ parts:
     - CFLAGS=-O2
     override-build: |
       set -ex
-      "/build/ci-network-manager-06ivjm32u71q2ta2/stage"/build-tools/check-versions network-manager yes
+
+      # Download VPN packages here, we cannot just stage as they pull
+      # the NM package which will conflict with our build.
+      apt download network-manager-openvpn
+      dpkg -x network-manager-openvpn_*.deb "$CRAFT_PART_INSTALL"/
+
+      "/build/ci-network-manager-9kos2dhr459mpaqv/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-06ivjm32u71q2ta2"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-9kos2dhr459mpaqv"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -232,7 +239,7 @@ parts:
       unset _SNAP
     stage-packages:
     - libbrotli1=1.0.9-2build6
-    - libcurl3-gnutls=7.81.0-1ubuntu1.6
+    - libcurl3-gnutls=7.81.0-1ubuntu1.7
     - libjansson4=2.13.1-1.1build3
     - libldap-2.5-0=2.5.13+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.18.6-1
@@ -240,15 +247,18 @@ parts:
     - libnewt0.52=0.52.21-5ubuntu2
     - libnghttp2-14=1.43.0-1build3
     - libpcap0.8=1.10.1-4build1
+    - libpkcs11-helper1=1.28-1ubuntu0.22.04.1
     - libpsl5=0.21.0-1.2build2
     - librtmp1=2.4+20151223.gitfa8646d.1-2build4
-    - libsasl2-2=2.1.27+dfsg2-3ubuntu1
+    - libsasl2-2=2.1.27+dfsg2-3ubuntu1.1
     - libslang2=2.3.2-5build4
     - libteamdctl0=1.31-1build2
+    - openvpn=2.5.5-1ubuntu3.1
     - ppp=2.4.9-1+1ubuntu3
     organize:
       snap/network-manager/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
+      usr/lib/aarch64-linux-gnu/NetworkManager: usr/lib/NetworkManager
     prime:
     - usr/bin/nmcli
     - usr/bin/nmtui
@@ -260,10 +270,12 @@ parts:
     - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
     - usr/lib/NetworkManager
     - usr/sbin/NetworkManager
+    - usr/sbin/openvpn
     - etc/NetworkManager/*
     - usr/share/doc/libbrotli1/copyright
     - usr/share/doc/libcurl3-gnutls/copyright
     - usr/share/doc/libjansson4/copyright
+    - usr/share/doc/libpkcs11-helper1/copyright
     - usr/share/doc/libldap-2.5-0/copyright
     - usr/share/doc/libmm-glib0/copyright
     - usr/share/doc/libndp0/copyright
@@ -275,10 +287,12 @@ parts:
     - usr/share/doc/libsasl2-2/copyright
     - usr/share/doc/libslang2/copyright
     - usr/share/doc/libteamdctl0/copyright
+    - usr/share/doc/openvpn/copyright
     - usr/share/doc/ppp/copyright
     - usr/share/doc/libbrotli1/changelog.*
     - usr/share/doc/libcurl3-gnutls/changelog.*
     - usr/share/doc/libjansson4/changelog.*
+    - usr/share/doc/libpkcs11-helper1/changelog.*
     - usr/share/doc/libldap-2.5-0/changelog.*
     - usr/share/doc/libmm-glib0/changelog.*
     - usr/share/doc/libndp0/changelog.*
@@ -290,12 +304,15 @@ parts:
     - usr/share/doc/libsasl2-2/changelog.*
     - usr/share/doc/libslang2/changelog.*
     - usr/share/doc/libteamdctl0/changelog.*
+    - usr/share/doc/openvpn/changelog.*
     - usr/share/doc/ppp/changelog.*
+    - usr/share/doc/network-manager-openvpn/changelog.*
     - usr/lib/*/libslang*
     - usr/lib/libnm*
     - usr/lib/*/libbrotli*
     - usr/lib/*/libcurl-gnutls*
     - usr/lib/*/libjansson*
+    - usr/lib/*/libpkcs11-helper*
     - usr/lib/*/liblber-2.5*
     - usr/lib/*/libldap-2.5*
     - usr/lib/*/libmm-glib*
@@ -307,6 +324,8 @@ parts:
     - usr/lib/*/librtmp*
     - usr/lib/*/libsasl2*
     - usr/lib/*/libteamdctl*
+    - usr/lib/openvpn/*
+    - usr/lib/*/openvpn/plugins/*
     - -usr/lib/NetworkManager/nm-dhcp-helper
     - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-adsl.so
     - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-bluetooth.so
@@ -317,13 +336,13 @@ parts:
 architectures:
 - arm64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-06ivjm32u71q2ta2/+build/1923179
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-9kos2dhr459mpaqv/+build/2026592
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.86-1.1ubuntu0.1
 - libbrotli1=1.0.9-2build6
-- libcurl3-gnutls=7.81.0-1ubuntu1.6
+- libcurl3-gnutls=7.81.0-1ubuntu1.7
 - libjansson4=2.13.1-1.1build3
 - libldap-2.5-0=2.5.13+dfsg-0ubuntu0.22.04.1
 - libmm-glib0=1.18.6-1
@@ -332,10 +351,12 @@ primed-stage-packages:
 - libnghttp2-14=1.43.0-1build3
 - libnm0=1.36.6-0ubuntu2
 - libpcap0.8=1.10.1-4build1
+- libpkcs11-helper1=1.28-1ubuntu0.22.04.1
 - libpsl5=0.21.0-1.2build2
 - librtmp1=2.4+20151223.gitfa8646d.1-2build4
-- libsasl2-2=2.1.27+dfsg2-3ubuntu1
+- libsasl2-2=2.1.27+dfsg2-3ubuntu1.1
 - libslang2=2.3.2-5build4
 - libteamdctl0=1.31-1build2
 - network-manager=1.36.6-0ubuntu2
+- openvpn=2.5.5-1ubuntu3.1
 - ppp=2.4.9-1+1ubuntu3
