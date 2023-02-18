@@ -1,3 +1,69 @@
+2023-02-18 network-manager 1.36.6-3
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * Add support for OpenVPN
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/433744
+  * Add new test to prevent regressions for wireguard VPNs.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/434372
+  * snap-patch/netplan: do not write external or generated connections
+
+    See
+    https://developer-old.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMSettingsConnectionFlags
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/436824
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * Add support for gcloud tests and github workflows
+    Merge pull request #4 from snapcore/add-gcloud-support
+  * Workflow fixes
+    Merge pull request #6 from snapcore/workflow-fixes
+  * workflows/tests: use snapcore/system-snaps-cicd-tools/action-test
+    Merge pull request #7 from snapcore/test
+  * workflows/tests: pass LP credentials to action with env var
+    Merge pull request #8 from snapcore/use-env-creds
+  * Use actions from CI/CD tools repo
+    Merge pull request #10 from snapcore/use-release-action
+
+  [ Changes in primed packages ]
+  
+  libpkcs11-helper1 (1.28-1ubuntu0.22.04.1): new primed package
+  
+  openvpn (2.5.5-1ubuntu3.1): new primed package
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.6 to 7.81.0-1ubuntu1.7:
+  
+    curl (7.81.0-1ubuntu1.7) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: Another HSTS bypass via IDN
+        - debian/patches/CVE-2022-43551.patch: use the IDN decoded name in HSTS
+          checks in lib/http.c.
+        - CVE-2022-43551
+      * SECURITY UPDATE: HTTP Proxy deny use-after-free
+        - debian/patches/CVE-2022-43552.patch: do not free the protocol struct
+          in *_done() in lib/smb.c, lib/telnet.c.
+        - CVE-2022-43552
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 04 Jan 2023 09:53:07 -0500
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27+dfsg2-3ubuntu1 to 2.1.27+dfsg2-3ubuntu1.1:
+  
+    cyrus-sasl2 (2.1.27+dfsg2-3ubuntu1.1) jammy; urgency=medium
+  
+      * Add SASL channel binding support for GSSAPI and GSS-SPNEGO
+        (LP: #1912256):
+        - d/p/0034-channel-binding-gssapi-gss-spnego.patch: add SASL channel
+          binding support for GSSAPI and GSS-SPNEGO
+        - d/p/0035-Add-support-for-setting-max-ssf-0-to-GSS-SPNEGO-1.patch:
+          allow setting maxssf to 0 when using GSS-SPNEGO inside SSL/TLS
+        - d/p/0035-Add-support-for-setting-max-ssf-0-to-GSS-SPNEGO-2.patch:
+          be more conformant to RFC4752
+      * Add some DEP8 tests (LP: #1677781):
+        - d/t/{control,saslauthd}: saslauthd tests with multiple mechanisms
+        - d/t/{control,gssapi}: test for SASL GSSAPI using OpenLDAP
+        - d/t/{control,pluginviewer}: test available mechanisms
+        - d/t/{control,shared-secret-mechs}: test shared secret mechanisms
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Wed, 19 Oct 2022 14:06:40 -0700
+  
 2022-10-27 network-manager 1.36.6-2
 
   [ Changes in primed packages ]
