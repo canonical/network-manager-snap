@@ -1,0 +1,53 @@
+summary: Test static IP configuration
+
+restore: |
+    # Ensure that the created virtual network interfaces are removed
+    # in any case when we're done
+    if [ -e /sys/class/net/veth0 ] ; then
+        ip link delete veth0
+    fi
+
+execute: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+
+    # TODO remove when we can run tests on UC20
+    # (netplan .nmconnection issues, snapd mountspace issues)
+    exit 0
+
+    ip link add dev veth0 type veth peer name veth1
+
+    wait_for_network_manager
+    # NetworkManager should ignore the other side of our pipe so
+    # that we can configure it statically.
+    network-manager.nmcli d set veth1 managed no
+    ip addr add 10.0.1.1/24 dev veth1
+
+    connection=veth0-static
+    network-manager.nmcli c add con-name $connection type ethernet ifname veth0 \
+        ip4 10.0.1.2/24
+    network-manager.nmcli c up $connection
+    network-manager.nmcli d | grep 'veth0.*connected'
+
+    # Address should be correctly applied now
+    expected_veth0_address="10.0.1.2/24"
+    network-manager.nmcli -m multiline -f IP4.ADDRESS c show veth0-static | grep $expected_veth0_address
+    ip addr show dev veth0 | grep 'UP'
+    ip addr show dev veth0 | grep $expected_veth0_address
+
+    # Routing needs to be in place as well
+    expected_veth0_route='10.0.1.0/24 dev veth0.*src 10.0.1.2'
+    ip route | grep "$expected_veth0_route"
+
+    # Disable connection and ensure IP configuration is removed
+    network-manager.nmcli c down $connection
+    ip addr show dev veth0 | grep -v $expected_veth0_address
+    ip route | grep -v "$expected_veth0_route"
+
+    # Enabling network connection again and removing it should remove
+    # the IP configuration too
+    network-manager.nmcli c up $connection
+    ip addr show dev veth0 | grep $expected_veth0_address
+    ip route | grep "$expected_veth0_route"
+    network-manager.nmcli c delete $connection
+    ip addr show dev veth0 | grep -v $expected_veth0_address
+    ip route | grep -v "$expected_veth0_route"
