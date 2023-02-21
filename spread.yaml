@@ -44,17 +44,17 @@ backends:
     plan: n2-standard-2
     halt-timeout: 2h
     systems:
-      - ubuntu-core-22-64:
-          image: ubuntu-22.04-64
+      - ubuntu-core-18-64:
+          image: ubuntu-18.04-64
           workers: 8
           storage: 20G
     prepare: |
-      # Builds UC image on top of classic 22.04
+      # Builds UC image on top of classic 18.04
       "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
     systems:
-      - ubuntu-core-22:
+      - ubuntu-core-18:
           # TODO how is this done in snapd spread?
           #bios: /usr/share/OVMF/OVMF_CODE.fd
           username: test
@@ -85,7 +85,7 @@ prepare: |
   "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME"
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 18/stable
 
 restore-each: |
   "$SYSTEMSNAPSTESTLIB"/restore-each.sh
