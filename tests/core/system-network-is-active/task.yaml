@@ -1,0 +1,17 @@
+summary: Ethernet network should be managed by NetworkManager
+
+execute: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+    # TODO is this a netplan regression? Tests fail if this test executes
+    # after others. We need to re-start networkd so it notices that it
+    # should not manage the eth. The NM snap installation should have made
+    # this unnecessary. See https://bugs.launchpad.net/netplan/+bug/1979277
+    systemctl restart systemd-networkd
+    get_qemu_eth_iface eth_if
+    # Verify NetworManager handles ethernet and marks it as connected
+    test -e /etc/netplan/00-default-nm-renderer.yaml
+    wait_for_network_manager
+    get_qemu_eth_iface eth_if
+    network-manager.nmcli d | grep "$eth_if.*connected"
+    networkctl status $eth_if --no-pager
+    networkctl status $eth_if | grep unmanaged

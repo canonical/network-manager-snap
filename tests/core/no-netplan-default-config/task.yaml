@@ -1,0 +1,36 @@
+summary: Verify ethernet is auto-connected when no default netplan configuration exists
+
+prepare: |
+    cp /etc/netplan/"$DEFAULT_NETPLAN_FILE" /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig
+
+restore: |
+    mv /etc/netplan/"$DEFAULT_NETPLAN_FILE".orig /etc/netplan/"$DEFAULT_NETPLAN_FILE"
+
+execute: |
+    # TODO strategy for defaultrenderer setting needs to be rethought because
+    # now netplan is fusing network files configuration. So it is no more
+    # a matter of creating / destroying a netplan file.
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+    # Remove netplan configuartion file to get a system
+    # without generated configuration files from netplan
+    rm /etc/netplan/"$DEFAULT_NETPLAN_FILE"
+
+    netplan apply
+
+    # We should be automatically connected now and not via a configuration
+    # generated from netplan
+    wait_for_network_manager
+    get_qemu_eth_iface eth_if
+    network-manager.nmcli d | grep "$eth_if.*connected"
+
+    networkctl status $eth_if | grep unmanaged
+    network-manager.nmcli c show --active | grep $eth_if | grep -v netplan
+
+    # We should only have a single active configuration
+    test `network-manager.nmcli -m multiline -f UUID c show --active | wc -l` -eq 1
+
+    # Verify that we can modify the automatically created connection
+    connection=$(network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
+    network-manager.nmcli c modify $connection 802-3-ethernet.wake-on-lan magic
+    wol_value=$(network-manager.nmcli -f 802-3-ethernet.wake-on-lan c show $connection | xargs | cut -d':' -f 2)
+    test "$wol_value" = " magic"

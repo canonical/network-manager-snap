@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - snap-1.10
-      - snap-20
-      - snap-22
 
 jobs:
   build:
