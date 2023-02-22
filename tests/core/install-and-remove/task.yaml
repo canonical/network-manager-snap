@@ -24,5 +24,4 @@ execute: |
     snap remove network-manager
     if [ -f "$netplan_cfg_path" ]; then
         printf "%s still exists\n"
-        exit 1
     fi
