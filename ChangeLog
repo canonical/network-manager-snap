@@ -1,3 +1,86 @@
+2023-02-22 network-manager 1.10.6-15
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * Adapt core18 spread tests to gce
+    Merge pull request #11 from snapcore/spread-change-1.10
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.58.0-2ubuntu3.21 to 7.58.0-2ubuntu3.22:
+  
+    curl (7.58.0-2ubuntu3.22) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP Proxy deny use-after-free
+        - debian/patches/CVE-2022-43552.patch: do not free the protocol struct
+          in *_done() in lib/smb.c, lib/telnet.c.
+        - CVE-2022-43552
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 04 Jan 2023 12:08:06 -0500
+  
+  libasn1-8-heimdal, libgssapi3-heimdal, libhcrypto4-heimdal, libheimbase1-heimdal, libheimntlm0-heimdal, libhx509-5-heimdal, libkrb5-26-heimdal, libroken18-heimdal, libwind0-heimdal (built from heimdal) updated from 7.5.0+dfsg-1ubuntu0.1 to 7.5.0+dfsg-1ubuntu0.4:
+  
+    heimdal (7.5.0+dfsg-1ubuntu0.4) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: signature validation failure
+        - debian/patches/CVE-2022-45142.patch: fix logic inversion issue caused
+          by the fix for CVE-2022-3437 when using memcmp in
+          _gssapi_verify_mic_arcfour() and _gssapi_unwrap_arcfour() in
+          lib/gssapi/krb5/arcfour.c.
+        - CVE-2022-45142
+  
+     -- Rodrigo Figueiredo Zaiden <rodrigo.zaiden@canonical.com>  Mon, 06 Feb 2023 15:30:26 -0300
+  
+    heimdal (7.5.0+dfsg-1ubuntu0.3) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: NULL pointer dereference
+        - debian/patches/CVE-2021-44758.patch: add a call to send_reject() when
+          preferred_mech_type is GSS_C_NO_OID in
+          lib/gssapi/spnego/accept_sec_context.c.
+        - debian/patches/CVE-2021-44758-post.patch: remove grep command in test
+          file tests/gss/check-context.in to prevent FTBFS.
+        - CVE-2021-44758
+      * SECURITY UPDATE: buffer overflow
+        - debian/patches/CVE-2022-3437-1.patch: change calls to memcmp with
+          ct_memcmp in lib/gssapi/krb5/arcfour.c.
+        - debian/patches/CVE-2022-3437-2.patch: change calls to memcmp with
+          ct_memcmp in lib/gssapi/krb5/unwrap.c
+        - debian/patches/CVE-2022-3437-3.patch: add NULL pointer checks before
+          memcpy in lib/gssapi/krb5/unwrap.c.
+        - debian/patches/CVE-2022-3437-4.patch: change logic on pad buffer
+          hanlding in _gssapi_verify_pad() in lib/gssapi/krb5/decapsulate.c.
+        - debian/patches/CVE-2022-3437-5.patch: add buffer boundary checks in
+          _gssapi_verify_mech_header() in lib/gssapi/krb5/decapsulate.c
+        - debian/patches/CVE-2022-3437-6.patch: add buffer length checks in
+          lib/gssapi/krb5/unwrap.c.
+        - debian/patches/CVE-2022-3437-7.patch: add buffer length checks in
+          _gsskrb5_get_mech() in lib/gssapi/krb5/decapsulate.c.
+        - debian/patches/CVE-2022-3437-8.patch: change buffer length parameter
+          when calling _gssapi_verify_pad() in lib/gssapi/krb5/unwrap.c.
+        - CVE-2022-3437
+      * SECURITY UPDATE: integer overflow
+        - debian/patches/CVE-2022-42898-1.patch: change logic on PAC buffer
+          parsing in lib/krb5/pac.c.
+        - debian/patches/CVE-2022-42898-2.patch: change variable type from
+          unsigned long to uint64_t in lib/krb5/store-int.c.
+        - CVE-2022-42898
+      * SECURITY UPDATE: invalid free
+        - debian/patches/CVE-2022-44640.patch: relocates a call to fprintf and
+          parameters when calling it in decode_type() in lib/asn1/gen_decode.c
+          and add a call to fprintf in free_type() in lib/asn1/gen_free.c.
+        - CVE-2022-44640
+  
+     -- Rodrigo Figueiredo Zaiden <rodrigo.zaiden@canonical.com>  Wed, 11 Jan 2023 19:19:12 -0300
+  
+    heimdal (7.5.0+dfsg-1ubuntu0.2) bionic-security; urgency=medium
+  
+      * SECURITY UPDATE: out-of-bounds memory access
+        - debian/patches/CVE-2022-41916.patch: move variable assignment and
+          increment to be done later in time to prevent unintended read in
+          find_composition() in lib/wind/normalize.c.
+        - CVE-2022-41916
+  
+     -- Rodrigo Figueiredo Zaiden <rodrigo.zaiden@canonical.com>  Wed, 07 Dec 2022 15:09:46 -0300
+  
 2022-10-27 network-manager 1.10.6-14
 
   [ Changes in primed packages ]
