@@ -1,16 +1,20 @@
 name: Publish to edge
 
 on:
-  push:
+  pull_request_target:
     branches:
       - snap-1.10
       - snap-20
       - snap-22
+    types:
+      - closed
 
 jobs:
-  build:
+  publish_to_edge:
     # self-hosted runner so we can access launchpad
     runs-on: self-hosted
+    # Runs when the PR has been merged
+    if: github.event.pull_request.merged == true
     environment: beta
     steps:
       - name: Publish to edge
