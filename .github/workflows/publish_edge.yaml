@@ -1,7 +1,7 @@
 name: Publish to edge
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - snap-1.10
     types:
