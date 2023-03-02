@@ -1,3 +1,23 @@
+2023-03-02 network-manager 1.2.2-30
+
+  [ Changes in primed packages ]
+  
+  libnss3 (built from nss) updated from 2:3.28.4-0ubuntu0.16.04.14+esm2 to 2:3.28.4-0ubuntu0.16.04.14+esm3:
+  
+    nss (2:3.28.4-0ubuntu0.16.04.14+esm3) xenial-security; urgency=medium
+  
+      [ Marc Deslauriers ]
+      * SECURITY UPDATE: Crash when handling empty pkcs7 sequence
+        - debian/patches/CVE-2022-22747.patch: check for missing signedData
+          field in nss/lib/pkcs7/certread.c.
+        - CVE-2022-22747
+      * SECURITY UPDATE: Free of uninitialized pointer in lg_init
+        - debian/patches/CVE-2022-34480.patch: rearrange frees in
+          nss/lib/softoken/legacydb/lginit.c.
+        - CVE-2022-34480
+  
+     -- Ian Constantin <ian.constantin@canonical.com>  Mon, 13 Feb 2023 17:13:29 +0200
+  
 2022-01-10 network-manager 1.2.2-29
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
