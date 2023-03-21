@@ -20,7 +20,9 @@ execute: |
   easy-openvpn-server show-client default > "$ovpn_cfg_p"
 
   # Create NM's connection
-  network-manager.nmcli c import type openvpn file "$ovpn_cfg_p"
+  # IMPORTANT: import must happen as root so cert files are accessible
+  # (the sudo is unnecessary but added for emphasis).
+  sudo network-manager.nmcli c import type openvpn file "$ovpn_cfg_p"
   network-manager.nmcli c up default
   # tun2 device active (0 and 1 belong to easy-openvpn-server)
   network-manager.nmcli c show --active | grep tun2
@@ -42,4 +44,10 @@ execute: |
   fi
 
   network-manager.nmcli c down default
+
+  # Check that tun0/tun1/tun2 temporary connections do not have a static config file
+  if grep 'name: "tun' /etc/netplan/*; then
+      exit 1
+  fi
+
   network-manager.nmcli c del default
