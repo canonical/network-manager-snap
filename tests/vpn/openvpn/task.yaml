@@ -46,7 +46,7 @@ execute: |
   network-manager.nmcli c down default
 
   # Check that tun0/tun1/tun2 temporary connections do not have a static config file
-  if grep 'name: "tun' /etc/netplan/*; then
+  if egrep 'name: "?tun' /etc/netplan/*.yaml; then
       exit 1
   fi
 
