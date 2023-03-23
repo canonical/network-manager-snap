@@ -280,7 +280,7 @@ index ad6f277ce..0af209f64 100644
  
 +    /* NETPLAN: write only non-temporary files to /etc/netplan/... */
 +    if (!is_volatile && !is_nm_generated && !is_external &&
-+ strstr(keyfile_dir, "/etc/NetworkManager/system-connections")) {
++        strstr(keyfile_dir, "/etc/NetworkManager/system-connections")) {
 +        g_autofree gchar* ssid = g_key_file_get_string(kf_file, "wifi", "ssid", NULL);
 +        g_autofree gchar* escaped_ssid = ssid ?
 +                                         g_uri_escape_string(ssid, NULL, TRUE) : NULL;
