@@ -274,12 +274,13 @@ index ad6f277ce..0af209f64 100644
                             GError                        **error)
  {
      nm_auto_unref_keyfile GKeyFile *kf_file        = NULL;
-@@ -409,6 +414,113 @@ _internal_write_connection(NMConnection                   *connection,
+@@ -409,6 +414,114 @@ _internal_write_connection(NMConnection                   *connection,
      if (existing_path && !existing_path_read_only && !nm_streq(path, existing_path))
          unlink(existing_path);
  
 +    /* NETPLAN: write only non-temporary files to /etc/netplan/... */
-+    if (!is_volatile && !is_nm_generated && !is_external) {
++    if (!is_volatile && !is_nm_generated && !is_external &&
++        strstr(keyfile_dir, "/etc/NetworkManager/system-connections")) {
 +        g_autofree gchar* ssid = g_key_file_get_string(kf_file, "wifi", "ssid", NULL);
 +        g_autofree gchar* escaped_ssid = ssid ?
 +                                         g_uri_escape_string(ssid, NULL, TRUE) : NULL;
