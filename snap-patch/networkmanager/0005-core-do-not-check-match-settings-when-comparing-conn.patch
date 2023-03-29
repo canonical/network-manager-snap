@@ -1,0 +1,32 @@
+From 21576dd210fa71785a99b788fcd5a1fcf023314c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
+ <alfonso.sanchez-beato@canonical.com>
+Date: Fri, 24 Mar 2023 17:42:15 +0000
+Subject: [PATCH] core: do not check 'match' settings when comparing
+ connections
+
+Match settings are already used for matching an existing connection to
+a device, it does not really make sense to compare them with an
+auto-generated connection that is not going to have them.
+---
+ src/NetworkManagerUtils.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/NetworkManagerUtils.c b/src/NetworkManagerUtils.c
+index 3f2f44d3c..99f191280 100644
+--- a/src/NetworkManagerUtils.c
++++ b/src/NetworkManagerUtils.c
+@@ -744,6 +744,10 @@ check_possible_match (NMConnection *orig,
+ 	if (!check_connection_s390_props (orig, candidate, settings))
+ 		return NULL;
+ 
++	// match properties are for matching from static to generated connections,
++	// so they are not really part of the difference.
++	g_hash_table_remove (settings, NM_SETTING_MATCH_SETTING_NAME);
++
+ 	if (g_hash_table_size (settings) == 0)
+ 		return candidate;
+ 	else
+-- 
+2.34.1
+
