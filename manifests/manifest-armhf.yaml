@@ -1,9 +1,9 @@
-snapcraft-version: 7.2.9
-snapcraft-started-at: '2023-02-22T18:06:05.218615Z'
+snapcraft-version: 7.3.1
+snapcraft-started-at: '2023-03-29T10:57:36.101725Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-17
+version: 1.22.10-18
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -98,13 +98,13 @@ parts:
     installed-packages:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1ubuntu0.20.04.1
-    - apparmor=2.13.3-7ubuntu5.1
+    - apparmor=2.13.3-7ubuntu5.2
     - apt=2.0.9
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.6
+    - base-files=11ubuntu5.7
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.2
     - binutils-arm-linux-gnueabihf=2.34-6ubuntu1.4
@@ -165,7 +165,7 @@ parts:
     - iproute2=5.5.0-1ubuntu1
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
-    - libapparmor1=2.13.3-7ubuntu5.1
+    - libapparmor1=2.13.3-7ubuntu5.2
     - libapt-pkg6.0=2.0.9
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
@@ -197,8 +197,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.4
     - libctf0=2.34-6ubuntu1.4
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.18
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -238,14 +238,14 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.7
-    - libgnutls-openssl27=3.6.13-2ubuntu1.7
-    - libgnutls28-dev=3.6.13-2ubuntu1.7
-    - libgnutls30=3.6.13-2ubuntu1.7
-    - libgnutlsxx28=3.6.13-2ubuntu1.7
+    - libgnutls-dane0=3.6.13-2ubuntu1.8
+    - libgnutls-openssl27=3.6.13-2ubuntu1.8
+    - libgnutls28-dev=3.6.13-2ubuntu1.8
+    - libgnutls30=3.6.13-2ubuntu1.8
+    - libgnutlsxx28=3.6.13-2ubuntu1.8
     - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
-    - libgssapi-krb5-2=1.17-6ubuntu4.2
+    - libgssapi-krb5-2=1.17-6ubuntu4.3
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -272,12 +272,12 @@ parts:
     - libjansson-dev=2.12-1build1
     - libjansson4=2.12-1build1
     - libjson-c4=0.13.1+dfsg-7ubuntu0.3
-    - libk5crypto3=1.17-6ubuntu4.2
+    - libk5crypto3=1.17-6ubuntu4.3
     - libkeyutils1=1.6-6ubuntu1.1
     - libkmod2=27-1ubuntu2.1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1.4
-    - libkrb5-3=1.17-6ubuntu4.2
-    - libkrb5support0=1.17-6ubuntu4.2
+    - libkrb5-3=1.17-6ubuntu4.3
+    - libkrb5support0=1.17-6ubuntu4.3
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
@@ -324,15 +324,15 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.8
-    - libnss3=2:3.49.1-1ubuntu1.8
+    - libnss3-dev=2:3.49.1-1ubuntu1.9
+    - libnss3=2:3.49.1-1ubuntu1.9
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.19
+    - libpam-systemd=245.4-4ubuntu3.20
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -354,8 +354,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.3
     - libpython2.7-stdlib=2.7.18-1~20.04.3
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.6
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.7
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -380,8 +380,8 @@ parts:
     - libssl1.1=1.1.1f-1ubuntu2.17
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.19
-    - libsystemd0=245.4-4ubuntu3.19
+    - libsystemd-dev=245.4-4ubuntu3.20
+    - libsystemd0=245.4-4ubuntu3.20
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -392,8 +392,8 @@ parts:
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.19
-    - libudev1=245.4-4ubuntu3.19
+    - libudev-dev=245.4-4ubuntu3.20
+    - libudev1=245.4-4ubuntu3.20
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -410,7 +410,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-139.156
+    - linux-libc-dev=5.4.0-146.163
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -462,8 +462,8 @@ parts:
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - python3.8=3.8.10-0ubuntu1~20.04.6
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - python3.8=3.8.10-0ubuntu1~20.04.7
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -476,14 +476,14 @@ parts:
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.19
-    - systemd-timesyncd=245.4-4ubuntu3.19
-    - systemd=245.4-4ubuntu3.19
+    - systemd-sysv=245.4-4ubuntu3.20
+    - systemd-timesyncd=245.4-4ubuntu3.20
+    - systemd=245.4-4ubuntu3.20
     - sysvinit-utils=2.96-2.1ubuntu1
-    - tar=1.30+dfsg-7ubuntu0.20.04.2
+    - tar=1.30+dfsg-7ubuntu0.20.04.3
     - tzdata=2022g-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.19
+    - udev=245.4-4ubuntu3.20
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -492,12 +492,12 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1825
-    - snapcraft=8622
-    - snapd=18359
+    - core20=1855
+    - snapcraft=8939
+    - snapd=18601
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-fcxivzr2hzvkbjc4"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-2cyo2wygu5fob3pi"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
@@ -512,13 +512,13 @@ parts:
     installed-packages:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1ubuntu0.20.04.1
-    - apparmor=2.13.3-7ubuntu5.1
+    - apparmor=2.13.3-7ubuntu5.2
     - apt=2.0.9
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.6
+    - base-files=11ubuntu5.7
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.2
     - binutils-arm-linux-gnueabihf=2.34-6ubuntu1.4
@@ -579,7 +579,7 @@ parts:
     - iproute2=5.5.0-1ubuntu1
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
-    - libapparmor1=2.13.3-7ubuntu5.1
+    - libapparmor1=2.13.3-7ubuntu5.2
     - libapt-pkg6.0=2.0.9
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
@@ -611,8 +611,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.4
     - libctf0=2.34-6ubuntu1.4
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.18
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -652,14 +652,14 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.7
-    - libgnutls-openssl27=3.6.13-2ubuntu1.7
-    - libgnutls28-dev=3.6.13-2ubuntu1.7
-    - libgnutls30=3.6.13-2ubuntu1.7
-    - libgnutlsxx28=3.6.13-2ubuntu1.7
+    - libgnutls-dane0=3.6.13-2ubuntu1.8
+    - libgnutls-openssl27=3.6.13-2ubuntu1.8
+    - libgnutls28-dev=3.6.13-2ubuntu1.8
+    - libgnutls30=3.6.13-2ubuntu1.8
+    - libgnutlsxx28=3.6.13-2ubuntu1.8
     - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
-    - libgssapi-krb5-2=1.17-6ubuntu4.2
+    - libgssapi-krb5-2=1.17-6ubuntu4.3
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -686,12 +686,12 @@ parts:
     - libjansson-dev=2.12-1build1
     - libjansson4=2.12-1build1
     - libjson-c4=0.13.1+dfsg-7ubuntu0.3
-    - libk5crypto3=1.17-6ubuntu4.2
+    - libk5crypto3=1.17-6ubuntu4.3
     - libkeyutils1=1.6-6ubuntu1.1
     - libkmod2=27-1ubuntu2.1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1.4
-    - libkrb5-3=1.17-6ubuntu4.2
-    - libkrb5support0=1.17-6ubuntu4.2
+    - libkrb5-3=1.17-6ubuntu4.3
+    - libkrb5support0=1.17-6ubuntu4.3
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
@@ -738,15 +738,15 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.8
-    - libnss3=2:3.49.1-1ubuntu1.8
+    - libnss3-dev=2:3.49.1-1ubuntu1.9
+    - libnss3=2:3.49.1-1ubuntu1.9
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.19
+    - libpam-systemd=245.4-4ubuntu3.20
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -768,8 +768,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.3
     - libpython2.7-stdlib=2.7.18-1~20.04.3
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.6
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.7
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -794,8 +794,8 @@ parts:
     - libssl1.1=1.1.1f-1ubuntu2.17
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.19
-    - libsystemd0=245.4-4ubuntu3.19
+    - libsystemd-dev=245.4-4ubuntu3.20
+    - libsystemd0=245.4-4ubuntu3.20
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -806,8 +806,8 @@ parts:
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.19
-    - libudev1=245.4-4ubuntu3.19
+    - libudev-dev=245.4-4ubuntu3.20
+    - libudev1=245.4-4ubuntu3.20
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -824,7 +824,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-139.156
+    - linux-libc-dev=5.4.0-146.163
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -876,8 +876,8 @@ parts:
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - python3.8=3.8.10-0ubuntu1~20.04.6
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - python3.8=3.8.10-0ubuntu1~20.04.7
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -890,14 +890,14 @@ parts:
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.19
-    - systemd-timesyncd=245.4-4ubuntu3.19
-    - systemd=245.4-4ubuntu3.19
+    - systemd-sysv=245.4-4ubuntu3.20
+    - systemd-timesyncd=245.4-4ubuntu3.20
+    - systemd=245.4-4ubuntu3.20
     - sysvinit-utils=2.96-2.1ubuntu1
-    - tar=1.30+dfsg-7ubuntu0.20.04.2
+    - tar=1.30+dfsg-7ubuntu0.20.04.3
     - tzdata=2022g-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.19
+    - udev=245.4-4ubuntu3.20
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -906,15 +906,15 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1825
-    - snapcraft=8622
-    - snapd=18359
+    - core20=1855
+    - snapcraft=8939
+    - snapd=18601
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-fcxivzr2hzvkbjc4/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-fcxivzr2hzvkbjc4"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-2cyo2wygu5fob3pi/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -1014,13 +1014,13 @@ parts:
     installed-packages:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1ubuntu0.20.04.1
-    - apparmor=2.13.3-7ubuntu5.1
+    - apparmor=2.13.3-7ubuntu5.2
     - apt=2.0.9
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.6
+    - base-files=11ubuntu5.7
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.2
     - binutils-arm-linux-gnueabihf=2.34-6ubuntu1.4
@@ -1081,7 +1081,7 @@ parts:
     - iproute2=5.5.0-1ubuntu1
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
-    - libapparmor1=2.13.3-7ubuntu5.1
+    - libapparmor1=2.13.3-7ubuntu5.2
     - libapt-pkg6.0=2.0.9
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
@@ -1113,8 +1113,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.4
     - libctf0=2.34-6ubuntu1.4
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.18
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1154,14 +1154,14 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.7
-    - libgnutls-openssl27=3.6.13-2ubuntu1.7
-    - libgnutls28-dev=3.6.13-2ubuntu1.7
-    - libgnutls30=3.6.13-2ubuntu1.7
-    - libgnutlsxx28=3.6.13-2ubuntu1.7
+    - libgnutls-dane0=3.6.13-2ubuntu1.8
+    - libgnutls-openssl27=3.6.13-2ubuntu1.8
+    - libgnutls28-dev=3.6.13-2ubuntu1.8
+    - libgnutls30=3.6.13-2ubuntu1.8
+    - libgnutlsxx28=3.6.13-2ubuntu1.8
     - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
-    - libgssapi-krb5-2=1.17-6ubuntu4.2
+    - libgssapi-krb5-2=1.17-6ubuntu4.3
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1188,12 +1188,12 @@ parts:
     - libjansson-dev=2.12-1build1
     - libjansson4=2.12-1build1
     - libjson-c4=0.13.1+dfsg-7ubuntu0.3
-    - libk5crypto3=1.17-6ubuntu4.2
+    - libk5crypto3=1.17-6ubuntu4.3
     - libkeyutils1=1.6-6ubuntu1.1
     - libkmod2=27-1ubuntu2.1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1.4
-    - libkrb5-3=1.17-6ubuntu4.2
-    - libkrb5support0=1.17-6ubuntu4.2
+    - libkrb5-3=1.17-6ubuntu4.3
+    - libkrb5support0=1.17-6ubuntu4.3
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
@@ -1240,15 +1240,15 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.8
-    - libnss3=2:3.49.1-1ubuntu1.8
+    - libnss3-dev=2:3.49.1-1ubuntu1.9
+    - libnss3=2:3.49.1-1ubuntu1.9
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.19
+    - libpam-systemd=245.4-4ubuntu3.20
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -1270,8 +1270,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.3
     - libpython2.7-stdlib=2.7.18-1~20.04.3
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.6
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.7
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1296,8 +1296,8 @@ parts:
     - libssl1.1=1.1.1f-1ubuntu2.17
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.19
-    - libsystemd0=245.4-4ubuntu3.19
+    - libsystemd-dev=245.4-4ubuntu3.20
+    - libsystemd0=245.4-4ubuntu3.20
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1308,8 +1308,8 @@ parts:
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.19
-    - libudev1=245.4-4ubuntu3.19
+    - libudev-dev=245.4-4ubuntu3.20
+    - libudev1=245.4-4ubuntu3.20
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1326,7 +1326,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-139.156
+    - linux-libc-dev=5.4.0-146.163
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1378,8 +1378,8 @@ parts:
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - python3.8=3.8.10-0ubuntu1~20.04.6
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - python3.8=3.8.10-0ubuntu1~20.04.7
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1392,14 +1392,14 @@ parts:
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.19
-    - systemd-timesyncd=245.4-4ubuntu3.19
-    - systemd=245.4-4ubuntu3.19
+    - systemd-sysv=245.4-4ubuntu3.20
+    - systemd-timesyncd=245.4-4ubuntu3.20
+    - systemd=245.4-4ubuntu3.20
     - sysvinit-utils=2.96-2.1ubuntu1
-    - tar=1.30+dfsg-7ubuntu0.20.04.2
+    - tar=1.30+dfsg-7ubuntu0.20.04.3
     - tzdata=2022g-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.19
+    - udev=245.4-4ubuntu3.20
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -1408,18 +1408,18 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1825
-    - snapcraft=8622
-    - snapd=18359
+    - core20=1855
+    - snapcraft=8939
+    - snapd=18601
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-fcxivzr2hzvkbjc4/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-2cyo2wygu5fob3pi/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-fcxivzr2hzvkbjc4"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1436,7 +1436,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-fcxivzr2hzvkbjc4"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1529,7 +1529,7 @@ parts:
     - iputils-arping=3:20190709-3
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
     - libdbus-glib-1-2=0.110-5fakssync1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1561,13 +1561,13 @@ parts:
     installed-packages:
     - adduser=3.118ubuntu2
     - advancecomp=2.1-2.1ubuntu0.20.04.1
-    - apparmor=2.13.3-7ubuntu5.1
+    - apparmor=2.13.3-7ubuntu5.2
     - apt=2.0.9
     - autoconf=2.69-11.1
     - automake=1:1.16.1-4ubuntu6
     - autopoint=0.19.8.1-10build1
     - autotools-dev=20180224.1
-    - base-files=11ubuntu5.6
+    - base-files=11ubuntu5.7
     - base-passwd=3.5.47
     - bash=5.0-6ubuntu1.2
     - binutils-arm-linux-gnueabihf=2.34-6ubuntu1.4
@@ -1628,7 +1628,7 @@ parts:
     - iproute2=5.5.0-1ubuntu1
     - iptables=1.8.4-3ubuntu2
     - libacl1=2.2.53-6
-    - libapparmor1=2.13.3-7ubuntu5.1
+    - libapparmor1=2.13.3-7ubuntu5.2
     - libapt-pkg6.0=2.0.9
     - libargon2-1=0~20171227-0.2
     - libasan5=9.4.0-1ubuntu1~20.04.1
@@ -1660,8 +1660,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.4
     - libctf0=2.34-6ubuntu1.4
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.18
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1701,14 +1701,14 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.7
-    - libgnutls-openssl27=3.6.13-2ubuntu1.7
-    - libgnutls28-dev=3.6.13-2ubuntu1.7
-    - libgnutls30=3.6.13-2ubuntu1.7
-    - libgnutlsxx28=3.6.13-2ubuntu1.7
+    - libgnutls-dane0=3.6.13-2ubuntu1.8
+    - libgnutls-openssl27=3.6.13-2ubuntu1.8
+    - libgnutls28-dev=3.6.13-2ubuntu1.8
+    - libgnutls30=3.6.13-2ubuntu1.8
+    - libgnutlsxx28=3.6.13-2ubuntu1.8
     - libgomp1=10.3.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
-    - libgssapi-krb5-2=1.17-6ubuntu4.2
+    - libgssapi-krb5-2=1.17-6ubuntu4.3
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1735,12 +1735,12 @@ parts:
     - libjansson-dev=2.12-1build1
     - libjansson4=2.12-1build1
     - libjson-c4=0.13.1+dfsg-7ubuntu0.3
-    - libk5crypto3=1.17-6ubuntu4.2
+    - libk5crypto3=1.17-6ubuntu4.3
     - libkeyutils1=1.6-6ubuntu1.1
     - libkmod2=27-1ubuntu2.1
     - libkrb5-26-heimdal=7.7.0+dfsg-1ubuntu1.4
-    - libkrb5-3=1.17-6ubuntu4.2
-    - libkrb5support0=1.17-6ubuntu4.2
+    - libkrb5-3=1.17-6ubuntu4.3
+    - libkrb5support0=1.17-6ubuntu4.3
     - libldap-2.4-2=2.4.49+dfsg-2ubuntu1.9
     - libldap-common=2.4.49+dfsg-2ubuntu1.9
     - liblockfile-bin=1.16-1.1
@@ -1787,15 +1787,15 @@ parts:
     - libnpth0=1.6-1
     - libnspr4-dev=2:4.25-1
     - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.8
-    - libnss3=2:3.49.1-1ubuntu1.8
+    - libnss3-dev=2:3.49.1-1ubuntu1.9
+    - libnss3=2:3.49.1-1ubuntu1.9
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.19
+    - libpam-systemd=245.4-4ubuntu3.20
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -1817,8 +1817,8 @@ parts:
     - libpython2.7-minimal=2.7.18-1~20.04.3
     - libpython2.7-stdlib=2.7.18-1~20.04.3
     - libpython3-stdlib=3.8.2-0ubuntu2
-    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.6
+    - libpython3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - libpython3.8-stdlib=3.8.10-0ubuntu1~20.04.7
     - libreadline-dev=8.0-4
     - libreadline8=8.0-4
     - libroken18-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1843,8 +1843,8 @@ parts:
     - libssl1.1=1.1.1f-1ubuntu2.17
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.19
-    - libsystemd0=245.4-4ubuntu3.19
+    - libsystemd-dev=245.4-4ubuntu3.20
+    - libsystemd0=245.4-4ubuntu3.20
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1855,8 +1855,8 @@ parts:
     - libtool=2.4.6-14
     - libtry-tiny-perl=0.30-1
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.19
-    - libudev1=245.4-4ubuntu3.19
+    - libudev-dev=245.4-4ubuntu3.20
+    - libudev1=245.4-4ubuntu3.20
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1873,7 +1873,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-139.156
+    - linux-libc-dev=5.4.0-146.163
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1925,8 +1925,8 @@ parts:
     - python3-pyparsing=2.4.6-1
     - python3-six=1.14.0-2
     - python3-yaml=5.3.1-1ubuntu0.1
-    - python3.8-minimal=3.8.10-0ubuntu1~20.04.6
-    - python3.8=3.8.10-0ubuntu1~20.04.6
+    - python3.8-minimal=3.8.10-0ubuntu1~20.04.7
+    - python3.8=3.8.10-0ubuntu1~20.04.7
     - python3=3.8.2-0ubuntu2
     - quilt=0.65-3
     - readline-common=8.0-4
@@ -1939,14 +1939,14 @@ parts:
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
     - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.19
-    - systemd-timesyncd=245.4-4ubuntu3.19
-    - systemd=245.4-4ubuntu3.19
+    - systemd-sysv=245.4-4ubuntu3.20
+    - systemd-timesyncd=245.4-4ubuntu3.20
+    - systemd=245.4-4ubuntu3.20
     - sysvinit-utils=2.96-2.1ubuntu1
-    - tar=1.30+dfsg-7ubuntu0.20.04.2
+    - tar=1.30+dfsg-7ubuntu0.20.04.3
     - tzdata=2022g-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.19
+    - udev=245.4-4ubuntu3.20
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -1955,9 +1955,9 @@ parts:
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=1825
-    - snapcraft=8622
-    - snapd=18359
+    - core20=1855
+    - snapcraft=8939
+    - snapd=18601
     plugin: dump
     prime: []
     source: snap-common
@@ -1971,9 +1971,9 @@ parts:
     - git
     installed-packages: []
     installed-snaps:
-    - core20=1825
-    - snapcraft=8622
-    - snapd=18359
+    - core20=1855
+    - snapcraft=8939
+    - snapd=18601
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2000,7 +2000,7 @@ parts:
     - dnsmasq-base=2.80-1.1ubuntu1.6
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.15
+    - libcurl3-gnutls=7.68.0-1ubuntu2.18
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -2028,7 +2028,7 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-fcxivzr2hzvkbjc4/+build/2030402
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-2cyo2wygu5fob3pi/+build/2066631
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2054,7 +2054,7 @@ build-packages:
 - libblkid-dev=2.34-0.1ubuntu9.3
 - libcap2-bin=1:2.32-1
 - libcroco3=0.6.13-1
-- libcurl4-gnutls-dev=7.68.0-1ubuntu2.15
+- libcurl4-gnutls-dev=7.68.0-1ubuntu2.18
 - libdbus-1-dev=1.12.16-2ubuntu2.3
 - libdbus-glib-1-2=0.110-5fakssync1
 - libdbus-glib-1-dev-bin=0.110-5fakssync1
@@ -2074,10 +2074,10 @@ build-packages:
 - libglib2.0-doc=2.64.6-1~ubuntu20.04.4
 - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
 - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-- libgnutls-dane0=3.6.13-2ubuntu1.7
-- libgnutls-openssl27=3.6.13-2ubuntu1.7
-- libgnutls28-dev=3.6.13-2ubuntu1.7
-- libgnutlsxx28=3.6.13-2ubuntu1.7
+- libgnutls-dane0=3.6.13-2ubuntu1.8
+- libgnutls-openssl27=3.6.13-2ubuntu1.8
+- libgnutls28-dev=3.6.13-2ubuntu1.8
+- libgnutlsxx28=3.6.13-2ubuntu1.8
 - libhtml-parser-perl=3.72-5
 - libhtml-tagset-perl=3.20-4
 - libhtml-tree-perl=5.07-2
@@ -2124,8 +2124,8 @@ build-packages:
 - libnl-route-3-dev=3.4.0-1ubuntu0.1
 - libnspr4-dev=2:4.25-1
 - libnspr4=2:4.25-1
-- libnss3-dev=2:3.49.1-1ubuntu1.8
-- libnss3=2:3.49.1-1ubuntu1.8
+- libnss3-dev=2:3.49.1-1ubuntu1.9
+- libnss3=2:3.49.1-1ubuntu1.9
 - libosp5=1.5.2-13ubuntu3
 - libp11-kit-dev=0.23.20-1ubuntu0.1
 - libpcre16-3=2:8.39-12ubuntu0.1
@@ -2147,7 +2147,7 @@ build-packages:
 - libsigsegv2=2.12-2
 - libslang2-dev=2.3.2-4
 - libslang2=2.3.2-4
-- libsystemd-dev=245.4-4ubuntu3.19
+- libsystemd-dev=245.4-4ubuntu3.20
 - libtasn1-6-dev=4.16.0-2
 - libteam-dev=1.30-1
 - libteam5=1.30-1
@@ -2155,7 +2155,7 @@ build-packages:
 - libtimedate-perl=2.3200-1
 - libtool=2.4.6-14
 - libtry-tiny-perl=0.30-1
-- libudev-dev=245.4-4ubuntu3.19
+- libudev-dev=245.4-4ubuntu3.20
 - libunbound8=1.9.4-2ubuntu1.4
 - liburi-perl=1.76-2
 - libwww-perl=6.43-1
@@ -2203,13 +2203,13 @@ build-packages:
 - xsltproc=1.1.34-4ubuntu0.20.04.1
 - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
 build-snaps:
-- core20=1825
+- core20=1855
 primed-stage-packages:
 - dnsmasq-base=2.80-1.1ubuntu1.6
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libbrotli1=1.0.7-6ubuntu0.1
-- libcurl3-gnutls=7.68.0-1ubuntu2.15
+- libcurl3-gnutls=7.68.0-1ubuntu2.18
 - libdbus-glib-1-2=0.110-5fakssync1
 - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
