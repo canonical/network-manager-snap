@@ -4,11 +4,17 @@ environment:
     WIFI_SSID: Ubuntu
     WIFI_PASSPHRASE: Test1234
 
+restore: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+
+    network-manager.nmcli c del "$WIFI_SSID"
+    remove_ap
+
 execute: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     create_ap "$WIFI_SSID" "$WIFI_PASSPHRASE"
 
     # Connect to the AP and ensure the connection was established
-    network-manager.nmcli d wifi connect $WIFI_SSID password $WIFI_PASSPHRASE
+    network-manager.nmcli d wifi connect $WIFI_SSID password $WIFI_PASSPHRASE ifname wlan1
     network-manager.nmcli d | grep 'wlan1.*connected'
