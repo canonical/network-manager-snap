@@ -113,7 +113,12 @@ create_ap() {
     return 1
   fi
 
-  snap install wifi-ap
+  snap install --dangerous ../../extra/wifi-ap_357_amd64.snap
+  snap connect wifi-ap:firewall-control
+  snap connect wifi-ap:network-control
+  snap connect wifi-ap:network-manager network-manager
+  snap restart wifi-ap
+
   # wifi-ap needs a bit of time to settle down
   repeat_until_done 'wifi-ap.status | MATCH "ap.active: true"' 0.5
 
