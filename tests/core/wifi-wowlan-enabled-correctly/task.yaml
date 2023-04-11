@@ -1,5 +1,11 @@
 summary: Verify WiFi WoWLAN can be enabled in NetworkManager globally via a snap config option
 
+restore: |
+    . "$SYSTEMSNAPSTESTLIB"/utilities.sh
+
+    network-manager.nmcli c del Ubuntu
+    remove_ap
+
 execute: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
@@ -11,8 +17,8 @@ execute: |
     create_ap Ubuntu
 
     # Connect to the AP and ensure the connection was established
-    network-manager.nmcli d wifi | grep Ubuntu
-    network-manager.nmcli d wifi connect Ubuntu
+    network-manager.nmcli d wifi list ifname wlan1 | grep Ubuntu
+    network-manager.nmcli d wifi connect Ubuntu ifname wlan1
     network-manager.nmcli d | grep 'wlan1.*connected'
 
     # Now that we're connected a new connection exists which we can look at
