@@ -3,8 +3,6 @@ name: Release snap
 on:
   workflow_dispatch:
     branches:
-      - snap-1.10
-      - snap-20
       - snap-22
 
 jobs:
