@@ -1,9 +1,9 @@
 snapcraft-version: '4.8'
-snapcraft-started-at: '2023-03-02T11:23:14.346840Z'
+snapcraft-started-at: '2023-04-11T08:46:08.851378Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '16.04'
 name: network-manager
-version: 1.2.2-30
+version: 1.2.2-31
 summary: Network management framework
 description: |
   NetworkManager is a system network service that manages your network
@@ -105,8 +105,8 @@ parts:
     - gir1.2-glib-2.0=1.46.0-3ubuntu1
     - gir1.2-gudev-1.0=1:230-2
     - gir1.2-modemmanager-1.0=1.6.4-1ubuntu0.16.04.1
-    - git-man=1:2.7.4-0ubuntu1.10+esm5
-    - git=1:2.7.4-0ubuntu1.10+esm5
+    - git-man=1:2.7.4-0ubuntu1.10+esm6
+    - git=1:2.7.4-0ubuntu1.10+esm6
     - gnome-common=3.14.0-2
     - gnupg=1.4.20-1ubuntu3.3+esm2
     - gobject-introspection=1.46.0-3ubuntu1
@@ -150,7 +150,7 @@ parts:
     - libcomerr2=1.42.13-1ubuntu1.2+esm1
     - libcroco3=0.6.11-1ubuntu0.1~esm1
     - libcryptsetup4=2:1.6.6-5ubuntu2.1
-    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm7
+    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm8
     - libdb5.3=5.3.28-11ubuntu0.2
     - libdbus-1-3=1.10.6-1ubuntu3.6+esm2
     - libdbus-1-dev=1.10.6-1ubuntu3.6+esm2
@@ -264,9 +264,9 @@ parts:
     - libnl-route-3-dev=3.2.27-1ubuntu0.16.04.1
     - libnspr4-dev=2:4.13.1-0ubuntu0.16.04.1
     - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
     - libp11-kit-dev=0.23.2-5~ubuntu16.04.2
     - libp11-kit0=0.23.2-5~ubuntu16.04.2
     - libpam-modules-bin=1.1.8-3.2ubuntu2.3+esm4
@@ -283,11 +283,11 @@ parts:
     - libpng12-dev=1.2.54-1ubuntu1.1+esm1
     - libprocps4=2:3.3.10-4ubuntu2.5
     - libpython-stdlib=2.7.12-1~16.04
-    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm3
+    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm4
     - libpython3-stdlib=3.5.1-3
-    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm6
+    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm7
     - libquadmath0=5.4.0-6ubuntu1~16.04.12+esm2
     - libreadline-dev=6.3-8ubuntu2
     - libreadline6-dev=6.3-8ubuntu2
@@ -311,8 +311,8 @@ parts:
     - libssl1.0.0=1.0.2g-1ubuntu4.20+esm6
     - libstdc++-5-dev=5.4.0-6ubuntu1~16.04.12+esm2
     - libstdc++6=5.4.0-6ubuntu1~16.04.12+esm2
-    - libsystemd-dev=229-4ubuntu21.31+esm1
-    - libsystemd0=229-4ubuntu21.31+esm1
+    - libsystemd-dev=229-4ubuntu21.31+esm3
+    - libsystemd0=229-4ubuntu21.31+esm3
     - libtasn1-6-dev=4.7-3ubuntu0.16.04.3+esm3
     - libtasn1-6=4.7-3ubuntu0.16.04.3+esm3
     - libtimedate-perl=2.3000-2
@@ -321,8 +321,8 @@ parts:
     - libtool=2.4.6-0.1
     - libtsan0=5.4.0-6ubuntu1~16.04.12+esm2
     - libubsan0=5.4.0-6ubuntu1~16.04.12+esm2
-    - libudev-dev=229-4ubuntu21.31+esm1
-    - libudev1=229-4ubuntu21.31+esm1
+    - libudev-dev=229-4ubuntu21.31+esm3
+    - libudev1=229-4ubuntu21.31+esm3
     - libunistring0=0.9.3-5.2ubuntu1
     - liburi-perl=1.71-1
     - libusb-0.1-4=2:0.1.12-28
@@ -337,7 +337,7 @@ parts:
     - libxslt1.1=1.1.28-2.1ubuntu0.3+esm1
     - libxtables11=1.6.0-2ubuntu3
     - libzstd1=1.3.1+dfsg-1~ubuntu0.16.04.1+esm3
-    - linux-libc-dev=4.4.0-236.270
+    - linux-libc-dev=4.4.0-237.271
     - lockfile-progs=0.1.17
     - login=1:4.2-3.1ubuntu5.5+esm3
     - lsb-base=9.20160110ubuntu0.2
@@ -372,11 +372,11 @@ parts:
     - python-mako=1.0.3+ds1-1ubuntu1+esm1
     - python-markupsafe=0.23-2build2
     - python-minimal=2.7.12-1~16.04
-    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - python2.7=2.7.12-1ubuntu0~16.04.18+esm3
+    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - python2.7=2.7.12-1ubuntu0~16.04.18+esm4
     - python3-minimal=3.5.1-3
-    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - python3.5=3.5.2-2ubuntu0~16.04.13+esm6
+    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - python3.5=3.5.2-2ubuntu0~16.04.13+esm7
     - python3=3.5.1-3
     - python=2.7.12-1~16.04
     - readline-common=6.3-8ubuntu2
@@ -390,14 +390,14 @@ parts:
     - squashfs-tools=1:4.3-3ubuntu2.16.04.3+esm1
     - squashfuse=0.1.100-0ubuntu1~ubuntu16.04.1
     - sudo=1.8.16-0ubuntu1.10+esm1
-    - systemd-sysv=229-4ubuntu21.31+esm1
-    - systemd=229-4ubuntu21.31+esm1
+    - systemd-sysv=229-4ubuntu21.31+esm3
+    - systemd=229-4ubuntu21.31+esm3
     - sysv-rc=2.88dsf-59.3ubuntu2
     - sysvinit-utils=2.88dsf-59.3ubuntu2
     - tar=1.28-2.1ubuntu0.2+esm2
-    - tzdata=2022f-0ubuntu0.16.04+esm1
+    - tzdata=2022g-0ubuntu0.16.04+esm1
     - ubuntu-keyring=2012.05.19.1
-    - udev=229-4ubuntu21.31+esm1
+    - udev=229-4ubuntu21.31+esm3
     - util-linux=2.27.1-6ubuntu3.10+esm2
     - uuid-dev=2.27.1-6ubuntu3.10+esm2
     - xml-core=0.13+nmu2
@@ -406,13 +406,13 @@ parts:
     - zlib1g-dev=1:1.2.8.dfsg-2ubuntu4.3+esm2
     - zlib1g=1:1.2.8.dfsg-2ubuntu4.3+esm2
     installed-snaps:
-    - core18=2697
-    - core=14784
+    - core18=2721
+    - core=14946
     - snapcraft=6512
-    - snapd=18357
+    - snapd=18596
     organize:
       ChangeLog: usr/share/doc/network-manager/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-jxtkzcywrvfmrem3"/ChangeLog "$SNAPCRAFT_PART_INSTALL"
+    override-build: 'cp "/build/ci-network-manager-gtakfa9synve2djd"/ChangeLog "$SNAPCRAFT_PART_INSTALL"
 
       '
     plugin: nil
@@ -477,8 +477,8 @@ parts:
     - gir1.2-glib-2.0=1.46.0-3ubuntu1
     - gir1.2-gudev-1.0=1:230-2
     - gir1.2-modemmanager-1.0=1.6.4-1ubuntu0.16.04.1
-    - git-man=1:2.7.4-0ubuntu1.10+esm5
-    - git=1:2.7.4-0ubuntu1.10+esm5
+    - git-man=1:2.7.4-0ubuntu1.10+esm6
+    - git=1:2.7.4-0ubuntu1.10+esm6
     - gnome-common=3.14.0-2
     - gnupg=1.4.20-1ubuntu3.3+esm2
     - gobject-introspection=1.46.0-3ubuntu1
@@ -522,7 +522,7 @@ parts:
     - libcomerr2=1.42.13-1ubuntu1.2+esm1
     - libcroco3=0.6.11-1ubuntu0.1~esm1
     - libcryptsetup4=2:1.6.6-5ubuntu2.1
-    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm7
+    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm8
     - libdb5.3=5.3.28-11ubuntu0.2
     - libdbus-1-3=1.10.6-1ubuntu3.6+esm2
     - libdbus-1-dev=1.10.6-1ubuntu3.6+esm2
@@ -636,9 +636,9 @@ parts:
     - libnl-route-3-dev=3.2.27-1ubuntu0.16.04.1
     - libnspr4-dev=2:4.13.1-0ubuntu0.16.04.1
     - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
     - libp11-kit-dev=0.23.2-5~ubuntu16.04.2
     - libp11-kit0=0.23.2-5~ubuntu16.04.2
     - libpam-modules-bin=1.1.8-3.2ubuntu2.3+esm4
@@ -655,11 +655,11 @@ parts:
     - libpng12-dev=1.2.54-1ubuntu1.1+esm1
     - libprocps4=2:3.3.10-4ubuntu2.5
     - libpython-stdlib=2.7.12-1~16.04
-    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm3
+    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm4
     - libpython3-stdlib=3.5.1-3
-    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm6
+    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm7
     - libquadmath0=5.4.0-6ubuntu1~16.04.12+esm2
     - libreadline-dev=6.3-8ubuntu2
     - libreadline6-dev=6.3-8ubuntu2
@@ -683,8 +683,8 @@ parts:
     - libssl1.0.0=1.0.2g-1ubuntu4.20+esm6
     - libstdc++-5-dev=5.4.0-6ubuntu1~16.04.12+esm2
     - libstdc++6=5.4.0-6ubuntu1~16.04.12+esm2
-    - libsystemd-dev=229-4ubuntu21.31+esm1
-    - libsystemd0=229-4ubuntu21.31+esm1
+    - libsystemd-dev=229-4ubuntu21.31+esm3
+    - libsystemd0=229-4ubuntu21.31+esm3
     - libtasn1-6-dev=4.7-3ubuntu0.16.04.3+esm3
     - libtasn1-6=4.7-3ubuntu0.16.04.3+esm3
     - libtimedate-perl=2.3000-2
@@ -693,8 +693,8 @@ parts:
     - libtool=2.4.6-0.1
     - libtsan0=5.4.0-6ubuntu1~16.04.12+esm2
     - libubsan0=5.4.0-6ubuntu1~16.04.12+esm2
-    - libudev-dev=229-4ubuntu21.31+esm1
-    - libudev1=229-4ubuntu21.31+esm1
+    - libudev-dev=229-4ubuntu21.31+esm3
+    - libudev1=229-4ubuntu21.31+esm3
     - libunistring0=0.9.3-5.2ubuntu1
     - liburi-perl=1.71-1
     - libusb-0.1-4=2:0.1.12-28
@@ -709,7 +709,7 @@ parts:
     - libxslt1.1=1.1.28-2.1ubuntu0.3+esm1
     - libxtables11=1.6.0-2ubuntu3
     - libzstd1=1.3.1+dfsg-1~ubuntu0.16.04.1+esm3
-    - linux-libc-dev=4.4.0-236.270
+    - linux-libc-dev=4.4.0-237.271
     - lockfile-progs=0.1.17
     - login=1:4.2-3.1ubuntu5.5+esm3
     - lsb-base=9.20160110ubuntu0.2
@@ -744,11 +744,11 @@ parts:
     - python-mako=1.0.3+ds1-1ubuntu1+esm1
     - python-markupsafe=0.23-2build2
     - python-minimal=2.7.12-1~16.04
-    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - python2.7=2.7.12-1ubuntu0~16.04.18+esm3
+    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - python2.7=2.7.12-1ubuntu0~16.04.18+esm4
     - python3-minimal=3.5.1-3
-    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - python3.5=3.5.2-2ubuntu0~16.04.13+esm6
+    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - python3.5=3.5.2-2ubuntu0~16.04.13+esm7
     - python3=3.5.1-3
     - python=2.7.12-1~16.04
     - readline-common=6.3-8ubuntu2
@@ -762,14 +762,14 @@ parts:
     - squashfs-tools=1:4.3-3ubuntu2.16.04.3+esm1
     - squashfuse=0.1.100-0ubuntu1~ubuntu16.04.1
     - sudo=1.8.16-0ubuntu1.10+esm1
-    - systemd-sysv=229-4ubuntu21.31+esm1
-    - systemd=229-4ubuntu21.31+esm1
+    - systemd-sysv=229-4ubuntu21.31+esm3
+    - systemd=229-4ubuntu21.31+esm3
     - sysv-rc=2.88dsf-59.3ubuntu2
     - sysvinit-utils=2.88dsf-59.3ubuntu2
     - tar=1.28-2.1ubuntu0.2+esm2
-    - tzdata=2022f-0ubuntu0.16.04+esm1
+    - tzdata=2022g-0ubuntu0.16.04+esm1
     - ubuntu-keyring=2012.05.19.1
-    - udev=229-4ubuntu21.31+esm1
+    - udev=229-4ubuntu21.31+esm3
     - util-linux=2.27.1-6ubuntu3.10+esm2
     - uuid-dev=2.27.1-6ubuntu3.10+esm2
     - xml-core=0.13+nmu2
@@ -778,10 +778,10 @@ parts:
     - zlib1g-dev=1:1.2.8.dfsg-2ubuntu4.3+esm2
     - zlib1g=1:1.2.8.dfsg-2ubuntu4.3+esm2
     installed-snaps:
-    - core18=2697
-    - core=14784
+    - core18=2721
+    - core=14946
     - snapcraft=6512
-    - snapd=18357
+    - snapd=18596
     plugin: nil
     prime:
     - usr/share/doc/inotify-tools/*
@@ -905,8 +905,8 @@ parts:
     - gir1.2-glib-2.0=1.46.0-3ubuntu1
     - gir1.2-gudev-1.0=1:230-2
     - gir1.2-modemmanager-1.0=1.6.4-1ubuntu0.16.04.1
-    - git-man=1:2.7.4-0ubuntu1.10+esm5
-    - git=1:2.7.4-0ubuntu1.10+esm5
+    - git-man=1:2.7.4-0ubuntu1.10+esm6
+    - git=1:2.7.4-0ubuntu1.10+esm6
     - gnome-common=3.14.0-2
     - gnupg=1.4.20-1ubuntu3.3+esm2
     - gobject-introspection=1.46.0-3ubuntu1
@@ -950,7 +950,7 @@ parts:
     - libcomerr2=1.42.13-1ubuntu1.2+esm1
     - libcroco3=0.6.11-1ubuntu0.1~esm1
     - libcryptsetup4=2:1.6.6-5ubuntu2.1
-    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm7
+    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm8
     - libdb5.3=5.3.28-11ubuntu0.2
     - libdbus-1-3=1.10.6-1ubuntu3.6+esm2
     - libdbus-1-dev=1.10.6-1ubuntu3.6+esm2
@@ -1064,9 +1064,9 @@ parts:
     - libnl-route-3-dev=3.2.27-1ubuntu0.16.04.1
     - libnspr4-dev=2:4.13.1-0ubuntu0.16.04.1
     - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
     - libp11-kit-dev=0.23.2-5~ubuntu16.04.2
     - libp11-kit0=0.23.2-5~ubuntu16.04.2
     - libpam-modules-bin=1.1.8-3.2ubuntu2.3+esm4
@@ -1083,11 +1083,11 @@ parts:
     - libpng12-dev=1.2.54-1ubuntu1.1+esm1
     - libprocps4=2:3.3.10-4ubuntu2.5
     - libpython-stdlib=2.7.12-1~16.04
-    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm3
+    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm4
     - libpython3-stdlib=3.5.1-3
-    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm6
+    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm7
     - libquadmath0=5.4.0-6ubuntu1~16.04.12+esm2
     - libreadline-dev=6.3-8ubuntu2
     - libreadline6-dev=6.3-8ubuntu2
@@ -1111,8 +1111,8 @@ parts:
     - libssl1.0.0=1.0.2g-1ubuntu4.20+esm6
     - libstdc++-5-dev=5.4.0-6ubuntu1~16.04.12+esm2
     - libstdc++6=5.4.0-6ubuntu1~16.04.12+esm2
-    - libsystemd-dev=229-4ubuntu21.31+esm1
-    - libsystemd0=229-4ubuntu21.31+esm1
+    - libsystemd-dev=229-4ubuntu21.31+esm3
+    - libsystemd0=229-4ubuntu21.31+esm3
     - libtasn1-6-dev=4.7-3ubuntu0.16.04.3+esm3
     - libtasn1-6=4.7-3ubuntu0.16.04.3+esm3
     - libtimedate-perl=2.3000-2
@@ -1121,8 +1121,8 @@ parts:
     - libtool=2.4.6-0.1
     - libtsan0=5.4.0-6ubuntu1~16.04.12+esm2
     - libubsan0=5.4.0-6ubuntu1~16.04.12+esm2
-    - libudev-dev=229-4ubuntu21.31+esm1
-    - libudev1=229-4ubuntu21.31+esm1
+    - libudev-dev=229-4ubuntu21.31+esm3
+    - libudev1=229-4ubuntu21.31+esm3
     - libunistring0=0.9.3-5.2ubuntu1
     - liburi-perl=1.71-1
     - libusb-0.1-4=2:0.1.12-28
@@ -1137,7 +1137,7 @@ parts:
     - libxslt1.1=1.1.28-2.1ubuntu0.3+esm1
     - libxtables11=1.6.0-2ubuntu3
     - libzstd1=1.3.1+dfsg-1~ubuntu0.16.04.1+esm3
-    - linux-libc-dev=4.4.0-236.270
+    - linux-libc-dev=4.4.0-237.271
     - lockfile-progs=0.1.17
     - login=1:4.2-3.1ubuntu5.5+esm3
     - lsb-base=9.20160110ubuntu0.2
@@ -1172,11 +1172,11 @@ parts:
     - python-mako=1.0.3+ds1-1ubuntu1+esm1
     - python-markupsafe=0.23-2build2
     - python-minimal=2.7.12-1~16.04
-    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - python2.7=2.7.12-1ubuntu0~16.04.18+esm3
+    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - python2.7=2.7.12-1ubuntu0~16.04.18+esm4
     - python3-minimal=3.5.1-3
-    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - python3.5=3.5.2-2ubuntu0~16.04.13+esm6
+    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - python3.5=3.5.2-2ubuntu0~16.04.13+esm7
     - python3=3.5.1-3
     - python=2.7.12-1~16.04
     - readline-common=6.3-8ubuntu2
@@ -1190,14 +1190,14 @@ parts:
     - squashfs-tools=1:4.3-3ubuntu2.16.04.3+esm1
     - squashfuse=0.1.100-0ubuntu1~ubuntu16.04.1
     - sudo=1.8.16-0ubuntu1.10+esm1
-    - systemd-sysv=229-4ubuntu21.31+esm1
-    - systemd=229-4ubuntu21.31+esm1
+    - systemd-sysv=229-4ubuntu21.31+esm3
+    - systemd=229-4ubuntu21.31+esm3
     - sysv-rc=2.88dsf-59.3ubuntu2
     - sysvinit-utils=2.88dsf-59.3ubuntu2
     - tar=1.28-2.1ubuntu0.2+esm2
-    - tzdata=2022f-0ubuntu0.16.04+esm1
+    - tzdata=2022g-0ubuntu0.16.04+esm1
     - ubuntu-keyring=2012.05.19.1
-    - udev=229-4ubuntu21.31+esm1
+    - udev=229-4ubuntu21.31+esm3
     - util-linux=2.27.1-6ubuntu3.10+esm2
     - uuid-dev=2.27.1-6ubuntu3.10+esm2
     - xml-core=0.13+nmu2
@@ -1206,10 +1206,10 @@ parts:
     - zlib1g-dev=1:1.2.8.dfsg-2ubuntu4.3+esm2
     - zlib1g=1:1.2.8.dfsg-2ubuntu4.3+esm2
     installed-snaps:
-    - core18=2697
-    - core=14784
+    - core18=2721
+    - core=14946
     - snapcraft=6512
-    - snapd=18357
+    - snapd=18596
     override-build: |
       snapcraftctl build
       # Run all tests NetworkManager ships by default
@@ -1268,7 +1268,7 @@ parts:
     - libmm-glib0=1.6.4-1ubuntu0.16.04.1
     - libndp0=1.4-2ubuntu0.16.04.1
     - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
     uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager-common:
@@ -1327,8 +1327,8 @@ parts:
     - gir1.2-glib-2.0=1.46.0-3ubuntu1
     - gir1.2-gudev-1.0=1:230-2
     - gir1.2-modemmanager-1.0=1.6.4-1ubuntu0.16.04.1
-    - git-man=1:2.7.4-0ubuntu1.10+esm5
-    - git=1:2.7.4-0ubuntu1.10+esm5
+    - git-man=1:2.7.4-0ubuntu1.10+esm6
+    - git=1:2.7.4-0ubuntu1.10+esm6
     - gnome-common=3.14.0-2
     - gnupg=1.4.20-1ubuntu3.3+esm2
     - gobject-introspection=1.46.0-3ubuntu1
@@ -1372,7 +1372,7 @@ parts:
     - libcomerr2=1.42.13-1ubuntu1.2+esm1
     - libcroco3=0.6.11-1ubuntu0.1~esm1
     - libcryptsetup4=2:1.6.6-5ubuntu2.1
-    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm7
+    - libcurl3-gnutls=7.47.0-1ubuntu2.19+esm8
     - libdb5.3=5.3.28-11ubuntu0.2
     - libdbus-1-3=1.10.6-1ubuntu3.6+esm2
     - libdbus-1-dev=1.10.6-1ubuntu3.6+esm2
@@ -1486,9 +1486,9 @@ parts:
     - libnl-route-3-dev=3.2.27-1ubuntu0.16.04.1
     - libnspr4-dev=2:4.13.1-0ubuntu0.16.04.1
     - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm3
-    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+    - libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm4
+    - libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
     - libp11-kit-dev=0.23.2-5~ubuntu16.04.2
     - libp11-kit0=0.23.2-5~ubuntu16.04.2
     - libpam-modules-bin=1.1.8-3.2ubuntu2.3+esm4
@@ -1505,11 +1505,11 @@ parts:
     - libpng12-dev=1.2.54-1ubuntu1.1+esm1
     - libprocps4=2:3.3.10-4ubuntu2.5
     - libpython-stdlib=2.7.12-1~16.04
-    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm3
+    - libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm4
     - libpython3-stdlib=3.5.1-3
-    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm6
+    - libpython3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - libpython3.5-stdlib=3.5.2-2ubuntu0~16.04.13+esm7
     - libquadmath0=5.4.0-6ubuntu1~16.04.12+esm2
     - libreadline-dev=6.3-8ubuntu2
     - libreadline6-dev=6.3-8ubuntu2
@@ -1533,8 +1533,8 @@ parts:
     - libssl1.0.0=1.0.2g-1ubuntu4.20+esm6
     - libstdc++-5-dev=5.4.0-6ubuntu1~16.04.12+esm2
     - libstdc++6=5.4.0-6ubuntu1~16.04.12+esm2
-    - libsystemd-dev=229-4ubuntu21.31+esm1
-    - libsystemd0=229-4ubuntu21.31+esm1
+    - libsystemd-dev=229-4ubuntu21.31+esm3
+    - libsystemd0=229-4ubuntu21.31+esm3
     - libtasn1-6-dev=4.7-3ubuntu0.16.04.3+esm3
     - libtasn1-6=4.7-3ubuntu0.16.04.3+esm3
     - libtimedate-perl=2.3000-2
@@ -1543,8 +1543,8 @@ parts:
     - libtool=2.4.6-0.1
     - libtsan0=5.4.0-6ubuntu1~16.04.12+esm2
     - libubsan0=5.4.0-6ubuntu1~16.04.12+esm2
-    - libudev-dev=229-4ubuntu21.31+esm1
-    - libudev1=229-4ubuntu21.31+esm1
+    - libudev-dev=229-4ubuntu21.31+esm3
+    - libudev1=229-4ubuntu21.31+esm3
     - libunistring0=0.9.3-5.2ubuntu1
     - liburi-perl=1.71-1
     - libusb-0.1-4=2:0.1.12-28
@@ -1559,7 +1559,7 @@ parts:
     - libxslt1.1=1.1.28-2.1ubuntu0.3+esm1
     - libxtables11=1.6.0-2ubuntu3
     - libzstd1=1.3.1+dfsg-1~ubuntu0.16.04.1+esm3
-    - linux-libc-dev=4.4.0-236.270
+    - linux-libc-dev=4.4.0-237.271
     - lockfile-progs=0.1.17
     - login=1:4.2-3.1ubuntu5.5+esm3
     - lsb-base=9.20160110ubuntu0.2
@@ -1594,11 +1594,11 @@ parts:
     - python-mako=1.0.3+ds1-1ubuntu1+esm1
     - python-markupsafe=0.23-2build2
     - python-minimal=2.7.12-1~16.04
-    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-    - python2.7=2.7.12-1ubuntu0~16.04.18+esm3
+    - python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+    - python2.7=2.7.12-1ubuntu0~16.04.18+esm4
     - python3-minimal=3.5.1-3
-    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm6
-    - python3.5=3.5.2-2ubuntu0~16.04.13+esm6
+    - python3.5-minimal=3.5.2-2ubuntu0~16.04.13+esm7
+    - python3.5=3.5.2-2ubuntu0~16.04.13+esm7
     - python3=3.5.1-3
     - python=2.7.12-1~16.04
     - readline-common=6.3-8ubuntu2
@@ -1612,14 +1612,14 @@ parts:
     - squashfs-tools=1:4.3-3ubuntu2.16.04.3+esm1
     - squashfuse=0.1.100-0ubuntu1~ubuntu16.04.1
     - sudo=1.8.16-0ubuntu1.10+esm1
-    - systemd-sysv=229-4ubuntu21.31+esm1
-    - systemd=229-4ubuntu21.31+esm1
+    - systemd-sysv=229-4ubuntu21.31+esm3
+    - systemd=229-4ubuntu21.31+esm3
     - sysv-rc=2.88dsf-59.3ubuntu2
     - sysvinit-utils=2.88dsf-59.3ubuntu2
     - tar=1.28-2.1ubuntu0.2+esm2
-    - tzdata=2022f-0ubuntu0.16.04+esm1
+    - tzdata=2022g-0ubuntu0.16.04+esm1
     - ubuntu-keyring=2012.05.19.1
-    - udev=229-4ubuntu21.31+esm1
+    - udev=229-4ubuntu21.31+esm3
     - util-linux=2.27.1-6ubuntu3.10+esm2
     - uuid-dev=2.27.1-6ubuntu3.10+esm2
     - xml-core=0.13+nmu2
@@ -1628,10 +1628,10 @@ parts:
     - zlib1g-dev=1:1.2.8.dfsg-2ubuntu4.3+esm2
     - zlib1g=1:1.2.8.dfsg-2ubuntu4.3+esm2
     installed-snaps:
-    - core18=2697
-    - core=14784
+    - core18=2721
+    - core=14946
     - snapcraft=6512
-    - snapd=18357
+    - snapd=18596
     plugin: dump
     prime: []
     source: snap-common
@@ -1642,7 +1642,7 @@ parts:
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-jxtkzcywrvfmrem3/+build/2038287
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-gtakfa9synve2djd/+build/2077296
 build-packages:
 - autoconf-archive=20150925-1
 - autoconf=2.69-9
@@ -1737,9 +1737,9 @@ build-packages:
 - libnl-route-3-dev=3.2.27-1ubuntu0.16.04.1
 - libnspr4-dev=2:4.13.1-0ubuntu0.16.04.1
 - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-- libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm3
-- libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm3
-- libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+- libnss3-dev=2:3.28.4-0ubuntu0.16.04.14+esm4
+- libnss3-nssdb=2:3.28.4-0ubuntu0.16.04.14+esm4
+- libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
 - libp11-kit-dev=0.23.2-5~ubuntu16.04.2
 - libpcre16-3=2:8.38-3.1ubuntu0.1~esm2
 - libpcre3-dev=2:8.38-3.1ubuntu0.1~esm2
@@ -1747,20 +1747,20 @@ build-packages:
 - libpcrecpp0v5=2:8.38-3.1ubuntu0.1~esm2
 - libpng12-dev=1.2.54-1ubuntu1.1+esm1
 - libpython-stdlib=2.7.12-1~16.04
-- libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-- libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm3
+- libpython2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+- libpython2.7-stdlib=2.7.12-1ubuntu0~16.04.18+esm4
 - libreadline-dev=6.3-8ubuntu2
 - libreadline6-dev=6.3-8ubuntu2
 - libsigsegv2=2.10-4
 - libslang2-dev=2.3.0-2ubuntu1.1
 - libslang2=2.3.0-2ubuntu1.1
 - libsp1c2=1.3.4-1.2.1-49ubuntu1
-- libsystemd-dev=229-4ubuntu21.31+esm1
+- libsystemd-dev=229-4ubuntu21.31+esm3
 - libtasn1-6-dev=4.7-3ubuntu0.16.04.3+esm3
 - libtimedate-perl=2.3000-2
 - libtinfo-dev=6.0+20160213-1ubuntu1+esm2
 - libtool=2.4.6-0.1
-- libudev-dev=229-4ubuntu21.31+esm1
+- libudev-dev=229-4ubuntu21.31+esm3
 - libunistring0=0.9.3-5.2ubuntu1
 - liburi-perl=1.71-1
 - libwww-perl=6.15-1
@@ -1780,8 +1780,8 @@ build-packages:
 - python-mako=1.0.3+ds1-1ubuntu1+esm1
 - python-markupsafe=0.23-2build2
 - python-minimal=2.7.12-1~16.04
-- python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm3
-- python2.7=2.7.12-1ubuntu0~16.04.18+esm3
+- python2.7-minimal=2.7.12-1ubuntu0~16.04.18+esm4
+- python2.7=2.7.12-1ubuntu0~16.04.18+esm4
 - python=2.7.12-1~16.04
 - sgml-base=1.26+nmu4ubuntu1
 - sgml-data=2.0.10
@@ -1791,7 +1791,7 @@ build-packages:
 - xsltproc=1.1.28-2.1ubuntu0.3+esm1
 - zlib1g-dev=1:1.2.8.dfsg-2ubuntu4.3+esm2
 build-snaps:
-- core=14784
+- core=14946
 primed-stage-packages:
 - inotify-tools=3.14-1ubuntu1
 - iputils-arping=3:20121221-5ubuntu2
@@ -1801,4 +1801,4 @@ primed-stage-packages:
 - libmm-glib0=1.6.4-1ubuntu0.16.04.1
 - libndp0=1.4-2ubuntu0.16.04.1
 - libnspr4=2:4.13.1-0ubuntu0.16.04.1
-- libnss3=2:3.28.4-0ubuntu0.16.04.14+esm3
+- libnss3=2:3.28.4-0ubuntu0.16.04.14+esm4
