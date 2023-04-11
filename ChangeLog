@@ -1,3 +1,25 @@
+2023-04-11 network-manager 1.2.2-31
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * tests: use wifi-ap as local snap
+    
+    As it has been unpublished in the store.
+    Merge-Proposal: https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+merge/440528
+
+  [ Changes in primed packages ]
+  
+  libnss3 (built from nss) updated from 2:3.28.4-0ubuntu0.16.04.14+esm3 to 2:3.28.4-0ubuntu0.16.04.14+esm4:
+  
+    nss (2:3.28.4-0ubuntu0.16.04.14+esm4) xenial-security; urgency=medium
+  
+      * SECURITY UPDATE: Arbitrary memory write via PKCS 12 in NSS
+        - debian/patches/CVE-2023-0767.patch: improve handling of unknown
+          PKCS#12 safe bag types in nss/lib/pkcs12/p12d.c,
+          nss/lib/pkcs12/p12t.h, nss/lib/pkcs12/p12tmpl.c.
+        - CVE-2023-0767
+  
+     -- Leonidas Da Silva Barbosa <leo.barbosa@canonical.com>  Wed, 01 Mar 2023 14:26:55 -0300
+  
 2023-03-02 network-manager 1.2.2-30
 
   [ Changes in primed packages ]
