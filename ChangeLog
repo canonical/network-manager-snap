@@ -1,3 +1,196 @@
+2023-04-13 network-manager 1.36.6-4
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * snap-patch/netplan: do not write files for temporary connections
+    Merge pull request #15 from snapcore/no-temp-conns
+  * patch:  core: do not check 'match' settings when comparing connections
+    Merge pull request #19 from snapcore/fix-conn-matching
+  * tests: fix tests using access points
+    Merge pull request #20 from snapcore/fix-ap-tests-22
+  * .github/workflows: fix usage of branches
+    Merge pull request #21 from snapcore/fix-workflows
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.7 to 7.81.0-1ubuntu1.10:
+  
+    curl (7.81.0-1ubuntu1.10) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: TELNET option IAC injection
+        - debian/patches/CVE-2023-27533.patch: only accept option arguments in
+          ascii in lib/telnet.c.
+        - CVE-2023-27533
+      * SECURITY UPDATE: SFTP path ~ resolving discrepancy
+        - debian/patches/CVE-2023-27534-pre1.patch: do not add '/' if homedir
+          ends with one in lib/curl_path.c.
+        - debian/patches/CVE-2023-27534.patch: create the new path with dynbuf
+          in lib/curl_path.c.
+        - CVE-2023-27534
+      * SECURITY UPDATE: FTP too eager connection reuse
+        - debian/patches/CVE-2023-27535-pre1.patch: add and use Curl_timestrcmp
+          in lib/netrc.c, lib/strcase.c, lib/strcase.h, lib/url.c,
+          lib/vauth/digest_sspi.c, lib/vtls/vtls.c.
+        - debian/patches/CVE-2023-27535.patch: add more conditions for
+          connection reuse in lib/ftp.c, lib/ftp.h, lib/url.c, lib/urldata.h.
+        - CVE-2023-27535
+      * SECURITY UPDATE: GSS delegation too eager connection re-use
+        - debian/patches/CVE-2023-27536.patch: only reuse connections with same
+          GSS delegation in lib/url.c, lib/urldata.h.
+        - CVE-2023-27536
+      * SECURITY UPDATE: SSH connection too eager reuse still
+        - debian/patches/CVE-2023-27538.patch: fix the SSH connection reuse
+          check in lib/url.c.
+        - CVE-2023-27538
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 14 Mar 2023 12:37:02 -0400
+  
+    curl (7.81.0-1ubuntu1.8) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: multiple HSTS issues
+        - debian/patches/CVE-2023-23914_5-1.patch: add sharing of HSTS cache
+          among handles in docs/libcurl/opts/CURLSHOPT_SHARE.3,
+          docs/libcurl/symbols-in-versions, include/curl/curl.h, lib/hsts.c,
+          lib/hsts.h, lib/setopt.c, lib/share.c, lib/share.h, lib/transfer.c,
+          lib/url.c, lib/urldata.h.
+        - debian/patches/CVE-2023-23914_5-2.patch: share HSTS between handles
+          in src/tool_operate.c.
+        - debian/patches/CVE-2023-23914_5-3.patch: handle adding the same host
+          name again in lib/hsts.c.
+        - debian/patches/CVE-2023-23914_5-4.patch: support crlf="yes" for
+          verify/proxy in tests/FILEFORMAT.md, tests/runtests.pl.
+        - debian/patches/CVE-2023-23914_5-5.patch: verify hsts with two URLs in
+          tests/data/Makefile.inc, tests/data/test446.
+        - CVE-2023-23914
+        - CVE-2023-23915
+      * SECURITY UPDATE: HTTP multi-header compression denial of service
+        - debian/patches/CVE-2023-23916-pre1.patch: do CRLF replacements in
+          tests/FILEFORMAT.md, tests/data/test1, tests/runtests.pl.
+        - debian/patches/CVE-2023-23916.patch: do not reset stage counter for
+          each header in lib/content_encoding.c, lib/urldata.h,
+          tests/data/Makefile.inc, tests/data/test418.
+        - CVE-2023-23916
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 15 Feb 2023 08:20:05 -0500
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.27+dfsg2-3ubuntu1.1 to 2.1.27+dfsg2-3ubuntu1.2:
+  
+    cyrus-sasl2 (2.1.27+dfsg2-3ubuntu1.2) jammy; urgency=medium
+  
+      * d/control, d/libsasl2-modules-gssapi-mit.install,
+        d/libsasl2-modules.install: move the SCRAM mechanism to
+        the libsasl2-modules package (LP: #1988730)
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Mon, 12 Dec 2022 08:52:45 -0300
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.86-1.1ubuntu0.1 to 2.86-1.1ubuntu0.2:
+  
+    dnsmasq (2.86-1.1ubuntu0.2) jammy; urgency=medium
+  
+      * src/forward.c: Do not refuse retries from client DNS queries. Behaviour to
+        stop infinite loops when all servers return REFUSED was wrongly activated
+        on client retries, resulting in incorrect REFUSED replies to client
+        retries. The code added here is a cherry pick released in upstream version
+        2.87, originating at
+        https://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=2561f9fe0eb9c0be
+        (LP: #1981794)
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Fri, 14 Oct 2022 14:39:41 -0700
+  
+  libmm-glib0 (built from modemmanager) updated from 1.18.6-1 to 1.20.0-1~ubuntu22.04.1:
+  
+    modemmanager (1.20.0-1~ubuntu22.04.1) jammy; urgency=medium
+  
+      * Backport the newer modemmanager stack to the LTS as part of
+        new hardware enablement including FM350 modems
+        (lp: #1950282)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Tue, 13 Dec 2022 13:38:07 +0100
+  
+    modemmanager (1.19~git20220905-0ubuntu2) kinetic; urgency=medium
+  
+      * Build without libqrtr for now, the MIR is blocked since we don't have
+        hardware available to do the required testing of the feature,
+        include some workarounds to fix the build
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 07 Sep 2022 15:38:20 +0200
+  
+    modemmanager (1.19~git20220905-0ubuntu1) kinetic; urgency=medium
+  
+      * New upstream snapshot, fixing build issues with the new glib serie
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 05 Sep 2022 11:26:53 +0200
+  
+    modemmanager (1.19~git20220825-0ubuntu1) kinetic; urgency=medium
+  
+      * Update to a preversion doing a git snapshot, needed for newer hardware
+      * Update the build requirements and build with meson
+      * Refresh the symbols
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 25 Aug 2022 17:28:49 +0200
+  
+    modemmanager (1.18.10-1) unstable; urgency=medium
+  
+      * New upstream version 1.18.10
+      * d/control: update my email address and bump libqmi dependency.
+        Upstream bumped the required version of `libqmi`, so let's ensure this
+        is reflected in this package.
+        This commit also bumps the Standards-Version, as no additional change is
+        required.
+      * debian: update linitian-overrides.
+        Due to recent changes in `lintian`, our overrides for the -doc packages
+        are no longer needed. However, a new `source-is-missing` lintian error
+        message must be overridden as it relates to HTML files, which are source
+        files themselves.
+  
+     -- Arnaud Ferraris <aferraris@debian.org>  Mon, 11 Jul 2022 17:30:09 +0200
+  
+    modemmanager (1.18.8-1) unstable; urgency=medium
+  
+      * debian: lintian-driven fixes and small improvements.
+        This commit includes minor changes spotted by `lintian-brush`:
+        - remove obsolete/empty maintainer scripts
+        - `d/upstream/metadata`: append `.git` to repo URL
+        - `d/rules`: drop symbols migration (1.4.14 is long gone)
+      * d/control: drop build dependency on libqrtr-glib
+        `libqrtr-glib-dev` is now a dependency to `libqmi-glib-dev`, and as such
+        can be safely omitted from this package's build deps.
+        We must however increase the required `libqmi` version to ensure we
+        avoid build failures.
+      * New upstream version 1.18.8
+      * d/symbols: update for new release.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Fri, 20 May 2022 10:19:43 +0200
+  
+    modemmanager (1.18.6-2) unstable; urgency=medium
+  
+      * d/control: build-depend on libqrtr-glib.
+        This enables support for the QRTR protocol so we can use the integrated
+        modem found on Qualcomm SoCs.
+  
+     -- Arnaud Ferraris <arnaud.ferraris@gmail.com>  Wed, 23 Feb 2022 13:58:35 +0100
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.13+dfsg-0ubuntu0.22.04.1 to 2.5.14+dfsg-0ubuntu0.22.04.2:
+  
+    openldap (2.5.14+dfsg-0ubuntu0.22.04.2) jammy; urgency=medium
+  
+      * Build the passwd/sha2 contrib module with -fno-strict-aliasing to
+        avoid computing an incorrect SHA256 hash with some versions of the
+        compiler (LP: #2000817):
+        - d/t/{control,sha2-contrib}: test to verify the SHA256 hash
+          produced by passwd/sha2
+        - d/rules: set -fno-strict-aliasing only when building the
+          passwd/sha2 contrib module
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Sun, 12 Mar 2023 14:11:53 -0300
+  
+    openldap (2.5.14+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2007625).
+        - Several fixes, including memory leaks that affect slapd and
+          certain slapo modules.
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Fri, 17 Feb 2023 16:12:43 -0500
+  
 2023-02-18 network-manager 1.36.6-3
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
