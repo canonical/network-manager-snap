@@ -1,3 +1,13 @@
+2023-05-02 network-manager 1.10.6-17
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * snap/snapcraft: update branch for dnsmasq
+    Merge pull request #23 from snapcore/update-branches-1.10
+
+  [ Changes in primed packages ]
+  
+  No changes for primed packages
+  
 2023-03-29 network-manager 1.10.6-16
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
