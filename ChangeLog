@@ -1,3 +1,21 @@
+2023-05-02 network-manager 1.22.10-19
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.80-1.1ubuntu1.6 to 2.80-1.1ubuntu1.7:
+  
+    dnsmasq (2.80-1.1ubuntu1.7) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: IP fragmentation
+        - src/config.h: update default max EDNS_PKTSZ to 1232 as agreed on
+          dnsflagday 2020.
+        - man/dnsmasq.8: updating documentation to reflect new default max
+          EDNS_PKTSZ.
+        - eb92fb32b746f2104b0f370b5b295bb8dd4bd5e5
+        - CVE-2023-28450
+  
+     -- Ian Constantin <ian.constantin@canonical.com>  Tue, 18 Apr 2023 11:12:00 +0300
+  
 2023-03-29 network-manager 1.22.10-18
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
