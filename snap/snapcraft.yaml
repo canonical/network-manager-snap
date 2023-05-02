@@ -70,7 +70,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/2.79-1ubuntu0.6
+    source-branch: applied/2.79-1ubuntu0.7
     build-packages:
       - build-essential
     make-parameters:
