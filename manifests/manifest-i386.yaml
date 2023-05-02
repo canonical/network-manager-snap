@@ -1,9 +1,9 @@
 snapcraft-version: '5.0'
-snapcraft-started-at: '2023-03-29T11:43:00.506200Z'
+snapcraft-started-at: '2023-05-02T15:33:24.017561Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '18.04'
 name: network-manager
-version: 1.10.6-16
+version: 1.10.6-17
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -78,17 +78,17 @@ parts:
     installed-snaps:
     - core18=2720
     - snapcraft=6754
-    - snapd=18597
+    - snapd=19123
     organize:
       ChangeLog: usr/share/doc/network-manager/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-90zkaehlewv569i6"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-coe7eo7lksjhdet0"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 i686
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 i686
       athlon i686 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -98,24 +98,24 @@ parts:
     installed-snaps:
     - core18=2720
     - snapcraft=6754
-    - snapd=18597
+    - snapd=19123
     make-parameters:
     - PREFIX=/
     override-build: |
-      git apply "/build/ci-network-manager-90zkaehlewv569i6"/snap-patch/dnsmasq.patch
+      git apply "/build/ci-network-manager-coe7eo7lksjhdet0"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
     - sbin/dnsmasq
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
-    source-branch: applied/2.79-1ubuntu0.6
+    source-branch: applied/2.79-1ubuntu0.7
     source-checksum: ''
     source-commit: ''
     source-tag: ''
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 i686
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 i686
       athlon i686 GNU/Linux'
   networkmanager:
     build-packages:
@@ -201,11 +201,11 @@ parts:
     installed-snaps:
     - core18=2720
     - snapcraft=6754
-    - snapd=18597
+    - snapd=19123
     override-build: |
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-90zkaehlewv569i6"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-coe7eo7lksjhdet0"/snap-patch/networkmanager/*.patch
 
       # remove configure to trigger autotools
       rm ./configure
@@ -215,7 +215,7 @@ parts:
       make check
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-90zkaehlewv569i6"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-coe7eo7lksjhdet0"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -328,7 +328,7 @@ parts:
     - libwind0-heimdal=7.5.0+dfsg-1ubuntu0.4
     - ppp=2.4.7-2+2ubuntu1.3
     - resolvconf=1.79ubuntu10.18.04.3
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 i686
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 i686
       athlon i686 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -336,13 +336,13 @@ parts:
     installed-snaps:
     - core18=2720
     - snapcraft=6754
-    - snapd=18597
+    - snapd=19123
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 i686
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 i686
       athlon i686 GNU/Linux'
   networkmanager-phony:
     build-packages:
@@ -352,7 +352,7 @@ parts:
     - adduser=3.116ubuntu1
     - advancecomp=2.1-1ubuntu0.18.04.3
     - apparmor=2.12-4ubuntu5.1
-    - apt=1.6.14
+    - apt=1.6.17
     - autoconf=2.69-11
     - automake=1:1.15.1-3ubuntu2
     - autopoint=0.19.8.1-6ubuntu0.3
@@ -401,8 +401,8 @@ parts:
     - gir1.2-freedesktop=1.56.1-1
     - gir1.2-glib-2.0=1.56.1-1
     - gir1.2-modemmanager-1.0=1.10.0-1~ubuntu18.04.2
-    - git-man=1:2.17.1-1ubuntu0.17
-    - git=1:2.17.1-1ubuntu0.17
+    - git-man=1:2.17.1-1ubuntu0.18
+    - git=1:2.17.1-1ubuntu0.18
     - gobject-introspection=1.56.1-1
     - gpg-agent=2.2.4-1ubuntu1.6
     - gpg=2.2.4-1ubuntu1.6
@@ -420,7 +420,7 @@ parts:
     - iptables=1.6.1-2ubuntu2
     - libacl1=2.2.52-3build1
     - libapparmor1=2.12-4ubuntu5.1
-    - libapt-pkg5.0=1.6.14
+    - libapt-pkg5.0=1.6.17
     - libargon2-0=0~20161029-1.1
     - libasan4=7.5.0-3ubuntu1~18.04
     - libasn1-8-heimdal=7.5.0+dfsg-1ubuntu0.4
@@ -611,8 +611,8 @@ parts:
     - libsmartcols1=2.31.1-0.4ubuntu3.7
     - libsqlite3-0=3.22.0-1ubuntu0.7
     - libss2=1.44.1-1ubuntu1.4
-    - libssl1.0.0=1.0.2n-1ubuntu5.11
-    - libssl1.1=1.1.1-1ubuntu2.1~18.04.21
+    - libssl1.0.0=1.0.2n-1ubuntu5.12
+    - libssl1.1=1.1.1-1ubuntu2.1~18.04.22
     - libstdc++-7-dev=7.5.0-3ubuntu1~18.04
     - libstdc++6=8.4.0-1ubuntu1~18.04
     - libsystemd-dev=237-3ubuntu10.57
@@ -639,13 +639,13 @@ parts:
     - libwww-perl=6.31-1ubuntu0.1
     - libwww-robotrules-perl=6.01-1
     - libxml-parser-perl=2.44-2build3
-    - libxml2=2.9.4+dfsg1-6.1ubuntu1.8
+    - libxml2=2.9.4+dfsg1-6.1ubuntu1.9
     - libxslt1.1=1.1.29-5ubuntu0.3
     - libxtables12=1.6.1-2ubuntu2
     - libyaml-0-2=0.1.7-2ubuntu3
     - libyaml-perl=1.24-1
     - libzstd1=1.3.3+dfsg-2ubuntu1.2
-    - linux-libc-dev=4.15.0-208.220
+    - linux-libc-dev=4.15.0-210.221
     - lockfile-progs=0.1.17build1
     - login=1:4.5-1ubuntu2.5
     - lsb-base=9.20170808ubuntu1
@@ -662,7 +662,7 @@ parts:
     - nettle-dev=3.4.1-0ubuntu0.18.04.1
     - opensp=1.5.2-13ubuntu2
     - openssh-client=1:7.6p1-4ubuntu0.7
-    - openssl=1.1.1-1ubuntu2.1~18.04.21
+    - openssl=1.1.1-1ubuntu2.1~18.04.22
     - optipng=0.7.6-1.1
     - passwd=1:4.5-1ubuntu2.5
     - patch=2.7.6-2ubuntu1.1
@@ -706,12 +706,12 @@ parts:
     - socat=1.7.3.2-2ubuntu2
     - squashfs-tools=1:4.3-6ubuntu0.18.04.4
     - squashfuse=0.1.100-0ubuntu2
-    - sudo=1.8.21p2-3ubuntu1.5
+    - sudo=1.8.21p2-3ubuntu1.6
     - systemd-sysv=237-3ubuntu10.57
     - systemd=237-3ubuntu10.57
     - sysvinit-utils=2.88dsf-59.10ubuntu1
     - tar=1.29b-2ubuntu0.4
-    - tzdata=2022g-0ubuntu0.18.04
+    - tzdata=2023c-0ubuntu0.18.04
     - ubuntu-keyring=2018.09.18.1~18.04.2
     - udev=237-3ubuntu10.57
     - util-linux=2.31.1-0.4ubuntu3.7
@@ -724,7 +724,7 @@ parts:
     installed-snaps:
     - core18=2720
     - snapcraft=6754
-    - snapd=18597
+    - snapd=19123
     override-build: |
       ./build-tools/cmp-stage-build.py \
           networkmanager network-manager dnsmasq dnsmasq-base
@@ -732,7 +732,7 @@ parts:
     override-prime: |
       mkdir -p snap
       "$SNAPCRAFT_PART_SRC"/build-tools/find-non-primed-pkgs.sh \
-          "/build/ci-network-manager-90zkaehlewv569i6" snap/unstage.txt
+          "/build/ci-network-manager-coe7eo7lksjhdet0" snap/unstage.txt
     plugin: nil
     prime: []
     source: https://git.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/stack-snaps-tools
@@ -743,7 +743,7 @@ parts:
     source-type: git
     stage: []
     stage-packages:
-    - dnsmasq-base=2.79-1ubuntu0.6
+    - dnsmasq-base=2.79-1ubuntu0.7
     - libasn1-8-heimdal=7.5.0+dfsg-1ubuntu0.4
     - libcurl3-gnutls=7.58.0-2ubuntu3.24
     - libgssapi3-heimdal=7.5.0+dfsg-1ubuntu0.4
@@ -766,12 +766,12 @@ parts:
     - libteamdctl0=1.26-1
     - libwind0-heimdal=7.5.0+dfsg-1ubuntu0.4
     - network-manager=1.10.6-2ubuntu1.4
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 i686
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 i686
       athlon i686 GNU/Linux'
 architectures:
 - i386
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-90zkaehlewv569i6/+build/2066674
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-coe7eo7lksjhdet0/+build/2096955
 build-packages:
 - autoconf=2.69-11
 - automake=1:1.15.1-3ubuntu2
@@ -891,7 +891,7 @@ build-packages:
 - libwww-perl=6.31-1ubuntu0.1
 - libwww-robotrules-perl=6.01-1
 - libxml-parser-perl=2.44-2build3
-- libxml2=2.9.4+dfsg1-6.1ubuntu1.8
+- libxml2=2.9.4+dfsg1-6.1ubuntu1.9
 - libxslt1.1=1.1.29-5ubuntu0.3
 - libxtables12=1.6.1-2ubuntu2
 - libyaml-0-2=0.1.7-2ubuntu3
