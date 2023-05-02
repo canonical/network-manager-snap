@@ -1,9 +1,9 @@
 snapcraft-version: 7.3.1
-snapcraft-started-at: '2023-03-29T10:48:43.381220Z'
+snapcraft-started-at: '2023-05-02T14:14:07.412335Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-18
+version: 1.22.10-19
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -148,8 +148,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.18.6-1~ubuntu20.04.1
-    - git-man=1:2.25.1-1ubuntu3.10
-    - git=1:2.25.1-1ubuntu3.10
+    - git-man=1:2.25.1-1ubuntu3.11
+    - git=1:2.25.1-1ubuntu3.11
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.2
     - gpg=2.2.19-3ubuntu2.2
@@ -334,7 +334,7 @@ parts:
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.20
+    - libpam-systemd=245.4-4ubuntu3.21
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -380,11 +380,11 @@ parts:
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
-    - libssl1.1=1.1.1f-1ubuntu2.17
+    - libssl1.1=1.1.1f-1ubuntu2.18
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.20
-    - libsystemd0=245.4-4ubuntu3.20
+    - libsystemd-dev=245.4-4ubuntu3.21
+    - libsystemd0=245.4-4ubuntu3.21
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -396,8 +396,8 @@ parts:
     - libtry-tiny-perl=0.30-1
     - libtsan0=10.3.0-1ubuntu1~20.04
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.20
-    - libudev1=245.4-4ubuntu3.20
+    - libudev-dev=245.4-4ubuntu3.21
+    - libudev1=245.4-4ubuntu3.21
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -407,14 +407,14 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.6
     - libxslt1.1=1.1.34-4ubuntu0.20.04.1
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-146.163
+    - linux-libc-dev=5.4.0-148.165
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -432,7 +432,7 @@ parts:
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
     - openssh-client=1:8.2p1-4ubuntu0.5
-    - openssl=1.1.1f-1ubuntu2.17
+    - openssl=1.1.1f-1ubuntu2.18
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.4
     - patch=2.7.6-6
@@ -479,15 +479,15 @@ parts:
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
-    - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.20
-    - systemd-timesyncd=245.4-4ubuntu3.20
-    - systemd=245.4-4ubuntu3.20
+    - sudo=1.8.31-1ubuntu1.5
+    - systemd-sysv=245.4-4ubuntu3.21
+    - systemd-timesyncd=245.4-4ubuntu3.21
+    - systemd=245.4-4ubuntu3.21
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.3
-    - tzdata=2022g-0ubuntu0.20.04.1
+    - tzdata=2023c-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.20
+    - udev=245.4-4ubuntu3.21
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -498,17 +498,17 @@ parts:
     installed-snaps:
     - core20=1852
     - snapcraft=8931
-    - snapd=18596
+    - snapd=19122
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-2cyo2wygu5fob3pi"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-6yliheyoegn2jzub"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -566,8 +566,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.18.6-1~ubuntu20.04.1
-    - git-man=1:2.25.1-1ubuntu3.10
-    - git=1:2.25.1-1ubuntu3.10
+    - git-man=1:2.25.1-1ubuntu3.11
+    - git=1:2.25.1-1ubuntu3.11
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.2
     - gpg=2.2.19-3ubuntu2.2
@@ -752,7 +752,7 @@ parts:
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.20
+    - libpam-systemd=245.4-4ubuntu3.21
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -798,11 +798,11 @@ parts:
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
-    - libssl1.1=1.1.1f-1ubuntu2.17
+    - libssl1.1=1.1.1f-1ubuntu2.18
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.20
-    - libsystemd0=245.4-4ubuntu3.20
+    - libsystemd-dev=245.4-4ubuntu3.21
+    - libsystemd0=245.4-4ubuntu3.21
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -814,8 +814,8 @@ parts:
     - libtry-tiny-perl=0.30-1
     - libtsan0=10.3.0-1ubuntu1~20.04
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.20
-    - libudev1=245.4-4ubuntu3.20
+    - libudev-dev=245.4-4ubuntu3.21
+    - libudev1=245.4-4ubuntu3.21
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -825,14 +825,14 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.6
     - libxslt1.1=1.1.34-4ubuntu0.20.04.1
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-146.163
+    - linux-libc-dev=5.4.0-148.165
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -850,7 +850,7 @@ parts:
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
     - openssh-client=1:8.2p1-4ubuntu0.5
-    - openssl=1.1.1f-1ubuntu2.17
+    - openssl=1.1.1f-1ubuntu2.18
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.4
     - patch=2.7.6-6
@@ -897,15 +897,15 @@ parts:
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
-    - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.20
-    - systemd-timesyncd=245.4-4ubuntu3.20
-    - systemd=245.4-4ubuntu3.20
+    - sudo=1.8.31-1ubuntu1.5
+    - systemd-sysv=245.4-4ubuntu3.21
+    - systemd-timesyncd=245.4-4ubuntu3.21
+    - systemd=245.4-4ubuntu3.21
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.3
-    - tzdata=2022g-0ubuntu0.20.04.1
+    - tzdata=2023c-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.20
+    - udev=245.4-4ubuntu3.21
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -916,13 +916,13 @@ parts:
     installed-snaps:
     - core20=1852
     - snapcraft=8931
-    - snapd=18596
+    - snapd=19122
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-2cyo2wygu5fob3pi/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-6yliheyoegn2jzub/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-6yliheyoegn2jzub"/snap-patch/dnsmasq.patch
       snapcraftctl build
     plugin: make
     prime:
@@ -935,7 +935,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1072,8 +1072,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.18.6-1~ubuntu20.04.1
-    - git-man=1:2.25.1-1ubuntu3.10
-    - git=1:2.25.1-1ubuntu3.10
+    - git-man=1:2.25.1-1ubuntu3.11
+    - git=1:2.25.1-1ubuntu3.11
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.2
     - gpg=2.2.19-3ubuntu2.2
@@ -1258,7 +1258,7 @@ parts:
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.20
+    - libpam-systemd=245.4-4ubuntu3.21
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -1304,11 +1304,11 @@ parts:
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
-    - libssl1.1=1.1.1f-1ubuntu2.17
+    - libssl1.1=1.1.1f-1ubuntu2.18
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.20
-    - libsystemd0=245.4-4ubuntu3.20
+    - libsystemd-dev=245.4-4ubuntu3.21
+    - libsystemd0=245.4-4ubuntu3.21
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1320,8 +1320,8 @@ parts:
     - libtry-tiny-perl=0.30-1
     - libtsan0=10.3.0-1ubuntu1~20.04
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.20
-    - libudev1=245.4-4ubuntu3.20
+    - libudev-dev=245.4-4ubuntu3.21
+    - libudev1=245.4-4ubuntu3.21
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1331,14 +1331,14 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.6
     - libxslt1.1=1.1.34-4ubuntu0.20.04.1
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-146.163
+    - linux-libc-dev=5.4.0-148.165
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1356,7 +1356,7 @@ parts:
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
     - openssh-client=1:8.2p1-4ubuntu0.5
-    - openssl=1.1.1f-1ubuntu2.17
+    - openssl=1.1.1f-1ubuntu2.18
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.4
     - patch=2.7.6-6
@@ -1403,15 +1403,15 @@ parts:
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
-    - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.20
-    - systemd-timesyncd=245.4-4ubuntu3.20
-    - systemd=245.4-4ubuntu3.20
+    - sudo=1.8.31-1ubuntu1.5
+    - systemd-sysv=245.4-4ubuntu3.21
+    - systemd-timesyncd=245.4-4ubuntu3.21
+    - systemd=245.4-4ubuntu3.21
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.3
-    - tzdata=2022g-0ubuntu0.20.04.1
+    - tzdata=2023c-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.20
+    - udev=245.4-4ubuntu3.21
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -1422,16 +1422,16 @@ parts:
     installed-snaps:
     - core20=1852
     - snapcraft=8931
-    - snapd=18596
+    - snapd=19122
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-2cyo2wygu5fob3pi/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-6yliheyoegn2jzub/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-6yliheyoegn2jzub"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1448,7 +1448,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-2cyo2wygu5fob3pi"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-6yliheyoegn2jzub"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1566,7 +1566,7 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1623,8 +1623,8 @@ parts:
     - gir1.2-freedesktop=1.64.1-1~ubuntu20.04.1
     - gir1.2-glib-2.0=1.64.1-1~ubuntu20.04.1
     - gir1.2-modemmanager-1.0=1.18.6-1~ubuntu20.04.1
-    - git-man=1:2.25.1-1ubuntu3.10
-    - git=1:2.25.1-1ubuntu3.10
+    - git-man=1:2.25.1-1ubuntu3.11
+    - git=1:2.25.1-1ubuntu3.11
     - gobject-introspection=1.64.1-1~ubuntu20.04.1
     - gpg-agent=2.2.19-3ubuntu2.2
     - gpg=2.2.19-3ubuntu2.2
@@ -1809,7 +1809,7 @@ parts:
     - libpam-modules-bin=1.3.1-5ubuntu4.6
     - libpam-modules=1.3.1-5ubuntu4.6
     - libpam-runtime=1.3.1-5ubuntu4.6
-    - libpam-systemd=245.4-4ubuntu3.20
+    - libpam-systemd=245.4-4ubuntu3.21
     - libpam0g=1.3.1-5ubuntu4.6
     - libpcre16-3=2:8.39-12ubuntu0.1
     - libpcre2-16-0=10.34-7ubuntu0.1
@@ -1855,11 +1855,11 @@ parts:
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
     - libssh-4=0.9.3-2ubuntu2.2
-    - libssl1.1=1.1.1f-1ubuntu2.17
+    - libssl1.1=1.1.1f-1ubuntu2.18
     - libstdc++-9-dev=9.4.0-1ubuntu1~20.04.1
     - libstdc++6=10.3.0-1ubuntu1~20.04
-    - libsystemd-dev=245.4-4ubuntu3.20
-    - libsystemd0=245.4-4ubuntu3.20
+    - libsystemd-dev=245.4-4ubuntu3.21
+    - libsystemd0=245.4-4ubuntu3.21
     - libtasn1-6-dev=4.16.0-2
     - libtasn1-6=4.16.0-2
     - libteam-dev=1.30-1
@@ -1871,8 +1871,8 @@ parts:
     - libtry-tiny-perl=0.30-1
     - libtsan0=10.3.0-1ubuntu1~20.04
     - libubsan1=10.3.0-1ubuntu1~20.04
-    - libudev-dev=245.4-4ubuntu3.20
-    - libudev1=245.4-4ubuntu3.20
+    - libudev-dev=245.4-4ubuntu3.21
+    - libudev1=245.4-4ubuntu3.21
     - libunbound8=1.9.4-2ubuntu1.4
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
@@ -1882,14 +1882,14 @@ parts:
     - libwww-perl=6.43-1
     - libwww-robotrules-perl=6.02-1
     - libxml-parser-perl=2.46-1
-    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.5
+    - libxml2=2.9.10+dfsg-5ubuntu0.20.04.6
     - libxslt1.1=1.1.34-4ubuntu0.20.04.1
     - libxtables12=1.8.4-3ubuntu2
     - libyaml-0-2=0.2.2-1
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-146.163
+    - linux-libc-dev=5.4.0-148.165
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1907,7 +1907,7 @@ parts:
     - nettle-dev=3.5.1+really3.5.1-2ubuntu0.2
     - opensp=1.5.2-13ubuntu3
     - openssh-client=1:8.2p1-4ubuntu0.5
-    - openssl=1.1.1f-1ubuntu2.17
+    - openssl=1.1.1f-1ubuntu2.18
     - optipng=0.7.7-1
     - passwd=1:4.8.1-1ubuntu5.20.04.4
     - patch=2.7.6-6
@@ -1954,15 +1954,15 @@ parts:
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
-    - sudo=1.8.31-1ubuntu1.4
-    - systemd-sysv=245.4-4ubuntu3.20
-    - systemd-timesyncd=245.4-4ubuntu3.20
-    - systemd=245.4-4ubuntu3.20
+    - sudo=1.8.31-1ubuntu1.5
+    - systemd-sysv=245.4-4ubuntu3.21
+    - systemd-timesyncd=245.4-4ubuntu3.21
+    - systemd=245.4-4ubuntu3.21
     - sysvinit-utils=2.96-2.1ubuntu1
     - tar=1.30+dfsg-7ubuntu0.20.04.3
-    - tzdata=2022g-0ubuntu0.20.04.1
+    - tzdata=2023c-0ubuntu0.20.04.1
     - ubuntu-keyring=2020.02.11.4
-    - udev=245.4-4ubuntu3.20
+    - udev=245.4-4ubuntu3.21
     - util-linux=2.34-0.1ubuntu9.3
     - uuid-dev=2.34-0.1ubuntu9.3
     - xml-core=0.18+nmu1
@@ -1973,13 +1973,13 @@ parts:
     installed-snaps:
     - core20=1852
     - snapcraft=8931
-    - snapd=18596
+    - snapd=19122
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1989,7 +1989,7 @@ parts:
     installed-snaps:
     - core20=1852
     - snapcraft=8931
-    - snapd=18596
+    - snapd=19122
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2013,7 +2013,7 @@ parts:
     source-type: git
     stage: []
     stage-packages:
-    - dnsmasq-base=2.80-1.1ubuntu1.6
+    - dnsmasq-base=2.80-1.1ubuntu1.7
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
     - libcurl3-gnutls=7.68.0-1ubuntu2.18
@@ -2039,12 +2039,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - network-manager=1.22.10-1ubuntu2.3
-    uname: 'Linux 5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-147-generic #164-Ubuntu SMP Tue Mar 21 14:23:17 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-2cyo2wygu5fob3pi/+build/2066630
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-6yliheyoegn2jzub/+build/2096885
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2163,7 +2163,7 @@ build-packages:
 - libsigsegv2=2.12-2
 - libslang2-dev=2.3.2-4
 - libslang2=2.3.2-4
-- libsystemd-dev=245.4-4ubuntu3.20
+- libsystemd-dev=245.4-4ubuntu3.21
 - libtasn1-6-dev=4.16.0-2
 - libteam-dev=1.30-1
 - libteam5=1.30-1
@@ -2171,13 +2171,13 @@ build-packages:
 - libtimedate-perl=2.3200-1
 - libtool=2.4.6-14
 - libtry-tiny-perl=0.30-1
-- libudev-dev=245.4-4ubuntu3.20
+- libudev-dev=245.4-4ubuntu3.21
 - libunbound8=1.9.4-2ubuntu1.4
 - liburi-perl=1.76-2
 - libwww-perl=6.43-1
 - libwww-robotrules-perl=6.02-1
 - libxml-parser-perl=2.46-1
-- libxml2=2.9.10+dfsg-5ubuntu0.20.04.5
+- libxml2=2.9.10+dfsg-5ubuntu0.20.04.6
 - libxslt1.1=1.1.34-4ubuntu0.20.04.1
 - libxtables12=1.8.4-3ubuntu2
 - libyaml-0-2=0.2.2-1
@@ -2221,7 +2221,7 @@ build-packages:
 build-snaps:
 - core20=1852
 primed-stage-packages:
-- dnsmasq-base=2.80-1.1ubuntu1.6
+- dnsmasq-base=2.80-1.1ubuntu1.7
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libbrotli1=1.0.7-6ubuntu0.1
