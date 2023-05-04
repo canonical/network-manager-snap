@@ -1,9 +1,9 @@
 snapcraft-version: 7.3.1
-snapcraft-started-at: '2023-04-13T07:59:07.335504Z'
+snapcraft-started-at: '2023-05-04T12:14:10.999453Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '22.04'
 name: network-manager
-version: 1.36.6-4
+version: 1.36.6-5
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -63,7 +63,7 @@ parts:
     build-packages: []
   changelog:
     plugin: nil
-    override-build: 'cp "/build/ci-network-manager-zk6nv4mubqme5zks"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-oxm6ugo41v03y90k"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
 
       '
     organize:
@@ -80,7 +80,7 @@ parts:
     - dpkg-dev
     - git
     stage-packages:
-    - dnsmasq-base=2.86-1.1ubuntu0.2
+    - dnsmasq-base=2.86-1.1ubuntu0.3
     - libcurl3-gnutls=7.81.0-1ubuntu1.10
     - libjansson4=2.13.1-1.1build3
     - libldap-2.5-0=2.5.14+dfsg-0ubuntu0.22.04.2
@@ -128,8 +128,8 @@ parts:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-zk6nv4mubqme5zks/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-zk6nv4mubqme5zks"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-oxm6ugo41v03y90k/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-oxm6ugo41v03y90k"/snap-patch/dnsmasq.patch
       craftctl default
     prime:
     - sbin/dnsmasq
@@ -219,10 +219,10 @@ parts:
       apt download network-manager-openvpn
       dpkg -x network-manager-openvpn_*.deb "$CRAFT_PART_INSTALL"/
 
-      "/build/ci-network-manager-zk6nv4mubqme5zks/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-oxm6ugo41v03y90k/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-zk6nv4mubqme5zks"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-oxm6ugo41v03y90k"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -336,11 +336,11 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-zk6nv4mubqme5zks/+build/2079146
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-oxm6ugo41v03y90k/+build/2098640
 build-packages: []
 build-snaps: []
 primed-stage-packages:
-- dnsmasq-base=2.86-1.1ubuntu0.2
+- dnsmasq-base=2.86-1.1ubuntu0.3
 - libbrotli1=1.0.9-2build6
 - libcurl3-gnutls=7.81.0-1ubuntu1.10
 - libjansson4=2.13.1-1.1build3
