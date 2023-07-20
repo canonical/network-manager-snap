@@ -1,3 +1,24 @@
+2023-07-20 network-manager 1.22.10-21
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.18 to 7.68.0-1ubuntu2.19:
+  
+    curl (7.68.0-1ubuntu2.19) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: improper certificate validation vulnerability
+        - debian/patches/CVE-2023-28321.patch: fix host name wildcard checking
+          in lib/hostcheck.c, tests/data/test1397, tests/unit/unit1397.c.
+        - CVE-2023-28321
+      * SECURITY UPDATE: information disclosure vulnerability
+        - debian/patches/CVE-2023-28322.patch: unify the upload/method handling
+          in lib/curl_rtmp.c, lib/file.c, lib/ftp.c, lib/http.c, lib/imap.c,
+          lib/rtsp.c, lib/setopt.c, lib/smb.c, lib/smtp.c, lib/tftp.c,
+          lib/transfer.c, lib/urldata.h, lib/vssh/libssh.c, lib/vssh/libssh2.c.
+        - CVE-2023-28322
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 17 Jul 2023 10:44:42 -0400
+  
 2023-06-08 network-manager 1.22.10-20
 
   [ Changes in primed packages ]
