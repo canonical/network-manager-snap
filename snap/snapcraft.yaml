@@ -220,14 +220,12 @@ parts:
       - --without-dhcpcanon
       # Explicitly disable polkit, as it's not applicable on Ubuntu Core
       - --disable-polkit
-      - --disable-polkit-agent
       - --enable-ppp
       - --enable-ifupdown
       - --enable-introspection
       - --disable-gtk-doc
       - --enable-concheck
       - --enable-teamdctl
-      - --enable-json-validation
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
