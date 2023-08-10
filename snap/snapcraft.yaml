@@ -144,6 +144,8 @@ parts:
       "$SNAPCRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
       git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
+      find "$SNAPCRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
     filesets:
       binaries:
         - sbin/dnsmasq
@@ -253,6 +255,8 @@ parts:
       # re-create configure
       ./autogen.sh
       snapcraftctl build
+      find "$SNAPCRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
 
       # Run all tests NetworkManager ships by default
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
