@@ -149,6 +149,9 @@ parts:
       "$CRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
       git apply "$CRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
     prime:
       - sbin/dnsmasq
 
@@ -249,6 +252,9 @@ parts:
       # re-create configure
       ./autogen.sh
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
 
       # Run all tests NetworkManager ships by default
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
