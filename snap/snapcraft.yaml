@@ -242,7 +242,7 @@ parts:
       - --disable-ovs
       - --without-nm-cloud-setup
       # Set explicitly CFLAGS until lp: #1791946 is solved
-      - CFLAGS=-O2
+      - CFLAGS='-O2 -Wl,-z,relro,-z,now -pie -fpie'
     # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
     # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
