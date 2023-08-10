@@ -264,7 +264,6 @@ parts:
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
-      - libbrotli1
       - libcurl3-gnutls
       - libjansson4
       - libpkcs11-helper1
@@ -302,7 +301,6 @@ parts:
       # configuration
       - etc/NetworkManager/*
       # docs
-      - usr/share/doc/libbrotli1/copyright
       - usr/share/doc/libcurl3-gnutls/copyright
       - usr/share/doc/libjansson4/copyright
       - usr/share/doc/libpkcs11-helper1/copyright
@@ -319,7 +317,6 @@ parts:
       - usr/share/doc/libteamdctl0/copyright
       - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
-      - usr/share/doc/libbrotli1/changelog.*
       - usr/share/doc/libcurl3-gnutls/changelog.*
       - usr/share/doc/libjansson4/changelog.*
       - usr/share/doc/libpkcs11-helper1/changelog.*
@@ -340,7 +337,6 @@ parts:
       # libraries
       - usr/lib/*/libslang*
       - usr/lib/libnm*
-      - usr/lib/*/libbrotli*
       - usr/lib/*/libcurl-gnutls*
       ## required for teamdctl
       - usr/lib/*/libjansson*
