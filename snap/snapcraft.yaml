@@ -149,6 +149,9 @@ parts:
       "$CRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
       git apply "$CRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
     prime:
       - sbin/dnsmasq
 
@@ -217,20 +220,18 @@ parts:
       - --without-dhcpcanon
       # Explicitly disable polkit, as it's not applicable on Ubuntu Core
       - --disable-polkit
-      - --disable-polkit-agent
       - --enable-ppp
       - --enable-ifupdown
       - --enable-introspection
       - --disable-gtk-doc
       - --enable-concheck
       - --enable-teamdctl
-      - --enable-json-validation
       - --disable-more-warnings
       - --disable-modify-system
       - --disable-ovs
       - --without-nm-cloud-setup
-      # Set explicitly CFLAGS until lp: #1791946 is solved
-      - CFLAGS=-O2
+      # Set explicitly flags until lp: #1791946 is solved
+      - CFLAGS='-O2 -Wl,-z,relro,-z,now -pie -fpie'
     # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
     # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
@@ -249,6 +250,9 @@ parts:
       # re-create configure
       ./autogen.sh
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
 
       # Run all tests NetworkManager ships by default
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
@@ -260,7 +264,6 @@ parts:
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
-      - libbrotli1
       - libcurl3-gnutls
       - libjansson4
       - libpkcs11-helper1
@@ -298,7 +301,6 @@ parts:
       # configuration
       - etc/NetworkManager/*
       # docs
-      - usr/share/doc/libbrotli1/copyright
       - usr/share/doc/libcurl3-gnutls/copyright
       - usr/share/doc/libjansson4/copyright
       - usr/share/doc/libpkcs11-helper1/copyright
@@ -315,7 +317,6 @@ parts:
       - usr/share/doc/libteamdctl0/copyright
       - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
-      - usr/share/doc/libbrotli1/changelog.*
       - usr/share/doc/libcurl3-gnutls/changelog.*
       - usr/share/doc/libjansson4/changelog.*
       - usr/share/doc/libpkcs11-helper1/changelog.*
@@ -336,7 +337,6 @@ parts:
       # libraries
       - usr/lib/*/libslang*
       - usr/lib/libnm*
-      - usr/lib/*/libbrotli*
       - usr/lib/*/libcurl-gnutls*
       ## required for teamdctl
       - usr/lib/*/libjansson*
