@@ -1,3 +1,32 @@
+2023-09-14 network-manager 1.36.6-7
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * snapcraft.yaml: some clean-ups
+    Merge pull request #26 from snapcore/cleanups
+
+  [ Changes in primed packages ]
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.14+dfsg-0ubuntu0.22.04.2 to 2.5.16+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.16+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2029170).
+        - Fixed slapd cn=config incorrect handling of paused (ITS#10045)
+        - Fixed slapd-meta to account for MOD ops being optional (ITS#10067)
+        - Fixed slapd-asyncmeta to account for MOD ops being optional (ITS#10067)
+      
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Mon, 31 Jul 2023 18:13:10 -0400
+  
+    openldap (2.5.15+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2027079).
+        - Several fixes, including to asynchronous connections to the OpenLDAP
+          server.
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Tue, 11 Jul 2023 15:26:41 -0400
+  
+  libbrotli1: not primed anymore
+  
 2023-07-20 network-manager 1.36.6-6
 
   [ Changes in primed packages ]
