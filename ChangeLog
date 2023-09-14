@@ -1,3 +1,13 @@
+2023-09-14 network-manager 1.22.10-22
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * snapcraft.yaml: some clean-ups
+    Merge pull request #28 from snapcore/cleanups-20
+
+  [ Changes in primed packages ]
+  
+  No changes for primed packages
+  
 2023-07-20 network-manager 1.22.10-21
 
   [ Changes in primed packages ]
