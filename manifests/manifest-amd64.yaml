@@ -1,9 +1,9 @@
-snapcraft-version: 7.4.3
-snapcraft-started-at: '2023-07-20T10:57:59.567179Z'
+snapcraft-version: 7.5.2
+snapcraft-started-at: '2023-09-14T18:18:58.889765Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '22.04'
 name: network-manager
-version: 1.36.6-6
+version: 1.36.6-7
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -63,7 +63,7 @@ parts:
     build-packages: []
   changelog:
     plugin: nil
-    override-build: 'cp "/build/ci-network-manager-vcbye0ls9q1hken8"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-hwa6dekk2papo9xp"/ChangeLog "$CRAFT_PART_INSTALL"/ChangeLog
 
       '
     organize:
@@ -83,7 +83,7 @@ parts:
     - dnsmasq-base=2.86-1.1ubuntu0.3
     - libcurl3-gnutls=7.81.0-1ubuntu1.13
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.14+dfsg-0ubuntu0.22.04.2
+    - libldap-2.5-0=2.5.16+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.2
     - libndp0=1.8-0ubuntu3
     - libnewt0.52=0.52.21-5ubuntu2
@@ -128,9 +128,12 @@ parts:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-vcbye0ls9q1hken8/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-vcbye0ls9q1hken8"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-hwa6dekk2papo9xp/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-hwa6dekk2papo9xp"/snap-patch/dnsmasq.patch
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
     prime:
     - sbin/dnsmasq
     stage-packages: []
@@ -198,19 +201,17 @@ parts:
     - --with-libaudit=no
     - --without-dhcpcanon
     - --disable-polkit
-    - --disable-polkit-agent
     - --enable-ppp
     - --enable-ifupdown
     - --enable-introspection
     - --disable-gtk-doc
     - --enable-concheck
     - --enable-teamdctl
-    - --enable-json-validation
     - --disable-more-warnings
     - --disable-modify-system
     - --disable-ovs
     - --without-nm-cloud-setup
-    - CFLAGS=-O2
+    - CFLAGS='-O2 -Wl,-z,relro,-z,now -pie -fpie'
     override-build: |
       set -ex
 
@@ -219,14 +220,17 @@ parts:
       apt download network-manager-openvpn
       dpkg -x network-manager-openvpn_*.deb "$CRAFT_PART_INSTALL"/
 
-      "/build/ci-network-manager-vcbye0ls9q1hken8/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-hwa6dekk2papo9xp/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-vcbye0ls9q1hken8"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-hwa6dekk2papo9xp"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
       craftctl default
+      # Strip binaries
+      find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
+          grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
 
       # Run all tests NetworkManager ships by default
       # Hide the $SNAP env variable during testing, to prevent the netplan CLI
@@ -238,10 +242,9 @@ parts:
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
-    - libbrotli1=1.0.9-2build6
     - libcurl3-gnutls=7.81.0-1ubuntu1.13
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.14+dfsg-0ubuntu0.22.04.2
+    - libldap-2.5-0=2.5.16+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.2
     - libndp0=1.8-0ubuntu3
     - libnewt0.52=0.52.21-5ubuntu2
@@ -272,7 +275,6 @@ parts:
     - usr/sbin/NetworkManager
     - usr/sbin/openvpn
     - etc/NetworkManager/*
-    - usr/share/doc/libbrotli1/copyright
     - usr/share/doc/libcurl3-gnutls/copyright
     - usr/share/doc/libjansson4/copyright
     - usr/share/doc/libpkcs11-helper1/copyright
@@ -289,7 +291,6 @@ parts:
     - usr/share/doc/libteamdctl0/copyright
     - usr/share/doc/openvpn/copyright
     - usr/share/doc/ppp/copyright
-    - usr/share/doc/libbrotli1/changelog.*
     - usr/share/doc/libcurl3-gnutls/changelog.*
     - usr/share/doc/libjansson4/changelog.*
     - usr/share/doc/libpkcs11-helper1/changelog.*
@@ -309,7 +310,6 @@ parts:
     - usr/share/doc/network-manager-openvpn/changelog.*
     - usr/lib/*/libslang*
     - usr/lib/libnm*
-    - usr/lib/*/libbrotli*
     - usr/lib/*/libcurl-gnutls*
     - usr/lib/*/libjansson*
     - usr/lib/*/libpkcs11-helper*
@@ -336,15 +336,14 @@ parts:
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-vcbye0ls9q1hken8/+build/2174855
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-hwa6dekk2papo9xp/+build/2230452
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.86-1.1ubuntu0.3
-- libbrotli1=1.0.9-2build6
 - libcurl3-gnutls=7.81.0-1ubuntu1.13
 - libjansson4=2.13.1-1.1build3
-- libldap-2.5-0=2.5.14+dfsg-0ubuntu0.22.04.2
+- libldap-2.5-0=2.5.16+dfsg-0ubuntu0.22.04.1
 - libmm-glib0=1.20.0-1~ubuntu22.04.2
 - libndp0=1.8-0ubuntu3
 - libnewt0.52=0.52.21-5ubuntu2
