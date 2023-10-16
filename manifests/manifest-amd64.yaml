@@ -1,9 +1,9 @@
-snapcraft-version: 7.5.2
-snapcraft-started-at: '2023-09-14T17:59:51.976938Z'
+snapcraft-version: 7.5.3
+snapcraft-started-at: '2023-10-16T09:06:16.591498Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-22
+version: 1.22.10-23
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -181,10 +181,10 @@ parts:
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.9
-    - libc-dev-bin=2.31-0ubuntu9.9
-    - libc6-dev=2.31-0ubuntu9.9
-    - libc6=2.31-0ubuntu9.9
+    - libc-bin=2.31-0ubuntu9.12
+    - libc-dev-bin=2.31-0ubuntu9.12
+    - libc6-dev=2.31-0ubuntu9.12
+    - libc6=2.31-0ubuntu9.12
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -197,8 +197,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.6
     - libctf0=2.34-6ubuntu1.6
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.20
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -414,7 +414,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-162.179
+    - linux-libc-dev=5.4.0-164.181
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -497,18 +497,18 @@ parts:
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
     - core20=2015
-    - snapcraft=9542
-    - snapd=20092
+    - snapcraft=9726
+    - snapd=20290
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-9gob40uvbpvwzj95"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-i1vpvn6ifm7yb1tf"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-162-generic #179-Ubuntu SMP Mon Aug 14 08:51:31 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-164-generic #181-Ubuntu SMP Fri Sep 1 13:41:22 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -599,10 +599,10 @@ parts:
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.9
-    - libc-dev-bin=2.31-0ubuntu9.9
-    - libc6-dev=2.31-0ubuntu9.9
-    - libc6=2.31-0ubuntu9.9
+    - libc-bin=2.31-0ubuntu9.12
+    - libc-dev-bin=2.31-0ubuntu9.12
+    - libc6-dev=2.31-0ubuntu9.12
+    - libc6=2.31-0ubuntu9.12
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -615,8 +615,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.6
     - libctf0=2.34-6ubuntu1.6
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.20
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -832,7 +832,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-162.179
+    - linux-libc-dev=5.4.0-164.181
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -915,14 +915,14 @@ parts:
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
     - core20=2015
-    - snapcraft=9542
-    - snapd=20092
+    - snapcraft=9726
+    - snapd=20290
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-9gob40uvbpvwzj95/stage"/build-tools/check-versions dnsmasq-base no
-      git apply "/build/ci-network-manager-9gob40uvbpvwzj95"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-i1vpvn6ifm7yb1tf/stage"/build-tools/check-versions dnsmasq-base no
+      git apply "/build/ci-network-manager-i1vpvn6ifm7yb1tf"/snap-patch/dnsmasq.patch
       snapcraftctl build
       find "$SNAPCRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
           grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
@@ -937,7 +937,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-162-generic #179-Ubuntu SMP Mon Aug 14 08:51:31 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-164-generic #181-Ubuntu SMP Fri Sep 1 13:41:22 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1107,10 +1107,10 @@ parts:
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.9
-    - libc-dev-bin=2.31-0ubuntu9.9
-    - libc6-dev=2.31-0ubuntu9.9
-    - libc6=2.31-0ubuntu9.9
+    - libc-bin=2.31-0ubuntu9.12
+    - libc-dev-bin=2.31-0ubuntu9.12
+    - libc6-dev=2.31-0ubuntu9.12
+    - libc6=2.31-0ubuntu9.12
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -1123,8 +1123,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.6
     - libctf0=2.34-6ubuntu1.6
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.20
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1340,7 +1340,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-162.179
+    - linux-libc-dev=5.4.0-164.181
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1423,17 +1423,17 @@ parts:
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
     - core20=2015
-    - snapcraft=9542
-    - snapd=20092
+    - snapcraft=9726
+    - snapd=20290
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-9gob40uvbpvwzj95/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-i1vpvn6ifm7yb1tf/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-9gob40uvbpvwzj95"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-i1vpvn6ifm7yb1tf"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1452,7 +1452,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-9gob40uvbpvwzj95"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-i1vpvn6ifm7yb1tf"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1545,7 +1545,7 @@ parts:
     - iputils-arping=3:20190709-3
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
     - libdbus-glib-1-2=0.110-5fakssync1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1570,7 +1570,7 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 5.4.0-162-generic #179-Ubuntu SMP Mon Aug 14 08:51:31 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-164-generic #181-Ubuntu SMP Fri Sep 1 13:41:22 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1660,10 +1660,10 @@ parts:
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.9
-    - libc-dev-bin=2.31-0ubuntu9.9
-    - libc6-dev=2.31-0ubuntu9.9
-    - libc6=2.31-0ubuntu9.9
+    - libc-bin=2.31-0ubuntu9.12
+    - libc-dev-bin=2.31-0ubuntu9.12
+    - libc6-dev=2.31-0ubuntu9.12
+    - libc6=2.31-0ubuntu9.12
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -1676,8 +1676,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.6
     - libctf0=2.34-6ubuntu1.6
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.20
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1893,7 +1893,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-162.179
+    - linux-libc-dev=5.4.0-164.181
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.4
     - logsave=1.45.5-2ubuntu1.1
@@ -1976,14 +1976,14 @@ parts:
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
     - core20=2015
-    - snapcraft=9542
-    - snapd=20092
+    - snapcraft=9726
+    - snapd=20290
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-162-generic #179-Ubuntu SMP Mon Aug 14 08:51:31 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-164-generic #181-Ubuntu SMP Fri Sep 1 13:41:22 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1992,8 +1992,8 @@ parts:
     installed-packages: []
     installed-snaps:
     - core20=2015
-    - snapcraft=9542
-    - snapd=20092
+    - snapcraft=9726
+    - snapd=20290
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2020,7 +2020,7 @@ parts:
     - dnsmasq-base=2.80-1.1ubuntu1.7
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.19
+    - libcurl3-gnutls=7.68.0-1ubuntu2.20
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -2043,12 +2043,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - network-manager=1.22.10-1ubuntu2.3
-    uname: 'Linux 5.4.0-162-generic #179-Ubuntu SMP Mon Aug 14 08:51:31 UTC 2023 x86_64
+    uname: 'Linux 5.4.0-164-generic #181-Ubuntu SMP Fri Sep 1 13:41:22 UTC 2023 x86_64
       x86_64 x86_64 GNU/Linux'
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-9gob40uvbpvwzj95/+build/2230355
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-i1vpvn6ifm7yb1tf/+build/2263330
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2074,7 +2074,7 @@ build-packages:
 - libblkid-dev=2.34-0.1ubuntu9.4
 - libcap2-bin=1:2.32-1ubuntu0.1
 - libcroco3=0.6.13-1
-- libcurl4-gnutls-dev=7.68.0-1ubuntu2.19
+- libcurl4-gnutls-dev=7.68.0-1ubuntu2.20
 - libdbus-1-dev=1.12.16-2ubuntu2.3
 - libdbus-glib-1-2=0.110-5fakssync1
 - libdbus-glib-1-dev-bin=0.110-5fakssync1
@@ -2229,7 +2229,7 @@ primed-stage-packages:
 - iputils-arping=3:20190709-3
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libbrotli1=1.0.7-6ubuntu0.1
-- libcurl3-gnutls=7.68.0-1ubuntu2.19
+- libcurl3-gnutls=7.68.0-1ubuntu2.20
 - libdbus-glib-1-2=0.110-5fakssync1
 - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
