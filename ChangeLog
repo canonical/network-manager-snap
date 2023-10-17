@@ -1,3 +1,27 @@
+2023-10-17 network-manager 1.36.6-8
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * tests/no-netplan-default-config: use MATCH instead of grep
+    Merge pull request #30 from snapcore/match-not-grep
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.13 to 7.81.0-1ubuntu1.14:
+  
+    curl (7.81.0-1ubuntu1.14) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: SOCKS5 heap buffer overflow
+        - debian/patches/CVE-2023-38545.patch: return error if hostname too
+          long for remote resolve in lib/socks.c, tests/data/Makefile.inc,
+          tests/data/test728.
+        - CVE-2023-38545
+      * SECURITY UPDATE: cookie injection with none file
+        - debian/patches/CVE-2023-38546.patch: remove unnecessary struct fields
+          in lib/cookie.c, lib/cookie.h, lib/easy.c.
+        - CVE-2023-38546
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 03 Oct 2023 13:15:41 -0400
+  
 2023-09-14 network-manager 1.36.6-7
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
