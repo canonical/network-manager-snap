@@ -1,3 +1,136 @@
+2024-02-09 network-manager 1.36.6-9
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.14 to 7.81.0-1ubuntu1.15:
+  
+    curl (7.81.0-1ubuntu1.15) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: cookie mixed case PSL bypass
+        - debian/patches/CVE-2023-46218.patch: lowercase the domain names
+          before PSL checks in lib/cookie.c.
+        - CVE-2023-46218
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 29 Nov 2023 14:23:00 -0500
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.86-1.1ubuntu0.3 to 2.86-1.1ubuntu0.5:
+  
+    dnsmasq (2.86-1.1ubuntu0.5) jammy; urgency=medium
+  
+      * src/dnsmasq.c: Fix a crash that can happen when an empty resolv.conf is
+        reloaded (LP: #2045570)
+      * src/helper.c: Fix wrong client address for dhcp-script when DHCPv4 relay
+        in use (LP: #2042587)
+  
+     -- Andreas Hasenack <andreas@canonical.com>  Thu, 11 Jan 2024 09:21:27 -0300
+  
+    dnsmasq (2.86-1.1ubuntu0.4) jammy; urgency=medium
+  
+      * src/dnsmasq.h, src/domain-match.c: Fix confusion when using resolvconf
+        servers (combining server|address for a domain), resulting in the struct
+        server datastructure for server=/domain/# getting passed to
+        forward_query(), rapidly followed by a SEGV. This fix makes
+        server=/domain/# a fully fledged member of the priority list.
+        The code added here is a cherry pick released in upstream version
+        2.87, originating at
+        https://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=commit;h=de372d69
+        (LP: #2015562)
+  
+     -- Miriam España Acebal <miriam.espana@canonical.com>  Thu, 20 Apr 2023 11:00:27 +0200
+  
+  libmm-glib0 (built from modemmanager) updated from 1.20.0-1~ubuntu22.04.2 to 1.20.0-1~ubuntu22.04.3:
+  
+    modemmanager (1.20.0-1~ubuntu22.04.3) jammy; urgency=medium
+  
+      * Backport the newer modemmanager commits from 1.20.6 to the LTS
+        as part of new hardware enablement including Telit FN990 modem
+        (lp: #2047008)
+  
+     -- Laider Lai <laider.lai@canonical.com>  Wed, 20 Dec 2023 05:35:16 +0000
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.43.0-1build3 to 1.43.0-1ubuntu0.1:
+  
+    nghttp2 (1.43.0-1ubuntu0.1) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP/2 protocol denial of service
+        - debian/patches/CVE-2023-44487.patch: implement stream reset rate
+          limiting.
+        - CVE-2023-44487
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 11 Oct 2023 13:50:35 -0400
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.16+dfsg-0ubuntu0.22.04.1 to 2.5.16+dfsg-0ubuntu0.22.04.2:
+  
+    openldap (2.5.16+dfsg-0ubuntu0.22.04.2) jammy-security; urgency=medium
+  
+      * No change rebuild to fix CVE-2023-2953 in the -security pocket.
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 25 Jan 2024 13:42:39 -0500
+  
+  openvpn (built from openvpn) updated from 2.5.5-1ubuntu3.1 to 2.5.9-0ubuntu0.22.04.2:
+  
+    openvpn (2.5.9-0ubuntu0.22.04.2) jammy; urgency=medium
+  
+      * d/rules: Use --with-openssl-engine=yes during configuration to maintain the
+        existing behavior of technically allowing openssl engine access in jammy.
+        For more information see
+        https://bugs.launchpad.net/ubuntu/+source/openvpn/+bug/2004676/comments/6
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Fri, 29 Sep 2023 16:14:48 -0700
+  
+    openvpn (2.5.9-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream release 2.5.9 (LP: #2004676):
+        - The version is being updated to the latest in 2.5.x rather than 2.6.x to
+          avoid feature releases and focus on bug fixes
+        - Updates:
+          + Allow optional ciphers in --data-ciphers
+        - Bug Fixes Include:
+          + Fix null pointer error when running openvpn --show-tls with mbedtls
+          + Fix corner case that could lead to leaked file descriptor
+          + Fix parsing issue in pull-filter when there are leading spaces
+          + Fix possible buffer overflow in parse_line argument
+          + See https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn25 for
+            additional bug fixes and information
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Tue, 15 Aug 2023 10:48:49 -0700
+  
+    openvpn (2.5.8-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream releases 2.5.6-2.5.8 (LP: #2004676):
+        - The version is being updated to the latest in 2.5.x rather than 2.6.x to
+          avoid feature releases and focus on bug fixes
+        - Updates:
+          + OpenSSL3 support
+          + pkcs11-helper upgrade to 1.28.4
+          + allow running a default configuration with TLS libraries without BF-CBC
+        - Bug Fixes Include:
+          + CVE-2022-0547
+          + Fix potential memory leaks in add_route() and add_route_ipv6()
+          + Fix PATH_MAX build failure in auth-pam.c
+          + Fix using --auth-token together with --management-client-auth
+          + Fix clearing of username+password when using --auth-nocache
+          + See https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn25 for
+            additional bug fixes and information
+      * Remove patches fixed upstream:
+        - d/p/CVE-2022-0547.patch
+          [Included in upstream release 2.5.6]
+        - d/p/openssl-3/0001-Add-insecure-tls-cert-profile-options.patch
+        - d/p/openssl-3/0002-Refactor-early-initialisation-and-uninitialisation-
+          into-methods.patch
+        - d/p/openssl-3/0003-Allow-loading-of-non-default-providers.patch
+        - d/p/openssl-3/0004-Fix-allowing-showing-unsupported-ciphers-digests.patch
+        - d/p/openssl-3/0005-Add-message-when-decoding-PKCS12-file-fails.patch
+        - d/p/openssl-3/0006-Translate-OpenSSL-3.0-digest-names-to-OpenSSL-1.1-
+          digest-names.patch
+         [Included in upstream release 2.5.7]
+        - d/p/openssl-3/0007-Allow-running-a-default-configuration-with-TLS-
+          libraries-without-BF-CBC.patch
+        - d/p/match-manpage-and-command-help.patch
+          [Included in upstream release 2.5.8]
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Fri, 03 Feb 2023 15:49:35 -0700
+  
 2023-10-17 network-manager 1.36.6-8
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
