@@ -1,3 +1,82 @@
+2024-02-21 network-manager 1.22.10-24
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * tests/core/no-netplan-default-config: fix race condition
+    Merge pull request #31 from snapcore/fix-netplan-test
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.20 to 7.68.0-1ubuntu2.21:
+  
+    curl (7.68.0-1ubuntu2.21) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: cookie mixed case PSL bypass
+        - debian/patches/CVE-2023-46218.patch: lowercase the domain names
+          before PSL checks in lib/cookie.c.
+        - CVE-2023-46218
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 29 Nov 2023 14:26:14 -0500
+  
+  iputils-arping (built from iputils) updated from 3:20190709-3 to 3:20190709-3ubuntu1:
+  
+    iputils (3:20190709-3ubuntu1) focal; urgency=medium
+  
+      * debian/patches/git_revert_strict_pattern_matching.patch:
+        - cherrypick of an upstream revert of a buggy commit which was leading
+          to incorrect ping statistics on truncated packets (lp: #1964506)
+  
+     -- Sebastien Bacher <seb128@ubuntu.com>  Tue, 13 Sep 2022 21:06:15 +0200
+  
+  libssh-4 (built from libssh) updated from 0.9.3-2ubuntu2.3 to 0.9.3-2ubuntu2.5:
+  
+    libssh (0.9.3-2ubuntu2.5) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: code injection via ProxyCommand/ProxyJump hostname
+        - debian/patches/CVE-2023-6004-*.patch: validate hostnames.
+        - CVE-2023-6004
+      * SECURITY UPDATE: DoS via incorrect return value checks
+        - debian/patches/CVE-2023-6918-*.patch: check return values.
+        - CVE-2023-6918
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 11 Jan 2024 07:46:38 -0500
+  
+    libssh (0.9.3-2ubuntu2.4) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: Prefix truncation attack on BPP
+        - debian/patches/CVE-2023-48795-1.patch: add client side mitigation.
+        - debian/patches/CVE-2023-48795-2.patch: add server side mitigations.
+        - debian/patches/CVE-2023-48795-3.patch: strip extensions from both kex
+          lists for matching.
+        - debian/patches/CVE-2023-48795-4.patch: tests: adjust calculation to
+          strict kex.
+        - CVE-2023-48795
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 18 Dec 2023 17:32:08 -0500
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.40.0-1ubuntu0.1 to 1.40.0-1ubuntu0.2:
+  
+    nghttp2 (1.40.0-1ubuntu0.2) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP/2 protocol denial of service
+        - debian/patches/CVE-2023-44487.patch: implement stream reset rate
+          limiting.
+        - CVE-2023-44487
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 11 Oct 2023 17:39:46 -0400
+  
+  libldap-2.4-2 (built from openldap) updated from 2.4.49+dfsg-2ubuntu1.9 to 2.4.49+dfsg-2ubuntu1.10:
+  
+    openldap (2.4.49+dfsg-2ubuntu1.10) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: DoS via lack of strdup return code checking
+        - debian/patches/CVE-2023-2953-1.patch: check for ber_strdup failure in
+          libraries/libldap/fetch.c.
+        - debian/patches/CVE-2023-2953-2.patch: check for strdup failure in
+          libraries/libldap/url.c.
+        - CVE-2023-2953
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 25 Jan 2024 13:43:43 -0500
+  
 2023-10-16 network-manager 1.22.10-23
 
   [ Changes in primed packages ]
