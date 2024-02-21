@@ -15,6 +15,12 @@ execute: |
     # without generated configuration files from netplan
     rm /etc/netplan/"$DEFAULT_NETPLAN_FILE"
 
+    # Wait a bit so the NetworkManager process has really started (NM's wrapper
+    # script might still be running), otherwise the apply won't restart it and
+    # NM might take the old files in the end due to races. Probably netplan
+    # should check if NM is up after creating the new files, not after (my
+    # guess at what is happening).
+    sleep 10
     netplan apply
 
     # We should be automatically connected now and not via a configuration
