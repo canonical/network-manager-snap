@@ -142,7 +142,7 @@ parts:
     override-build: |
       set -ex
       "$SNAPCRAFT_STAGE"/build-tools/check-versions dnsmasq-base no
-      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
+      git am "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
       find "$SNAPCRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
           grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip

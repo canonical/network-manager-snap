@@ -1,19 +1,19 @@
-From 8e829e18fc739f05b1a25cc40ce1722f65831950 Mon Sep 17 00:00:00 2001
+From 91e001d5c1c88d858ed20ab83fc79b4c16f7fcbd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Alfonso=20S=C3=A1nchez-Beato?=
  <alfonso.sanchez-beato@canonical.com>
-Date: Tue, 25 Jun 2019 17:36:41 +0200
+Date: Thu, 21 Mar 2024 08:17:29 +0000
 Subject: [PATCH] snap: do not tinker with uid/gid, change fixed paths
 
 ---
  src/config.h  |  6 +++---
- src/dnsmasq.c | 30 +++++++++++++++---------------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ src/dnsmasq.c | 19 -------------------
+ 2 files changed, 3 insertions(+), 22 deletions(-)
 
 diff --git a/src/config.h b/src/config.h
-index ecefb87..25b92ba 100644
+index e722e98..4290e77 100644
 --- a/src/config.h
 +++ b/src/config.h
-@@ -190,7 +190,7 @@ RESOLVFILE
+@@ -214,7 +214,7 @@ RESOLVFILE
  #   elif defined(__ANDROID__)
  #      define LEASEFILE "/data/misc/dhcp/dnsmasq.leases"
  #   else
@@ -22,7 +22,7 @@ index ecefb87..25b92ba 100644
  #   endif
  #endif
  
-@@ -198,7 +198,7 @@ RESOLVFILE
+@@ -222,7 +222,7 @@ RESOLVFILE
  #   if defined(__FreeBSD__)
  #      define CONFFILE "/usr/local/etc/dnsmasq.conf"
  #   else
@@ -31,7 +31,7 @@ index ecefb87..25b92ba 100644
  #   endif
  #endif
  
-@@ -214,7 +214,7 @@ RESOLVFILE
+@@ -238,7 +238,7 @@ RESOLVFILE
  #   if defined(__ANDROID__)
  #      define RUNFILE "/data/dnsmasq.pid"
  #    else
@@ -41,28 +41,25 @@ index ecefb87..25b92ba 100644
  #endif
  
 diff --git a/src/dnsmasq.c b/src/dnsmasq.c
-index ce44809..17c451b 100644
+index 30fb419..da1abed 100644
 --- a/src/dnsmasq.c
 +++ b/src/dnsmasq.c
-@@ -548,8 +548,8 @@ int main (int argc, char **argv)
+@@ -678,8 +678,6 @@ int main (int argc, char **argv)
  		 of the directory containing the file. That directory will
  		 need to by owned by the dnsmasq user, and the ownership of the
  		 file has to match, to keep systemd >273 happy. */
 -	      if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1)
 -		chown_warn = errno;
-+	      /* if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1) */
-+	      /*   chown_warn = errno; */
  
  	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), 0))
  		err = 1;
-@@ -595,16 +595,16 @@ int main (int argc, char **argv)
+@@ -728,16 +726,6 @@ int main (int argc, char **argv)
    if (!option_bool(OPT_DEBUG) && getuid() == 0)   
      {
        int bad_capabilities = 0;
 -      gid_t dummy;
-+      /* gid_t dummy; */
-       
-       /* remove all supplementary groups */
+-      
+-      /* remove all supplementary groups */
 -      if (gp && 
 -	  (setgroups(0, &dummy) == -1 ||
 -	   setgid(gp->gr_gid) == -1))
@@ -70,33 +67,23 @@ index ce44809..17c451b 100644
 -	  send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname);
 -	  _exit(0);
 -	}
-+      /* if (gp &&  */
-+      /*     (setgroups(0, &dummy) == -1 || */
-+      /*      setgid(gp->gr_gid) == -1)) */
-+      /*   { */
-+      /*     send_event(err_pipe[1], EVENT_GROUP_ERR, errno, daemon->groupname); */
-+      /*     _exit(0); */
-+      /*   } */
    
        if (ent_pw && ent_pw->pw_uid != 0)
  	{     
-@@ -654,11 +654,11 @@ int main (int argc, char **argv)
+@@ -777,13 +765,6 @@ int main (int argc, char **argv)
+ 	      _exit(0);
  	    }
  	  
- 	  /* finally drop root */
+-	  /* finally drop root */
 -	  if (setuid(ent_pw->pw_uid) == -1)
 -	    {
 -	      send_event(err_pipe[1], EVENT_USER_ERR, errno, daemon->username);
 -	      _exit(0);
 -	    }     
-+	  /* if (setuid(ent_pw->pw_uid) == -1) */
-+	  /*   { */
-+	  /*     send_event(err_pipe[1], EVENT_USER_ERR, errno, daemon->username); */
-+	  /*     _exit(0); */
-+	  /*   }      */
- 
+-
  #ifdef HAVE_LINUX_NETWORK
- 	  if (is_dad_listeners() || option_bool(OPT_CLEVERBIND))
+ 	  data->effective &= ~(1 << CAP_SETUID);
+ 	  data->permitted &= ~(1 << CAP_SETUID);
 -- 
-2.17.1
+2.34.1
 
