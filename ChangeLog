@@ -1,3 +1,43 @@
+2024-03-21 network-manager 1.36.6-10
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * tests/core/no-netplan-default-config: fix race condition
+    Merge pull request #32 from snapcore/fix-netplan-test-22
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.86-1.1ubuntu0.5 to 2.90-0ubuntu0.22.04.1:
+  
+    dnsmasq (2.90-0ubuntu0.22.04.1) jammy-security; urgency=medium
+  
+      * Updated to 2.90 to fix multiple security issues.
+        - debian/rules: specify lua version with LUA.
+        - CVE-2023-50387, CVE-2023-50868
+      * Convert package to source format 3.0 to ease maintenance going forward.
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 14 Feb 2024 14:23:43 -0500
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.16+dfsg-0ubuntu0.22.04.2 to 2.5.17+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.17+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2040465).
+        - Added slapo-dynlist option to disable filter support (ITS#10025)
+        - Fixed liblber missing newline on long msg (ITS#10105)
+        - Fixed libldap exit handling with OpenSSL3 (ITS#9952)
+        - Fixed libldap with TLS and multiple ldap URIs (ITS#10101)
+        - Fixed libldap OpenSSL cipher suite handling (ITS#10094)
+        - Fixed libldap OpenSSL 3.0 and Diffie-Hellman param files (ITS#10124)
+        - Fixed libldap timestamps on Windows (ITS#10100)
+        - Fixed lloadd to work when resolv.conf is missing (ITS#10070)
+        - Fixed lloadd handling of closing connection (ITS#10083)
+        - Fixed slapd to honour disclose in matchedDN handling (ITS#10139)
+        - Fixed slapd handling of regex testing in ACLs (ITS#10089)
+        - Fixed slapd-asyncmeta when remote suffix is empty (ITS#10076)
+        - Fixed slapo-dynlist so it can't be global (ITS#10091)
+  
+     -- Sergio Durigan Junior <sergio.durigan@canonical.com>  Fri, 09 Feb 2024 15:12:07 -0500
+  
 2024-02-09 network-manager 1.36.6-9
 
   [ Changes in primed packages ]
