@@ -1,9 +1,9 @@
 snapcraft-version: 8.0.5
-snapcraft-started-at: '2024-03-21T11:40:35.605669Z'
+snapcraft-started-at: '2024-04-22T12:34:39.359544Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '20.04'
 name: network-manager
-version: 1.22.10-25
+version: 1.22.10-26
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -111,7 +111,7 @@ parts:
     - binutils-x86-64-linux-gnu=2.34-6ubuntu1.9
     - binutils=2.34-6ubuntu1.9
     - bsdmainutils=11.1.2ubuntu3
-    - bsdutils=1:2.34-0.1ubuntu9.4
+    - bsdutils=1:2.34-0.1ubuntu9.6
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
     - ca-certificates=20230311ubuntu0.20.04.1
@@ -133,7 +133,7 @@ parts:
     - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1.1
     - fakeroot=1.24-1
-    - fdisk=2.34-0.1ubuntu9.4
+    - fdisk=2.34-0.1ubuntu9.6
     - file=1:5.38-4
     - findutils=4.7.0-1ubuntu1
     - fuse=2.9.9-3
@@ -176,15 +176,15 @@ parts:
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
     - libbinutils=2.34-6ubuntu1.9
-    - libblkid-dev=2.34-0.1ubuntu9.4
-    - libblkid1=2.34-0.1ubuntu9.4
+    - libblkid-dev=2.34-0.1ubuntu9.6
+    - libblkid1=2.34-0.1ubuntu9.6
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.14
-    - libc-dev-bin=2.31-0ubuntu9.14
-    - libc6-dev=2.31-0ubuntu9.14
-    - libc6=2.31-0ubuntu9.14
+    - libc-bin=2.31-0ubuntu9.15
+    - libc-dev-bin=2.31-0ubuntu9.15
+    - libc6-dev=2.31-0ubuntu9.15
+    - libc6=2.31-0ubuntu9.15
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -197,8 +197,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.9
     - libctf0=2.34-6ubuntu1.9
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.22
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -216,7 +216,7 @@ parts:
     - libexpat1=2.2.9-1ubuntu0.6
     - libext2fs2=1.45.5-2ubuntu1.1
     - libfakeroot=1.24-1
-    - libfdisk1=2.34-0.1ubuntu9.4
+    - libfdisk1=2.34-0.1ubuntu9.6
     - libffi-dev=3.3-4
     - libffi7=3.3-4
     - libfido2-1=1.3.1-1ubuntu2
@@ -238,11 +238,11 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.10
-    - libgnutls-openssl27=3.6.13-2ubuntu1.10
-    - libgnutls28-dev=3.6.13-2ubuntu1.10
-    - libgnutls30=3.6.13-2ubuntu1.10
-    - libgnutlsxx28=3.6.13-2ubuntu1.10
+    - libgnutls-dane0=3.6.13-2ubuntu1.11
+    - libgnutls-openssl27=3.6.13-2ubuntu1.11
+    - libgnutls28-dev=3.6.13-2ubuntu1.11
+    - libgnutls30=3.6.13-2ubuntu1.11
+    - libgnutlsxx28=3.6.13-2ubuntu1.11
     - libgomp1=10.5.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.4
@@ -294,8 +294,8 @@ parts:
     - libmm-glib-dev=1.18.6-1~ubuntu20.04.1
     - libmm-glib0=1.18.6-1~ubuntu20.04.1
     - libmnl0=1.0.4-2
-    - libmount-dev=2.34-0.1ubuntu9.4
-    - libmount1=2.34-0.1ubuntu9.4
+    - libmount-dev=2.34-0.1ubuntu9.6
+    - libmount1=2.34-0.1ubuntu9.6
     - libmpc3=1.1.0-1
     - libmpdec2=2.4.2-3
     - libmpfr6=4.0.2-1
@@ -324,10 +324,10 @@ parts:
     - libnl-route-3-200=3.4.0-1ubuntu0.1
     - libnl-route-3-dev=3.4.0-1ubuntu0.1
     - libnpth0=1.6-1
-    - libnspr4-dev=2:4.25-1
-    - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.9
-    - libnss3=2:3.49.1-1ubuntu1.9
+    - libnspr4-dev=2:4.35-0ubuntu0.20.04.1
+    - libnspr4=2:4.35-0ubuntu0.20.04.1
+    - libnss3-dev=2:3.98-0ubuntu0.20.04.2
+    - libnss3=2:3.98-0ubuntu0.20.04.2
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -375,7 +375,7 @@ parts:
     - libsigsegv2=2.12-2
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
-    - libsmartcols1=2.34-0.1ubuntu9.4
+    - libsmartcols1=2.34-0.1ubuntu9.6
     - libsqlite3-0=3.31.1-4ubuntu0.6
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
@@ -401,7 +401,7 @@ parts:
     - libunbound8=1.9.4-2ubuntu1.5
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
-    - libuuid1=2.34-0.1ubuntu9.4
+    - libuuid1=2.34-0.1ubuntu9.6
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libwrap0=7.6.q-30
     - libwww-perl=6.43-1
@@ -414,7 +414,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-174.193
+    - linux-libc-dev=5.4.0-177.197
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.5
     - logsave=1.45.5-2ubuntu1.1
@@ -424,7 +424,7 @@ parts:
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
     - modemmanager-dev=1.18.6-1~ubuntu20.04.1
-    - mount=2.34-0.1ubuntu9.4
+    - mount=2.34-0.1ubuntu9.6
     - ncurses-base=6.2-0ubuntu2.1
     - ncurses-bin=6.2-0ubuntu2.1
     - netbase=6.1
@@ -475,7 +475,7 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.58+20.04.1
+    - snapd=2.61.3+20.04
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
@@ -488,28 +488,28 @@ parts:
     - tzdata=2024a-0ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.23
-    - util-linux=2.34-0.1ubuntu9.4
-    - uuid-dev=2.34-0.1ubuntu9.4
+    - util-linux=2.34-0.1ubuntu9.6
+    - uuid-dev=2.34-0.1ubuntu9.6
     - xml-core=0.18+nmu1
     - xsltproc=1.1.34-4ubuntu0.20.04.1
     - xz-utils=5.2.4-1ubuntu1.1
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=2182
+    - core20=2264
     - core22=1122
     - snapcraft=11040
-    - snapd=21184
+    - snapd=21465
     organize:
       ChangeLog: snap/ChangeLog
-    override-build: 'cp "/build/ci-network-manager-ldf5bxco5cepyxt8"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
+    override-build: 'cp "/build/ci-network-manager-ue0oeejbzetknu9o"/ChangeLog "$SNAPCRAFT_PART_INSTALL"/ChangeLog
 
       '
     plugin: nil
     prime: []
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-173-generic #191-Ubuntu SMP Fri Feb 2 13:55:07 UTC 2024 x86_64
+    uname: 'Linux 5.4.0-176-generic #196-Ubuntu SMP Fri Mar 22 16:46:39 UTC 2024 x86_64
       x86_64 x86_64 GNU/Linux'
   dnsmasq:
     build-packages:
@@ -530,7 +530,7 @@ parts:
     - binutils-x86-64-linux-gnu=2.34-6ubuntu1.9
     - binutils=2.34-6ubuntu1.9
     - bsdmainutils=11.1.2ubuntu3
-    - bsdutils=1:2.34-0.1ubuntu9.4
+    - bsdutils=1:2.34-0.1ubuntu9.6
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
     - ca-certificates=20230311ubuntu0.20.04.1
@@ -552,7 +552,7 @@ parts:
     - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1.1
     - fakeroot=1.24-1
-    - fdisk=2.34-0.1ubuntu9.4
+    - fdisk=2.34-0.1ubuntu9.6
     - file=1:5.38-4
     - findutils=4.7.0-1ubuntu1
     - fuse=2.9.9-3
@@ -595,15 +595,15 @@ parts:
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
     - libbinutils=2.34-6ubuntu1.9
-    - libblkid-dev=2.34-0.1ubuntu9.4
-    - libblkid1=2.34-0.1ubuntu9.4
+    - libblkid-dev=2.34-0.1ubuntu9.6
+    - libblkid1=2.34-0.1ubuntu9.6
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.14
-    - libc-dev-bin=2.31-0ubuntu9.14
-    - libc6-dev=2.31-0ubuntu9.14
-    - libc6=2.31-0ubuntu9.14
+    - libc-bin=2.31-0ubuntu9.15
+    - libc-dev-bin=2.31-0ubuntu9.15
+    - libc6-dev=2.31-0ubuntu9.15
+    - libc6=2.31-0ubuntu9.15
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -616,8 +616,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.9
     - libctf0=2.34-6ubuntu1.9
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.22
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -635,7 +635,7 @@ parts:
     - libexpat1=2.2.9-1ubuntu0.6
     - libext2fs2=1.45.5-2ubuntu1.1
     - libfakeroot=1.24-1
-    - libfdisk1=2.34-0.1ubuntu9.4
+    - libfdisk1=2.34-0.1ubuntu9.6
     - libffi-dev=3.3-4
     - libffi7=3.3-4
     - libfido2-1=1.3.1-1ubuntu2
@@ -657,11 +657,11 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.10
-    - libgnutls-openssl27=3.6.13-2ubuntu1.10
-    - libgnutls28-dev=3.6.13-2ubuntu1.10
-    - libgnutls30=3.6.13-2ubuntu1.10
-    - libgnutlsxx28=3.6.13-2ubuntu1.10
+    - libgnutls-dane0=3.6.13-2ubuntu1.11
+    - libgnutls-openssl27=3.6.13-2ubuntu1.11
+    - libgnutls28-dev=3.6.13-2ubuntu1.11
+    - libgnutls30=3.6.13-2ubuntu1.11
+    - libgnutlsxx28=3.6.13-2ubuntu1.11
     - libgomp1=10.5.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.4
@@ -713,8 +713,8 @@ parts:
     - libmm-glib-dev=1.18.6-1~ubuntu20.04.1
     - libmm-glib0=1.18.6-1~ubuntu20.04.1
     - libmnl0=1.0.4-2
-    - libmount-dev=2.34-0.1ubuntu9.4
-    - libmount1=2.34-0.1ubuntu9.4
+    - libmount-dev=2.34-0.1ubuntu9.6
+    - libmount1=2.34-0.1ubuntu9.6
     - libmpc3=1.1.0-1
     - libmpdec2=2.4.2-3
     - libmpfr6=4.0.2-1
@@ -743,10 +743,10 @@ parts:
     - libnl-route-3-200=3.4.0-1ubuntu0.1
     - libnl-route-3-dev=3.4.0-1ubuntu0.1
     - libnpth0=1.6-1
-    - libnspr4-dev=2:4.25-1
-    - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.9
-    - libnss3=2:3.49.1-1ubuntu1.9
+    - libnspr4-dev=2:4.35-0ubuntu0.20.04.1
+    - libnspr4=2:4.35-0ubuntu0.20.04.1
+    - libnss3-dev=2:3.98-0ubuntu0.20.04.2
+    - libnss3=2:3.98-0ubuntu0.20.04.2
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -794,7 +794,7 @@ parts:
     - libsigsegv2=2.12-2
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
-    - libsmartcols1=2.34-0.1ubuntu9.4
+    - libsmartcols1=2.34-0.1ubuntu9.6
     - libsqlite3-0=3.31.1-4ubuntu0.6
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
@@ -820,7 +820,7 @@ parts:
     - libunbound8=1.9.4-2ubuntu1.5
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
-    - libuuid1=2.34-0.1ubuntu9.4
+    - libuuid1=2.34-0.1ubuntu9.6
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libwrap0=7.6.q-30
     - libwww-perl=6.43-1
@@ -833,7 +833,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-174.193
+    - linux-libc-dev=5.4.0-177.197
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.5
     - logsave=1.45.5-2ubuntu1.1
@@ -843,7 +843,7 @@ parts:
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
     - modemmanager-dev=1.18.6-1~ubuntu20.04.1
-    - mount=2.34-0.1ubuntu9.4
+    - mount=2.34-0.1ubuntu9.6
     - ncurses-base=6.2-0ubuntu2.1
     - ncurses-bin=6.2-0ubuntu2.1
     - netbase=6.1
@@ -894,7 +894,7 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.58+20.04.1
+    - snapd=2.61.3+20.04
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
@@ -907,24 +907,24 @@ parts:
     - tzdata=2024a-0ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.23
-    - util-linux=2.34-0.1ubuntu9.4
-    - uuid-dev=2.34-0.1ubuntu9.4
+    - util-linux=2.34-0.1ubuntu9.6
+    - uuid-dev=2.34-0.1ubuntu9.6
     - xml-core=0.18+nmu1
     - xsltproc=1.1.34-4ubuntu0.20.04.1
     - xz-utils=5.2.4-1ubuntu1.1
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=2182
+    - core20=2264
     - core22=1122
     - snapcraft=11040
-    - snapd=21184
+    - snapd=21465
     make-parameters:
     - PREFIX=/
     override-build: |
       set -ex
-      "/build/ci-network-manager-ldf5bxco5cepyxt8/stage"/build-tools/check-versions dnsmasq-base no
-      git am "/build/ci-network-manager-ldf5bxco5cepyxt8"/snap-patch/dnsmasq.patch
+      "/build/ci-network-manager-ue0oeejbzetknu9o/stage"/build-tools/check-versions dnsmasq-base no
+      git am "/build/ci-network-manager-ue0oeejbzetknu9o"/snap-patch/dnsmasq.patch
       snapcraftctl build
       find "$SNAPCRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
           grep 'application/x-.*executable\|application/x-.*sharedlib' | cut -d: -f1 | xargs strip
@@ -939,7 +939,7 @@ parts:
     source-type: git
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-173-generic #191-Ubuntu SMP Fri Feb 2 13:55:07 UTC 2024 x86_64
+    uname: 'Linux 5.4.0-176-generic #196-Ubuntu SMP Fri Mar 22 16:46:39 UTC 2024 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager:
     autotools-configure-parameters:
@@ -1039,7 +1039,7 @@ parts:
     - binutils-x86-64-linux-gnu=2.34-6ubuntu1.9
     - binutils=2.34-6ubuntu1.9
     - bsdmainutils=11.1.2ubuntu3
-    - bsdutils=1:2.34-0.1ubuntu9.4
+    - bsdutils=1:2.34-0.1ubuntu9.6
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
     - ca-certificates=20230311ubuntu0.20.04.1
@@ -1061,7 +1061,7 @@ parts:
     - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1.1
     - fakeroot=1.24-1
-    - fdisk=2.34-0.1ubuntu9.4
+    - fdisk=2.34-0.1ubuntu9.6
     - file=1:5.38-4
     - findutils=4.7.0-1ubuntu1
     - fuse=2.9.9-3
@@ -1104,15 +1104,15 @@ parts:
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
     - libbinutils=2.34-6ubuntu1.9
-    - libblkid-dev=2.34-0.1ubuntu9.4
-    - libblkid1=2.34-0.1ubuntu9.4
+    - libblkid-dev=2.34-0.1ubuntu9.6
+    - libblkid1=2.34-0.1ubuntu9.6
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.14
-    - libc-dev-bin=2.31-0ubuntu9.14
-    - libc6-dev=2.31-0ubuntu9.14
-    - libc6=2.31-0ubuntu9.14
+    - libc-bin=2.31-0ubuntu9.15
+    - libc-dev-bin=2.31-0ubuntu9.15
+    - libc6-dev=2.31-0ubuntu9.15
+    - libc6=2.31-0ubuntu9.15
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -1125,8 +1125,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.9
     - libctf0=2.34-6ubuntu1.9
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.22
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1144,7 +1144,7 @@ parts:
     - libexpat1=2.2.9-1ubuntu0.6
     - libext2fs2=1.45.5-2ubuntu1.1
     - libfakeroot=1.24-1
-    - libfdisk1=2.34-0.1ubuntu9.4
+    - libfdisk1=2.34-0.1ubuntu9.6
     - libffi-dev=3.3-4
     - libffi7=3.3-4
     - libfido2-1=1.3.1-1ubuntu2
@@ -1166,11 +1166,11 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.10
-    - libgnutls-openssl27=3.6.13-2ubuntu1.10
-    - libgnutls28-dev=3.6.13-2ubuntu1.10
-    - libgnutls30=3.6.13-2ubuntu1.10
-    - libgnutlsxx28=3.6.13-2ubuntu1.10
+    - libgnutls-dane0=3.6.13-2ubuntu1.11
+    - libgnutls-openssl27=3.6.13-2ubuntu1.11
+    - libgnutls28-dev=3.6.13-2ubuntu1.11
+    - libgnutls30=3.6.13-2ubuntu1.11
+    - libgnutlsxx28=3.6.13-2ubuntu1.11
     - libgomp1=10.5.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.4
@@ -1222,8 +1222,8 @@ parts:
     - libmm-glib-dev=1.18.6-1~ubuntu20.04.1
     - libmm-glib0=1.18.6-1~ubuntu20.04.1
     - libmnl0=1.0.4-2
-    - libmount-dev=2.34-0.1ubuntu9.4
-    - libmount1=2.34-0.1ubuntu9.4
+    - libmount-dev=2.34-0.1ubuntu9.6
+    - libmount1=2.34-0.1ubuntu9.6
     - libmpc3=1.1.0-1
     - libmpdec2=2.4.2-3
     - libmpfr6=4.0.2-1
@@ -1252,10 +1252,10 @@ parts:
     - libnl-route-3-200=3.4.0-1ubuntu0.1
     - libnl-route-3-dev=3.4.0-1ubuntu0.1
     - libnpth0=1.6-1
-    - libnspr4-dev=2:4.25-1
-    - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.9
-    - libnss3=2:3.49.1-1ubuntu1.9
+    - libnspr4-dev=2:4.35-0ubuntu0.20.04.1
+    - libnspr4=2:4.35-0ubuntu0.20.04.1
+    - libnss3-dev=2:3.98-0ubuntu0.20.04.2
+    - libnss3=2:3.98-0ubuntu0.20.04.2
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -1303,7 +1303,7 @@ parts:
     - libsigsegv2=2.12-2
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
-    - libsmartcols1=2.34-0.1ubuntu9.4
+    - libsmartcols1=2.34-0.1ubuntu9.6
     - libsqlite3-0=3.31.1-4ubuntu0.6
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
@@ -1329,7 +1329,7 @@ parts:
     - libunbound8=1.9.4-2ubuntu1.5
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
-    - libuuid1=2.34-0.1ubuntu9.4
+    - libuuid1=2.34-0.1ubuntu9.6
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libwrap0=7.6.q-30
     - libwww-perl=6.43-1
@@ -1342,7 +1342,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-174.193
+    - linux-libc-dev=5.4.0-177.197
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.5
     - logsave=1.45.5-2ubuntu1.1
@@ -1352,7 +1352,7 @@ parts:
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
     - modemmanager-dev=1.18.6-1~ubuntu20.04.1
-    - mount=2.34-0.1ubuntu9.4
+    - mount=2.34-0.1ubuntu9.6
     - ncurses-base=6.2-0ubuntu2.1
     - ncurses-bin=6.2-0ubuntu2.1
     - netbase=6.1
@@ -1403,7 +1403,7 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.58+20.04.1
+    - snapd=2.61.3+20.04
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
@@ -1416,27 +1416,27 @@ parts:
     - tzdata=2024a-0ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.23
-    - util-linux=2.34-0.1ubuntu9.4
-    - uuid-dev=2.34-0.1ubuntu9.4
+    - util-linux=2.34-0.1ubuntu9.6
+    - uuid-dev=2.34-0.1ubuntu9.6
     - xml-core=0.18+nmu1
     - xsltproc=1.1.34-4ubuntu0.20.04.1
     - xz-utils=5.2.4-1ubuntu1.1
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=2182
+    - core20=2264
     - core22=1122
     - snapcraft=11040
-    - snapd=21184
+    - snapd=21465
     organize:
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       snap/network-manager/current/usr/lib/pppd/2.4.5/nm-pppd-plugin.so: usr/lib/pppd/2.4.5/nm-pppd-plugin.so
     override-build: |
       set -ex
-      "/build/ci-network-manager-ldf5bxco5cepyxt8/stage"/build-tools/check-versions network-manager yes
+      "/build/ci-network-manager-ue0oeejbzetknu9o/stage"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      git am "/build/ci-network-manager-ldf5bxco5cepyxt8"/snap-patch/networkmanager/*.patch
+      git am "/build/ci-network-manager-ue0oeejbzetknu9o"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
@@ -1455,7 +1455,7 @@ parts:
       unset _SNAP
     override-stage: |
       snapcraftctl stage
-      patch -p1 < "/build/ci-network-manager-ldf5bxco5cepyxt8"/snap-patch/resolvconf.patch
+      patch -p1 < "/build/ci-network-manager-ue0oeejbzetknu9o"/snap-patch/resolvconf.patch
     plugin: autotools
     prime:
     - sbin/resolvconf
@@ -1548,7 +1548,7 @@ parts:
     - iputils-arping=3:20190709-3ubuntu1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
     - libdbus-glib-1-2=0.110-5fakssync1
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -1573,7 +1573,7 @@ parts:
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - ppp=2.4.7-2+4.1ubuntu5.1
     - resolvconf=1.82
-    uname: 'Linux 5.4.0-173-generic #191-Ubuntu SMP Fri Feb 2 13:55:07 UTC 2024 x86_64
+    uname: 'Linux 5.4.0-176-generic #196-Ubuntu SMP Fri Mar 22 16:46:39 UTC 2024 x86_64
       x86_64 x86_64 GNU/Linux'
   networkmanager-common:
     build-packages: []
@@ -1593,7 +1593,7 @@ parts:
     - binutils-x86-64-linux-gnu=2.34-6ubuntu1.9
     - binutils=2.34-6ubuntu1.9
     - bsdmainutils=11.1.2ubuntu3
-    - bsdutils=1:2.34-0.1ubuntu9.4
+    - bsdutils=1:2.34-0.1ubuntu9.6
     - build-essential=12.8ubuntu1.1
     - bzip2=1.0.8-2
     - ca-certificates=20230311ubuntu0.20.04.1
@@ -1615,7 +1615,7 @@ parts:
     - dpkg=1.19.7ubuntu3.2
     - e2fsprogs=1.45.5-2ubuntu1.1
     - fakeroot=1.24-1
-    - fdisk=2.34-0.1ubuntu9.4
+    - fdisk=2.34-0.1ubuntu9.6
     - file=1:5.38-4
     - findutils=4.7.0-1ubuntu1
     - fuse=2.9.9-3
@@ -1658,15 +1658,15 @@ parts:
     - libaudit-common=1:2.8.5-2ubuntu6
     - libaudit1=1:2.8.5-2ubuntu6
     - libbinutils=2.34-6ubuntu1.9
-    - libblkid-dev=2.34-0.1ubuntu9.4
-    - libblkid1=2.34-0.1ubuntu9.4
+    - libblkid-dev=2.34-0.1ubuntu9.6
+    - libblkid1=2.34-0.1ubuntu9.6
     - libbrotli1=1.0.7-6ubuntu0.1
     - libbsd0=0.10.0-1
     - libbz2-1.0=1.0.8-2
-    - libc-bin=2.31-0ubuntu9.14
-    - libc-dev-bin=2.31-0ubuntu9.14
-    - libc6-dev=2.31-0ubuntu9.14
-    - libc6=2.31-0ubuntu9.14
+    - libc-bin=2.31-0ubuntu9.15
+    - libc-dev-bin=2.31-0ubuntu9.15
+    - libc6-dev=2.31-0ubuntu9.15
+    - libc6=2.31-0ubuntu9.15
     - libcap-ng0=0.7.9-2.1build1
     - libcap2-bin=1:2.32-1ubuntu0.1
     - libcap2=1:2.32-1ubuntu0.1
@@ -1679,8 +1679,8 @@ parts:
     - libcryptsetup12=2:2.2.2-3ubuntu2.4
     - libctf-nobfd0=2.34-6ubuntu1.9
     - libctf0=2.34-6ubuntu1.9
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
-    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
+    - libcurl4-gnutls-dev=7.68.0-1ubuntu2.22
     - libdb5.3=5.3.28+dfsg1-0.6ubuntu2
     - libdbus-1-3=1.12.16-2ubuntu2.3
     - libdbus-1-dev=1.12.16-2ubuntu2.3
@@ -1698,7 +1698,7 @@ parts:
     - libexpat1=2.2.9-1ubuntu0.6
     - libext2fs2=1.45.5-2ubuntu1.1
     - libfakeroot=1.24-1
-    - libfdisk1=2.34-0.1ubuntu9.4
+    - libfdisk1=2.34-0.1ubuntu9.6
     - libffi-dev=3.3-4
     - libffi7=3.3-4
     - libfido2-1=1.3.1-1ubuntu2
@@ -1720,11 +1720,11 @@ parts:
     - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
     - libgmp10=2:6.2.0+dfsg-4ubuntu0.1
     - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-    - libgnutls-dane0=3.6.13-2ubuntu1.10
-    - libgnutls-openssl27=3.6.13-2ubuntu1.10
-    - libgnutls28-dev=3.6.13-2ubuntu1.10
-    - libgnutls30=3.6.13-2ubuntu1.10
-    - libgnutlsxx28=3.6.13-2ubuntu1.10
+    - libgnutls-dane0=3.6.13-2ubuntu1.11
+    - libgnutls-openssl27=3.6.13-2ubuntu1.11
+    - libgnutls28-dev=3.6.13-2ubuntu1.11
+    - libgnutls30=3.6.13-2ubuntu1.11
+    - libgnutlsxx28=3.6.13-2ubuntu1.11
     - libgomp1=10.5.0-1ubuntu1~20.04
     - libgpg-error0=1.37-1
     - libgssapi-krb5-2=1.17-6ubuntu4.4
@@ -1776,8 +1776,8 @@ parts:
     - libmm-glib-dev=1.18.6-1~ubuntu20.04.1
     - libmm-glib0=1.18.6-1~ubuntu20.04.1
     - libmnl0=1.0.4-2
-    - libmount-dev=2.34-0.1ubuntu9.4
-    - libmount1=2.34-0.1ubuntu9.4
+    - libmount-dev=2.34-0.1ubuntu9.6
+    - libmount1=2.34-0.1ubuntu9.6
     - libmpc3=1.1.0-1
     - libmpdec2=2.4.2-3
     - libmpfr6=4.0.2-1
@@ -1806,10 +1806,10 @@ parts:
     - libnl-route-3-200=3.4.0-1ubuntu0.1
     - libnl-route-3-dev=3.4.0-1ubuntu0.1
     - libnpth0=1.6-1
-    - libnspr4-dev=2:4.25-1
-    - libnspr4=2:4.25-1
-    - libnss3-dev=2:3.49.1-1ubuntu1.9
-    - libnss3=2:3.49.1-1ubuntu1.9
+    - libnspr4-dev=2:4.35-0ubuntu0.20.04.1
+    - libnspr4=2:4.35-0ubuntu0.20.04.1
+    - libnss3-dev=2:3.98-0ubuntu0.20.04.2
+    - libnss3=2:3.98-0ubuntu0.20.04.2
     - libosp5=1.5.2-13ubuntu3
     - libp11-kit-dev=0.23.20-1ubuntu0.1
     - libp11-kit0=0.23.20-1ubuntu0.1
@@ -1857,7 +1857,7 @@ parts:
     - libsigsegv2=2.12-2
     - libslang2-dev=2.3.2-4
     - libslang2=2.3.2-4
-    - libsmartcols1=2.34-0.1ubuntu9.4
+    - libsmartcols1=2.34-0.1ubuntu9.6
     - libsqlite3-0=3.31.1-4ubuntu0.6
     - libsquashfuse0=0.1.103-2
     - libss2=1.45.5-2ubuntu1.1
@@ -1883,7 +1883,7 @@ parts:
     - libunbound8=1.9.4-2ubuntu1.5
     - libunistring2=0.9.10-2
     - liburi-perl=1.76-2
-    - libuuid1=2.34-0.1ubuntu9.4
+    - libuuid1=2.34-0.1ubuntu9.6
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libwrap0=7.6.q-30
     - libwww-perl=6.43-1
@@ -1896,7 +1896,7 @@ parts:
     - libyaml-dev=0.2.2-1
     - libyaml-perl=1.30-1
     - libzstd1=1.4.4+dfsg-3ubuntu0.1
-    - linux-libc-dev=5.4.0-174.193
+    - linux-libc-dev=5.4.0-177.197
     - lockfile-progs=0.1.18
     - login=1:4.8.1-1ubuntu5.20.04.5
     - logsave=1.45.5-2ubuntu1.1
@@ -1906,7 +1906,7 @@ parts:
     - mawk=1.3.4.20200120-2
     - mime-support=3.64ubuntu1
     - modemmanager-dev=1.18.6-1~ubuntu20.04.1
-    - mount=2.34-0.1ubuntu9.4
+    - mount=2.34-0.1ubuntu9.6
     - ncurses-base=6.2-0ubuntu2.1
     - ncurses-bin=6.2-0ubuntu2.1
     - netbase=6.1
@@ -1957,7 +1957,7 @@ parts:
     - sensible-utils=0.0.12+nmu1
     - sgml-base=1.29.1
     - sgml-data=2.0.11
-    - snapd=2.58+20.04.1
+    - snapd=2.61.3+20.04
     - socat=1.7.3.3-2
     - squashfs-tools=1:4.4-1ubuntu0.3
     - squashfuse=0.1.103-2
@@ -1970,24 +1970,24 @@ parts:
     - tzdata=2024a-0ubuntu0.20.04
     - ubuntu-keyring=2020.02.11.4
     - udev=245.4-4ubuntu3.23
-    - util-linux=2.34-0.1ubuntu9.4
-    - uuid-dev=2.34-0.1ubuntu9.4
+    - util-linux=2.34-0.1ubuntu9.6
+    - uuid-dev=2.34-0.1ubuntu9.6
     - xml-core=0.18+nmu1
     - xsltproc=1.1.34-4ubuntu0.20.04.1
     - xz-utils=5.2.4-1ubuntu1.1
     - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
     - zlib1g=1:1.2.11.dfsg-2ubuntu1.5
     installed-snaps:
-    - core20=2182
+    - core20=2264
     - core22=1122
     - snapcraft=11040
-    - snapd=21184
+    - snapd=21465
     plugin: dump
     prime: []
     source: snap-common
     stage: []
     stage-packages: []
-    uname: 'Linux 5.4.0-173-generic #191-Ubuntu SMP Fri Feb 2 13:55:07 UTC 2024 x86_64
+    uname: 'Linux 5.4.0-176-generic #196-Ubuntu SMP Fri Mar 22 16:46:39 UTC 2024 x86_64
       x86_64 x86_64 GNU/Linux'
   stack-snaps-tools:
     build-packages:
@@ -1995,10 +1995,10 @@ parts:
     - git
     installed-packages: []
     installed-snaps:
-    - core20=2182
+    - core20=2264
     - core22=1122
     - snapcraft=11040
-    - snapd=21184
+    - snapd=21465
     override-build: |
       set -ex
       find "$SNAPCRAFT_PART_INSTALL"/ -type f,l \
@@ -2025,7 +2025,7 @@ parts:
     - dnsmasq-base=2.90-0ubuntu0.20.04.1
     - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libbrotli1=1.0.7-6ubuntu0.1
-    - libcurl3-gnutls=7.68.0-1ubuntu2.21
+    - libcurl3-gnutls=7.68.0-1ubuntu2.22
     - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
     - libheimbase1-heimdal=7.7.0+dfsg-1ubuntu1.4
@@ -2048,12 +2048,12 @@ parts:
     - libteamdctl0=1.30-1
     - libwind0-heimdal=7.7.0+dfsg-1ubuntu1.4
     - network-manager=1.22.10-1ubuntu2.4
-    uname: 'Linux 5.4.0-173-generic #191-Ubuntu SMP Fri Feb 2 13:55:07 UTC 2024 x86_64
+    uname: 'Linux 5.4.0-176-generic #196-Ubuntu SMP Fri Mar 22 16:46:39 UTC 2024 x86_64
       x86_64 x86_64 GNU/Linux'
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ldf5bxco5cepyxt8/+build/2428392
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/ci-network-manager-ue0oeejbzetknu9o/+build/2459761
 build-packages:
 - autoconf=2.69-11.1
 - automake=1:1.16.1-4ubuntu6
@@ -2076,10 +2076,10 @@ build-packages:
 - intltool=0.51.0-5ubuntu1
 - iproute2=5.5.0-1ubuntu1
 - iptables=1.8.4-3ubuntu2.1
-- libblkid-dev=2.34-0.1ubuntu9.4
+- libblkid-dev=2.34-0.1ubuntu9.6
 - libcap2-bin=1:2.32-1ubuntu0.1
 - libcroco3=0.6.13-1
-- libcurl4-gnutls-dev=7.68.0-1ubuntu2.21
+- libcurl4-gnutls-dev=7.68.0-1ubuntu2.22
 - libdbus-1-dev=1.12.16-2ubuntu2.3
 - libdbus-glib-1-2=0.110-5fakssync1
 - libdbus-glib-1-dev-bin=0.110-5fakssync1
@@ -2099,10 +2099,10 @@ build-packages:
 - libglib2.0-doc=2.64.6-1~ubuntu20.04.6
 - libgmp-dev=2:6.2.0+dfsg-4ubuntu0.1
 - libgmpxx4ldbl=2:6.2.0+dfsg-4ubuntu0.1
-- libgnutls-dane0=3.6.13-2ubuntu1.10
-- libgnutls-openssl27=3.6.13-2ubuntu1.10
-- libgnutls28-dev=3.6.13-2ubuntu1.10
-- libgnutlsxx28=3.6.13-2ubuntu1.10
+- libgnutls-dane0=3.6.13-2ubuntu1.11
+- libgnutls-openssl27=3.6.13-2ubuntu1.11
+- libgnutls28-dev=3.6.13-2ubuntu1.11
+- libgnutlsxx28=3.6.13-2ubuntu1.11
 - libhtml-parser-perl=3.72-5
 - libhtml-tagset-perl=3.20-4
 - libhtml-tree-perl=5.07-2
@@ -2126,7 +2126,7 @@ build-packages:
 - libmm-glib-dev=1.18.6-1~ubuntu20.04.1
 - libmm-glib0=1.18.6-1~ubuntu20.04.1
 - libmnl0=1.0.4-2
-- libmount-dev=2.34-0.1ubuntu9.4
+- libmount-dev=2.34-0.1ubuntu9.6
 - libncurses-dev=6.2-0ubuntu2.1
 - libndp-dev=1.7-0ubuntu1
 - libndp0=1.7-0ubuntu1
@@ -2147,10 +2147,10 @@ build-packages:
 - libnl-nf-3-200=3.4.0-1ubuntu0.1
 - libnl-route-3-200=3.4.0-1ubuntu0.1
 - libnl-route-3-dev=3.4.0-1ubuntu0.1
-- libnspr4-dev=2:4.25-1
-- libnspr4=2:4.25-1
-- libnss3-dev=2:3.49.1-1ubuntu1.9
-- libnss3=2:3.49.1-1ubuntu1.9
+- libnspr4-dev=2:4.35-0ubuntu0.20.04.1
+- libnspr4=2:4.35-0ubuntu0.20.04.1
+- libnss3-dev=2:3.98-0ubuntu0.20.04.2
+- libnss3=2:3.98-0ubuntu0.20.04.2
 - libosp5=1.5.2-13ubuntu3
 - libp11-kit-dev=0.23.20-1ubuntu0.1
 - libpcre16-3=2:8.39-12ubuntu0.1
@@ -2223,18 +2223,18 @@ build-packages:
 - quilt=0.65-3
 - sgml-base=1.29.1
 - sgml-data=2.0.11
-- uuid-dev=2.34-0.1ubuntu9.4
+- uuid-dev=2.34-0.1ubuntu9.6
 - xml-core=0.18+nmu1
 - xsltproc=1.1.34-4ubuntu0.20.04.1
 - zlib1g-dev=1:1.2.11.dfsg-2ubuntu1.5
 build-snaps:
-- core20=2182
+- core20=2264
 primed-stage-packages:
 - dnsmasq-base=2.90-0ubuntu0.20.04.1
 - iputils-arping=3:20190709-3ubuntu1
 - libasn1-8-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libbrotli1=1.0.7-6ubuntu0.1
-- libcurl3-gnutls=7.68.0-1ubuntu2.21
+- libcurl3-gnutls=7.68.0-1ubuntu2.22
 - libdbus-glib-1-2=0.110-5fakssync1
 - libgssapi3-heimdal=7.7.0+dfsg-1ubuntu1.4
 - libhcrypto4-heimdal=7.7.0+dfsg-1ubuntu1.4
