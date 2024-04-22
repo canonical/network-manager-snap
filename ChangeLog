@@ -1,3 +1,18 @@
+2024-04-22 network-manager 1.36.6-11
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.15 to 7.81.0-1ubuntu1.16:
+  
+    curl (7.81.0-1ubuntu1.16) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP/2 push headers memory-leak
+        - debian/patches/CVE-2024-2398.patch: push headers better cleanup in
+          lib/http2.c.
+        - CVE-2024-2398
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 19 Mar 2024 08:16:19 -0400
+  
 2024-03-21 network-manager 1.36.6-10
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
