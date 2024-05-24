@@ -255,11 +255,7 @@ parts:
       "$CRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
-      
-      for filename in "$CRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch; do
-          git am "$filename"
-      done
-      #git am "$CRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
+      git am "$CRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
 
       # re-create configure
       ./autogen.sh
