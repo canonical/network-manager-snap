@@ -44,17 +44,17 @@ backends:
     plan: n2-standard-2
     halt-timeout: 2h
     systems:
-      - ubuntu-core-22-64:
-          image: ubuntu-22.04-64
+      - ubuntu-core-24-64:
+          image: ubuntu-24.04-64
           workers: 8
           storage: 20G
     prepare: |
-      # Builds UC image on top of classic 22.04
+      # Builds UC image on top of classic 24.04
       "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
     systems:
-      - ubuntu-core-22:
+      - ubuntu-core-24:
           # TODO how is this done in snapd spread?
           #bios: /usr/share/OVMF/OVMF_CODE.fd
           username: test

@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.46.0-1ubuntu2
+version: 1.46.0-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
