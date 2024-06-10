@@ -15,3 +15,6 @@ jobs:
           LP_CREDENTIALS: ${{ secrets.LP_CREDENTIALS }}
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         uses: snapcore/system-snaps-cicd-tools/action-release@main
+        with:
+          # TODO: remove this filter when snapd 2.64 is released
+          architectures: arm64,amd64,armhf
