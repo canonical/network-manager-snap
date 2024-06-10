@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.36.6-10-dev
+version: 1.46.0-1-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -8,8 +8,8 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN services.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-22
-base: core22
+    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-24
+base: core24
 confinement: strict
 grade: stable
 
@@ -139,7 +139,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/jammy-updates
+    source-branch: applied/ubuntu/noble
     build-packages:
       - build-essential
     make-parameters:
@@ -160,14 +160,16 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/jammy-updates
+    source-branch: applied/ubuntu/noble
     build-packages:
-      - intltool
+      - gettext
       - libglib2.0-dev
       - ppp-dev
+      - libselinux1-dev
+      - libaudit-dev
       - libgnutls28-dev
       - uuid-dev
-      - systemd
+      - systemd-dev
       - libsystemd-dev
       - libudev-dev
       - libgirepository1.0-dev
@@ -175,6 +177,7 @@ parts:
       - python3-gi
       - libpsl-dev
       - libcurl4-gnutls-dev
+      - gtk-doc-tools
       - libglib2.0-doc
       - libmm-glib-dev
       - libndp-dev
@@ -182,13 +185,19 @@ parts:
       - libnewt-dev
       - libteam-dev
       - libjansson-dev
-      - libnss3-dev
+      - libbluetooth-dev
+      - valac
+      - polkitd
+      - libpolkit-gobject-1-dev
       - dbus
       - python3-dbus
-      - gtk-doc-tools
+      - python3-pexpect
+      - iproute2
+      - libyaml-dev
       - libnetplan-dev
       - netplan.io
-      - libyaml-dev
+      - intltool
+      - libnss3-dev
     autotools-configure-parameters:
       - --prefix=/usr
       - --sysconfdir=/etc
@@ -217,19 +226,20 @@ parts:
       - --with-selinux=no
       - --with-tests
       - --with-libaudit=no
-      - --without-dhcpcanon
+      - --with-dhcpcanon=no
+      - --enable-netplan=yes
       # Explicitly disable polkit, as it's not applicable on Ubuntu Core
-      - --disable-polkit
+      - --enable-polkit=no
       - --enable-ppp
       - --enable-ifupdown
       - --enable-introspection
-      - --disable-gtk-doc
+      - --enable-gtk-doc=no
       - --enable-concheck
       - --enable-teamdctl
-      - --disable-more-warnings
-      - --disable-modify-system
-      - --disable-ovs
-      - --without-nm-cloud-setup
+      - --enable-more-warnings=no
+      - --enable-modify-system=no
+      - --enable-ovs=no
+      - --with-nm-cloud-setup=no
       # Set explicitly flags until lp: #1791946 is solved
       - CFLAGS='-O2 -Wl,-z,relro,-z,now -pie -fpie'
     # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
@@ -264,10 +274,10 @@ parts:
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
-      - libcurl3-gnutls
+      - libcurl3t64-gnutls
       - libjansson4
       - libpkcs11-helper1
-      - libldap-2.5-0
+      - libldap2
       - libmm-glib0
       - libnewt0.52
       - libnghttp2-14
@@ -283,7 +293,7 @@ parts:
     organize:
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
-      usr/lib/$CRAFT_ARCH_TRIPLET/NetworkManager: usr/lib/NetworkManager
+      usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/NetworkManager: usr/lib/NetworkManager
 
     prime:
       # binaries
@@ -301,36 +311,41 @@ parts:
       # configuration
       - etc/NetworkManager/*
       # docs
-      - usr/share/doc/libcurl3-gnutls/copyright
+      - usr/share/doc/libcurl3t64-gnutls/copyright
+      - usr/share/doc/libibverbs1/copyright
       - usr/share/doc/libjansson4/copyright
-      - usr/share/doc/libpkcs11-helper1/copyright
-      - usr/share/doc/libldap-2.5-0/copyright
+      - usr/share/doc/libldap2/copyright
       - usr/share/doc/libmm-glib0/copyright
       - usr/share/doc/libndp0/copyright
       - usr/share/doc/libnewt0.52/copyright
       - usr/share/doc/libnghttp2-14/copyright
-      - usr/share/doc/libpcap0.8/copyright
-      - usr/share/doc/libpsl5/copyright
+      - usr/share/doc/libnm0/copyright
+      - usr/share/doc/libpcap0.8t64/copyright
+      - usr/share/doc/libpkcs11-helper1t64/copyright
+      - usr/share/doc/libpsl5t64/copyright
       - usr/share/doc/librtmp1/copyright
       - usr/share/doc/libsasl2-2/copyright
-      - usr/share/doc/libslang2/copyright
       - usr/share/doc/libteamdctl0/copyright
+      - usr/share/doc/libslang2/copyright
       - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
-      - usr/share/doc/libcurl3-gnutls/changelog.*
+      - usr/share/doc/network-manager-openvpn/copyright
+      - usr/share/doc/libcurl3t64-gnutls/changelog.*
+      - usr/share/doc/libibverbs1/changelog.*
       - usr/share/doc/libjansson4/changelog.*
-      - usr/share/doc/libpkcs11-helper1/changelog.*
-      - usr/share/doc/libldap-2.5-0/changelog.*
+      - usr/share/doc/libldap2/changelog.*
       - usr/share/doc/libmm-glib0/changelog.*
       - usr/share/doc/libndp0/changelog.*
       - usr/share/doc/libnewt0.52/changelog.*
       - usr/share/doc/libnghttp2-14/changelog.*
-      - usr/share/doc/libpcap0.8/changelog.*
-      - usr/share/doc/libpsl5/changelog.*
+      - usr/share/doc/libnm0/changelog.*
+      - usr/share/doc/libpcap0.8t64/changelog.*
+      - usr/share/doc/libpkcs11-helper1t64/changelog.*
+      - usr/share/doc/libpsl5t64/changelog.*
       - usr/share/doc/librtmp1/changelog.*
       - usr/share/doc/libsasl2-2/changelog.*
-      - usr/share/doc/libslang2/changelog.*
       - usr/share/doc/libteamdctl0/changelog.*
+      - usr/share/doc/libslang2/changelog.*
       - usr/share/doc/openvpn/changelog.*
       - usr/share/doc/ppp/changelog.*
       - usr/share/doc/network-manager-openvpn/changelog.*
@@ -342,11 +357,13 @@ parts:
       - usr/lib/*/libjansson*
       # For openvpn
       - usr/lib/*/libpkcs11-helper*
-      - usr/lib/*/liblber-2.5*
-      - usr/lib/*/libldap-2.5*
+      - usr/lib/*/liblber.so.2*
+      - usr/lib/*/libldap.so.2*
+      - usr/lib/*/libibverbs.so.1*
       - usr/lib/*/libmm-glib*
       - usr/lib/*/libnewt*
       - usr/lib/*/libndp*
+      - usr/lib/*/libssh.so.4*
       - usr/lib/*/libnghttp2*
       - usr/lib/*/libpcap*
       - usr/lib/*/libpsl*
@@ -359,8 +376,8 @@ parts:
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
       ## Things we don't support yet and don't have to ship
-      - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-adsl.so
-      - -usr/lib/NetworkManager/1.36.4/libnm-device-plugin-bluetooth.so
+      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-adsl.so
+      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-bluetooth.so
       ## Some additional build artifacts we do not need
       - -usr/lib/NetworkManager/*/*.la
       - -usr/lib/libnm.la
