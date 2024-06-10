@@ -14,3 +14,6 @@ jobs:
         env:
           LP_CREDENTIALS: ${{ secrets.LP_CREDENTIALS }}
         uses: snapcore/system-snaps-cicd-tools/action-test@main
+        with:
+          # TODO: remove this filter when snapd 2.64 is released
+          architectures: arm64,amd64,armhf
