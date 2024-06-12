@@ -282,7 +282,7 @@ parts:
       - libnewt0.52
       - libnghttp2-14
       - libndp0
-      - libpsl5
+      - libpsl5t64
       - librtmp1
       - libsasl2-2
       - libteamdctl0
