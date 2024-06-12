@@ -276,7 +276,7 @@ parts:
     stage-packages:
       - libcurl3t64-gnutls
       - libjansson4
-      - libpkcs11-helper1
+      - libpkcs11-helper1t64
       - libldap2
       - libmm-glib0
       - libnewt0.52
