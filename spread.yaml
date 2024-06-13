@@ -67,6 +67,11 @@ exclude:
   - .git
 
 prepare: |
+  # When running this through other means than GH actions, ensure that
+  # the repo is checked out
+  if ! [ -d /home/network-manager/cicd ]; then
+    git clone https://github.com/snapcore/system-snaps-cicd-tools.git /home/network-manager/cicd
+  fi
   # Take the MATCH and REBOOT functions from spread and allow our shell
   # scripts to use them as shell commands. The replacements are real
   # executables in cicd/snapd-lib/bin (which is on PATH) but they source
@@ -85,7 +90,7 @@ prepare: |
   "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME"
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 24/stable
 
 restore-each: |
   "$SYSTEMSNAPSTESTLIB"/restore-each.sh
