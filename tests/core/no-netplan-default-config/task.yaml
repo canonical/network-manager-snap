@@ -34,8 +34,10 @@ execute: |
     networkctl status $eth_if | MATCH '(unmanaged|failed)'
     network-manager.nmcli c show --active | MATCH $eth_if | MATCH -v netplan
 
-    # We should only have a single active configuration
-    test `network-manager.nmcli -m multiline -f UUID c show --active | wc -l` -eq 1
+    # Verify the active connections
+    test `network-manager.nmcli -m multiline -f UUID c show --active | wc -l` -eq 2
+    network-manager.nmcli -m multiline -f DEVICE c show --active | MATCH "lo"
+    network-manager.nmcli -m multiline -f DEVICE c show --active | MATCH "ens4"
 
     # Verify that we can modify the automatically created connection
     connection=$(network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
