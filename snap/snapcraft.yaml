@@ -372,6 +372,7 @@ parts:
       - usr/lib/*/libteamdctl*
       - usr/lib/openvpn/*
       - usr/lib/*/openvpn/plugins/*
+      - usr/libexec/*openvpn*
       # unwanted
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
