@@ -62,6 +62,10 @@ layout:
     bind: $SNAP_DATA/var/lib/NetworkManager
   /usr/sbin/openvpn:
     symlink: $SNAP/usr/sbin/openvpn
+  /usr/libexec/nm-openvpn-service:
+    symlink: $SNAP/usr/libexec/nm-openvpn-service
+  /usr/libexec/nm-openvpn-service-openvpn-helper:
+    symlink: $SNAP/usr/libexec/nm-openvpn-service-openvpn-helper
   # So nm-openvpn-service-openvpn-helper can find it (env including
   # LD_LIBRARY_PATH is not passed down by openvpn).
   /usr/lib/libnm.so.0:
