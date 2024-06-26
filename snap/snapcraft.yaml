@@ -218,8 +218,8 @@ parts:
       - --with-pppd=/snap/$CRAFT_PROJECT_NAME/current/usr/sbin/pppd
       - --with-pppd-plugin-dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
       - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
-      - --with-systemdsystemunitdir=/lib/systemd/system
-      - --with-udev-dir=/lib/udev
+      - --with-systemdsystemunitdir=/usr/lib/systemd/system
+      - --with-udev-dir=/usr/lib/udev
       - --with-crypto=gnutls
       # Explicitly disable session tracking, as it's not applicable on Ubuntu Core
       - --with-session-tracking=no
