@@ -3,6 +3,7 @@ summary: Verify WiFi WoWLAN can be enabled in NetworkManager globally via a snap
 restore: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
+    wait_for_network_manager
     network-manager.nmcli c del Ubuntu
     remove_ap
 
