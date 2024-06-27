@@ -90,7 +90,7 @@ prepare: |
   "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 24/stable
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 24/edge
 
 restore-each: |
   "$SYSTEMSNAPSTESTLIB"/restore-each.sh

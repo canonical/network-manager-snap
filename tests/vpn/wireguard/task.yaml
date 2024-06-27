@@ -6,7 +6,7 @@ execute: |
   # TODO eventually this will not be needed when the store auto-connects it
   snap connect network-manager:network-control
 
-  def_iface=$(ip r list to default | cut -d' ' -f5)
+  def_iface=$(ip r list to default | cut -d' ' -f5 | head -n 1)
   def_ip=$(ip -4 a show dev "$def_iface" primary | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
   wg0_conf_p=/var/snap/network-manager/common/wg0.conf
   wg1_conf_p=/var/snap/network-manager/common/wg1.conf

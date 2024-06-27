@@ -1,0 +1,33 @@
+From d5e87e52d8d25134daf51d9c84a28c06ffe497ee Mon Sep 17 00:00:00 2001
+From: Philip Meulengracht <the_meulengracht@hotmail.com>
+Date: Thu, 27 Jun 2024 12:54:15 +0200
+Subject: [PATCH] src/core: allow reverse ipv6 disabled settings
+
+---
+ src/core/NetworkManagerUtils.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/src/core/NetworkManagerUtils.c b/src/core/NetworkManagerUtils.c
+index 08564903a..0d7fd2b2a 100644
+--- a/src/core/NetworkManagerUtils.c
++++ b/src/core/NetworkManagerUtils.c
+@@ -381,6 +381,16 @@ check_ip6_method(NMConnection *orig, NMConnection *candidate, GHashTable *settin
+          * simply take care of IPv6.
+          */
+         allow = TRUE;
++    } else if (nm_streq0(orig_ip6_method,NM_SETTING_IP6_CONFIG_METHOD_IGNORE)
++               && NM_IN_STRSET(candidate_ip6_method,
++                            NM_SETTING_IP6_CONFIG_METHOD_LINK_LOCAL,
++                            NM_SETTING_IP6_CONFIG_METHOD_DISABLED,
++                            NM_SETTING_IP6_CONFIG_METHOD_AUTO)) {
++        /* If the generated connection method is 'ignore' and the candidate method 
++         * is 'link-local', disabled' or 'auto' we can take the connection, since
++         * ipv6 probably has not been enabled.
++         */
++        allow = TRUE;
+     }
+ 
+     if (allow) {
+-- 
+2.34.1
+
