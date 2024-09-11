@@ -13,6 +13,11 @@ restore: |
 execute: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
+    systemctl status load-mac80211-hwsim.service || true
+    systemctl cat load-mac80211-hwsim.service || true
+    journalctl --no-pager -l -u load-mac80211-hwsim.service || true
+    lsmod
+    ip a
     create_ap "$WIFI_SSID" "$WIFI_PASSPHRASE"
 
     # Connect to the AP and ensure the connection was established
