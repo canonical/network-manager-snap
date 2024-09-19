@@ -1,9 +1,9 @@
-snapcraft-version: 8.2.12
-snapcraft-started-at: '2024-06-27T18:48:03.124035Z'
+snapcraft-version: 8.3.4
+snapcraft-started-at: '2024-09-19T21:35:32.717012Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '24.04'
 name: network-manager
-version: 1.46.0-1
+version: 1.46.0-2
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -82,7 +82,7 @@ parts:
     stage-packages:
     - adduser=3.137ubuntu1
     - dnsmasq-base=2.90-2build2
-    - libcurl3t64-gnutls=8.5.0-2ubuntu10.1
+    - libcurl3t64-gnutls=8.5.0-2ubuntu10.4
     - libjansson4=2.14-2build2
     - libldap2=2.6.7+dfsg-1~exp1ubuntu8
     - libmm-glib0=1.23.4-0ubuntu2
@@ -93,7 +93,7 @@ parts:
     - libnm0=1.46.0-1ubuntu2
     - libpsl5t64=0.21.2-1.1build1
     - librtmp1=2.4+20151223.gitfa8646d.1-2build7
-    - libsasl2-2=2.1.28+dfsg1-5ubuntu3
+    - libsasl2-2=2.1.28+dfsg1-5ubuntu3.1
     - libslang2=2.3.3-3build2
     - libssh-4=0.10.6-2build2
     - libteamdctl0=1.31-1build3
@@ -254,7 +254,7 @@ parts:
       unset _SNAP
     stage-packages:
     - adduser=3.137ubuntu1
-    - libcurl3t64-gnutls=8.5.0-2ubuntu10.1
+    - libcurl3t64-gnutls=8.5.0-2ubuntu10.4
     - libibverbs1=50.0-2build2
     - libjansson4=2.14-2build2
     - libldap2=2.6.7+dfsg-1~exp1ubuntu8
@@ -266,11 +266,11 @@ parts:
     - libpkcs11-helper1t64=1.29.0-2.1build2
     - libpsl5t64=0.21.2-1.1build1
     - librtmp1=2.4+20151223.gitfa8646d.1-2build7
-    - libsasl2-2=2.1.28+dfsg1-5ubuntu3
+    - libsasl2-2=2.1.28+dfsg1-5ubuntu3.1
     - libslang2=2.3.3-3build2
     - libssh-4=0.10.6-2build2
     - libteamdctl0=1.31-1build3
-    - openvpn=2.6.9-1ubuntu4
+    - openvpn=2.6.9-1ubuntu4.1
     - ppp=2.4.9-1+1.1ubuntu4
     organize:
       snap/network-manager/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
@@ -358,12 +358,12 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2526566
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2602348
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.90-2build2
-- libcurl3t64-gnutls=8.5.0-2ubuntu10.1
+- libcurl3t64-gnutls=8.5.0-2ubuntu10.4
 - libibverbs1=50.0-2build2
 - libjansson4=2.14-2build2
 - libldap2=2.6.7+dfsg-1~exp1ubuntu8
@@ -376,10 +376,10 @@ primed-stage-packages:
 - libpkcs11-helper1t64=1.29.0-2.1build2
 - libpsl5t64=0.21.2-1.1build1
 - librtmp1=2.4+20151223.gitfa8646d.1-2build7
-- libsasl2-2=2.1.28+dfsg1-5ubuntu3
+- libsasl2-2=2.1.28+dfsg1-5ubuntu3.1
 - libslang2=2.3.3-3build2
 - libssh-4=0.10.6-2build2
 - libteamdctl0=1.31-1build3
 - network-manager=1.46.0-1ubuntu2
-- openvpn=2.6.9-1ubuntu4
+- openvpn=2.6.9-1ubuntu4.1
 - ppp=2.4.9-1+1.1ubuntu4
