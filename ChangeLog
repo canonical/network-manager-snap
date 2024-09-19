@@ -1,3 +1,62 @@
+2024-09-19 network-manager 1.46.0-2
+
+  [ Changes in primed packages ]
+  
+  libcurl3t64-gnutls (built from curl) updated from 8.5.0-2ubuntu10.1 to 8.5.0-2ubuntu10.4:
+  
+    curl (8.5.0-2ubuntu10.4) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: OCSP stapling bypass with GnuTLS
+        - debian/patches/CVE-2024-8096.patch: fix OCSP stapling management in
+          lib/vtls/gtls.c.
+        - CVE-2024-8096
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 06 Sep 2024 07:27:11 -0400
+  
+    curl (8.5.0-2ubuntu10.3) noble-proposed; urgency=medium
+  
+      * SRU: LP: #2076340: No-change rebuild to pick up changed build flags
+        on ppc64 and s390x.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Fri, 09 Aug 2024 04:33:21 +0200
+  
+    curl (8.5.0-2ubuntu10.2) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: ASN.1 date parser overread
+        - debian/patches/CVE-2024-7264-pre1.patch: clean up GTime2str in
+          lib/vtls/x509asn1.c.
+        - debian/patches/CVE-2024-7264.patch: unittests and fixes for gtime2str
+          in lib/vtls/x509asn1.c, lib/vtls/x509asn1.h, tests/data/Makefile.inc,
+          tests/data/test1656, tests/unit/Makefile.inc, tests/unit/unit1656.c.
+        - CVE-2024-7264
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 01 Aug 2024 09:43:08 -0400
+  
+  libsasl2-2 (built from cyrus-sasl2) updated from 2.1.28+dfsg1-5ubuntu3 to 2.1.28+dfsg1-5ubuntu3.1:
+  
+    cyrus-sasl2 (2.1.28+dfsg1-5ubuntu3.1) noble-proposed; urgency=medium
+  
+      * SRU: LP: #2076340: No-change rebuild to pick up changed build flags
+        on ppc64 and s390x.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Fri, 09 Aug 2024 04:33:21 +0200
+  
+  openvpn (built from openvpn) updated from 2.6.9-1ubuntu4 to 2.6.9-1ubuntu4.1:
+  
+    openvpn (2.6.9-1ubuntu4.1) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: client can circumvent management client-kill
+        - debian/patches/CVE-2024-28882.patch: only schedule_exit() once in
+          src/openvpn/forward.*, src/openvpn/push.c.
+        - CVE-2024-28882
+      * SECURITY UPDATE: malicious peer can DoS or send garbage to logs
+        - debian/patches/CVE-2024-5594.patch: properly handle null bytes and
+          invalid characters in control messages in src/openvpn/buffer.*,
+          src/openvpn/forward.c, tests/unit_tests/openvpn/test_buffer.c.
+        - CVE-2024-5594
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 27 Jun 2024 14:21:42 -0400
+  
 2024-06-27 network-manager 1.46.0-1
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
