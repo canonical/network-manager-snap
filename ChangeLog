@@ -1,3 +1,74 @@
+2025-03-19 network-manager 1.36.6-14
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.18 to 7.81.0-1ubuntu1.20:
+  
+    curl (7.81.0-1ubuntu1.20) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: netrc and redirect credential leak
+        - debian/patches/CVE-2024-11053-pre1.patch: use same credentials on
+          redirect in lib/transfer.c, lib/url.c, lib/urldata.h,
+          tests/data/Makefile.inc, tests/data/test998, tests/data/test999.
+        - debian/patches/CVE-2024-11053.patch: address several netrc parser
+          flaws in lib/netrc.c, lib/url.c, tests/data/Makefile.inc,
+          tests/data/test478, tests/data/test479, tests/data/test480,
+          tests/unit/unit1304.c, tests/data/DISABLED.
+        - CVE-2024-11053
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 11 Dec 2024 12:26:37 -0500
+  
+    curl (7.81.0-1ubuntu1.19) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: HSTS expiry overwrites parent cache entry.
+        - debian/patches/CVE-2024-9681.patch: Add bestsub, blen, and hostname
+          comparison in lib/hsts.c.
+        - CVE-2024-9681
+  
+     -- Hlib Korzhynskyy <hlib.korzhynskyy@canonical.com>  Wed, 06 Nov 2024 10:54:59 -0330
+  
+  libnm0, network-manager (built from network-manager) updated from 1.36.6-0ubuntu2 to 1.36.6-0ubuntu2.1:
+  
+    network-manager (1.36.6-0ubuntu2.1) jammy; urgency=medium
+  
+      [ Danilo Egea Gondolfo ]
+      * debian/patches/lp2032824 (LP: #2032824)
+        Fix for VETHs pairs activation on startup.
+  
+      [ Jeremy Bicha ]
+      * debian/watch: Watch for 1.36.x releases
+  
+     -- Lukas Märdian <slyon@ubuntu.com>  Wed, 11 Dec 2024 15:48:05 +0100
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.18+dfsg-0ubuntu0.22.04.2 to 2.5.18+dfsg-0ubuntu0.22.04.3:
+  
+    openldap (2.5.18+dfsg-0ubuntu0.22.04.3) jammy; urgency=medium
+  
+      * Fixup TIMEOUT and NETWORK_TIMEOUT options so they work correctly
+        when SSL is involved. Before they would never timeout, causing
+        hangs on connection failure. Now they timeout as expected.
+        (LP: #2090806)
+        - d/p/lp2090806-ITS-8047-Fix-TLS-connection-timeout-handling.patch
+  
+     -- Matthew Ruffell <matthew.ruffell@canonical.com>  Mon, 09 Dec 2024 15:54:19 +1300
+  
+  openvpn (built from openvpn) updated from 2.5.9-0ubuntu0.22.04.3 to 2.5.11-0ubuntu0.22.04.1:
+  
+    openvpn (2.5.11-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream release 2.5.11 (LP: #2073318):
+        - CVE Fixes:
+          + CVE-2024-5594, CVE-2024-27459, CVE-2024-24974, CVE-2024-27903
+        - Updates:
+          + Allow trailing r and n in control channel message
+          + See https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn25 for
+            additional bug fixes and information
+      * Remove patches fixed upstream:
+        - d/p/CVE-2024-5594.patch
+        [Fixed in 2.5.11]
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Tue, 17 Sep 2024 13:25:49 -0700
+  
 2024-09-20 network-manager 1.36.6-13
 
   [ Changes in primed packages ]
