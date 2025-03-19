@@ -1,3 +1,20 @@
+2025-03-19 network-manager 1.22.10-30
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.68.0-1ubuntu2.24 to 7.68.0-1ubuntu2.25:
+  
+    curl (7.68.0-1ubuntu2.25) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: netrc and redirect credential leak
+        - debian/patches/CVE-2024-11053.patch: address several netrc parser
+          flaws in lib/netrc.c, lib/url.c, tests/data/Makefile.inc,
+          tests/data/test478, tests/data/test479, tests/data/test480,
+          tests/unit/unit1304.c, tests/data/DISABLED.
+        - CVE-2024-11053
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 11 Dec 2024 13:26:38 -0500
+  
 2024-12-04 network-manager 1.22.10-29
 
   [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
