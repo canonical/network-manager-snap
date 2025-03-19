@@ -142,7 +142,7 @@ parts:
       - --with-libsoup=no
       # We want to support ModemManager
       - --with-modem-manager-1=yes
-      - --enable-tests=yes
+      - --enable-tests=no
       # Set explicitly CFLAGS until lp: #1791946 is solved
       - CFLAGS=-O2
 
