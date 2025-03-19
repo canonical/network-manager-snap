@@ -1,3 +1,279 @@
+2025-03-19 network-manager 1.2.2-32
+
+  [ Roberto Mier Escandon <rmescandon@gmail.com> ]
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+
+  [ Konrad Zapałowicz <konrad.zapalowicz@canonical.com> ]
+  * docs: replace syslog with journal
+    Merge-Proposal: https://code.launchpad.net/~kzapalowicz/snappy-hwe-snaps/+git/network-manager/+merge/325000
+
+  [ Roberto Mier Escandón  <roberto.escandon@canonical.com> ]
+  * Debug enable/disable config option.
+
+    You can restart network-manager service in debug mode by:
+      snap set network-manager debug.enable=true
+    
+    and disable debug mode:
+      snap set network-manager debug.enable=false
+    
+    Default value is false.
+    
+    When set to true, service is started with these flags:
+      --debug --log-level=DEBUG
+    
+    NOTE: Additionally, there are some spread tests changes to make them more stable
+    Merge-Proposal: https://code.launchpad.net/~rmescandon/snappy-hwe-snaps/+git/network-manager/+merge/327096
+  * debug config option back to debug.enable
+spread tests operations being repeated use now a common helper function
+    Merge-Proposal: https://code.launchpad.net/~rmescandon/snappy-hwe-snaps/+git/network-manager/+merge/327866
+
+  [ System Enablement CI Bot <ce-system-enablement@lists.canonical.com> ]
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+
+  [ Simon Fels <simon.fels@canonical.com> ]
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+  * See more information in merge proposal
+    
+
+  [ Tony Espy <(unknown e-mail)> ]
+  * This change removes a broken link to RHEL documentation for nmcli.
+    Merge-Proposal: https://code.launchpad.net/~awe/snappy-hwe-snaps/+git/network-manager/+merge/356279
+
+  [ Simon Fels <simon.busch@canonical.com> ]
+  * Add configuration item to allow users to enable ethernet support
+
+    The current implementation requires to reboot the device two times which is not really what we want but not possible to change until we have a network-setup-control interface which would allow our hook to change the netplan configuration directly.
+    Merge-Proposal: https://code.launchpad.net/~morphis/snappy-hwe-snaps/+git/network-manager/+merge/316935
+
+  [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
+  * spread: fix tests that use wifi-ap.
+NM some times needs to be restarted to properly re-scan APs and get
+    the right authentication type.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/327212
+  * Fixes for immutable-netplan-config and wifi-connect-secured-ap tests
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/328363
+  * Change debug activation to avoid having to re-start NM.
+To be able to re-start NM the core-support plug was being used, which
+    would have never been accepted in the Ubuntu store, as that interface
+    is meant to be used by the core snap only. Instead, avoid having to
+    restart by using nmcli to dynamically activate/deactivate debug option.
+    For this we need to use the nmcli plug instead for the configure hook.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/328576
+  * Make sure there is no race condition between the configure hook and the start of the NM daemon. This is fulfilled by making sure that the only script that touches configuration files is the NM wrapper, while the configure hook only checks the snap properties and re-starts NM if a change has been detected (the later is done by comparing with a file that contains the state in the previous call to the hook). Fixes LP: #1748154.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/337957
+  * Change docs so they reflect the correct way of making NM manage ethernet devices
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/343839
+  * * Fix snapcraft 2.42.1 warnings
+* Add network interface to configure hook, for snapctl
+    * Do not stage libc6, as that makes snapcraft to set RPATH in the binaries
+    * Reduce size of the snap
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/347531
+  * tests: remove buggy test
+
+    This check fails because output of "snap list" changes continuously, so
+    you cannot rely on it. Also, the check is redundant.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/354468
+  * Compile wiht optimizations turned on
+
+    Override snapcraft's CFLAGS to make sure -O2 is set and -g is not
+    (LP: #1791333).
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/354748
+  * Robustify service start:
+
+    * Do not fail on error when calling snapctl
+    * Do not exit on bad configuration
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/360107
+  * Make sure default routes survive across expiring of DHCP leases
+
+    Make sure default routes survive across expiring of DHCP leases. Commits
+    taken from upstream. Related to LP: #1800712.
+    
+    Empty commit so changelog is updated on release. The real change has
+    happened in the network-manager/xenial/1.2.2 code branch.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/361484
+  * Avoid duplicated connections (LP: #1811347) - changes in source branch
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/361725
+  * Strip binaries for a smaller snap
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/354491
+  * snap: copy changelog to the package
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/372525
+  * Do not stage libraries that are part already of the core snap and that
+in fact we were not even including in the snap. This will remove some
+    dependencies from the manifest so we will not get CVEs for these libs
+    that do not actually affect us.
+    
+    Use documented way of specifying slots and hooks
+    
+    Remove calls to set log level in wrapper:
+    The calls were actually failing as NM was not started yet. Furthermore,
+    the log level is set via a call option in NM. Also remove nmcli-internal
+    as after this it is not used anymore and probably there will be no need
+    for it in the future (we restart always NM when the settings change
+    instead of dynamically changing it).
+    
+    test: debug-config-option: robustify and fix:
+    '!' does not have the expected effect with 'set -e'. Also, wait a bit
+    when NM is re-starting. Ideally we should wait for it to appear on DBus
+    though.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/377715
+  * Stage only copyright of staged packages
+Some copyright files were not needed as they come from packages from
+    which we do not take any file.
+    
+    Do not stage libsqlite3
+    libsqlite3 is already included in the core snap.
+    
+    Add unstage.txt file
+    This file contains a list of debian package that we are not actually
+    staging, although snapcraft adds them to manifest.yaml. CI now
+    recognizes this file, and manually removes the listed packages from the
+    manifest when releasing a snap to the store.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/377873
+  * NOTICE: CVE-2018-15688 was fixed in 1.2.2-20
+CVE-2018-15688 / USN-3807-1 was fixed in 1.2.2-20, although
+    the Changelog for that version did not reflect the fact.
+    - CVE-2018-15688
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378035
+  * Make sure we remove libsqlite3-0 when releasing from CI from the list of
+staged packages, as we are not including it anymore in the snap.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/378728
+  * tests/utilities: install from latest track
+tests/suspend-resume: wait a bit after waking up
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/386952
+  * * core/pppd-plugin: wait to recover port settings before notifying death
+  See code branch MP:
+      https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/387041
+    * docs: update to reflect current state
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/387195
+  * * Fix memory leaks introduced in snap patches (LP#1902271)
+* platform: use also statvfs() to check for udevd. Fixes LP:#1712918,
+    LP:#1893184.
+    * Move hook files to snap/hooks (workaround LP#1905072)
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/394309
+  * Prime all docs from primed packages
+
+    Prime all docs from primed packages, not only the copyright. This
+    seems a saner option as we have the full changelog for the packages
+    and other possibly important files for attribution, even though there
+    is a slight size increase for the snap.
+    Merge-Proposal: https://code.launchpad.net/~alfonsosanchezbeato/snappy-hwe-snaps/+git/network-manager/+merge/413856
+  * tests: use wifi-ap as local snap
+
+    As it has been unpublished in the store.
+    Merge-Proposal: https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+merge/440528
+
+  [ Changes in primed packages ]
+  
+  libndp0 (built from libndp) updated from 1.4-2ubuntu0.16.04.1 to 1.4-2ubuntu0.16.04.1+esm1:
+  
+    libndp (1.4-2ubuntu0.16.04.1+esm1) xenial-security; urgency=medium
+  
+      * SECURITY UPDATE: Buffer overflow via malformed IPv6 packets
+        - debian/patches/CVE-2024-5564.patch: libndp: valid route
+          information option length
+        - CVE-2024-5564
+  
+     -- John Breton <john.breton@canonical.com>  Wed, 29 Jan 2025 14:54:50 -0500
+  
 2023-04-11 network-manager 1.2.2-31
 
   [ Alfonso Sanchez-Beato <alfonso.sanchez-beato@canonical.com> ]
