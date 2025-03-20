@@ -164,7 +164,7 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/noble
+    source-branch: applied/ubuntu/noble-updates
     build-packages:
       - gettext
       - libglib2.0-dev
