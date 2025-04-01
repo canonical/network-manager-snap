@@ -1,3 +1,115 @@
+2025-04-01 network-manager 1.46.0-3
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * snapcraft: adopt network-manager to noble-updates
+    Merge pull request #47 from canonical/fix-nm-noble-updates
+  * CI: use self-hosted x64 runners
+    Merge pull request #48 from canonical/hosted-runners-x64
+
+  [ Changes in primed packages ]
+  
+  libcurl3t64-gnutls (built from curl) updated from 8.5.0-2ubuntu10.4 to 8.5.0-2ubuntu10.6:
+  
+    curl (8.5.0-2ubuntu10.6) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: netrc and redirect credential leak
+        - debian/patches/CVE-2024-11053-pre1.patch: use same credentials on
+          redirect in lib/transfer.c, lib/url.c, lib/urldata.h,
+          tests/data/Makefile.inc, tests/data/test998, tests/data/test999.
+        - debian/patches/CVE-2024-11053.patch: address several netrc parser
+          flaws in lib/netrc.c, lib/url.c, tests/data/Makefile.inc,
+          tests/data/test478, tests/data/test479, tests/data/test480,
+          tests/unit/unit1304.c.
+        - CVE-2024-11053
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 11 Dec 2024 11:44:19 -0500
+  
+    curl (8.5.0-2ubuntu10.5) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: HSTS expiry overwrites parent cache entry.
+        - debian/patches/CVE-2024-9681.patch: Add bestsub, blen, and hostname
+          comparison in lib/hsts.c.
+        - CVE-2024-9681
+  
+     -- Hlib Korzhynskyy <hlib.korzhynskyy@canonical.com>  Wed, 06 Nov 2024 10:48:09 -0330
+  
+  libnm0, network-manager (built from network-manager) updated from 1.46.0-1ubuntu2 to 1.46.0-1ubuntu2.2:
+  
+    network-manager (1.46.0-1ubuntu2.2) noble; urgency=medium
+  
+      * d/control: Avoid calling into half-upgraded Netplan (LP: #2033259)
+        NM calls 'netplan generate', which will crash if new libnetplan1 is already
+        installed, but we're calling the old netplan.io Python code expecting the
+        old libnetplan0 API.
+  
+     -- Lukas Märdian <slyon@ubuntu.com>  Wed, 23 Oct 2024 13:04:42 +0200
+  
+    network-manager (1.46.0-1ubuntu2.1) noble; urgency=medium
+  
+      * d/p/wifi-fix-the-ranges-of-5-GHz-and-6-GHz-bands.patch
+        d/p/wifi-fix-enumeration-of-6-GHz-channels-from-wiphy.patch
+        - Fix detection of 6 GHz band capability for WiFi devices (LP: #2084731)
+  
+     -- Dirk Su <dirk.su@canonical.com>  Wed, 16 Oct 2024 17:16:59 +0800
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.59.0-1ubuntu0.1 to 1.59.0-1ubuntu0.2:
+  
+    nghttp2 (1.59.0-1ubuntu0.2) noble; urgency=medium
+  
+      * SRU: LP: #2083480: No-change rebuild to disable frame pointers on
+        ppc64el and s390x.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Wed, 02 Oct 2024 14:40:49 +0200
+  
+  libldap2 (built from openldap) updated from 2.6.7+dfsg-1~exp1ubuntu8 to 2.6.7+dfsg-1~exp1ubuntu8.2:
+  
+    openldap (2.6.7+dfsg-1~exp1ubuntu8.2) noble; urgency=medium
+  
+      * Fixup TIMEOUT and NETWORK_TIMEOUT options so they work correctly
+        when SSL is involved. Before they would never timeout, causing
+        hangs on connection failure. Now they timeout as expected.
+        (LP: #2090806)
+        - d/p/lp2090806-ITS-8047-Fix-TLS-connection-timeout-handling.patch
+  
+     -- Matthew Ruffell <matthew.ruffell@canonical.com>  Mon, 09 Dec 2024 15:50:18 +1300
+  
+    openldap (2.6.7+dfsg-1~exp1ubuntu8.1) noble; urgency=medium
+  
+      * SRU: LP: #2083480: No-change rebuild to disable frame pointers on
+        ppc64el and s390x.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Wed, 02 Oct 2024 14:40:51 +0200
+  
+  openvpn (built from openvpn) updated from 2.6.9-1ubuntu4.1 to 2.6.12-0ubuntu0.24.04.1:
+  
+    openvpn (2.6.12-0ubuntu0.24.04.1) noble; urgency=medium
+  
+      * New upstream release 2.6.12 (LP: #2073318):
+        - CVE Fixes:
+          + CVE-2024-4877, CVE-2024-5594, CVE-2024-28882, CVE-2024-27459,
+            CVE-2024-24974, CVE-2024-27903
+        - Updates:
+          + Allow trailing \r and \n in control channel message
+          + Implement --server-poll-timeout on SOCKS proxies
+          + Implement Windows CA template match for Crypto-API selector
+          + Update sample configuration files
+          + Update systemd unit file documentation references
+        - Bug Fixes Include:
+          + Fix issue with proxy credentials caching
+          + Fix LibreSSL crashing when enumerating digests/cipher with workaround
+          + Use snprintf instead of sprintf for get_ssl_library_version
+          + Fix disabling DCO when proxy is set via management interface
+          + See https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn26 for
+            additional bug fixes and information
+      * Remove patches fixed upstream:
+        - d/p/systemd.patch
+        [Fixed in 2.6.10]
+        - d/p/CVE-2024-28882.patch
+        - d/p/CVE-2024-5594.patch
+        [Fixed in 2.6.11]
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Tue, 17 Sep 2024 10:27:52 -0700
+  
 2024-09-19 network-manager 1.46.0-2
 
   [ Changes in primed packages ]
