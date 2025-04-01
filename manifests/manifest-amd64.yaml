@@ -1,9 +1,9 @@
-snapcraft-version: 8.3.4
-snapcraft-started-at: '2024-09-19T21:33:27.963140Z'
+snapcraft-version: 8.7.3
+snapcraft-started-at: '2025-04-01T16:18:29.049401Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '24.04'
 name: network-manager
-version: 1.46.0-2
+version: 1.46.0-3
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -82,22 +82,24 @@ parts:
     stage-packages:
     - adduser=3.137ubuntu1
     - dnsmasq-base=2.90-2build2
-    - libcurl3t64-gnutls=8.5.0-2ubuntu10.4
+    - libcurl3t64-gnutls=8.5.0-2ubuntu10.6
     - libjansson4=2.14-2build2
-    - libldap2=2.6.7+dfsg-1~exp1ubuntu8
+    - libldap2=2.6.7+dfsg-1~exp1ubuntu8.2
     - libmm-glib0=1.23.4-0ubuntu2
     - libndp0=1.8-1fakesync1ubuntu0.24.04.1
     - libnewt0.52=0.52.24-2ubuntu2
     - libnftables1=1.0.9-1build1
-    - libnghttp2-14=1.59.0-1ubuntu0.1
-    - libnm0=1.46.0-1ubuntu2
+    - libnghttp2-14=1.59.0-1ubuntu0.2
+    - libnm0=1.46.0-1ubuntu2.2
     - libpsl5t64=0.21.2-1.1build1
     - librtmp1=2.4+20151223.gitfa8646d.1-2build7
     - libsasl2-2=2.1.28+dfsg1-5ubuntu3.1
     - libslang2=2.3.3-3build2
     - libssh-4=0.10.6-2build2
     - libteamdctl0=1.31-1build3
-    - network-manager=1.46.0-1ubuntu2
+    - network-manager=1.46.0-1ubuntu2.2
+    - python3-cffi-backend=1.16.0-2build1
+    - python3-netplan=1.1.1-1~ubuntu24.04.1
     override-build: |
       set -ex
       find "$CRAFT_PART_INSTALL"/ -type f,l \
@@ -145,7 +147,7 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/noble
+    source-branch: applied/ubuntu/noble-updates
     build-packages:
     - gettext
     - libglib2.0-dev
@@ -254,14 +256,15 @@ parts:
       unset _SNAP
     stage-packages:
     - adduser=3.137ubuntu1
-    - libcurl3t64-gnutls=8.5.0-2ubuntu10.4
+    - debconf=1.5.86ubuntu1
+    - libcurl3t64-gnutls=8.5.0-2ubuntu10.6
     - libibverbs1=50.0-2build2
     - libjansson4=2.14-2build2
-    - libldap2=2.6.7+dfsg-1~exp1ubuntu8
+    - libldap2=2.6.7+dfsg-1~exp1ubuntu8.2
     - libmm-glib0=1.23.4-0ubuntu2
     - libndp0=1.8-1fakesync1ubuntu0.24.04.1
     - libnewt0.52=0.52.24-2ubuntu2
-    - libnghttp2-14=1.59.0-1ubuntu0.1
+    - libnghttp2-14=1.59.0-1ubuntu0.2
     - libpcap0.8t64=1.10.4-4.1ubuntu3
     - libpkcs11-helper1t64=1.29.0-2.1build2
     - libpsl5t64=0.21.2-1.1build1
@@ -270,7 +273,7 @@ parts:
     - libslang2=2.3.3-3build2
     - libssh-4=0.10.6-2build2
     - libteamdctl0=1.31-1build3
-    - openvpn=2.6.9-1ubuntu4.1
+    - openvpn=2.6.12-0ubuntu0.24.04.1
     - ppp=2.4.9-1+1.1ubuntu4
     organize:
       snap/network-manager/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
@@ -358,20 +361,20 @@ parts:
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2602347
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2767917
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.90-2build2
-- libcurl3t64-gnutls=8.5.0-2ubuntu10.4
+- libcurl3t64-gnutls=8.5.0-2ubuntu10.6
 - libibverbs1=50.0-2build2
 - libjansson4=2.14-2build2
-- libldap2=2.6.7+dfsg-1~exp1ubuntu8
+- libldap2=2.6.7+dfsg-1~exp1ubuntu8.2
 - libmm-glib0=1.23.4-0ubuntu2
 - libndp0=1.8-1fakesync1ubuntu0.24.04.1
 - libnewt0.52=0.52.24-2ubuntu2
-- libnghttp2-14=1.59.0-1ubuntu0.1
-- libnm0=1.46.0-1ubuntu2
+- libnghttp2-14=1.59.0-1ubuntu0.2
+- libnm0=1.46.0-1ubuntu2.2
 - libpcap0.8t64=1.10.4-4.1ubuntu3
 - libpkcs11-helper1t64=1.29.0-2.1build2
 - libpsl5t64=0.21.2-1.1build1
@@ -380,6 +383,6 @@ primed-stage-packages:
 - libslang2=2.3.3-3build2
 - libssh-4=0.10.6-2build2
 - libteamdctl0=1.31-1build3
-- network-manager=1.46.0-1ubuntu2
-- openvpn=2.6.9-1ubuntu4.1
+- network-manager=1.46.0-1ubuntu2.2
+- openvpn=2.6.12-0ubuntu0.24.04.1
 - ppp=2.4.9-1+1.1ubuntu4
