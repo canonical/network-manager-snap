@@ -1,3 +1,21 @@
+2025-04-07 network-manager 1.46.0-4
+
+  [ Changes in primed packages ]
+  
+  openvpn (built from openvpn) updated from 2.6.12-0ubuntu0.24.04.1 to 2.6.12-0ubuntu0.24.04.3:
+  
+    openvpn (2.6.12-0ubuntu0.24.04.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: denial of service issue
+        - debian/patches/CVE-2025-2704.patch: allow tls-crypt-v2 to be setup
+          only on initial packet of a session in src/openvpn/ssl.c,
+          src/openvpn/ssl_common.h, src/openvpn/ssl_pkt.c,
+          src/openvpn/ssl_pkt.h, src/openvpn/tls_crypt.c,
+          src/openvpn/tls_crypt.h, tests/unit_tests/openvpn/test_tls_crypt.c.
+        - CVE-2025-2704
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 01 Apr 2025 12:06:17 -0400
+  
 2025-04-01 network-manager 1.46.0-3
 
   [ Lukas Märdian <slyon@ubuntu.com> ]
