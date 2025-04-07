@@ -1,9 +1,9 @@
-snapcraft-version: 8.7.3
-snapcraft-started-at: '2025-04-01T16:24:33.321662Z'
+snapcraft-version: 8.7.4
+snapcraft-started-at: '2025-04-07T10:38:53.569437Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '24.04'
 name: network-manager
-version: 1.46.0-3
+version: 1.46.0-4
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -273,7 +273,7 @@ parts:
     - libslang2=2.3.3-3build2
     - libssh-4=0.10.6-2build2
     - libteamdctl0=1.31-1build3
-    - openvpn=2.6.12-0ubuntu0.24.04.1
+    - openvpn=2.6.12-0ubuntu0.24.04.3
     - ppp=2.4.9-1+1.1ubuntu4
     organize:
       snap/network-manager/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
@@ -361,7 +361,7 @@ parts:
 architectures:
 - arm64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2767916
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2773281
 build-packages: []
 build-snaps: []
 primed-stage-packages:
@@ -384,5 +384,5 @@ primed-stage-packages:
 - libssh-4=0.10.6-2build2
 - libteamdctl0=1.31-1build3
 - network-manager=1.46.0-1ubuntu2.2
-- openvpn=2.6.12-0ubuntu0.24.04.1
+- openvpn=2.6.12-0ubuntu0.24.04.3
 - ppp=2.4.9-1+1.1ubuntu4
