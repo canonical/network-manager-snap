@@ -54,6 +54,14 @@ apps:
             hardware-observe, network-setup-control, login-session-observe,
             network-observe]
 
+package-repositories:
+  - type: apt
+    formats: [deb, deb-src]
+    components: [main]
+    suites: [bionic]
+    key-id: DBB1FC89762BF6B96707C4059BC0A1A1622CF918
+    url: http://private-ppa.buildd/ubuntu-esm/esm-infra-security/ubuntu
+
 parts:
   networkmanager-common:
     plugin: dump
@@ -68,14 +76,20 @@ parts:
 
   dnsmasq:
     plugin: make
-    source: https://git.launchpad.net/ubuntu/+source/dnsmasq
-    source-type: git
-    source-branch: applied/2.79-1ubuntu0.7
+    source: .  # IGNORE: will be replace by ESM dnsmasq source package, but local-dir is faster than git checkout
+    source-branch: applied/2.90-0ubuntu0.18.04.1+esm1  # Spoofing the ESM version string for build-tools/cmp-stage-build.py
     build-packages:
       - build-essential
     make-parameters:
       - PREFIX=/
     override-build: |
+      cd ..
+      rm -rf build/
+      # pull dnsmasq from ESM private PPA
+      apt-get source dnsmasq
+      mv dnsmasq-2.90/ build/
+      rm dnsmasq*
+      cd build/
       git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
       snapcraftctl build
     filesets:

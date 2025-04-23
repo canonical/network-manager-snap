@@ -80,7 +80,7 @@ index ce44809..17c451b 100644
    
        if (ent_pw && ent_pw->pw_uid != 0)
  	{     
-@@ -654,11 +654,11 @@ int main (int argc, char **argv)
+@@ -654,10 +654,10 @@ int main (int argc, char **argv)
  	    }
  	  
  	  /* finally drop root */
@@ -96,7 +96,6 @@ index ce44809..17c451b 100644
 +	  /*   }      */
  
  #ifdef HAVE_LINUX_NETWORK
- 	  if (is_dad_listeners() || option_bool(OPT_CLEVERBIND))
 -- 
 2.17.1
 
