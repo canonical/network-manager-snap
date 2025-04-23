@@ -54,14 +54,6 @@ apps:
             hardware-observe, network-setup-control, login-session-observe,
             network-observe]
 
-package-repositories:
-  - type: apt
-    formats: [deb, deb-src]
-    components: [main]
-    suites: [bionic]
-    key-id: DBB1FC89762BF6B96707C4059BC0A1A1622CF918
-    url: http://private-ppa.buildd/ubuntu-esm/esm-infra-security/ubuntu
-
 parts:
   networkmanager-common:
     plugin: dump
