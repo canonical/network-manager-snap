@@ -77,6 +77,12 @@ parts:
     override-build: |
       cd ..
       rm -rf build/
+      # Enable 'deb-src' for the ESM repositories
+      sudo mkdir -p /etc/apt/sources.list.d
+      sudo touch /etc/apt/sources.list.d/empty.list  # make SED happy if no PPAs are installed
+      sudo sed -i '/@private-ppa.buildd\/ubuntu-esm/{p;s/deb /deb-src /g;}' /etc/apt/*.list
+      sudo sed -i '/@private-ppa.buildd\/ubuntu-esm/{p;s/deb /deb-src /g;}' /etc/apt/sources.list.d/*.list
+      sudo apt update
       # pull dnsmasq from ESM private PPA
       apt-get source dnsmasq
       mv dnsmasq-2.90/ build/
