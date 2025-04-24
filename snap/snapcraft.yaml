@@ -60,6 +60,8 @@ package-repositories:
     components: [main]
     suites: [bionic]
     key-id: DBB1FC89762BF6B96707C4059BC0A1A1622CF918
+    # Use https://USER:KEY@private-ppa.launchpadcontent.net/ubuntu-esm/... for
+    # local builds, see https://launchpad.net/people/+me/+archivesubscriptions
     url: http://private-ppa.buildd/ubuntu-esm/esm-infra-security/ubuntu
 
 parts:
