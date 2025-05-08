@@ -93,10 +93,11 @@ parts:
       rm dnsmasq*
       cd build/
       git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
+      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq-make.patch
       snapcraftctl build
     filesets:
       binaries:
-        - sbin/dnsmasq
+        - sbin/dnsmasq.local
     prime:
       - $binaries
 
@@ -147,7 +148,7 @@ parts:
       # dhcp handled by systemd client
       - --with-dhcpcd=no
       - --with-dhclient=no
-      - --with-dnsmasq=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/dnsmasq
+      - --with-dnsmasq=/snap/$SNAPCRAFT_PROJECT_NAME/current/sbin/dnsmasq.local
       - --with-iptables=/sbin/iptables
       - --with-systemd-journal=yes
       - --libexecdir=/snap/$SNAPCRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
