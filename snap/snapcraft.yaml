@@ -272,7 +272,6 @@ parts:
         - usr/share/doc/ppp/copyright
         - usr/share/doc/resolvconf/copyright
         # Changelogs
-        - usr/share/doc/dnsmasq/changelog.*
         - usr/share/doc/network-manager/changelog.*
         - usr/share/doc/iputils-arping/changelog.*
         - usr/share/doc/libasn1-8-heimdal/changelog.*
