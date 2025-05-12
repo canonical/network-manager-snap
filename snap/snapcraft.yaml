@@ -82,9 +82,11 @@ parts:
     source-branch: applied/2.90-0ubuntu0.18.04.1+esm1  # Spoofing the ESM version string for build-tools/cmp-stage-build.py
     build-packages:
       - build-essential
+      - git
     make-parameters:
       - PREFIX=/
     override-build: |
+      set -ex
       cd ..
       rm -rf build/
       # pull dnsmasq from ESM private PPA
