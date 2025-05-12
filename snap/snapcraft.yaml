@@ -82,7 +82,6 @@ parts:
     source-branch: applied/2.90-0ubuntu0.18.04.1+esm1  # Spoofing the ESM version string for build-tools/cmp-stage-build.py
     build-packages:
       - build-essential
-      - git
     make-parameters:
       - PREFIX=/
     override-build: |
@@ -94,8 +93,8 @@ parts:
       mv dnsmasq-2.90/ build/
       rm dnsmasq*
       cd build/
-      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
-      git apply "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq-make.patch
+      patch -p1 < "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq.patch
+      patch -p1 <  "$SNAPCRAFT_PROJECT_DIR"/snap-patch/dnsmasq-make.patch
       snapcraftctl build
     filesets:
       binaries:
