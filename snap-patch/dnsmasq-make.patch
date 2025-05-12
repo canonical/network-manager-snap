@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index a9bcab9..ed4825f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -112,7 +112,7 @@ install-common :
+ 	$(INSTALL) -d $(DESTDIR)$(BINDIR)
+ 	$(INSTALL) -d $(DESTDIR)$(MANDIR)/man8
+ 	$(INSTALL) -m 644 $(MAN)/dnsmasq.8 $(DESTDIR)$(MANDIR)/man8 
+-	$(INSTALL) -m 755 $(BUILDDIR)/dnsmasq $(DESTDIR)$(BINDIR)
++	$(INSTALL) -m 755 -T $(BUILDDIR)/dnsmasq $(DESTDIR)$(BINDIR)/dnsmasq.local
+ 
+ all-i18n : $(BUILDDIR)
+ 	@cd $(BUILDDIR) && $(MAKE) \
