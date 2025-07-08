@@ -8,7 +8,7 @@ on:
 jobs:
   publish_to_edge:
     # self-hosted runner so we can access launchpad
-    runs-on: [self-hosted, x64, linux]
+    runs-on: [self-hosted, x64, linux, spread-enabled]
     environment: beta
     steps:
       - name: Publish to edge
