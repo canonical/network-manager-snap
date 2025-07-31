@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   build_release:
-    runs-on: self-hosted
+    runs-on: [self-hosted, x64, linux, spread-enabled]
     environment: beta
     steps:
       - name: Build release
