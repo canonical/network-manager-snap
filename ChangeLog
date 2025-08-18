@@ -1,3 +1,116 @@
+2025-08-18 network-manager 1.46.0-5
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * Update dnsmasq to noble-updates for USN-7619-1
+    Merge pull request #56 from canonical/usn-7619-1
+
+  [ Changes in primed packages ]
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.90-2build2 to 2.90-2ubuntu0.1:
+  
+    dnsmasq (2.90-2ubuntu0.1) noble; urgency=medium
+  
+      * d/p/fix-crash-when-reloading-DHCP-config-on-SIGHUP.patch:
+        Confusion in the code to free old DHCP configuration when
+        it's being reloaded causes invalid pointers to be followed
+        and a crash (LP: #2026757).
+  
+      [ Lukas Märdian ]
+      * d/t/{control,functions}: Allow running on non-ifupdown systems and work
+        around systemd-resolved conflict
+      * d/t/{get-address+query-dns+lua+alt,ip-addr.patterns}: dhcpcd compat.
+        It does not send the hostname in its default configuration, provides
+        slightly different lease lifetimes and adds the 'noprefixroute' tag to
+        the test address from ip-addr.patterns (compared to ISC dhclient).
+  
+     -- Miriam España Acebal <miriam.espana@canonical.com>  Tue, 14 Jan 2025 17:34:59 +0100
+  
+  libssh-4 (built from libssh) updated from 0.10.6-2build2 to 0.10.6-2ubuntu0.1:
+  
+    libssh (0.10.6-2ubuntu0.1) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Write beyond bounds in binary to base64 conversion
+        functions
+        - debian/patches/CVE-2025-4877.patch: prevent integer overflow and
+          potential OOB.
+        - CVE-2025-4877
+      * SECURITY UPDATE: Use of uninitialized variable in
+        privatekey_from_file()
+        - debian/patches/CVE-2025-4878-1.patch: initialize pointers where
+          possible.
+        - debian/patches/CVE-2025-4878-2.patch: properly check return value to
+          avoid NULL pointer dereference.
+        - CVE-2025-4878
+      * SECURITY UPDATE: OOB read in sftp_handle function
+        - debian/patches/CVE-2025-5318.patch: fix possible buffer overrun.
+        - CVE-2025-5318
+      * SECURITY UPDATE: Double free in functions exporting keys
+        - debian/patches/CVE-2025-5351.patch: avoid double-free on low-memory
+          conditions.
+        - CVE-2025-5351
+      * SECURITY UPDATE: ssh_kdf() returns a success code on certain failures
+        - debian/patches/CVE-2025-5372-pre1.patch: Reformat ssh_kdf().
+        - debian/patches/CVE-2025-5372.patch: simplify error checking and
+          handling of return codes in ssh_kdf().
+        - CVE-2025-5372
+      * SECURITY UPDATE: Invalid return code for chacha20 poly1305 with OpenSSL
+        backend
+        - debian/patches/CVE-2025-5987.patch: correctly detect failures of
+          chacha initialization.
+        - CVE-2025-5987
+      * SECURITY UPDATE: Missing packet filter may expose to variant of
+        Terrapin attack
+        - debian/patches/missing_packet_filter.patch: implement missing packet
+          filter for DH GEX.
+        - No CVE number
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 02 Jul 2025 13:58:28 -0400
+  
+  openvpn (built from openvpn) updated from 2.6.12-0ubuntu0.24.04.3 to 2.6.14-0ubuntu0.24.04.1:
+  
+    openvpn (2.6.14-0ubuntu0.24.04.1) noble; urgency=medium
+  
+      * New upstream version 2.6.14 (LP: #2040467):
+        - CVE Fixes:
+          + CVE-2025-2704
+        - Updates:
+          + Send uname() release from client to server as IV_PLAT_VER.
+          + Pass --timeout=0 argument to systemd-ask-password, to avoid default
+            timeout of 90 seconds.
+        - Bug Fixes:
+          + Repair source IP selection for --multihome.
+          + Allow tls-crypt-v2 to be setup only on initial packet of a session.
+          + Fix some missing spaces in messages.
+          + Fix parsing of usernames or passwords longer than USER_PASS_LEN on the
+            server side to avoid IV variable misparsing and misleading errors.
+          + Purge proxy authentication credentials from memory after use (if
+            --auth-nocache is in use).
+        - See https://community.openvpn.net/openvpn/wiki/ChangesInOpenvpn26 for
+          additional bug fixes and information.
+      * Remove patches fixed upstream:
+        - d/p/CVE-2025-2704.patch
+        [Fixed in 2.6.14]
+      * d/t/control: Move to isolation-container to enable armhf/LXD coverage (LP 2104146).
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Fri, 30 May 2025 11:24:52 -0400
+  
+  libibverbs1 (built from rdma-core) updated from 50.0-2build2 to 50.0-2ubuntu0.2:
+  
+    rdma-core (50.0-2ubuntu0.2) noble; urgency=medium
+  
+      * Revert non-MANA 50.0-2ubuntu0.1 changes (LP: #2100089)
+      * Improve synchronization around MANA provider shadow queue
+  
+     -- Daniel Draper <daniel.draper@canonical.com>  Mon, 14 Apr 2025 12:00:22 +0200
+  
+    rdma-core (50.0-2ubuntu0.1) noble; urgency=medium
+  
+      * Incorporate all upstream changes to Microsoft Azure Network Adapter (MANA)
+        RDMA provider (LP: #2100089)
+      * Bump libibverbs symbol for private ibv_cmd_reg_dmabuf_mr
+  
+     -- Daniel Draper <daniel.draper@canonical.com>  Tue, 04 Mar 2025 22:38:59 +0100
+  
 2025-04-07 network-manager 1.46.0-4
 
   [ Changes in primed packages ]
