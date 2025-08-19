@@ -1,9 +1,9 @@
 snapcraft-version: 8.11.1
-snapcraft-started-at: '2025-08-18T16:39:04.189617Z'
+snapcraft-started-at: '2025-08-19T11:52:32.039860Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '24.04'
 name: network-manager
-version: 1.46.0-5
+version: 1.46.0-6
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -361,7 +361,7 @@ parts:
 architectures:
 - arm64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2880291
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-24/+build/2881184
 build-packages: []
 build-snaps: []
 primed-stage-packages:
