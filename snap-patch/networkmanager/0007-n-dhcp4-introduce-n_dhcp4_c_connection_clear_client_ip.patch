@@ -1,0 +1,54 @@
+From d9f4e8cc8d09efbc6d43a684d6a7ad0fd9b70209 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <slyon@ubuntu.com>
+Date: Thu, 11 Sep 2025 16:27:26 +0200
+Subject: [PATCH] n-dhcp4: introduce n_dhcp4_c_connection_clear_client_ip()
+ helper
+
+Forwarded: https://github.com/nettools/n-dhcp4/pull/48
+---
+ shared/n-dhcp4/src/n-dhcp4-c-connection.c | 4 ++++
+ shared/n-dhcp4/src/n-dhcp4-c-probe.c      | 2 +-
+ shared/n-dhcp4/src/n-dhcp4-private.h      | 2 ++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/shared/n-dhcp4/src/n-dhcp4-c-connection.c b/shared/n-dhcp4/src/n-dhcp4-c-connection.c
+index 7681fbc..cf5b2ac 100644
+--- a/shared/n-dhcp4/src/n-dhcp4-c-connection.c
++++ b/shared/n-dhcp4/src/n-dhcp4-c-connection.c
+@@ -379,6 +379,10 @@ void n_dhcp4_c_connection_get_timeout(NDhcp4CConnection *connection,
+         *timeoutp = timeout;
+ }
+ 
++void n_dhcp4_c_connection_clear_client_ip(NDhcp4CConnection *connection) {
++        connection->client_ip = INADDR_ANY;
++}
++
+ static int n_dhcp4_c_connection_packet_broadcast(NDhcp4CConnection *connection,
+                                                  NDhcp4Outgoing *message) {
+         int r;
+diff --git a/shared/n-dhcp4/src/n-dhcp4-c-probe.c b/shared/n-dhcp4/src/n-dhcp4-c-probe.c
+index a36dba6..9b8526e 100644
+--- a/shared/n-dhcp4/src/n-dhcp4-c-probe.c
++++ b/shared/n-dhcp4/src/n-dhcp4-c-probe.c
+@@ -704,7 +704,7 @@ static int n_dhcp4_client_probe_transition_deferred(NDhcp4ClientProbe *probe, ui
+         switch (probe->state) {
+         case N_DHCP4_CLIENT_PROBE_STATE_INIT:
+                 /* reset client IP (CIADDR) */
+-                probe->connection.client_ip = INADDR_ANY;
++                n_dhcp4_c_connection_clear_client_ip(&probe->connection);
+                 r = n_dhcp4_c_connection_listen(&probe->connection);
+                 if (r)
+                         return r;
+diff --git a/shared/n-dhcp4/src/n-dhcp4-private.h b/shared/n-dhcp4/src/n-dhcp4-private.h
+index 4040400..529a3ea 100644
+--- a/shared/n-dhcp4/src/n-dhcp4-private.h
++++ b/shared/n-dhcp4/src/n-dhcp4-private.h
+@@ -617,6 +617,8 @@ void n_dhcp4_c_connection_close(NDhcp4CConnection *connection);
+ void n_dhcp4_c_connection_get_timeout(NDhcp4CConnection *connection,
+                                       uint64_t *timeoutp);
+ 
++void n_dhcp4_c_connection_clear_client_ip(NDhcp4CConnection *connection);
++
+ int n_dhcp4_c_connection_discover_new(NDhcp4CConnection *connection,
+                                       NDhcp4Outgoing **request);
+ int n_dhcp4_c_connection_select_new(NDhcp4CConnection *connection,

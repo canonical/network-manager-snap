@@ -1,25 +1,28 @@
-From: =?utf-8?q?Lukas_M=C3=A4rdian?= <slyon@ubuntu.com>
-Date: Mon, 28 Jul 2025 15:50:19 +0200
-Subject: n-dhcp4: Do not set ciaddr in DISCOVER state.
+From b0535e7cef8232de3a01cd7150384a20d4ae446a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Lukas=20M=C3=A4rdian?= <slyon@ubuntu.com>
+Date: Mon, 28 Jul 2025 20:15:53 +0200
+Subject: [PATCH] n-dhcp4: Do not set ciaddr in DISCOVER state.
 
+This is invalid according to RFC 2131 table 1 ("Description of fields in a DHCP
+message") and has previously been discussed in #45.
+
+Fixes #45
+
+Forwarded: https://github.com/nettools/n-dhcp4/pull/48
 ---
- shared/n-dhcp4/src/n-dhcp4-c-connection.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ shared/n-dhcp4/src/n-dhcp4-c-probe.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/shared/n-dhcp4/src/n-dhcp4-c-connection.c b/shared/n-dhcp4/src/n-dhcp4-c-connection.c
-index 2f660e3..600a50b 100644
---- a/shared/n-dhcp4/src/n-dhcp4-c-connection.c
-+++ b/shared/n-dhcp4/src/n-dhcp4-c-connection.c
-@@ -528,6 +528,12 @@ static int n_dhcp4_c_connection_new_message(NDhcp4CConnection *connection,
-         message->userdata.type = type;
-         message->userdata.message_type = message_type;
+diff --git a/shared/n-dhcp4/src/n-dhcp4-c-probe.c b/shared/n-dhcp4/src/n-dhcp4-c-probe.c
+index 8a3788d..a36dba6 100644
+--- a/shared/n-dhcp4/src/n-dhcp4-c-probe.c
++++ b/shared/n-dhcp4/src/n-dhcp4-c-probe.c
+@@ -703,6 +703,8 @@ static int n_dhcp4_client_probe_transition_deferred(NDhcp4ClientProbe *probe, ui
  
-+        /* Do not set a Client IP in DISCOVERY state */
-+        if (type == N_DHCP4_C_MESSAGE_DISCOVER) {
-+                message->message->header.ciaddr = INADDR_ANY;
-+                connection->client_ip = INADDR_ANY;  // reset client IP
-+        }
-+
-         /*
-          * Note that some implementations expect the MESSAGE_TYPE option to be
-          * the first option, and possibly even hard-code access to it. Hence,
+         switch (probe->state) {
+         case N_DHCP4_CLIENT_PROBE_STATE_INIT:
++                /* reset client IP (CIADDR) */
++                probe->connection.client_ip = INADDR_ANY;
+                 r = n_dhcp4_c_connection_listen(&probe->connection);
+                 if (r)
+                         return r;
