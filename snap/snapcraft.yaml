@@ -322,7 +322,6 @@ parts:
         - etc/NetworkManager/*
         - etc/resolvconf/update.d/libc
       docs:
-        - usr/share/doc/dnsmasq/copyright
         - usr/share/doc/iputils-arping/copyright
         - usr/share/doc/libasn1-8-heimdal/copyright
         - usr/share/doc/libbrotli1/copyright
@@ -353,7 +352,6 @@ parts:
         - usr/share/doc/ppp/copyright
         - usr/share/doc/resolvconf/copyright
         # Changelogs
-        - usr/share/doc/dnsmasq/changelog.*
         - usr/share/doc/iputils-arping/changelog.*
         - usr/share/doc/libasn1-8-heimdal/changelog.*
         - usr/share/doc/libbrotli1/changelog.*
