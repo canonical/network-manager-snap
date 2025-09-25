@@ -1,3 +1,51 @@
+2025-09-25 network-manager 1.22.10-31
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * n-dhcp4: Do not set ciaddr in DISCOVER state.
+
+    Do not set ciaddr in DISCOVER state. As this is invalid according to RFC 2131
+    table 1 ("Description of fields in a DHCP message").
+    
+    Forwarded: https://github.com/nettools/n-dhcp4/pull/48
+    Merge pull request #57 from canonical/lp2116214-n-dhcp4-ciaddr-discover
+  * snapcraft: deploy local changelogs for ESM package compatibility
+
+    ESM changelogs will not be available at e.g.:
+    https://changelogs.ubuntu.com/changelogs/binary/libs/libssh-4/0.9.3-2ubuntu2.5+esm1/changelog
+    
+    Making the build_release workflow like:
+    ```
+    FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/actions-runner/_work/_temp/new_man/usr/share/doc//libssh-4/changelog.Debian.gz'
+    Exception: No changelog found in https://changelogs.ubuntu.com/changelogs/binary/libs/libssh-4/0.9.3-2ubuntu2.5+esm1/changelog - status:40
+    ```
+    
+    Similar to: https://github.com/canonical/network-manager-snap/pull/53
+    Merge pull request #59 from canonical/core20-fix-esm-changelogs
+  * snapcraft: drop dnsmasq docs
+    Merge pull request #60 from canonical/core20-fix-esm-changelogs-2
+
+  [ Changes in primed packages ]
+  
+  libssh-4 (built from libssh) updated from 0.9.3-2ubuntu2.5 to 0.9.3-2ubuntu2.5+esm1:
+  
+    libssh (0.9.3-2ubuntu2.5+esm1) focal-security; urgency=medium
+  
+      * SECURITY UPDATE: Integer Overflow
+        - debian/patches/CVE-2025-4877.patch: Prevent integer overflow and
+          potential OOB
+        - CVE-2025-4877
+      * SECURITY UPDATE: Undefined Behavior
+        - debian/patches/CVE-2025-4878-1.patch: Initialize pointers where
+          possible
+        - debian/patches/CVE-2025-4878-2.patch: Properly check return value
+          to avoid NULL pointer dereference
+        - CVE-2025-4878
+      * SECURITY UPDATE: Buffer Overflow
+        - debian/patches/CVE-2025-5318.patch: Fix possible buffer overrun
+        - CVE-2025-5318
+  
+     -- Bruce Cable <bruce.cable@canonical.com>  Fri, 08 Aug 2025 13:17:52 +1000
+  
 2025-03-19 network-manager 1.22.10-30
 
   [ Changes in primed packages ]
