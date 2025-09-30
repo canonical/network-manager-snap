@@ -1,9 +1,9 @@
-snapcraft-version: 8.7.2
-snapcraft-started-at: '2025-03-19T13:33:44.238480Z'
+snapcraft-version: 8.12.0
+snapcraft-started-at: '2025-09-30T14:35:33.717270Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '22.04'
 name: network-manager
-version: 1.36.6-14
+version: 1.36.6-15
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -81,9 +81,9 @@ parts:
     - git
     stage-packages:
     - dnsmasq-base=2.90-0ubuntu0.22.04.1
-    - libcurl3-gnutls=7.81.0-1ubuntu1.20
+    - libcurl3-gnutls=7.81.0-1ubuntu1.21
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.18+dfsg-0ubuntu0.22.04.3
+    - libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.4
     - libndp0=1.8-0ubuntu3.1
     - libnewt0.52=0.52.21-5ubuntu2
@@ -242,9 +242,9 @@ parts:
       unset _SNAP
     stage-packages:
     - debconf=1.5.79ubuntu1
-    - libcurl3-gnutls=7.81.0-1ubuntu1.20
+    - libcurl3-gnutls=7.81.0-1ubuntu1.21
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.18+dfsg-0ubuntu0.22.04.3
+    - libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.4
     - libndp0=1.8-0ubuntu3.1
     - libnewt0.52=0.52.21-5ubuntu2
@@ -336,14 +336,14 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-22/+build/2756245
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-22/+build/2919478
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.90-0ubuntu0.22.04.1
-- libcurl3-gnutls=7.81.0-1ubuntu1.20
+- libcurl3-gnutls=7.81.0-1ubuntu1.21
 - libjansson4=2.13.1-1.1build3
-- libldap-2.5-0=2.5.18+dfsg-0ubuntu0.22.04.3
+- libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
 - libmm-glib0=1.20.0-1~ubuntu22.04.4
 - libndp0=1.8-0ubuntu3.1
 - libnewt0.52=0.52.21-5ubuntu2
