@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     # self-hosted runner so we can access gce from external repos
-    runs-on: self-hosted
+    runs-on: [self-hosted, x64, linux, spread-enabled]
     steps:
       - name: Build and test
         env:
