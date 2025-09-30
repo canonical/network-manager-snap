@@ -1,3 +1,43 @@
+2025-09-30 network-manager 1.36.6-15
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * CI: Run workflows on 64bit spread-enabled runners
+    Merge pull request #61 from canonical/snap22-64bit-spread-runners
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.20 to 7.81.0-1ubuntu1.21:
+  
+    curl (7.81.0-1ubuntu1.21) jammy-security; urgency=medium
+  
+      * SECURITY REGRESSION: incorrect Cookie header field size check
+        (LP: #2118865)
+        - debian/patches/CVE-2022-32205-2.patch: rectify the field size check
+          in lib/http.c.
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 23 Sep 2025 07:24:37 -0400
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.18+dfsg-0ubuntu0.22.04.3 to 2.5.19+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.19+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2085192)
+        - Fixed libldap GnuTLS incompatible pointer type (ITS#10253)
+        - Fixed libldap OpenSSL set_ciphersuite error handling (ITS#10223)
+        - Fixed libldap to check for OpenSSL EVP_Digest* failure (ITS#10224)
+        - Fixed slapd syncrepl assert during refresh at shutdown (ITS#10232)
+        - Fixed slapd-ldap use of multi-precision add for op counters (ITS#10237)
+        - Fixed slapd-mdb idl intersection (ITS#10233)
+        - Fixed slapd-wt idl intersection (ITS#10233)
+        - Fixed slapo-translucent regression with subordinate databases (ITS#10248)
+        - Fixed slapo-translucent regression when requesting attributes (ITS#10272)
+        - Fixed slappw-argon2 defaults to be more secure (ITS#9827)
+      * Dropped:
+        - d/p/remove-extraneous-quote-configure-ac.patch
+          [Applied in upstream release 2.5.19]
+  
+     -- Bryce Harrington <bryce@canonical.com>  Mon, 21 Apr 2025 16:42:05 -0700
+  
 2025-03-19 network-manager 1.36.6-14
 
   [ Changes in primed packages ]
