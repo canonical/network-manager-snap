@@ -8,8 +8,8 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN services.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-24
-base: core24
+    https://github.com/canonical/network-manager-snap/tree/snap-26
+base: core26
 confinement: strict
 grade: stable
 
@@ -143,7 +143,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/noble-updates
+    source-branch: applied/ubuntu/resolute
     build-packages:
       - build-essential
     make-parameters:
@@ -164,7 +164,7 @@ parts:
     plugin: autotools
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/noble-updates
+    source-branch: applied/ubuntu/resolute
     build-packages:
       - gettext
       - libglib2.0-dev
@@ -381,8 +381,8 @@ parts:
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
       ## Things we don't support yet and don't have to ship
-      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-adsl.so
-      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-bluetooth.so
+      - -usr/lib/NetworkManager/1.54.2/libnm-device-plugin-adsl.so
+      - -usr/lib/NetworkManager/1.54.2/libnm-device-plugin-bluetooth.so
       ## Some additional build artifacts we do not need
       - -usr/lib/NetworkManager/*/*.la
       - -usr/lib/libnm.la
