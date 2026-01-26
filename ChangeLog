@@ -1,3 +1,65 @@
+2026-01-26 network-manager 1.46.0-7
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * CI: Use store environment
+    Merge pull request #63 from canonical/24/ci-store
+
+  [ Changes in primed packages ]
+  
+  libssh-4 (built from libssh) updated from 0.10.6-2ubuntu0.1 to 0.10.6-2ubuntu0.2:
+  
+    libssh (0.10.6-2ubuntu0.2) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: NULL pointer dereference
+        - debian/patches/CVE-2025-8114.patch: sets rc to SSH_ERROR prior to goto
+          error in ssh_make_sessionid() of src/kex.c.
+        - CVE-2025-8114 
+  
+     -- Ian Constantin <ian.constantin@canonical.com>  Wed, 29 Oct 2025 14:58:24 +0200
+  
+  libnm0, network-manager (built from network-manager) updated from 1.46.0-1ubuntu2.2 to 1.46.0-1ubuntu2.5:
+  
+    network-manager (1.46.0-1ubuntu2.5) noble; urgency=medium
+  
+      * Use iptables instead of nftables as firewall backend, to match UFW
+        (LP: #2128668)
+  
+     -- Mitchell Augustin <mitchell.augustin@canonical.com>  Mon, 27 Oct 2025 14:11:40 -0500
+  
+    network-manager (1.46.0-1ubuntu2.4) noble; urgency=medium
+  
+      * d/p/lp2127925-fix-autoreconnect-blocker.patch: unblock autoreconnect when a previously failed
+        connection is now successful (LP: #2127925)
+  
+     -- Antoine Lassagne <antoine.lassagne@canonical.com>  Thu, 16 Oct 2025 09:23:45 +0200
+  
+    network-manager (1.46.0-1ubuntu2.3) noble; urgency=medium
+  
+      * fix nmcli that could not report 6ghz wifi channels correctly (LP: #2116940)
+  
+     -- Antoine Lassagne <antoine.lassagne@canonical.com>  Tue, 15 Jul 2025 13:38:55 +0200
+  
+  openvpn (built from openvpn) updated from 2.6.14-0ubuntu0.24.04.1 to 2.6.14-0ubuntu0.24.04.3:
+  
+    openvpn (2.6.14-0ubuntu0.24.04.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: incorrect HMAC verification check
+        - debian/patches/CVE-2025-13086.patch: fix memcmp check for the hmac
+          verification in the 3way handshake being inverted in
+          src/openvpn/ssl_pkt.c, tests/unit_tests/openvpn/test_pkt.c.
+        - CVE-2025-13086
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 24 Nov 2025 17:32:32 -0500
+  
+    openvpn (2.6.14-0ubuntu0.24.04.2) noble; urgency=medium
+  
+      * d/p/handle_intentional_route_push_float_ip.patch: Fix floating IP due
+        to "route VPN_IP net_gateway", which can lead to incorrect blocking of
+        a source IP switch for 60 seconds immediately after connection setup.
+        (LP: #2108860)
+  
+     -- Jonas Jelten <jonas.jelten@canonical.com>  Tue, 09 Sep 2025 16:36:28 +0200
+  
 2025-08-19 network-manager 1.46.0-6
 
   [ Changes in primed packages ]
