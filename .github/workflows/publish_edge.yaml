@@ -4,8 +4,9 @@ on:
   pull_request_target:
     branches:
       - snap-1.10
-    types:
-      - closed
+  schedule:
+    # Run on the first Sunday of the month at 02:00 UTC
+    - cron: '0 2 1-7 * SUN'
 
 jobs:
   publish_to_edge:
