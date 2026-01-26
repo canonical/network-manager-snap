@@ -8,8 +8,8 @@ on:
 jobs:
   build:
     # self-hosted runner so we can access launchpad
-    runs-on: self-hosted
-    environment: beta
+    runs-on: [self-hosted, x64, linux, spread-enabled]
+    environment: store
     steps:
       - name: Publish to edge
         env:
