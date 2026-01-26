@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - snap-22
+  schedule:
+    # Run on the first Sunday of the month at 02:00 UTC
+    - cron: '0 2 1-7 * SUN'
 
 jobs:
   publish_to_edge:
