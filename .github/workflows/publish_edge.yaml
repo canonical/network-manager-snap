@@ -10,10 +10,10 @@ on:
 jobs:
   publish_to_edge:
     # self-hosted runner so we can access launchpad
-    runs-on: self-hosted
+    runs-on: [self-hosted, x64, linux, spread-enabled]
     # Runs when the PR has been merged
     if: github.event.pull_request.merged == true
-    environment: beta
+    environment: store
     steps:
       - name: Publish to edge
         env:
