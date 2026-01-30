@@ -23,6 +23,10 @@ plugs:
     bus: system
     name: fi.w1.wpa_supplicant1
 
+layout:
+  /sbin/resolvconf:
+    symlink: $SNAP/sbin/resolvconf
+
 hooks:
   configure:
     plugs:
