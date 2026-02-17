@@ -1,58 +1,70 @@
-From 070448536e628032036c2d61eec5502c1e1aa770 Mon Sep 17 00:00:00 2001
+From bd0b16d7fadb89690fc7c39b7adf9ca1178e5745 Mon Sep 17 00:00:00 2001
 From: snapcraft <snapcraft@canonical.com>
 Date: Mon, 7 Mar 2022 15:24:03 +0100
-Subject: [PATCH 3/4] Disable tests failing on launchpad
+Subject: [PATCH 2/3] Disable tests failing on launchpad
 
 ---
- Makefile.am | 9 ---------
- 1 file changed, 9 deletions(-)
+ src/core/devices/tests/meson.build    | 1 -
+ src/core/platform/tests/meson.build   | 5 -----
+ src/core/settings/plugins/meson.build | 1 -
+ src/core/tests/meson.build            | 1 -
+ 4 files changed, 8 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 8aa8d3210..f00eb9616 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -3166,8 +3166,6 @@ EXTRA_DIST += \
- # src/core/settings/plugins/keyfile/tests
- ###############################################################################
+diff --git a/src/core/devices/tests/meson.build b/src/core/devices/tests/meson.build
+index 871c32062..6ce7847c4 100644
+--- a/src/core/devices/tests/meson.build
++++ b/src/core/devices/tests/meson.build
+@@ -1,7 +1,6 @@
+ # SPDX-License-Identifier: LGPL-2.1-or-later
  
--check_programs += src/core/settings/plugins/keyfile/tests/test-keyfile-settings
--
- src_core_settings_plugins_keyfile_tests_test_keyfile_settings_CPPFLAGS = $(src_core_cppflags_test)
+ test_units = [
+-  'test-lldp',
+ ]
  
- src_core_settings_plugins_keyfile_tests_test_keyfile_settings_LDFLAGS = \
-@@ -4135,16 +4133,11 @@ check_programs_norun += \
+ foreach test_unit: test_units
+diff --git a/src/core/platform/tests/meson.build b/src/core/platform/tests/meson.build
+index 252c6840f..4dc31f522 100644
+--- a/src/core/platform/tests/meson.build
++++ b/src/core/platform/tests/meson.build
+@@ -5,16 +5,11 @@ test_linux_c_flags = test_c_flags + ['-DSETUP=nm_linux_platform_setup']
  
- check_programs += \
- 	src/core/platform/tests/test-address-fake \
--	src/core/platform/tests/test-address-linux \
- 	src/core/platform/tests/test-cleanup-fake \
--	src/core/platform/tests/test-cleanup-linux \
- 	src/core/platform/tests/test-link-fake \
--	src/core/platform/tests/test-link-linux \
- 	src/core/platform/tests/test-nmp-object \
- 	src/core/platform/tests/test-platform-general \
- 	src/core/platform/tests/test-route-fake \
--	src/core/platform/tests/test-route-linux \
--	src/core/platform/tests/test-tc-linux \
- 	$(NULL)
+ test_units = [
+   ['test-address-fake', 'test-address.c', test_fake_c_flags, default_test_timeout],
+-  ['test-address-linux', 'test-address.c', test_linux_c_flags, default_test_timeout],
+   ['test-cleanup-fake', 'test-cleanup.c', test_fake_c_flags, default_test_timeout],
+-  ['test-cleanup-linux', 'test-cleanup.c', test_linux_c_flags, default_test_timeout],
+   ['test-link-fake', 'test-link.c', test_fake_c_flags, default_test_timeout],
+-  ['test-link-linux', 'test-link.c', test_linux_c_flags, 900],
+   ['test-nmp-object', 'test-nmp-object.c', test_c_flags, default_test_timeout],
+   ['test-platform-general', 'test-platform-general.c', test_c_flags, default_test_timeout],
+   ['test-route-fake', 'test-route.c', test_fake_c_flags, default_test_timeout],
+-  ['test-route-linux', 'test-route.c', test_linux_c_flags, 900],
+-  ['test-tc-linux', 'test-tc.c', test_linux_c_flags, default_test_timeout],
+ ]
  
- src_core_platform_tests_monitor_CPPFLAGS = $(src_core_cppflags_test)
-@@ -4232,7 +4225,6 @@ src_core_devices_tests_ldflags = \
- 	$(SANITIZER_EXEC_LDFLAGS)
+ foreach test_unit: test_units
+diff --git a/src/core/settings/plugins/meson.build b/src/core/settings/plugins/meson.build
+index d4338a30a..ac6b453bf 100644
+--- a/src/core/settings/plugins/meson.build
++++ b/src/core/settings/plugins/meson.build
+@@ -9,5 +9,4 @@ if enable_ifupdown
+ endif
  
- check_programs += \
--	src/core/devices/tests/test-lldp \
- 	$(NULL)
- 
- src_core_devices_tests_test_lldp_CPPFLAGS = $(src_core_cppflags_test)
-@@ -4343,7 +4335,6 @@ check_programs += \
- 	src/core/tests/test-core \
- 	src/core/tests/test-core-with-expect \
- 	src/core/tests/test-dcb \
--	src/core/tests/test-l3cfg \
- 	src/core/tests/test-systemd \
- 	src/core/tests/test-utils \
- 	src/core/tests/test-wired-defname \
+ if enable_tests
+-  subdir('keyfile/tests')
+ endif
+diff --git a/src/core/tests/meson.build b/src/core/tests/meson.build
+index 78c689f79..2a0dac022 100644
+--- a/src/core/tests/meson.build
++++ b/src/core/tests/meson.build
+@@ -6,7 +6,6 @@ test_units = [
+   'test-core',
+   'test-core-with-expect',
+   'test-dcb',
+-  'test-l3cfg',
+   'test-utils',
+   'test-wired-defname',
+ ]
 -- 
-2.34.1
+2.43.0
 
