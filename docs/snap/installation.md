@@ -62,8 +62,10 @@ Now you have NetworkManager successfully installed.
 
 ## network-manager tracks and channels
 
-The network-manager snap has currently three tracks:
+The network-manager snap has currently multiple tracks:
 
+ * **26**: Contains upstream 1.54.2 and has a core26 base. The track
+   name refers to the base snap.
  * **24**: Contains upstream 1.46.0 and has a core24 base. The track
    name refers to the base snap.
  * **22**: Contains upstream 1.36.6 and has a core22 base. The track
