@@ -220,7 +220,7 @@ parts:
       - -Dsystemd_journal=true
       - -Dlibexecdir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
       - -Dpppd=/snap/$CRAFT_PROJECT_NAME/current/usr/sbin/pppd
-      - -Dpppd_plugin_dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
+      - -Dpppd_plugin_dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.5.2/
       - -Dsystemdsystemunitdir=/usr/lib/systemd/system
       - -Dudev_dir=/usr/lib/udev
       - -Dcrypto=gnutls
@@ -304,7 +304,7 @@ parts:
       - ppp
 
     organize:
-      snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.5.2/nm-pppd-plugin.so: usr/lib/pppd/2.5.2/nm-pppd-plugin.so
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/NetworkManager: usr/lib/NetworkManager
 
@@ -317,7 +317,7 @@ parts:
       - usr/bin/nmtui-hostname
       - usr/sbin/pppd
       - usr/lib/*/NetworkManager
-      - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      - usr/lib/pppd/2.5.2/nm-pppd-plugin.so
       - usr/lib/NetworkManager
       - usr/sbin/NetworkManager
       - usr/sbin/openvpn
