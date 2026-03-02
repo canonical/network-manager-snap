@@ -1,6 +1,9 @@
 name: Publish to edge
 
 on:
+  workflow_dispatch:
+    branches:
+      - snap-24
   push:
     branches:
       - snap-24
