@@ -1,3 +1,66 @@
+2026-03-09 network-manager 1.36.6-16
+
+  [ Guilherme Puida <guilherme.moreira@canonical.com> ]
+  * CI: enable workflow dispatch for edge builds
+    Merge pull request #71 from canonical/snap-22-edge-workflow-dispatch
+
+  [ Changes in primed packages ]
+  
+  libcurl3-gnutls (built from curl) updated from 7.81.0-1ubuntu1.21 to 7.81.0-1ubuntu1.22:
+  
+    curl (7.81.0-1ubuntu1.22) jammy-security; urgency=medium
+  
+      * SECURITY UPDATE: multi-threaded TSL options leak
+        - debian/patches/CVE-2025-14017.patch: call ldap_init() before
+        setting the options in lib/ldap.c
+        - CVE-2025-14017
+      * SECURITY UPDATE: bearer token leak on cross-protocol redirect
+        - debian/patches/CVE-2025-14524.patch: if redirected,
+        require permission to use bearer in lib/curl_sasl.c
+        - CVE-2025-14524
+      * SECURITY UPDATE: ssh known_hosts validation bypass
+        - debian/patches/CVE-2025-15079.patch: set both knownhosts
+        options to the same file in lib/vssh/libssh.c
+        - CVE-2025-15079
+      * SECURITY UPDATE: improper local ssh agent authentication
+        - debian/patches/CVE-2025-15224.patch: require private key
+        or user-agent for public key auth in lib/vssh/libssh.c
+        - CVE-2025-15224
+  
+     -- Elise Hlady <elise.hlady@canonical.com>  Wed, 18 Feb 2026 13:33:48 -0800
+  
+  libnm0, network-manager (built from network-manager) updated from 1.36.6-0ubuntu2.1 to 1.36.6-0ubuntu2.2:
+  
+    network-manager (1.36.6-0ubuntu2.2) jammy; urgency=medium
+  
+      * Use iptables instead of nftables as firewall backend, to match UFW
+        (LP: #2128668)
+  
+     -- Mitchell Augustin <mitchell.augustin@canonical.com>  Mon, 27 Oct 2025 14:11:40 -0500
+  
+  libldap-2.5-0 (built from openldap) updated from 2.5.19+dfsg-0ubuntu0.22.04.1 to 2.5.20+dfsg-0ubuntu0.22.04.1:
+  
+    openldap (2.5.20+dfsg-0ubuntu0.22.04.1) jammy; urgency=medium
+  
+      * New upstream version (LP: #2127665)
+        - Fixed lloadd handling of starttls critical (ITS#10323)
+        - Fixed slapd regression with certain searches (ITS#10307)
+        - Fixed slapo-pcache caching behaviors (ITS#10270)
+      * pbkdf2 iteration configuration support (LP: #2125685)
+        - d/p/lp2125685-pbkdf2-configurable-rounds: make iterations configurable
+        - d/p/lp2125685-pbkdf2-fix-iteration-arg: fix iteration argument index
+        - d/t/pbkdf2-contrib: test if pbkdf2 hashing rounds are adjustable
+      * Enable build of ppm password quality check module (LP: #2121816)
+        - d/rules: build ppm password quality module
+        - d/p/contrib-makefiles: build patches from 2.6.9+dfsg-1~exp1 (#1039740)
+        - d/p/ppm-cross: cross-build patch from 2.6.8+dfsg-1~exp1 (#1079533)
+        - d/t/ppm-contrib: test ppm password quality module
+          + no attribute checks, since they're first possible with 2.6.2
+        - d/control: add dependency on libcrack2-dev for ppm
+        - d/slapd-contrib.{examples,install,manpages}: add ppm
+  
+     -- Jonas Jelten <jonas.jelten@canonical.com>  Wed, 24 Sep 2025 15:40:37 +0200
+  
 2025-09-30 network-manager 1.36.6-15
 
   [ Lukas Märdian <slyon@ubuntu.com> ]
