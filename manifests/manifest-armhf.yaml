@@ -1,9 +1,9 @@
-snapcraft-version: 8.12.0
-snapcraft-started-at: '2025-09-30T14:35:33.717270Z'
+snapcraft-version: 8.14.2
+snapcraft-started-at: '2026-03-09T17:47:05.316234Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '22.04'
 name: network-manager
-version: 1.36.6-15
+version: 1.36.6-16
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -81,20 +81,20 @@ parts:
     - git
     stage-packages:
     - dnsmasq-base=2.90-0ubuntu0.22.04.1
-    - libcurl3-gnutls=7.81.0-1ubuntu1.21
+    - libcurl3-gnutls=7.81.0-1ubuntu1.22
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
+    - libldap-2.5-0=2.5.20+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.4
     - libndp0=1.8-0ubuntu3.1
     - libnewt0.52=0.52.21-5ubuntu2
     - libnghttp2-14=1.43.0-1ubuntu0.2
-    - libnm0=1.36.6-0ubuntu2.1
+    - libnm0=1.36.6-0ubuntu2.2
     - libpsl5=0.21.0-1.2build2
     - librtmp1=2.4+20151223.gitfa8646d.1-2build4
     - libsasl2-2=2.1.27+dfsg2-3ubuntu1.2
     - libslang2=2.3.2-5build4
     - libteamdctl0=1.31-1build2
-    - network-manager=1.36.6-0ubuntu2.1
+    - network-manager=1.36.6-0ubuntu2.2
     - pkexec=0.105-33
     override-build: |
       set -ex
@@ -242,9 +242,9 @@ parts:
       unset _SNAP
     stage-packages:
     - debconf=1.5.79ubuntu1
-    - libcurl3-gnutls=7.81.0-1ubuntu1.21
+    - libcurl3-gnutls=7.81.0-1ubuntu1.22
     - libjansson4=2.13.1-1.1build3
-    - libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
+    - libldap-2.5-0=2.5.20+dfsg-0ubuntu0.22.04.1
     - libmm-glib0=1.20.0-1~ubuntu22.04.4
     - libndp0=1.8-0ubuntu3.1
     - libnewt0.52=0.52.21-5ubuntu2
@@ -336,19 +336,19 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-22/+build/2919478
+  build_url: https://launchpad.net/~snappy-hwe-team/+snap/network-manager-snap-22/+build/3083051
 build-packages: []
 build-snaps: []
 primed-stage-packages:
 - dnsmasq-base=2.90-0ubuntu0.22.04.1
-- libcurl3-gnutls=7.81.0-1ubuntu1.21
+- libcurl3-gnutls=7.81.0-1ubuntu1.22
 - libjansson4=2.13.1-1.1build3
-- libldap-2.5-0=2.5.19+dfsg-0ubuntu0.22.04.1
+- libldap-2.5-0=2.5.20+dfsg-0ubuntu0.22.04.1
 - libmm-glib0=1.20.0-1~ubuntu22.04.4
 - libndp0=1.8-0ubuntu3.1
 - libnewt0.52=0.52.21-5ubuntu2
 - libnghttp2-14=1.43.0-1ubuntu0.2
-- libnm0=1.36.6-0ubuntu2.1
+- libnm0=1.36.6-0ubuntu2.2
 - libpcap0.8=1.10.1-4ubuntu1.22.04.1
 - libpkcs11-helper1=1.28-1ubuntu0.22.04.1
 - libpsl5=0.21.0-1.2build2
@@ -356,6 +356,6 @@ primed-stage-packages:
 - libsasl2-2=2.1.27+dfsg2-3ubuntu1.2
 - libslang2=2.3.2-5build4
 - libteamdctl0=1.31-1build2
-- network-manager=1.36.6-0ubuntu2.1
+- network-manager=1.36.6-0ubuntu2.2
 - openvpn=2.5.11-0ubuntu0.22.04.1
 - ppp=2.4.9-1+1ubuntu3
