@@ -1,3 +1,212 @@
+2026-03-09 network-manager 1.46.0-8
+
+  [ Guilherme Puida <guilherme.moreira@canonical.com> ]
+  * CI: enable workflow dispatch for edge builds
+    Merge pull request #69 from guilherme-puida/snap-24-edge-workflow-dispatch
+
+  [ Lukas Märdian <slyon@ubuntu.com> ]
+  * CI: monthly test-publish to edge
+    Merge pull request #66 from canonical/monthly-build
+
+  [ Changes in primed packages ]
+  
+  libcurl3t64-gnutls (built from curl) updated from 8.5.0-2ubuntu10.6 to 8.5.0-2ubuntu10.7:
+  
+    curl (8.5.0-2ubuntu10.7) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: predictable websocket frame mask
+        - debian/patches/CVE-2025-10148.patch: get a new mask for each
+        new outgoing frame in lib/ws.c
+        - CVE-2025-10148
+      * SECURITY UPDATE: multi-threaded TSL options leak
+        - debian/patches/CVE-2025-14017.patch: call ldap_init() before
+        setting the options in lib/ldap.c
+        - CVE-2025-14017
+      * SECURITY UPDATE: bearer token leak on cross-protocol redirect
+        - debian/patches/CVE-2025-14524.patch: if redirected,
+        require permission to use bearer in lib/curl_sasl.c
+        - CVE-2025-14524
+      * SECURITY UPDATE: OpenSSL partial chain store policy bypass
+        - debian/patches/CVE-2025-14819.patch: toggling
+          CURLSSLOPT_NO_PARTIALCHAIN makes a different CA cache in
+          lib/vtls/openssl.c.
+        - CVE-2025-14819
+      * SECURITY UPDATE: ssh known_hosts validation bypass
+        - debian/patches/CVE-2025-15079.patch: set both knownhosts
+        options to the same file in lib/vssh/libssh.c
+        - CVE-2025-15079
+      * SECURITY UPDATE: improper local ssh agent authentication
+        - debian/patches/CVE-2025-15224.patch: require private key
+        or user-agent for public key auth in lib/vssh/libssh.c
+        - CVE-2025-15224
+  
+     -- Elise Hlady <elise.hlady@canonical.com>  Wed, 18 Feb 2026 10:57:28 -0800
+  
+  libssh-4 (built from libssh) updated from 0.10.6-2ubuntu0.2 to 0.10.6-2ubuntu0.3:
+  
+    libssh (0.10.6-2ubuntu0.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: memory leak in key exchange
+        - debian/patches/CVE-2025-8277-1.patch: adjust packet filter to work
+          when DH-GEX is guessed wrongly in src/packet.c.
+        - debian/patches/CVE-2025-8277-2.patch: fix memory leak of unused
+          ephemeral key pair after client's wrong KEX guess in src/dh_crypto.c,
+          src/dh_key.c, src/ecdh_crypto.c, src/ecdh_gcrypt.c,
+          src/ecdh_mbedcrypto.c.
+        - debian/patches/CVE-2025-8277-3.patch: free previously allocated
+          pubkeys in src/ecdh_crypto.c, src/ecdh_gcrypt.c.
+        - debian/patches/CVE-2025-8277-4.patch: avoid leaking ecdh keys in
+          src/ecdh_mbedcrypto.c, src/wrapper.c.
+        - CVE-2025-8277
+      * SECURITY UPDATE: Improper sanitation of paths received from SCP servers
+        - debian/patches/CVE-2026-0964.patch: reject invalid paths received
+          through scp in src/scp.c.
+        - CVE-2026-0964
+      * SECURITY UPDATE: DoS via improper configuration file handling
+        - debian/patches/CVE-2026-0965.patch: do not attempt to read
+          non-regular and too large configuration files in
+          include/libssh/misc.h, include/libssh/priv.h, src/bind_config.c,
+          src/config.c, src/dh-gex.c, src/known_hosts.c, src/knownhosts.c,
+          src/misc.c, tests/unittests/torture_config.c.
+        - CVE-2026-0965
+      * SECURITY UPDATE: Buffer underflow in ssh_get_hexa() on invalid input
+        - debian/patches/CVE-2026-0966-1.patch: avoid heap buffer underflow in
+          ssh_get_hexa in src/misc.c.
+        - debian/patches/CVE-2026-0966-2.patch: test coverage for ssh_get_hexa
+          in tests/unittests/torture_misc.c.
+        - debian/patches/CVE-2026-0966-3.patch: update guided tour to use
+          SHA256 fingerprints in doc/guided_tour.dox.
+        - CVE-2026-0966
+      * SECURITY UPDATE: DoS via inefficient regular expression processing
+        - debian/patches/CVE-2026-0967.patch: avoid recursive matching (ReDoS)
+          in src/match.c, tests/unittests/torture_config.c.
+        - CVE-2026-0967
+      * SECURITY UPDATE: DoS due to malformed SFTP message
+        - debian/patches/CVE-2026-0968-1.patch: sanitize input handling in
+          sftp_parse_longname() in src/sftp.c.
+        - debian/patches/CVE-2026-0968-2.patch: reproducer for invalid longname
+          data in tests/unittests/CMakeLists.txt,
+          tests/unittests/torture_unit_sftp.c.
+        - CVE-2026-0968
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 13 Feb 2026 09:41:22 -0500
+  
+  libldap2 (built from openldap) updated from 2.6.7+dfsg-1~exp1ubuntu8.2 to 2.6.10+dfsg-0ubuntu0.24.04.1:
+  
+    openldap (2.6.10+dfsg-0ubuntu0.24.04.1) noble; urgency=medium
+  
+      * New upstream version (LP: #2127665):
+        - 2.6.10:
+          - Added slapd microsecond timestamp format for local logging (ITS#10140)
+          - Fixed libldap ldap_result behavior with LDAP_MSG_RECEIVED (ITS#10229)
+          - Fixed lloadd handling of starttls critical (ITS#10323)
+          - Fixed slapd syncrepl when used with slapo-rwm (ITS#10290)
+          - Fixed slapd regression with certain searches (ITS#10307)
+          - Fixed slapo-autoca olcAutoCAserverClass object (ITS#10288)
+          - Fixed slapo-pcache caching behaviors (ITS#10270)
+  
+        - 2.6.9:
+          - Fixed libldap TLS connection timeout handling (ITS#8047)
+          - Fixed libldap GnuTLS incompatible pointer type (ITS#10253)
+          - Fixed libldap OpenSSL set_ciphersuite error handling (ITS#10223)
+          - Fixed libldap to check for OpenSSL EVP_Digest* failure (ITS#10224)
+          - Fixed slapd cn=config disallowed modification of cn=schema (ITS#10256)
+          - Fixed slapd syncrepl assert during refresh at shutdown (ITS#10232)
+          - Fixed slapd syncrepl retry state during refreshDone (ITS#10234)
+          - Fixed slapd-ldap use of multi-precision add for op counters (ITS#10237)
+          - Fixed slapd-mdb idl intersection (ITS#10233)
+          - Fixed slapd-wt idl intersection (ITS#10233)
+          - Fixed slapo-memberof to omit dynamic values (ITS#10230)
+          - Fixed slapo-nestgroup leak in nestgroup_memberFilter (ITS#10249)
+          - Fixed slapo-translucent regression with subordinate databases (ITS#10248)
+          - Fixed slapo-translucent regression when requesting attributes (ITS#10272)
+          - Fixed slappw-argon2 defaults to be more secure (ITS#9827)
+  
+        - 2.6.8:
+          - Fixed libldap exit handling with OpenSSL3 again (ITS#9952)
+          - Fixed libldap OpenSSL channel binding digest (ITS#10216)
+          - Fixed slapd handling of large uid/gids peercred auth (ITS#10211)
+          - Fixed slapd-asyncmeta/meta target structure allocations (ITS#10197)
+          - Fixed slapd-meta with dynlist (ITS#10164)
+          - Fixed slapd-meta binds when proxying internal op (ITS#10165)
+          - Added slapo-nestgroup overlay (ITS#10161)
+          - Added slapo-memberof 'addcheck' option (ITS#10167)
+          - Fixed slapo-accesslog startup initialization (ITS#10170)
+          - Fixed slapo-constraint double free on invalid attr (ITS#10204)
+          - Fixed slapo-dynlist with abandoned operations (ITS#10044)
+          - Build
+            - Fixed build with gcc14.x (ITS#10166)
+            - Fixed back-perl with clang15 (ITS#10177)
+            - Fixed to reduce systemd dependencies (ITS#10214)
+          - Contrib
+            - Added slapo-alias contrib module (ITS#10104, ITS#10182)
+            - Fixed slapo-autogroup to work with slapo-dynlist (ITS#10185)
+            - Fixed smbk5pwd implicit function declaration (ITS#10206)
+          - Documentation
+            - Fixed slapo-memberof exattr requirements (ITS#7400)
+            - Fixed slapo-memberof is no longer deprecated (ITS#7400)
+  
+        - d/p/lp2090806...TLS-...timeout-handling: removed
+          [upstream in 2.6.9]
+        - d/p/smbk5pwd-implicit-declaration: removed
+          [upstream in 2.6.8]
+        - d/p/64-bit-time-t-compat: adjust for 2.6.10
+        - d/slapd.{install,manpages}: install new slapo-nestgroup overlay
+          [from 2.6.8+dfsg-1~exp2]
+        - d/slapd.manpages: add slapo-autogroup overlay
+          [from 2.6.8+dfsg-1~exp2]
+      * pbkdf2 iteration configuration support (LP: #2125685)
+        - d/p/lp2125685-pbkdf2-configurable-rounds: make iterations configurable
+        - d/p/lp2125685-pbkdf2-fix-iteration-arg: fix iteration argument index
+        - d/t/pbkdf2-contrib: test if pbkdf2 hashing rounds are adjustable
+      * Enable build of ppm password quality check module (LP: #2121816)
+        - d/rules: build ppm password quality module
+        - d/p/contrib-makefiles: add build adjustment from 2.6.9+dfsg-1~exp1 (#1039740)
+        - d/p/ppm-cross: cross-build patch from 2.6.8+dfsg-1~exp1 (#1079533)
+        - d/t/ppm-contrib: test ppm password quality module
+        - d/control: add build dependency on libcrack2-dev for ppm
+        - d/slapd-contrib.{examples,install,manpages}: add ppm
+  
+     -- Jonas Jelten <jonas.jelten@canonical.com>  Tue, 23 Sep 2025 18:26:39 +0200
+  
+  openvpn (built from openvpn) updated from 2.6.14-0ubuntu0.24.04.3 to 2.6.19-0ubuntu0.24.04.1:
+  
+    openvpn (2.6.19-0ubuntu0.24.04.1) noble; urgency=medium
+  
+      * New upstream version 2.6.19 (LP: #2127658):
+        - CVE Fixes:
+          + CVE-2025-13086
+        - Updates:
+          + Disable DCO if --bind-dev option is given
+        - Bug Fixes:
+          + Fix incorrect file descriptor handling in p2mp server on inotify FD
+            during a SIGUSR1 restart.
+          + Fix bug where --management-forget-disconnect and --management-signal
+            could be executed even if password authentication to managment
+            interface was still pending.
+          + Repair client-side interaction on reconnect between DCO event handling
+            and --persist-tun.
+          + Prevent crash on invalid server-ipv6 argument.
+          + Fix invalid pointer creation in tls_pre_decrypt().
+          + Properly check for errors in creation on $auth_failed_reason_file.
+          + Apply close-on-exec option to correct socket for incoming TCP
+            connections.
+          + Fix missing perf_pop() call in ssl_mbedtls.
+          + Apply more checks to incoming TLS handshake packets before creating new
+            state.
+          + Fix broadcast address configuration for broadcast-based applications
+            using ifconfig to get address.
+        - See https://community.openvpn.net/ReleaseHistory for additional
+          information.
+      * Remove patches fixed upstream:
+        - d/p/CVE-2025-13086.patch
+        [Fixed in 2.6.16]
+        - d/p/handle_intentional_route_push_float_ip.patch
+        [Fixed in 2.6.15]
+      * d/watch: Update download URL.
+  
+     -- Lena Voytek <lena.voytek@canonical.com>  Fri, 20 Feb 2026 18:13:25 -0500
+  
 2026-01-26 network-manager 1.46.0-7
 
   [ Lukas Märdian <slyon@ubuntu.com> ]
