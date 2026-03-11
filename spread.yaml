@@ -38,25 +38,38 @@ environment:
   DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
-  google:
-    key: '$(HOST: echo "$SPREAD_GOOGLE_KEY")'
-    location: snapd-spread/us-east1-b
-    plan: n2-standard-2
+  openstack-dev:
+    type: openstack
+    key: '$(HOST: echo "$OS_CREDENTIALS_STG_AMD64_PS7")'
+    plan: shared.xsmall
     halt-timeout: 2h
+    wait-timeout: 10m
+    groups: [default]
+    proxy: ingress-haproxy.ps7.canonical.com
+    cidr-port-rel: [10.151.54.0/24:4000]
+    volume-auto-delete: true
+    environment:
+      SNAPD_USE_PROXY: 'true'
+      HTTP_PROXY: 'http://egress.ps7.internal:3128'
+      HTTPS_PROXY: 'http://egress.ps7.internal:3128'
+      http_proxy: 'http://egress.ps7.internal:3128'
+      https_proxy: 'http://egress.ps7.internal:3128'
+      no_proxy: '127.0.0.1,127.0.0.53,localhost'
+      NO_PROXY: '127.0.0.1,127.0.0.53,localhost'
+      NTP_SERVER: 'ntp.ps7.internal'
     systems:
-      - ubuntu-core-24-64:
-          image: ubuntu-24.04-64
+      - ubuntu-core-26-64:
+          image: ubuntu-26.04-64
           workers: 8
           storage: 20G
     prepare: |
-      # Builds UC image on top of classic 24.04
+      # Builds UC image on top of classic 26.04
       "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
     systems:
-      - ubuntu-core-24:
-          # TODO how is this done in snapd spread?
-          #bios: /usr/share/OVMF/OVMF_CODE.fd
+      - ubuntu-core-26:
+          bios: uefi
           username: test
           password: test
 
@@ -90,7 +103,10 @@ prepare: |
   "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 24/edge
+  # OBS: This is temporary to bootstrap
+  snap install --dangerous "$PROJECT_PATH"/"$name"*_amd64.snap
+  # Run prepare-each step which is a bit of a no-op now
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 26/stable
 
 restore-each: |
   "$SYSTEMSNAPSTESTLIB"/restore-each.sh
