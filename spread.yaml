@@ -105,9 +105,6 @@ prepare: |
   "$SYSTEMSNAPSTESTLIB"/prepare.sh
 
 prepare-each: |
-  # OBS: This is temporary to bootstrap
-  # Will be removed when the snap is published on the store in the stable channel
-  snap install --dangerous "$PROJECT_PATH"/"$SNAP_NAME"*_amd64.snap
   # Run prepare-each step which is a bit of a no-op now
   "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 26/stable
 
