@@ -184,6 +184,7 @@ parts:
       - libpsl-dev
       - libcurl4-gnutls-dev
       - gtk-doc-tools
+      - libdbus-1-dev
       - libglib2.0-doc
       - libmm-glib-dev
       - libndp-dev
@@ -284,7 +285,7 @@ parts:
       unset _SNAP
     stage-packages:
       - libcurl3t64-gnutls
-      - libdbus-1-dev
+      - libdbus-1-3
       - libjansson4
       - libpkcs11-helper1t64
       - libldap2
@@ -292,7 +293,6 @@ parts:
       - libnewt0.52
       - libnghttp2-14
       - libndp0
-      - libnvme-dev
       - libpsl5t64
       - librtmp1
       - libsasl2-2
@@ -324,6 +324,7 @@ parts:
       # configuration
       - etc/NetworkManager/*
       # docs
+      - usr/share/doc/libdbus-1-3/copyright
       - usr/share/doc/libcurl3t64-gnutls/copyright
       - usr/share/doc/libibverbs1/copyright
       - usr/share/doc/libjansson4/copyright
@@ -340,9 +341,12 @@ parts:
       - usr/share/doc/libsasl2-2/copyright
       - usr/share/doc/libteamdctl0/copyright
       - usr/share/doc/libslang2/copyright
+      - usr/share/doc/libssh2-1t64/copyright
+      - usr/share/doc/mobile-broadband-provider-info/copyright
       - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
       - usr/share/doc/network-manager-openvpn/copyright
+      - usr/share/doc/libdbus-1-3/changelog.*
       - usr/share/doc/libcurl3t64-gnutls/changelog.*
       - usr/share/doc/libibverbs1/changelog.*
       - usr/share/doc/libjansson4/changelog.*
@@ -360,13 +364,17 @@ parts:
       - usr/share/doc/libssh2-1t64/changelog.*
       - usr/share/doc/libteamdctl0/changelog.*
       - usr/share/doc/libslang2/changelog.*
+      - usr/share/doc/mobile-broadband-provider-info/changelog.*
       - usr/share/doc/openvpn/changelog.*
       - usr/share/doc/ppp/changelog.*
       - usr/share/doc/network-manager-openvpn/changelog.*
+      # mobile provider database
+      - usr/share/mobile-broadband-provider-info/*
       # libraries
       - usr/lib/*/libslang*
       - usr/lib/libnm*
       - usr/lib/*/libcurl-gnutls*
+      - usr/lib/*/libdbus*
       - usr/lib/*/libssh2*
       ## required for teamdctl
       - usr/lib/*/libjansson*
