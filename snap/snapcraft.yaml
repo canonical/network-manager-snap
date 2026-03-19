@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.54.2-2-dev
+version: 1.54.3-0-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -392,8 +392,8 @@ parts:
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
       ## Things we don't support yet and don't have to ship
-      - -usr/lib/NetworkManager/1.54.2/libnm-device-plugin-adsl.so
-      - -usr/lib/NetworkManager/1.54.2/libnm-device-plugin-bluetooth.so
+      - -usr/lib/NetworkManager/1.54.3/libnm-device-plugin-adsl.so
+      - -usr/lib/NetworkManager/1.54.3/libnm-device-plugin-bluetooth.so
       ## Some additional build artifacts we do not need
       - -usr/lib/NetworkManager/*/*.la
       - -usr/lib/libnm.la
