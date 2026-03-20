@@ -1,5 +1,5 @@
 name: network-manager
-version: 1.46.0-8-dev
+version: 1.54.3-0-dev
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -8,10 +8,11 @@ description: |
   PPPoE devices, provides VPN integration with a variety of different
   VPN services.
   Please find the source code for this track at:
-    https://code.launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+git/network-manager/+ref/snap-24
-base: core24
+    https://github.com/canonical/network-manager-snap/tree/snap-26
+base: core26
 confinement: strict
-grade: stable
+grade: devel
+build-base: devel
 
 # Since the uc20+ network-manager snap currently defaults to the native
 # netplan config plugin, the default format of connection files has
@@ -143,7 +144,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/noble-updates
+    source-branch: applied/ubuntu/resolute
     build-packages:
       - build-essential
     make-parameters:
@@ -161,11 +162,12 @@ parts:
 
   networkmanager:
     after: [ stack-snaps-tools ]
-    plugin: autotools
+    plugin: meson
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/noble-updates
+    source-branch: applied/ubuntu/resolute
     build-packages:
+      - meson
       - gettext
       - libglib2.0-dev
       - ppp-dev
@@ -182,6 +184,7 @@ parts:
       - libpsl-dev
       - libcurl4-gnutls-dev
       - gtk-doc-tools
+      - libdbus-1-dev
       - libglib2.0-doc
       - libmm-glib-dev
       - libndp-dev
@@ -202,50 +205,50 @@ parts:
       - netplan.io
       - intltool
       - libnss3-dev
-    autotools-configure-parameters:
-      - --prefix=/usr
-      - --sysconfdir=/etc
-      - --localstatedir=/var
-      - --runstatedir=/run
-      - --disable-qt
+      - libnvme-dev
+    meson-parameters:
+      - -Dprefix=/usr
+      - -Dlibdir=lib
+      - -Dsysconfdir=/etc
+      - -Dlocalstatedir=/var
+      - -Druntime_dir=/run
+      - -Dqt=false
       # dhcp handled by systemd client
-      - --with-dhcpcd=no
-      - --with-dhclient=no
-      - --with-dnsmasq=/snap/$CRAFT_PROJECT_NAME/current/sbin/dnsmasq
-      - --with-iptables=/sbin/iptables
-      - --with-systemd-journal=yes
-      - --libexecdir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
-      - --with-pppd=/snap/$CRAFT_PROJECT_NAME/current/usr/sbin/pppd
-      - --with-pppd-plugin-dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/
-      - --with-dnssec-trigger=/usr/lib/dnssec-trigger/dnssec-trigger-script
-      - --with-systemdsystemunitdir=/usr/lib/systemd/system
-      - --with-udev-dir=/usr/lib/udev
-      - --with-crypto=gnutls
+      - -Ddhcpcd=false
+      - -Ddhclient=false
+      - -Ddnsmasq=/snap/$CRAFT_PROJECT_NAME/current/sbin/dnsmasq
+      - -Diptables=/sbin/iptables
+      - -Dsystemd_journal=true
+      - -Dlibexecdir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager
+      - -Dpppd=/snap/$CRAFT_PROJECT_NAME/current/usr/sbin/pppd
+      - -Dpppd_plugin_dir=/snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.5.2/
+      - -Dsystemdsystemunitdir=/usr/lib/systemd/system
+      - -Dudev_dir=/usr/lib/udev
+      - -Dcrypto=gnutls
       # Explicitly disable session tracking, as it's not applicable on Ubuntu Core
-      - --with-session-tracking=no
-      - --with-suspend-resume=systemd
-      - --with-modem-manager-1
-      - --with-nmtui=yes
-      - --with-nmcli=yes
-      - --with-selinux=no
-      - --with-tests
-      - --with-libaudit=no
-      - --with-dhcpcanon=no
-      - --enable-netplan=yes
+      - -Dsession_tracking=no
+      - -Dsuspend_resume=systemd
+      - -Dmodem_manager=true
+      - -Dnmtui=true
+      - -Dnmcli=true
+      - -Dselinux=false
+      - -Dtests=yes
+      - -Dlibaudit=no
+      - -Dnetplan=true
       # Explicitly disable polkit, as it's not applicable on Ubuntu Core
-      - --enable-polkit=no
-      - --enable-ppp
-      - --enable-ifupdown
-      - --enable-introspection
-      - --enable-gtk-doc=no
-      - --enable-concheck
-      - --enable-teamdctl
-      - --enable-more-warnings=no
-      - --enable-modify-system=no
-      - --enable-ovs=no
-      - --with-nm-cloud-setup=no
+      - -Dpolkit=false
+      - -Dppp=true
+      - -Difupdown=true
+      - -Dintrospection=true
+      - -Ddocs=false
+      - -Dconcheck=true
+      - -Dteamdctl=true
+      - -Dwarning_level=1
+      - -Dmodify_system=false
+      - -Dovs=false
+      - -Dnm_cloud_setup=false
       # Set explicitly flags until lp: #1791946 is solved
-      - CFLAGS='-O2 -Wl,-z,relro,-z,now -pie -fpie'
+      - -Dc_args=['-O2','-Wl,-z,relro,-z,now','-pie','-fpie']
     # Generated netplan patch from https://github.com/slyon/NetworkManager/tree/slyon/backend-1.22.10
     # git format-patch 1.22.10 --full-index --binary --stdout > ../0002-nm-netplan-keyfile.patch -- !(.gitignore)
     override-build: |
@@ -256,13 +259,16 @@ parts:
       apt download network-manager-openvpn
       dpkg -x network-manager-openvpn_*.deb "$CRAFT_PART_INSTALL"/
 
+      # Apply patches in SRC directory, as the meson plugin won't copy sources
+      # in build dir after the pull step
+      cd "$CRAFT_PART_SRC"
       "$CRAFT_STAGE"/build-tools/check-versions network-manager yes
       git config user.email "snapcraft@canonical.com"
       git config user.name "snapcraft"
       git am "$CRAFT_PROJECT_DIR"/snap-patch/networkmanager/*.patch
+      cd "$CRAFT_PART_BUILD"
 
       # re-create configure
-      ./autogen.sh
       craftctl default
       # Strip binaries
       find "$CRAFT_PART_INSTALL"/ -executable -type f | xargs file -Ni |
@@ -274,11 +280,12 @@ parts:
       # that does not allow to pass a --root-dir argument, needed for testing
       _SNAP=$SNAP
       unset SNAP
-      make check
+      meson test -C "$CRAFT_PART_BUILD"
       SNAP=$_SNAP
       unset _SNAP
     stage-packages:
       - libcurl3t64-gnutls
+      - libdbus-1-3
       - libjansson4
       - libpkcs11-helper1t64
       - libldap2
@@ -291,11 +298,13 @@ parts:
       - libsasl2-2
       - libteamdctl0
       - libslang2
+      - libssh2-1t64
+      - mobile-broadband-provider-info
       - openvpn
       - ppp
 
     organize:
-      snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.4.9/nm-pppd-plugin.so: usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      snap/$CRAFT_PROJECT_NAME/current/usr/lib/pppd/2.5.2/nm-pppd-plugin.so: usr/lib/pppd/2.5.2/nm-pppd-plugin.so
       snap/$CRAFT_PROJECT_NAME/current/usr/lib/NetworkManager: usr/lib/NetworkManager
       usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/NetworkManager: usr/lib/NetworkManager
 
@@ -308,13 +317,14 @@ parts:
       - usr/bin/nmtui-hostname
       - usr/sbin/pppd
       - usr/lib/*/NetworkManager
-      - usr/lib/pppd/2.4.9/nm-pppd-plugin.so
+      - usr/lib/pppd/2.5.2/nm-pppd-plugin.so
       - usr/lib/NetworkManager
       - usr/sbin/NetworkManager
       - usr/sbin/openvpn
       # configuration
       - etc/NetworkManager/*
       # docs
+      - usr/share/doc/libdbus-1-3/copyright
       - usr/share/doc/libcurl3t64-gnutls/copyright
       - usr/share/doc/libibverbs1/copyright
       - usr/share/doc/libjansson4/copyright
@@ -331,9 +341,12 @@ parts:
       - usr/share/doc/libsasl2-2/copyright
       - usr/share/doc/libteamdctl0/copyright
       - usr/share/doc/libslang2/copyright
+      - usr/share/doc/libssh2-1t64/copyright
+      - usr/share/doc/mobile-broadband-provider-info/copyright
       - usr/share/doc/openvpn/copyright
       - usr/share/doc/ppp/copyright
       - usr/share/doc/network-manager-openvpn/copyright
+      - usr/share/doc/libdbus-1-3/changelog.*
       - usr/share/doc/libcurl3t64-gnutls/changelog.*
       - usr/share/doc/libibverbs1/changelog.*
       - usr/share/doc/libjansson4/changelog.*
@@ -348,15 +361,21 @@ parts:
       - usr/share/doc/libpsl5t64/changelog.*
       - usr/share/doc/librtmp1/changelog.*
       - usr/share/doc/libsasl2-2/changelog.*
+      - usr/share/doc/libssh2-1t64/changelog.*
       - usr/share/doc/libteamdctl0/changelog.*
       - usr/share/doc/libslang2/changelog.*
+      - usr/share/doc/mobile-broadband-provider-info/changelog.*
       - usr/share/doc/openvpn/changelog.*
       - usr/share/doc/ppp/changelog.*
       - usr/share/doc/network-manager-openvpn/changelog.*
+      # mobile provider database
+      - usr/share/mobile-broadband-provider-info/*
       # libraries
       - usr/lib/*/libslang*
       - usr/lib/libnm*
       - usr/lib/*/libcurl-gnutls*
+      - usr/lib/*/libdbus*
+      - usr/lib/*/libssh2*
       ## required for teamdctl
       - usr/lib/*/libjansson*
       # For openvpn
@@ -381,8 +400,8 @@ parts:
       ## We don't use dhclient so we don't need this helper
       - -usr/lib/NetworkManager/nm-dhcp-helper
       ## Things we don't support yet and don't have to ship
-      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-adsl.so
-      - -usr/lib/NetworkManager/1.46.0/libnm-device-plugin-bluetooth.so
+      - -usr/lib/NetworkManager/1.54.3/libnm-device-plugin-adsl.so
+      - -usr/lib/NetworkManager/1.54.3/libnm-device-plugin-bluetooth.so
       ## Some additional build artifacts we do not need
       - -usr/lib/NetworkManager/*/*.la
       - -usr/lib/libnm.la

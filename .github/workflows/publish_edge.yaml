@@ -3,7 +3,7 @@ name: Publish to edge
 on:
   push:
     branches:
-      - snap-24
+      - snap-26
   schedule:
     # Run on the first Sunday of the month at 02:00 UTC
     - cron: '0 2 1-7 * SUN'

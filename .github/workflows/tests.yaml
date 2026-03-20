@@ -3,7 +3,7 @@ name: Spread tests
 on:
   pull_request:
     branches:
-      - snap-24
+      - snap-26
 
 jobs:
   build:

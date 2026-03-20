@@ -36,7 +36,7 @@ execute: |
 
     # We should only have a single active configuration
     test $(network-manager.nmcli -m multiline -f UUID c show --active | wc -l) -eq 1
-    network-manager.nmcli -m multiline -f DEVICE c show --active | MATCH "ens4"
+    network-manager.nmcli -m multiline -f DEVICE c show --active | MATCH $eth_if
 
     # Verify that we can modify the automatically created connection
     connection=$(network-manager.nmcli -m multiline -f UUID c show --active | awk '{print$2;exit}')
