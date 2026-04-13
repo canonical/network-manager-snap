@@ -71,6 +71,8 @@ layout:
   # LD_LIBRARY_PATH is not passed down by openvpn).
   /usr/lib/libnm.so.0:
     symlink: $SNAP/usr/lib/libnm.so.0
+  /usr/share/mobile-broadband-provider-info/serviceproviders.xml:
+    symlink: $SNAP/usr/share/mobile-broadband-provider-info/serviceproviders.xml
 
 apps:
   nmcli:
