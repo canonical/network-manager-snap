@@ -7,6 +7,9 @@ on:
   schedule:
     # Run on the first Sunday of the month at 02:00 UTC
     - cron: '0 2 1-7 * SUN'
+  workflow_dispatch:
+    branches:
+      - snap-26
 
 jobs:
   publish_to_edge:
@@ -22,3 +25,4 @@ jobs:
         with:
           # TODO: remove this filter when snapd 2.64 is released
           architectures: arm64,amd64,armhf
+          spread_suites: "openstack-dev:"
