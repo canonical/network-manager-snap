@@ -38,6 +38,33 @@ environment:
   DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
+  openstack:
+    key: '$(HOST: echo "$OS_CREDENTIALS_AMD64_PS7")'
+    plan: shared.xsmall
+    halt-timeout: 2h
+    wait-timeout: 10m
+    groups: [default]
+    proxy: ingress-haproxy.ps7.canonical.com
+    cidr-port-rel: [10.151.96.0/21:5000]
+    volume-auto-delete: true
+    environment:
+      SNAPD_USE_PROXY: 'true'
+      HTTP_PROXY: 'http://egress.ps7.internal:3128'
+      HTTPS_PROXY: 'http://egress.ps7.internal:3128'
+      http_proxy: 'http://egress.ps7.internal:3128'
+      https_proxy: 'http://egress.ps7.internal:3128'
+      no_proxy: '127.0.0.1,127.0.0.53,localhost'
+      NO_PROXY: '127.0.0.1,127.0.0.53,localhost'
+      NTP_SERVER: 'ntp.ps7.internal'
+    systems:
+      - ubuntu-core-26-64:
+          image: ubuntu-26.04-64
+          workers: 8
+          storage: 20G
+    prepare: |
+      # Builds UC image on top of classic 26.04
+      "$TESTSLIB"/prepare-restore.sh --prepare-suite
+
   openstack-dev:
     type: openstack
     key: '$(HOST: echo "$OS_CREDENTIALS_STG_AMD64_PS7")'
