@@ -20,4 +20,4 @@ jobs:
         with:
           # TODO: remove this filter when snapd 2.64 is released
           architectures: arm64,amd64,armhf
-          spread_suites: "openstack-dev:"
+          spread_suites: "openstack:"
