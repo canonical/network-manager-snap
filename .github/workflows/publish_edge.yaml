@@ -26,3 +26,5 @@ jobs:
           # TODO: remove this filter when snapd 2.64 is released
           architectures: arm64,amd64,armhf
           spread_suites: "openstack:"
+          # TODO: remove when core26 is released to stable
+          snapcraft_channel: "latest/edge/early-core26"
