@@ -1,3 +1,44 @@
+2026-04-27 network-manager 1.54.3-1
+
+  [ Guilherme Puida <guilherme.moreira@canonical.com> ]
+  * Add layout for /usr/share/mobile-broadband-provider-info/serviceproviders.xml
+    Merge pull request #72 from lorenzo-medici/26-add-serviceproviders-layout
+  * ci: run spread tests on openstack-dev:
+    Merge pull request #73 from canonical/snap-26-ci
+  * ci: switch to openstack backend
+    Merge pull request #75 from canonical/s26-ci-openstack
+  * snapcraft.yaml: set grade to stable
+    Merge pull request #76 from nicoharnois/uc26-stable
+
+  [ alfonsosanchezbeato <alfonso.sanchez-beato@canonical.com> ]
+  * snapcraft.yaml: switch to resolute-proposed.
+    Merge pull request #78 from nicoharnois/resolute-proposed
+
+  [ Changes in primed packages ]
+  
+  libnm0, network-manager (built from network-manager) updated from 1.54.3-2ubuntu1 to 1.54.3-2ubuntu3:
+  
+    network-manager (1.54.3-2ubuntu3) resolute; urgency=medium
+  
+      * Fix Connectivity-check.ubuntu.com URI, thanks to Davide for the help
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 16 Apr 2026 22:33:50 +0200
+  
+    network-manager (1.54.3-2ubuntu2) resolute; urgency=medium
+  
+      * d/p/lp2126573-n-dhcp4-do-not-set-ciaddr-in-discover-state.patch:
+        do not set ciaddr in DISCOVER state (LP: #2126573)
+  
+     -- Guilherme Puida Moreira <guilherme.moreira@canonical.com>  Thu, 19 Mar 2026 11:56:14 -0300
+  
+  libnewt0.52 (built from newt) updated from 0.52.25-1ubuntu2 to 0.52.25-1ubuntu3:
+  
+    newt (0.52.25-1ubuntu3) resolute; urgency=medium
+  
+      * No-change rebuild to drop Python 3.13 bits.
+  
+     -- Matthias Klose <doko@ubuntu.com>  Fri, 20 Mar 2026 12:05:30 +0100
+  
 2026-03-23 network-manager 1.54.3-0
 
   [ Guilherme Puida <guilherme.moreira@canonical.com> ]
