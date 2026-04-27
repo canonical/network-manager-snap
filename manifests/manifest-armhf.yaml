@@ -1,9 +1,9 @@
-snapcraft-version: 8.14.4
-snapcraft-started-at: '2026-03-23T15:41:03.838150Z'
+snapcraft-version: 8.14.5.post106
+snapcraft-started-at: '2026-04-27T17:06:08.350384Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '26.04'
 name: network-manager
-version: 1.54.3-0
+version: 1.54.3-1
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -14,7 +14,7 @@ description: |
   Please find the source code for this track at:
     https://github.com/canonical/network-manager-snap/tree/snap-26
 base: core26
-grade: devel
+grade: stable
 confinement: strict
 apps:
   nmcli:
@@ -81,110 +81,23 @@ parts:
     - git
     stage-packages:
     - adduser=3.153ubuntu1
-    - base-files=14ubuntu5
-    - base-passwd=3.6.8
-    - dbus-bin=1.16.2-2ubuntu4
-    - dbus-daemon=1.16.2-2ubuntu4
-    - dbus-session-bus-common=1.16.2-2ubuntu4
-    - dbus-system-bus-common=1.16.2-2ubuntu4
-    - debconf=1.5.92
     - dnsmasq-base=2.92-1
-    - ethtool=1:6.19-1
-    - gcc-16-base=16-20260315-1ubuntu1
-    - libacl1=2.3.2-2
-    - libapparmor1=5.0.0~beta1-0ubuntu3
-    - libatomic1=16-20260315-1ubuntu1
-    - libattr1=1:2.5.2-4
-    - libaudit-common=1:4.1.2-1
-    - libaudit1=1:4.1.2-1
-    - libblkid1=2.41.3-3ubuntu2
-    - libbpf1=1:1.6.3-1ubuntu1
-    - libbrotli1=1.2.0-3
-    - libbsd0=0.12.2-2build2
-    - libbz2-1.0=1.0.8-6build2
-    - libc-gconv-modules-extra=2.43-2ubuntu1
-    - libc6=2.43-2ubuntu1
-    - libcap2-bin=1:2.75-10ubuntu1
-    - libcap2=1:2.75-10ubuntu1
-    - libcrypt1=1:4.5.1-1
     - libcurl3t64-gnutls=8.18.0-1ubuntu2
-    - libdb5.3t64=5.3.28+dfsg2-10ubuntu1
-    - libdebconfclient0=0.280ubuntu1
-    - libelf1t64=0.194-3
-    - libffi8=3.5.2-3
-    - libgcc-s1=16-20260315-1ubuntu1
-    - libglib2.0-0t64=2.87.3-1
-    - libgnutls30t64=3.8.12-2ubuntu1
-    - libhogweed6t64=3.10.2-1
     - libjansson4=2.14-2build4
-    - libkmod2=34.2-2ubuntu2
     - libldap2=2.6.10+dfsg-1ubuntu5
-    - liblzma5=5.8.2-2
-    - libmd0=1.1.0-2build4
     - libmm-glib0=1.25.95-1ubuntu1
-    - libmount1=2.41.3-3ubuntu2
-    - libncursesw6=6.6+20251231-1
     - libndp0=1.9-1build1
-    - libnetplan1=1.2-1ubuntu3
-    - libnettle8t64=3.10.2-1
-    - libnewt0.52=0.52.25-1ubuntu2
+    - libnewt0.52=0.52.25-1ubuntu3
     - libnftables1=1.1.6-1
-    - libnftnl11=1.3.1-1
     - libnghttp2-14=1.68.0-2
-    - libnm0=1.54.3-2ubuntu1
-    - libpam-modules-bin=1.7.0-5ubuntu3
-    - libpam-modules=1.7.0-5ubuntu3
-    - libpam0g=1.7.0-5ubuntu3
-    - libpcre2-8-0=10.46-1build1
+    - libnm0=1.54.3-2ubuntu3
     - libpsl5t64=0.21.2-1.1build2
-    - libpython3-stdlib=3.14.3-0ubuntu1
-    - libpython3.14-minimal=3.14.3-2
-    - libpython3.14-stdlib=3.14.3-2
-    - libreadline8t64=8.3-4
     - librtmp1=2.4+20151223.gitfa8646d.1-3
     - libsasl2-2=2.1.28+dfsg1-9ubuntu3
-    - libselinux1=3.9-4
-    - libsemanage-common=3.9-1build1
-    - libsemanage2=3.9-1build1
-    - libsepol2=3.9-2
     - libslang2=2.3.3-5build1
-    - libsmartcols1=2.41.3-3ubuntu2
     - libssh2-1t64=1.11.1-1build2
-    - libssl3t64=3.5.5-1ubuntu1
-    - libsystemd-shared=259.5-0ubuntu1
-    - libsystemd0=259.5-0ubuntu1
     - libteamdctl0=1.31-1build4
-    - libtinfo6=6.6+20251231-1
-    - libtirpc-common=1.3.6+ds-1ubuntu1
-    - libtirpc3t64=1.3.6+ds-1ubuntu1
-    - libudev1=259.5-0ubuntu1
-    - libunistring5=1.3-2build1
-    - libuuid1=2.41.3-3ubuntu2
-    - libxtables12=1.8.11-2ubuntu3
-    - libyaml-0-2=0.2.5-2build3
-    - libzstd1=1.5.7+dfsg-3
-    - login.defs=1:4.17.4-2ubuntu3
-    - mawk=1.3.4.20260129-1
-    - media-types=14.0.0build1
-    - mount=2.41.3-3ubuntu2
-    - netbase=6.5build1
-    - netplan-generator=1.2-1ubuntu3
-    - netplan.io=1.2-1ubuntu3
-    - network-manager=1.54.3-2ubuntu1
-    - openssl-provider-legacy=3.5.5-1ubuntu1
-    - passwd=1:4.17.4-2ubuntu3
-    - python3-cffi-backend=2.0.0-3
-    - python3-minimal=3.14.3-0ubuntu1
-    - python3-netplan=1.2-1ubuntu3
-    - python3-yaml=6.0.3-1
-    - python3.14-minimal=3.14.3-2
-    - python3.14=3.14.3-2
-    - python3=3.14.3-0ubuntu1
-    - readline-common=8.3-4
-    - systemd=259.5-0ubuntu1
-    - tzdata=2026a-1ubuntu1
-    - udev=259.5-0ubuntu1
-    - zlib1g=1:1.3.dfsg+really1.3.1-1ubuntu3
+    - network-manager=1.54.3-2ubuntu3
     override-build: |
       set -ex
       find "$CRAFT_PART_INSTALL"/ -type f,l \
@@ -209,7 +122,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/resolute
+    source-branch: applied/ubuntu/resolute-proposed
     build-packages:
     - build-essential
     make-parameters:
@@ -232,7 +145,7 @@ parts:
     plugin: meson
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/resolute
+    source-branch: applied/ubuntu/resolute-proposed
     build-packages:
     - meson
     - gettext
@@ -346,75 +259,26 @@ parts:
       unset _SNAP
     stage-packages:
     - adduser=3.153ubuntu1
-    - base-passwd=3.6.8
     - debconf=1.5.92
-    - gcc-16-base=16-20260315-1ubuntu1
-    - libacl1=2.3.2-2
-    - libatomic1=16-20260315-1ubuntu1
-    - libattr1=1:2.5.2-4
-    - libaudit-common=1:4.1.2-1
-    - libaudit1=1:4.1.2-1
-    - libblkid1=2.41.3-3ubuntu2
-    - libbrotli1=1.2.0-3
-    - libbsd0=0.12.2-2build2
-    - libbz2-1.0=1.0.8-6build2
-    - libc-gconv-modules-extra=2.43-2ubuntu1
-    - libc6=2.43-2ubuntu1
-    - libcrypt1=1:4.5.1-1
     - libcurl3t64-gnutls=8.18.0-1ubuntu2
-    - libdb5.3t64=5.3.28+dfsg2-10ubuntu1
-    - libdebconfclient0=0.280ubuntu1
-    - libffi8=3.5.2-3
-    - libgcc-s1=16-20260315-1ubuntu1
-    - libglib2.0-0t64=2.87.3-1
-    - libgnutls30t64=3.8.12-2ubuntu1
-    - libhogweed6t64=3.10.2-1
     - libibverbs1=61.0-2ubuntu3
     - libjansson4=2.14-2build4
     - libldap2=2.6.10+dfsg-1ubuntu5
-    - liblz4-1=1.10.0-6
-    - liblzo2-2=2.10-3build2
-    - libmd0=1.1.0-2build4
     - libmm-glib0=1.25.95-1ubuntu1
-    - libmount1=2.41.3-3ubuntu2
-    - libncursesw6=6.6+20251231-1
     - libndp0=1.9-1build1
-    - libnettle8t64=3.10.2-1
-    - libnewt0.52=0.52.25-1ubuntu2
+    - libnewt0.52=0.52.25-1ubuntu3
     - libnghttp2-14=1.68.0-2
-    - libnl-route-3-200=3.12.0-2
-    - libpam-modules-bin=1.7.0-5ubuntu3
-    - libpam-modules=1.7.0-5ubuntu3
-    - libpam-runtime=1.7.0-5ubuntu3
-    - libpam0g=1.7.0-5ubuntu3
     - libpcap0.8t64=1.10.6-1ubuntu1
-    - libpcre2-8-0=10.46-1build1
     - libpkcs11-helper1t64=1.31.0-1
-    - libproc2-0=2:4.0.4-9ubuntu1
     - libpsl5t64=0.21.2-1.1build2
     - librtmp1=2.4+20151223.gitfa8646d.1-3
     - libsasl2-2=2.1.28+dfsg1-9ubuntu3
-    - libselinux1=3.9-4
-    - libsemanage-common=3.9-1build1
-    - libsemanage2=3.9-1build1
-    - libsepol2=3.9-2
     - libslang2=2.3.3-5build1
     - libssh2-1t64=1.11.1-1build2
-    - libssl3t64=3.5.5-1ubuntu1
-    - libsystemd0=259.5-0ubuntu1
     - libteamdctl0=1.31-1build4
-    - libtinfo6=6.6+20251231-1
-    - libunistring5=1.3-2build1
-    - libxxhash0=0.8.3-2build1
-    - libzstd1=1.5.7+dfsg-3
-    - login.defs=1:4.17.4-2ubuntu3
     - mobile-broadband-provider-info=20251101-1build1
-    - openssl-provider-legacy=3.5.5-1ubuntu1
     - openvpn=2.7.0-1ubuntu1
-    - passwd=1:4.17.4-2ubuntu3
     - ppp=2.5.2-1+1.2
-    - procps=2:4.0.4-9ubuntu1
-    - zlib1g=1:1.3.dfsg+really1.3.1-1ubuntu3
     organize:
       snap/network-manager/current/usr/lib/pppd/2.5.2/nm-pppd-plugin.so: usr/lib/pppd/2.5.2/nm-pppd-plugin.so
       snap/network-manager/current/usr/lib/NetworkManager: usr/lib/NetworkManager
@@ -510,7 +374,7 @@ parts:
 architectures:
 - armhf
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+snap/network-manager-snap-26/+build/3098246
+  build_url: https://launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+snap/network-manager-snap-26/+build/3134354
 build-packages: []
 build-snaps: []
 primed-stage-packages:
@@ -522,9 +386,9 @@ primed-stage-packages:
 - libldap2=2.6.10+dfsg-1ubuntu5
 - libmm-glib0=1.25.95-1ubuntu1
 - libndp0=1.9-1build1
-- libnewt0.52=0.52.25-1ubuntu2
+- libnewt0.52=0.52.25-1ubuntu3
 - libnghttp2-14=1.68.0-2
-- libnm0=1.54.3-2ubuntu1
+- libnm0=1.54.3-2ubuntu3
 - libpcap0.8t64=1.10.6-1ubuntu1
 - libpkcs11-helper1t64=1.31.0-1
 - libpsl5t64=0.21.2-1.1build2
@@ -534,6 +398,6 @@ primed-stage-packages:
 - libssh2-1t64=1.11.1-1build2
 - libteamdctl0=1.31-1build4
 - mobile-broadband-provider-info=20251101-1build1
-- network-manager=1.54.3-2ubuntu1
+- network-manager=1.54.3-2ubuntu3
 - openvpn=2.7.0-1ubuntu1
 - ppp=2.5.2-1+1.2
