@@ -24,7 +24,7 @@ environment:
   TESTSLIB: $PROJECT_PATH/cicd/snapd-lib
   SYSTEMSNAPSTESTLIB: $PROJECT_PATH/cicd/lib
   TESTSTOOLS: $PROJECT_PATH/cicd/snapd-lib/tools
-  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/cicd/snapd-lib/tools
+  PATH: /snap/bin:$PATH:/var/lib/snapd/snap/bin:$PROJECT_PATH/cicd/snapd-lib/tools:/usr/lib/python
   TESTSTMP: /var/tmp/snapd-tools
   REUSE_SNAPD: 0
   SRU_VALIDATION: 0
@@ -35,6 +35,14 @@ environment:
   KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-edge}")'
   GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-edge}")'
   SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-edge}")'
+  SNAPD_WORK_DIR: '$(HOST: echo "${SPREAD_SNAPD_WORK_DIR:-/var/tmp/work-dir}")'
+  SNAPD_USE_PROXY: '$(HOST: echo "${SPREAD_SNAPD_USE_PROXY:-}")'
+  HTTP_PROXY: '$(HOST: echo "$SPREAD_HTTP_PROXY")'
+  http_proxy: '$(HOST: echo "$SPREAD_HTTP_PROXY")'
+  HTTPS_PROXY: '$(HOST: echo "$SPREAD_HTTPS_PROXY")'
+  https_proxy: '$(HOST: echo "$SPREAD_HTTPS_PROXY")'
+  NO_PROXY: '$(HOST: echo "${SPREAD_NO_PROXY:-127.0.0.1}")'
+  no_proxy: '$(HOST: echo "${SPREAD_NO_PROXY:-127.0.0.1}")'
   DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
@@ -47,7 +55,7 @@ backends:
     proxy: ingress-haproxy.ps7.canonical.com
     cidr-port-rel: [10.151.96.0/21:5000]
     volume-auto-delete: true
-    environment:
+    environment: &openstack-env
       SNAPD_USE_PROXY: 'true'
       HTTP_PROXY: 'http://egress.ps7.internal:3128'
       HTTPS_PROXY: 'http://egress.ps7.internal:3128'
@@ -56,7 +64,7 @@ backends:
       no_proxy: '127.0.0.1,127.0.0.53,localhost'
       NO_PROXY: '127.0.0.1,127.0.0.53,localhost'
       NTP_SERVER: 'ntp.ps7.internal'
-    systems:
+    systems: &openstack-systems
       - ubuntu-core-26-64:
           image: ubuntu-26.04-64
           workers: 2
@@ -75,32 +83,24 @@ backends:
     proxy: ingress-haproxy.ps7.canonical.com
     cidr-port-rel: [10.151.54.0/24:4000]
     volume-auto-delete: true
-    environment:
-      SNAPD_USE_PROXY: 'true'
-      HTTP_PROXY: 'http://egress.ps7.internal:3128'
-      HTTPS_PROXY: 'http://egress.ps7.internal:3128'
-      http_proxy: 'http://egress.ps7.internal:3128'
-      https_proxy: 'http://egress.ps7.internal:3128'
-      no_proxy: '127.0.0.1,127.0.0.53,localhost'
-      NO_PROXY: '127.0.0.1,127.0.0.53,localhost'
-      NTP_SERVER: 'ntp.ps7.internal'
-    systems:
-      - ubuntu-core-26-64:
-          image: ubuntu-26.04-64
-          workers: 8
-          storage: 20G
+    environment: *openstack-env
+    systems: *openstack-systems
     prepare: |
       # Builds UC image on top of classic 26.04
       "$TESTSLIB"/prepare-restore.sh --prepare-suite
   qemu:
     memory: 4G
+    prepare: |
+      # Builds UC image on top of classic 26.04
+      "$TESTSLIB"/prepare-restore.sh --prepare-suite
     environment:
       DEFAULT_NETPLAN_FILE: 00-snapd-config.yaml
     systems:
       - ubuntu-core-26:
+          image: ubuntu-26.04-64-uefi
           bios: uefi
-          username: test
-          password: test
+          username: ubuntu
+          password: ubuntu
 
 # Put this somewhere where we have read-write access
 path: /home/network-manager
@@ -133,7 +133,8 @@ prepare: |
 
 prepare-each: |
   # Run prepare-each step which is a bit of a no-op now
-  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 26/stable
+  # TODO: change back to stable when released
+  "$SYSTEMSNAPSTESTLIB"/prepare-each.sh "$SNAP_NAME" 26/beta
 
 restore-each: |
   "$SYSTEMSNAPSTESTLIB"/restore-each.sh
