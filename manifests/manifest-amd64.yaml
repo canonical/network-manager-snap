@@ -1,9 +1,9 @@
-snapcraft-version: 8.14.5.post106
-snapcraft-started-at: '2026-04-27T17:03:19.569775Z'
+snapcraft-version: 9.0.0.post12
+snapcraft-started-at: '2026-06-01T20:17:56.920488Z'
 snapcraft-os-release-id: ubuntu
 snapcraft-os-release-version-id: '26.04'
 name: network-manager
-version: 1.54.3-1
+version: 1.54.3-2
 summary: Network Manager
 description: |
   NetworkManager is a system network service that manages your network
@@ -81,21 +81,21 @@ parts:
     - git
     stage-packages:
     - adduser=3.153ubuntu1
-    - dnsmasq-base=2.92-1
-    - libcurl3t64-gnutls=8.18.0-1ubuntu2
+    - dnsmasq-base=2.92-1ubuntu0.3
+    - libcurl3t64-gnutls=8.18.0-1ubuntu2.1
     - libjansson4=2.14-2build4
     - libldap2=2.6.10+dfsg-1ubuntu5
     - libmm-glib0=1.25.95-1ubuntu1
     - libndp0=1.9-1build1
     - libnewt0.52=0.52.25-1ubuntu3
     - libnftables1=1.1.6-1
-    - libnghttp2-14=1.68.0-2
+    - libnghttp2-14=1.68.0-2ubuntu0.1
     - libnm0=1.54.3-2ubuntu3
     - libpsl5t64=0.21.2-1.1build2
     - librtmp1=2.4+20151223.gitfa8646d.1-3
     - libsasl2-2=2.1.28+dfsg1-9ubuntu3
     - libslang2=2.3.3-5build1
-    - libssh2-1t64=1.11.1-1build2
+    - libssh2-1t64=1.11.1-1ubuntu0.26.04.1
     - libteamdctl0=1.31-1build4
     - network-manager=1.54.3-2ubuntu3
     override-build: |
@@ -122,7 +122,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/resolute-proposed
+    source-branch: applied/ubuntu/resolute-updates
     build-packages:
     - build-essential
     make-parameters:
@@ -145,7 +145,7 @@ parts:
     plugin: meson
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/resolute-proposed
+    source-branch: applied/ubuntu/resolute
     build-packages:
     - meson
     - gettext
@@ -260,24 +260,24 @@ parts:
     stage-packages:
     - adduser=3.153ubuntu1
     - debconf=1.5.92
-    - libcurl3t64-gnutls=8.18.0-1ubuntu2
+    - libcurl3t64-gnutls=8.18.0-1ubuntu2.1
     - libibverbs1=61.0-2ubuntu3
     - libjansson4=2.14-2build4
     - libldap2=2.6.10+dfsg-1ubuntu5
     - libmm-glib0=1.25.95-1ubuntu1
     - libndp0=1.9-1build1
     - libnewt0.52=0.52.25-1ubuntu3
-    - libnghttp2-14=1.68.0-2
+    - libnghttp2-14=1.68.0-2ubuntu0.1
     - libpcap0.8t64=1.10.6-1ubuntu1
     - libpkcs11-helper1t64=1.31.0-1
     - libpsl5t64=0.21.2-1.1build2
     - librtmp1=2.4+20151223.gitfa8646d.1-3
     - libsasl2-2=2.1.28+dfsg1-9ubuntu3
     - libslang2=2.3.3-5build1
-    - libssh2-1t64=1.11.1-1build2
+    - libssh2-1t64=1.11.1-1ubuntu0.26.04.1
     - libteamdctl0=1.31-1build4
     - mobile-broadband-provider-info=20251101-1build1
-    - openvpn=2.7.0-1ubuntu1
+    - openvpn=2.7.0-1ubuntu1.1
     - ppp=2.5.2-1+1.2
     organize:
       snap/network-manager/current/usr/lib/pppd/2.5.2/nm-pppd-plugin.so: usr/lib/pppd/2.5.2/nm-pppd-plugin.so
@@ -374,12 +374,12 @@ parts:
 architectures:
 - amd64
 image-info:
-  build_url: https://launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+snap/network-manager-snap-26/+build/3134353
+  build_url: https://launchpad.net/~snappy-hwe-team/snappy-hwe-snaps/+snap/network-manager-snap-26/+build/3168077
 build-packages: []
 build-snaps: []
 primed-stage-packages:
-- dnsmasq-base=2.92-1
-- libcurl3t64-gnutls=8.18.0-1ubuntu2
+- dnsmasq-base=2.92-1ubuntu0.3
+- libcurl3t64-gnutls=8.18.0-1ubuntu2.1
 - libdbus-1-3=1.16.2-2ubuntu4
 - libibverbs1=61.0-2ubuntu3
 - libjansson4=2.14-2build4
@@ -387,7 +387,7 @@ primed-stage-packages:
 - libmm-glib0=1.25.95-1ubuntu1
 - libndp0=1.9-1build1
 - libnewt0.52=0.52.25-1ubuntu3
-- libnghttp2-14=1.68.0-2
+- libnghttp2-14=1.68.0-2ubuntu0.1
 - libnm0=1.54.3-2ubuntu3
 - libpcap0.8t64=1.10.6-1ubuntu1
 - libpkcs11-helper1t64=1.31.0-1
@@ -395,9 +395,9 @@ primed-stage-packages:
 - librtmp1=2.4+20151223.gitfa8646d.1-3
 - libsasl2-2=2.1.28+dfsg1-9ubuntu3
 - libslang2=2.3.3-5build1
-- libssh2-1t64=1.11.1-1build2
+- libssh2-1t64=1.11.1-1ubuntu0.26.04.1
 - libteamdctl0=1.31-1build4
 - mobile-broadband-provider-info=20251101-1build1
 - network-manager=1.54.3-2ubuntu3
-- openvpn=2.7.0-1ubuntu1
+- openvpn=2.7.0-1ubuntu1.1
 - ppp=2.5.2-1+1.2
