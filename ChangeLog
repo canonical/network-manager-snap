@@ -1,3 +1,135 @@
+2026-06-01 network-manager 1.54.3-2
+
+  [ Guilherme Puida <guilherme.moreira@canonical.com> ]
+  * spread.yaml: update for UC26
+    Merge pull request #79 from nicoharnois/cicd-resolute
+  * switch from -proposed to -updates
+    Merge pull request #81 from canonical/s26-sources
+
+  [ Changes in primed packages ]
+  
+  libcurl3t64-gnutls (built from curl) updated from 8.18.0-1ubuntu2 to 8.18.0-1ubuntu2.1:
+  
+    curl (8.18.0-1ubuntu2.1) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: connection reuse ignores TLS requirement
+        - debian/patches/CVE-2026-4873.patch: do not reuse a non-tls starttls
+          connection if new requires TLS in lib/url.c.
+        - CVE-2026-4873
+      * SECURITY UPDATE: wrong reuse of HTTP Negotiate connection
+        - debian/patches/CVE-2026-5545.patch: improve connection reuse on
+          negotiate in lib/url.c.
+        - CVE-2026-5545
+      * SECURITY UPDATE: wrong reuse of SMB connection
+        - debian/patches/CVE-2026-5773.patch: disable connection reuse for
+          SMB(S) in lib/smb.c.
+        - CVE-2026-5773
+      * SECURITY UPDATE: proxy credentials leak over redirect-to proxy
+        - debian/patches/CVE-2026-6253-pre1.patch: chunked response, error code
+          in lib/cf-h1-proxy.c, lib/cf-h2-proxy.c, tests/*.
+        - debian/patches/CVE-2026-6253-pre2.patch: fix error code, remove SMB
+          use in tests/data/test445.
+        - debian/patches/CVE-2026-6253.patch: clear the proxy credentials as
+          well on port or scheme change in lib/http.c, lib/transfer.*, tests/*.
+        - CVE-2026-6253
+      * SECURITY UPDATE: stale custom cookie host causes cookie leak
+        - debian/patches/CVE-2026-6276.patch: move cookiehost to struct
+          SingleRequest in lib/http.c, lib/request.c, lib/request.h, lib/url.c,
+          lib/urldata.h, tests/*.
+        - CVE-2026-6276
+      * SECURITY UPDATE: netrc credential leak with reused proxy connection
+        - debian/patches/CVE-2026-6429-pre1.patch: prevent secure schemes
+          pushed over insecure connections in lib/http2.c.
+        - debian/patches/CVE-2026-6429-pre2.patch: same origin tests in
+          lib/http2.c, lib/urlapi-int.h, lib/urlapi.c.
+        - debian/patches/CVE-2026-6429.patch: clear credentials better on
+          redirect in lib/http.c, tests/*.
+        - CVE-2026-6429
+      * SECURITY UPDATE: cross-proxy Digest auth state leak
+        - debian/patches/CVE-2026-7168.patch: clear proxy auth properties when
+          switching in lib/setopt.c, lib/vauth/vauth.h, tests/*.
+        - CVE-2026-7168
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 29 Apr 2026 07:35:43 -0400
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.92-1 to 2.92-1ubuntu0.3:
+  
+    dnsmasq (2.92-1ubuntu0.3) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: OOB write via BOOTREPLY packet
+        - debian/patches/CVE-2026-6507.patch: Fix 1-byte buffer overflow in
+          relay_reply4() in src/rfc2131.c.
+        - CVE-2026-6507
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 22 May 2026 13:06:00 -0400
+  
+    dnsmasq (2.92-1ubuntu0.2) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: Heap buffer overflow on malicious caches in DNS
+        forwarding.
+        - debian/patches/CVE-2026-2291.patch: Expand char name size in
+          src/dnsmasq.h.
+        - CVE-2026-2291
+      * SECURITY UPDATE: NSEC bitmap parsing infinite loop
+        - debian/patches/CVE-2026-4890.patch: Correct erroneous iteration index
+          in src/dnssec.c
+        - CVE-2026-4890
+      * SECURITY UPDATE: Unbounded length field in RRSIG packets.
+        - debian/patches/CVE-2026-4891.patch: Validate rdlen in src/dnssec.c
+        - CVE-2026-4891
+      * SECURITY UPDATE: Buffer overflow in create_helper
+        - debian/patches/CVE-2026-4892.patch: Add upper bound to for loop in
+          src/helper.c
+        - CVE-2026-4892
+      * SECURITY UPDATE: Erroneous client subnet validation
+        - debian/patches/CVE-2026-4893.patch: Fixed length passed to check_source
+          in src/forward.c
+        - CVE-2026-4893
+      * SECURITY UPDATE: Buffer overflow in extract_addresses.
+        - debian/patches/CVE-2026-5172.patch: Check index after extracting name
+          in src/rfc1035.c
+        - CVE-2026-5172
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Wed, 29 Apr 2026 12:33:48 -0600
+  
+  libssh2-1t64 (built from libssh2) updated from 1.11.1-1build2 to 1.11.1-1ubuntu0.26.04.1:
+  
+    libssh2 (1.11.1-1ubuntu0.26.04.1) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: integer overflow via long username
+        - debian/patches/CVE-2026-7598.patch: add username_len bounds checking in
+          src/userauth.c.
+        - CVE-2026-7598
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 05 May 2026 12:39:40 -0400
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.68.0-2 to 1.68.0-2ubuntu0.1:
+  
+    nghttp2 (1.68.0-2ubuntu0.1) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: Denial of service through assertion failure.
+        - debian/patches/CVE-2026-27135.patch: Add iframe->state ==
+          NGHTTP2_IB_IGN_ALL checks in lib/nghttp2_session.c.
+        - CVE-2026-27135
+  
+     -- Hlib Korzhynskyy <hlib.korzhynskyy@canonical.com>  Tue, 05 May 2026 15:08:54 -0230
+  
+  openvpn (built from openvpn) updated from 2.7.0-1ubuntu1 to 2.7.0-1ubuntu1.1:
+  
+    openvpn (2.7.0-1ubuntu1.1) resolute-security; urgency=medium
+  
+      * SECURITY UPDATE: server ASSERT() via malformed packet
+        - debian/patches/CVE-2026-35058.patch: avoid interpreting opcode as
+          part of WKc in src/openvpn/tls_crypt.c,
+          tests/unit_tests/openvpn/test_tls_crypt.c.
+        - CVE-2026-35058
+      * SECURITY UPDATE: race condition in TLS handshake
+        - debian/patches/CVE-2026-40215.patch: ensure that buffer of freed
+          session are not used in src/openvpn/ssl.c.
+        - CVE-2026-40215
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 23 Apr 2026 09:04:54 -0400
+  
 2026-04-27 network-manager 1.54.3-1
 
   [ Guilherme Puida <guilherme.moreira@canonical.com> ]
