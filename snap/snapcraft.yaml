@@ -145,7 +145,7 @@ parts:
     plugin: make
     source: https://git.launchpad.net/ubuntu/+source/dnsmasq
     source-type: git
-    source-branch: applied/ubuntu/resolute-proposed
+    source-branch: applied/ubuntu/resolute-updates
     build-packages:
       - build-essential
     make-parameters:
@@ -166,7 +166,7 @@ parts:
     plugin: meson
     source: https://git.launchpad.net/ubuntu/+source/network-manager
     source-type: git
-    source-branch: applied/ubuntu/resolute-proposed
+    source-branch: applied/ubuntu/resolute
     build-packages:
       - meson
       - gettext
