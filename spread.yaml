@@ -35,6 +35,14 @@ environment:
   KERNEL_CHANNEL: '$(HOST: echo "${SPREAD_KERNEL_CHANNEL:-edge}")'
   GADGET_CHANNEL: '$(HOST: echo "${SPREAD_GADGET_CHANNEL:-edge}")'
   SNAPD_CHANNEL: '$(HOST: echo "${SPREAD_SNAPD_CHANNEL:-edge}")'
+  SNAPD_WORK_DIR: '$(HOST: echo "${SPREAD_SNAPD_WORK_DIR:-/var/tmp/work-dir}")'
+  SNAPD_USE_PROXY: '$(HOST: echo "${SPREAD_SNAPD_USE_PROXY:-}")'
+  HTTP_PROXY: '$(HOST: echo "$SPREAD_HTTP_PROXY")'
+  http_proxy: '$(HOST: echo "$SPREAD_HTTP_PROXY")'
+  HTTPS_PROXY: '$(HOST: echo "$SPREAD_HTTPS_PROXY")'
+  https_proxy: '$(HOST: echo "$SPREAD_HTTPS_PROXY")'
+  NO_PROXY: '$(HOST: echo "${SPREAD_NO_PROXY:-127.0.0.1}")'
+  no_proxy: '$(HOST: echo "${SPREAD_NO_PROXY:-127.0.0.1}")'
   DEFAULT_NETPLAN_FILE: 50-cloud-init.yaml
 
 backends:
