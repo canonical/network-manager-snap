@@ -1,3 +1,443 @@
+2026-10-07 network-manager 1.46.0-9
+
+  [ Guilherme Puida <guilherme.moreira@canonical.com> ]
+  * snap-24 no change rebuild
+    Merge pull request #83 from canonical/s24-ncr-1
+
+  [ Changes in primed packages ]
+  
+  libcurl3t64-gnutls (built from curl) updated from 8.5.0-2ubuntu10.7 to 8.5.0-2ubuntu10.15:
+  
+    curl (8.5.0-2ubuntu10.15) noble-security; urgency=medium
+  
+      [ Charles Cochran ]
+      * SECURITY UPDATE: Authentication bypass in LDAP SASL negotiation.
+        - debian/patches/CVE-2026-13608.patch: openldap: handle
+          Curl_sasl_continue() returns better in lib/openldap.c.
+        - CVE-2026-13608
+      * SECURITY UPDATE: Use after free in HTTP/2 server push.
+        - debian/patches/CVE-2026-18924.patch: make server push transfers
+          inherit share from parent in lib/http2.c.
+        - CVE-2026-18924
+      * SECURITY UPDATE: Public key pinning bypass.
+        - debian/patches/CVE-2026-80230.patch: require server cert if public
+          key pinned in lib/vtls/openssl.c.
+        - CVE-2026-80230
+      * SECURITY UPDATE: Cookie injection for public suffix domains.
+        - debian/patches/CVE-2026-82209.patch: ensure cookies set for an exact
+          PSL domain are host-only in lib/cookie.c, tests/data/Makefile.inc,
+          tests/data/test1136, tests/data/test2318.
+        - CVE-2026-82209
+  
+      [ Kyle Kernick]
+      * SECURITY REGRESSION: checksrc errors and failing test case for
+        CVE-2026-8927 (LP #2167779)
+        - debian/patches/CVE-2026-6429.patch: Fix indentation to fix
+          autopkgtests in lib/transfer.c.
+        - debian/patches/CVE-2026-8286.patch: Wrap long line to fix
+          autopkgtests in lib/url.c.
+        - debian/patches/CVE-2026-8458.patch: Wrap long lines and fix
+          indentation to fix autopkgtests in lib/curl_sasl.c.
+        - debian/patches/CVE-2026-8927.patch: Fix failing test
+  
+     -- Charles Cochran <charles.cochran@canonical.com>  Fri, 18 Sep 2026 11:45:57 -0400
+  
+    curl (8.5.0-2ubuntu10.13) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Authentication Bypass in connection reuse.
+        - debian/patches/CVE-2026-8932.patch: Fix incomplete mTLS config in
+          lib/ldap.c, ../urldata.h, ../vquic/curl_ngtcp2.c,
+          lib/vssh/libssh.c, ../libssh2.c,
+          lib/vtls/gtls.c, ../mbedtls.c, ../openssl.c, ../schannel.c,
+          ../sectransp.c, ../vtls.c, and ../wolfssl.c.
+        - CVE-2026-8932
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Thu, 20 Aug 2026 13:24:23 -0600
+  
+    curl (8.5.0-2ubuntu10.12) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Authentication Bypass by Capture-replay
+        - debian/patches/CVE-2026-11856.patch: Flush state on origin or credential
+          change in lib/http_digest.c, lib/urldata.h, lib/vauth/digest.c, and
+          lib/vauth/digest_sspi.c.
+        - CVE-2026-11856
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Tue, 18 Aug 2026 13:28:10 -0600
+  
+    curl (8.5.0-2ubuntu10.11) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Use after free in curl_easy_reset.
+        - debian/patches/CVE-2026-10536.patch: Deprecate CURLOPT_STREAM_DEPENDS
+          and CURLOPT_STREAM_DEPENDS_E and remove stream dependency tracking in
+          include/curl/curl.h, lib/http2.c, ../setopt.c, ../url.c, and
+          ../urldata.h
+        - CVE-2026-10536
+      * debian/patches/CVE-2026-5773.patch: Fix potential edge cases in fix. Thanks to Siddharth Doshi.
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Mon, 06 Jul 2026 11:02:02 -0600
+  
+    curl (8.5.0-2ubuntu10.10) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Connection reuse for starttls protocols.
+        - debian/patches/CVE-2026-8286.patch: When a connection is tested for
+          reuse in a transfer that may upgrade to TLS (commonly via STARTTLS),
+          the SSL configuration must match the existing connection in lib/url.c
+        - CVE-2026-8286
+      * SECURITY UPDATE: Connection reuse in SASL.
+        - debian/patches/CVE-2026-8458.patch: Fix erroneous connection reuse in
+          in lib/curl_sasl.c, lib/http_negotiate.c, lib/http_ntlm.c, lib/imap.c,
+          lib/openldap.c, and lib/pop3.c
+        - CVE-2026-8458
+      * SECURITY UPDATE: Cookie injection in is_public_suffix.
+        - debian/patches/CVE-2026-8924.patch: Trim trailing dots when checking
+          PSL in lib/cookie.c.
+        - CVE-2026-8924
+      * SECURITY UPDATE: Double-free in gsasl.
+        - debian/patches/CVE-2026-8925.patch: Require libgasl 1.6.0 to handle
+          NULL argument in lib/vauth/gsasl.c.
+        - CVE-2026-8925
+      * SECURITY UPDATE: Information disclosure in libcurl
+        - debian/patches/CVE-2026-8927.patch: Detect if proxy is not the same as
+          previous and flush state in lib/url.c and lib/urldata.h.
+        - CVE-2026-8927
+      * SECURITY UPDATE: Man-in-the-middle in libcurl.
+        - debian/patches/CVE-2026-9547.patch: Reject host key mismatches in
+          in lib/vssh/libssh.c
+        - CVE-2026-9547
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Mon, 29 Jun 2026 10:22:57 -0600
+  
+    curl (8.5.0-2ubuntu10.9) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: connection reuse ignores TLS requirement
+        - debian/patches/CVE-2026-4873.patch: do not reuse a non-tls starttls
+          connection if new requires TLS in lib/url.c.
+        - CVE-2026-4873
+      * SECURITY UPDATE: wrong reuse of HTTP Negotiate connection
+        - debian/patches/CVE-2026-5545.patch: improve connection reuse on
+          negotiate in lib/url.c.
+        - CVE-2026-5545
+      * SECURITY UPDATE: wrong reuse of SMB connection
+        - debian/patches/CVE-2026-5773.patch: disable connection reuse for
+          SMB(S) in lib/smb.c.
+        - CVE-2026-5773
+      * SECURITY UPDATE: proxy credentials leak over redirect-to proxy
+        - debian/patches/CVE-2026-6253.patch: clear the proxy credentials as
+          well on port or scheme change in lib/transfer.*, tests/*.
+        - CVE-2026-6253
+      * SECURITY UPDATE: stale custom cookie host causes cookie leak
+        - debian/patches/CVE-2026-6276.patch: move cookiehost to struct
+          SingleRequest in lib/http.c, lib/url.c, lib/urldata.h, tests/*.
+        - CVE-2026-6276
+      * SECURITY UPDATE: netrc credential leak with reused proxy connection
+        - debian/patches/CVE-2026-6429-pre1.patch: prevent secure schemes
+          pushed over insecure connections in lib/http2.c.
+        - debian/patches/CVE-2026-6429-pre2.patch: same origin tests in
+          lib/http2.c, lib/urlapi-int.h, lib/urlapi.c.
+        - debian/patches/CVE-2026-6429.patch: clear credentials better on
+          redirect in lib/transfer.c, tests/*.
+        - CVE-2026-6429
+      * SECURITY UPDATE: cross-proxy Digest auth state leak
+        - debian/patches/CVE-2026-7168.patch: clear proxy auth properties when
+          switching in lib/setopt.c, lib/vauth/vauth.h, tests/*.
+        - CVE-2026-7168
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 29 Apr 2026 07:35:43 -0400
+  
+    curl (8.5.0-2ubuntu10.8) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: bad reuse of HTTP Negotiate connection
+        - debian/patches/CVE-2026-1965-1.patch: fix reuse of connections using
+          HTTP Negotiate in lib/url.c.
+        - debian/patches/CVE-2026-1965-2.patch: fix copy and paste
+          url_match_auth_nego mistake in lib/url.c.
+        - CVE-2026-1965
+      * SECURITY UPDATE: token leak with redirect and netrc
+        - debian/patches/CVE-2026-3783.patch: only send bearer if auth is
+          allowed in lib/http.c, tests/data/Makefile.inc, tests/data/test2006.
+        - CVE-2026-3783
+      * SECURITY UPDATE: wrong proxy connection reuse with credentials
+        - debian/patches/CVE-2026-3784.patch: add additional tests in
+          lib/url.c.
+        - CVE-2026-3784
+      * SECURITY UPDATE: netrc and default credential leak
+        - debian/patches/CVE-2025-0167.patch: 'default' with no credentials is
+          not a match in lib/netrc.c, tests/data/Makefile.inc,
+          tests/data/test486.
+        - CVE-2025-0167
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 10 Mar 2026 10:42:35 -0400
+  
+  dnsmasq-base (built from dnsmasq) updated from 2.90-2ubuntu0.1 to 2.91-0ubuntu0.24.04.2:
+  
+    dnsmasq (2.91-0ubuntu0.24.04.2) noble; urgency=medium
+  
+      * Fix infinite loop when handling second PXE-proxy request (LP: #2166430)
+        - d/p/lp2166430-avoid-infinite-loop-when-handling-second-pxe-request.patch
+  
+     -- Guilherme Puida Moreira <guilherme.moreira@canonical.com>  Thu, 10 Sep 2026 14:49:02 -0300
+  
+    dnsmasq (2.91-0ubuntu0.24.04.1) noble; urgency=medium
+  
+      * New upstream release 2.91 (LP: #2138412)
+        - Security fixes:
+          + Fix out-of-bounds heap read in order_qsort() (potential SIGSEGV).
+          + Fix buffer overflow with overly long lease-change script names.
+        - Bug fixes:
+          + Fix crash when no upstream servers are defined.
+          + Fix erroneous "DNSSEC validated" state with non-DNSSEC upstream servers.
+          + Fix TFTP off-by-2 bug.
+          + Fix handling of EDNS0 UDP packet sizes.
+          + Improve behaviour with non-responsive upstream TCP DNS servers.
+          + Improve handling of truncated upstream answers.
+        - New features:
+          + Implement DNS-0x20 encoding (--do-0x20-encode, default off).
+          + Add --dhcp-option-pxe for PXE-only DHCP options, including proxy mode.
+          + Support PXE proxy-DHCP and DHCP-relay simultaneously.
+          + Set --fast-dns-retries by default when DNSSEC is enabled.
+        - Remove patches fixed upstream:
+          + d/p/fix-crash-when-reloading-DHCP-config-on-SIGHUP.patch
+        - d/patches: Refresh all patches to apply on top of new upstream version.
+        - d/t/functions.d/options*.patterns: remove cryptohash compile-time option.
+      * d/patches/CVE-*: add Origin headers.
+  
+     -- Guilherme Puida Moreira <guilherme.moreira@canonical.com>  Fri, 07 Aug 2026 10:11:47 -0300
+  
+    dnsmasq (2.90-2ubuntu0.4) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Buffer overflow in log_query.
+        - debian/patches/CVE-2026-12725.patch: Account for the "not supported"
+          string in logs, and add checks to catch overflow in src/cache.c and
+          src/dnssec.c
+        - CVE-2026-12725
+      * SECURITY UPDATE: Buffer OOB read in find_soa.
+        - debian/patches/CVE-2026-12969.patch: change the extrabytes argument
+          from 0 to 10 in src/rfc1035.c
+        - CVE-2026-12969
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Mon, 13 Jul 2026 16:12:36 -0600
+  
+    dnsmasq (2.90-2ubuntu0.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Heap buffer overflow on malicious caches in DNS
+        forwarding.
+        - debian/patches/CVE-2026-2291.patch: Expand char name size in
+          src/dnsmasq.h.
+        - CVE-2026-2291
+      * SECURITY UPDATE: NSEC bitmap parsing infinite loop
+        - debian/patches/CVE-2026-4890.patch: Correct erroneous iteration index
+          in src/dnssec.c
+        - CVE-2026-4890
+      * SECURITY UPDATE: Unbounded length field in RRSIG packets.
+        - debian/patches/CVE-2026-4891.patch: Validate rdlen in src/dnssec.c
+        - CVE-2026-4891
+      * SECURITY UPDATE: Buffer overflow in create_helper
+        - debian/patches/CVE-2026-4892.patch: Add upper bound to for loop in
+          src/helper.c
+        - CVE-2026-4892
+      * SECURITY UPDATE: Erroneous client subnet validation
+        - debian/patches/CVE-2026-4893.patch: Fixed length passed to check_source
+          in src/forward.c
+        - CVE-2026-4893
+      * SECURITY UPDATE: Buffer overflow in extract_addresses.
+        - debian/patches/CVE-2026-5172.patch: Check index after extracting name
+          in src/rfc1035.c
+        - CVE-2026-5172
+  
+     -- Kyle Kernick <kyle.kernick@canonical.com>  Wed, 29 Apr 2026 12:39:03 -0600
+  
+  libpcap0.8t64 (built from libpcap) updated from 1.10.4-4.1ubuntu3 to 1.10.4-4.1ubuntu3.1:
+  
+    libpcap (1.10.4-4.1ubuntu3.1) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Buffer overflow
+        - debian/patches/CVE-2026-0799.patch: validate the scratch memory register
+          index in bpf_filter() and reject packets with an out-of-range index
+        - CVE-2026-0799
+  
+     -- Nishit Majithia <nishit.majithia@canonical.com>  Fri, 25 Sep 2026 11:44:00 +0530
+  
+  libssh-4 (built from libssh) updated from 0.10.6-2ubuntu0.3 to 0.10.6-2ubuntu0.5:
+  
+    libssh (0.10.6-2ubuntu0.5) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Denial of service via zero advertised channel packet size
+        - debian/patches/CVE-2026-59843-1.patch: channels: Fail when receiving max
+          packet size 0 in src/channels.c, src/messages.c.
+        - debian/patches/CVE-2026-59843-2.patch: tests: Verify zero max packet size
+          in channel open is rejected in tests/unittests/torture_channel.c.
+        - CVE-2026-59843
+      * SECURITY UPDATE: Denial of service via unchecked ProxyCommand fork() failure
+        - debian/patches/CVE-2026-59845.patch: socket: Properly check fork() return
+          code in src/socket.c.
+        - CVE-2026-59845
+      * SECURITY UPDATE: Information disclosure via ProxyCommand %r username
+        expansion
+        - debian/patches/CVE-2026-59846-pre1.patch: misc: Add function to check
+          username syntax in include/libssh/misc.h, src/misc.c,
+          tests/unittests/torture_misc.c.
+        - debian/patches/CVE-2026-59846.patch: Block shell metacharacters from
+          usernames in include/libssh/priv.h, src/misc.c.
+        - CVE-2026-59846
+      * SECURITY UPDATE: Integrity downgrade via OpenSSL AES-GCM tag verification
+        - debian/patches/CVE-2026-59847-1.patch: libcrypto: Fix tag verification of
+          AES-GCM ciphers in src/libcrypto.c.
+        - debian/patches/CVE-2026-59847-2.patch: libcrypto: Fix symmetric issue
+          during encryption in src/libcrypto.c.
+        - CVE-2026-59847
+      * SECURITY UPDATE: Denial of service via SFTP responses with unknown request
+        IDs
+        - debian/patches/CVE-2026-59848-1.patch: sftp: handle responses with unknown
+          request IDs in include/libssh/sftp.h, src/sftp.c,
+          tests/client/torture_sftp_request_id.c, tests/client/CMakeLists.txt.
+        - debian/patches/CVE-2026-59848-2.patch: sftp: Initialize sftp_request_queue
+          ptr in sftp_free in src/sftp.c.
+        - CVE-2026-59848
+      * SECURITY UPDATE: Use-after-free via data callbacks on closed channels
+        - debian/patches/CVE-2026-59850.patch: channels: Avoid processing DATA
+          packets on closed channels in src/channels.c.
+        - CVE-2026-59850
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 24 Aug 2026 10:59:34 -0400
+  
+    libssh (0.10.6-2ubuntu0.4) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: out-of-bound read
+        - debian/patches/CVE-2026-3731.patch: correct bounds checks when querying
+          for an SFTP extension name or data in src/sftp.c.
+        - CVE-2026-3731
+  
+     -- Ian Constantin <ian.constantin@canonical.com>  Wed, 11 Mar 2026 12:24:58 +0200
+  
+  libnm0, network-manager (built from network-manager) updated from 1.46.0-1ubuntu2.5 to 1.46.0-1ubuntu2.8:
+  
+    network-manager (1.46.0-1ubuntu2.8) noble; urgency=medium
+  
+      * Backport Connectivity-check.ubuntu.com URI fix LP: #2148643              
+        - Adding a dot works to reduce the number of DNS requests, but has a side
+          effect of breaking captive portals and transparent proxies/firewalls.
+          the same URI is passed as get parameter.
+          The risk of having the DNS flooding is mitigated by a systemd fix, so the  
+          side effect remains to have 2 DNS queries instead of one        
+  
+     -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 18 Jun 2026 11:33:22 +0200
+  
+    network-manager (1.46.0-1ubuntu2.7) noble; urgency=medium
+  
+      * d/p/lp2126573-n-dhcp4-do-not-set-ciaddr-in-discover-state.patch:
+        do not set ciaddr in DISCOVER state (LP: #2126573)
+  
+     -- Guilherme Puida Moreira <guilherme.moreira@canonical.com>  Thu, 19 Mar 2026 11:46:20 -0300
+  
+    network-manager (1.46.0-1ubuntu2.6) noble; urgency=medium
+  
+      [ Serge Hallyn ]
+      * debian/tests/control: add apparmor to nm Depends (LP: #2142407)
+  
+      [ Mitchell Augustin ]
+      * Show incorrect password re-entry prompt for WPA3 networks (LP: #2122458)
+  
+     -- Serge Hallyn <serge@hallyn.com>  Mon, 23 Feb 2026 04:05:21 +0100
+  
+  libnghttp2-14 (built from nghttp2) updated from 1.59.0-1ubuntu0.2 to 1.59.0-1ubuntu0.4:
+  
+    nghttp2 (1.59.0-1ubuntu0.4) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: HTTP request/response smuggling issue
+        - debian/patches/CVE-2026-58055.patch: nghttpx: Tighten up CONNECT and HTTP
+          Upgrade handling in src/shrpx_downstream.cc, src/shrpx_downstream.h,
+          src/shrpx_http2_upstream.cc, src/shrpx_http3_upstream.cc,
+          src/shrpx_http_downstream_connection.cc,
+          src/shrpx_http_downstream_connection.h, src/shrpx_https_upstream.cc.
+        - CVE-2026-58055
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 30 Jun 2026 12:44:46 -0400
+  
+    nghttp2 (1.59.0-1ubuntu0.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: Denial of service through assertion failure.
+        - debian/patches/CVE-2026-27135-pre1.patch: Add iframe->state ==
+          NGHTTP2_IB_IGN_ALL checks in lib/nghttp2_session.c.
+        - debian/patches/CVE-2026-27135-pre2.patch: Add iframe->state ==
+          NGHTTP2_IB_IGN_ALL checks in lib/nghttp2_session.c.
+        - debian/patches/CVE-2026-27135.patch: Add iframe->state ==
+          NGHTTP2_IB_IGN_ALL checks in lib/nghttp2_session.c.
+        - debian/patches/CVE-2026-27135-post1.patch: Add iframe->state ==
+          NGHTTP2_IB_IGN_ALL checks in lib/nghttp2_session.c.
+        - CVE-2026-27135
+  
+     -- Hlib Korzhynskyy <hlib.korzhynskyy@canonical.com>  Mon, 27 Apr 2026 17:35:02 -0230
+  
+  openvpn (built from openvpn) updated from 2.6.19-0ubuntu0.24.04.1 to 2.6.19-0ubuntu0.24.04.4:
+  
+    openvpn (2.6.19-0ubuntu0.24.04.4) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: use-after-free in TLS Session Handling
+        - debian/patches/CVE-2026-84471.patch: Move check_session_buf_not_used
+          method into the method that free the buffer in src/openvpn/ssl.c.
+        - CVE-2026-84471
+      * SECURITY UPDATE: DoS via crafted inputs
+        - debian/patches/CVE-2026-84732-1.patch: Avoid unbounded reliable TLS
+          timeout in src/openvpn/options.c, src/openvpn/reliable.c,
+          src/openvpn/reliable.h.
+        - debian/patches/CVE-2026-84732-2.patch: Ignore acks for packets that cannot
+          be outstanding in src/openvpn/reliable.c, src/openvpn/reliable.h,
+          tests/unit_tests/openvpn/test_packet_id.c.
+        - CVE-2026-84732
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 23 Sep 2026 11:26:22 -0400
+  
+    openvpn (2.6.19-0ubuntu0.24.04.3) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: buffer overrun via NTLMv2 proxy responses
+        - debian/patches/CVE-2026-11771.patch: Fix 1-byte buffer overrun on NTLMv2
+          proxy responses. in src/openvpn/ntlm.c.
+        - CVE-2026-11771
+      * SECURITY UPDATE: metadata buffer leak
+        - debian/patches/CVE-2026-12932-pre1.patch: Zeroize tls-crypt-v2 client
+          keys in src/openvpn/ssl_pkt.c, src/openvpn/tls_crypt.c.
+        - debian/patches/CVE-2026-12932.patch: Clean up metadata handling in
+          tls_crypt_v2_extract_client_key in src/openvpn/ssl.h,
+          src/openvpn/ssl_common.h, src/openvpn/ssl_pkt.c, src/openvpn/tls_crypt.c,
+          tests/unit_tests/openvpn/test_tls_crypt.c.
+        - CVE-2026-12932
+      * SECURITY UPDATE: ack_write_buf use after free
+        - debian/patches/CVE-2026-12996.patch: Fix ack_write_buf use after free in
+          src/openvpn/ssl.c.
+        - CVE-2026-12996
+      * SECURITY UPDATE: tls_wrap_reneg use after free
+        - debian/patches/CVE-2026-13117.patch: Fix tls_wrap_reneg use after free in
+          src/openvpn/ssl.c.
+        - CVE-2026-13117
+      * SECURITY UPDATE: DoS via malformed authentication token
+        - debian/patches/CVE-2026-13122.patch: Ensure we only get the session from
+          valid tokens for external-auth in doc/man-sections/server-options.rst,
+          src/openvpn/auth_token.c, src/openvpn/auth_token.h,
+          src/openvpn/ssl_verify.c, tests/unit_tests/openvpn/test_auth_token.c.
+        - CVE-2026-13122
+      * SECURITY UPDATE: DoS via memory leak with valid tls-crypt-v2 client key
+        - debian/patches/CVE-2026-13698.patch: Ensure tls-crypt keys are not setup
+          twice in src/openvpn/ssl.c, src/openvpn/ssl.h, src/openvpn/ssl_pkt.c,
+          src/openvpn/ssl_pkt.h, src/openvpn/tls_crypt.c, src/openvpn/tls_crypt.h,
+          tests/unit_tests/openvpn/test_tls_crypt.c.
+        - CVE-2026-13698
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 07 Jul 2026 19:00:45 -0400
+  
+    openvpn (2.6.19-0ubuntu0.24.04.2) noble-security; urgency=medium
+  
+      * SECURITY UPDATE: server ASSERT() via malformed packet
+        - debian/patches/CVE-2026-35058.patch: avoid interpreting opcode as
+          part of WKc in src/openvpn/tls_crypt.c,
+          tests/unit_tests/openvpn/test_tls_crypt.c.
+        - CVE-2026-35058
+      * SECURITY UPDATE: race condition in TLS handshake
+        - debian/patches/CVE-2026-40215.patch: ensure that buffer of freed
+          session are not used in src/openvpn/ssl.c.
+        - CVE-2026-40215
+  
+     -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 23 Apr 2026 09:09:25 -0400
+  
 2026-03-09 network-manager 1.46.0-8
 
   [ Guilherme Puida <guilherme.moreira@canonical.com> ]
