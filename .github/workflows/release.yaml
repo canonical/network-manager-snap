@@ -7,6 +7,8 @@ on:
 
 jobs:
   build_release:
+    permissions:
+      contents: write
     runs-on: [self-hosted, x64, linux, spread-enabled]
     environment: store
     steps:

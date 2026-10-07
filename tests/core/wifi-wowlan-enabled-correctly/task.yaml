@@ -4,8 +4,9 @@ restore: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
 
     wait_for_network_manager
-    network-manager.nmcli c del Ubuntu
-    remove_ap
+    timeout 60 sh -c 'until network-manager.nmcli general >/dev/null 2>&1; do sleep 1; done'
+    network-manager.nmcli c del Ubuntu || true
+    remove_ap || true
 
 execute: |
     . "$SYSTEMSNAPSTESTLIB"/utilities.sh
@@ -13,6 +14,7 @@ execute: |
     # Enable WoWLAN globally for all new WiFi connections
     snap set network-manager wifi.wake-on-wlan=any
     wait_for_network_manager
+    timeout 60 sh -c 'until network-manager.nmcli general >/dev/null 2>&1; do sleep 1; done'
 
     # Get us an AP via the wifi-ap we can use to create a connection to
     create_ap Ubuntu
