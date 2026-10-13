@@ -14,3 +14,5 @@ jobs:
         env:
           LP_CREDENTIALS: ${{ secrets.LP_CREDENTIALS }}
         uses: snapcore/system-snaps-cicd-tools/action-test@main
+        with:
+          spread_suites: "openstack:"
