@@ -53,7 +53,7 @@ index 602daed..cfa09e9 100644
 +	      /* if (getuid() == 0 && ent_pw && ent_pw->pw_uid != 0 && fchown(fd, ent_pw->pw_uid, ent_pw->pw_gid) == -1) */
 +	      /*   chown_warn = errno; */
  
- 	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), 0))
+ 	      if (!read_write(fd, (unsigned char *)daemon->namebuff, strlen(daemon->namebuff), RW_WRITE))
  		err = 1;
 @@ -724,16 +724,16 @@ int main (int argc, char **argv)
    if (!option_bool(OPT_DEBUG) && getuid() == 0)   
